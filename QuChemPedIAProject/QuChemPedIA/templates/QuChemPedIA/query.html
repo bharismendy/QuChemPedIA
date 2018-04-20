@@ -6,6 +6,7 @@
         <input type="submit" value="Submit" />
     </form>
 <h1>Result of your research</h1>
+    {% if results|length >= 1 %}
         <table>
         <tr>
             <th>ID</th>
@@ -22,11 +23,13 @@
                     <td><a href="{% url 'calcul' result.id %}">{{ result.IUPAC }}</a></td>
                     <td>{{ result.SMILES }}</td>
                     <td>{{ result.InChi }}</td>
-                    <td>{{ result.FormuleBrute }}</td>
+                    <td>{{ result.Formula }}</td>
                 </tr>
             {% empty %}
-                <p>Aucun résultat</p>
+                <p>no result</p>
             {% endfor %}
         </table>
-
+        {% else %}
+            <p>no result</p>
+    {% endif %}
 {% endblock %}
