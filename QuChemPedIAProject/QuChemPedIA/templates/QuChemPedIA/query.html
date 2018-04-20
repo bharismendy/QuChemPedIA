@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+    <form action="{% url 'query' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <input type="submit" value="Submit" />
+    </form>
+<h1>Result of your research</h1>
+        <table>
+        <tr>
+            <th>ID</th>
+            <th>CID</th>
+            <th>IUPAC</th>
+            <th>SMILE</th>
+            <th>InChi</th>
+            <th>Formula</th>
+        </tr>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.id }}</td>
+                    <td>{{ result.CID }}</td>
+                    <td><a href="{% url 'calcul' result.id %}">{{ result.IUPAC }}</a></td>
+                    <td>{{ result.SMILES }}</td>
+                    <td>{{ result.InChi }}</td>
+                    <td>{{ result.FormuleBrute }}</td>
+                </tr>
+            {% empty %}
+                <p>Aucun résultat</p>
+            {% endfor %}
+        </table>
+
+{% endblock %}
