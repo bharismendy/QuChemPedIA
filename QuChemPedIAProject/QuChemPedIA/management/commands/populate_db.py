@@ -5,6 +5,8 @@ from django.core.management.base import BaseCommand
 import os
 import json
 import csv
+import subprocess
+from datetime import datetime
 
 
 class Command(BaseCommand):
@@ -22,29 +24,38 @@ class Command(BaseCommand):
                 listDir.remove(element)
         return listDir
 
+    def isLast(self,list_dir):
+        if len(list_dir) == 0:  # test si on est arrivé au dernier dossier
+            return True
+        return False
 
-    def store(self, destination_dir, path):
-        id = Query.objects.count()
-        list_dir = os.listdir(destination_dir)
-        last = False
-        while(not last):
-            list_dir = self.cleanFile(list_dir,path)
-            if(len(list_dir)==0):  # test si on est arrivé au dernier dossier
-                last = True
-                break
-            else :
-                list_dir.sort()
-                list_dir = self.cleanFile(list_dir,path)
-                path = path+"/"+list_dir[len(list_dir)-1]
-                list_dir = os.listdir(path=path)
-        print(path)
-        if len(list_dir)<25000:
-            # make dir
-            print("")
-
+    def store(self, destination_dir):
+        for dirpath, dirs, files in os.walk(destination_dir):
+            if len(dirs)<25000 :
+                list_dir = os.listdir(dirpath)
+                list_dir = self.cleanFile(list_dir,dirpath)
+                if self.isLast(list_dir):
+                    path = dirpath+'/..'
+                    list_dir = os.listdir(path)
+                    list_dir = self.cleanFile(list_dir,path)
+                    list_dir.sort(key=int)
+                    while not len(list_dir)<25000:
+                        path = path + '/..'
+                        if destination_dir in path :
+                            list_dir = os.listdir(path)
+                            list_dir = self.cleanFile(list_dir, path)
+                            list_dir.sort(key=int)
+                        else :
+                            print("ERROR FILE SYSTEM IS FULL")
+                        print(path)
+                    # on créer le répertoire et on met le calcul
+                    name_dir = list_dir[len(list_dir)-1]
+                    name_dir =int(name_dir)+1
+                    name_dir = path+'/'+str(name_dir)
+                    subprocess.Popen(["mkdir", name_dir])
+                    return name_dir+'/'
 
     def _create_query(self,source_dir,destination_dir,relation_file):
-
         # iterate on all file
         for dir in os.listdir(source_dir) :
             for filename in os.listdir(source_dir+'/'+dir):
@@ -57,45 +68,125 @@ class Command(BaseCommand):
 
                         # try to get the inchi
                         try:
-                            temp.InChi = loaded_json['molecule']['inchi'][0]
+                            temp.inchi = loaded_json['molecule']['inchi'][0]
                         except:
-                            temp.InChi = "N/A"
+                            temp.inchi = None
 
                         # try to get the formula
                         try:
-                            temp.Formula =loaded_json['molecule']['formula']
+                            temp.formula =loaded_json['molecule']['formula']
                         except:
-                            temp.Formula = "N/A"
+                            temp.formula = None
 
                         # try to get the SMILES
                         try:
-                            temp.Formula = loaded_json['molecule']['smi']
+                            temp.smiles = loaded_json['molecule']['smi']
                         except:
-                            temp.Formula = "N/A"
+                            temp.smiles = None
 
                         # try to get the theory
                         try:
                             temp.theory = loaded_json['comp_details']['general']['all_unique_theory'][0]
                         except:
-                            temp.theory = "N/A"
+                            temp.theory = None
 
                         # try to get the functionnal
                         try:
                             temp.functional = loaded_json['comp_details']['general']['functional']
                         except:
-                            temp.functional = "N/A"
+                            temp.functional = None
 
                         # try to get the software
                         try:
                             temp.software = loaded_json['comp_details']['general']['package']
                         except:
-                            temp.software = "N/A"
+                            temp.software = None
 
                         # try to get the nuclear starting energy
                         try:
-                            temp.nuclear_starting_energy = loaded_json['comp_details']['molecule']['starting_energy']
+                            val = loaded_json['comp_details']['molecule']['starting_energy']
+                            if not val in "N/A":
+                                temp.nuclear_starting_energy = val
                         except:
-                            temp.nuclear_starting_energy = "N/A"
+                            temp.nuclear_starting_energy = None
+
+                        # try to get the nuclear ending energy
+                        try:
+                            val = loaded_json['results']['geometry']['geometric_values']['nuclear_repulsion_energy_from_xyz']
+                            if not val in "N/A":
+                                temp.nuclear_ending_energy = val
+                        except:
+                            temp.nuclear_ending_energy = None
+
+                        # try to get the charge
+                        try:
+                            val = loaded_json['molecule']['charge']
+                            if not val in "N/A":
+                                temp.charge = val
+                        except:
+                            temp.charge = None
+
+                        # try to get the cansmiles
+                        try:
+                            temp.cansmiles = loaded_json['molecule']['can']
+                        except:
+                            temp.cansmiles = None
+
+                        # try to get the multiplicity
+                        try:
+                            val = loaded_json['molecule']['multiplicity']
+                            if not val in "N/A":
+                                temp.multiplicity = val
+                        except:
+                            temp.multiplicity = None
+
+                        # try to get the basis_set_name
+                        try:
+                            temp.basis_set_name = loaded_json['comp_details']['general']['basis_set_name']
+                        except:
+                            temp.basis_set_name = None
+
+                        # try to get the basis_set_size
+                        try:
+                            temp.basis_set_size = loaded_json['comp_details']['general']['basis_set_size']
+                        except:
+                            temp.basis_set_size = None
+
+                        # try to get the solvent_method
+                        try:
+                            temp.solvent_method = loaded_json['comp_details']['general']['solvent_reaction_field']
+                        except:
+                            temp.solvent_method = None
+
+                        # try to get the solvent
+                        try:
+                            temp.solvent = loaded_json['comp_details']['general']['solvent']
+                        except:
+                            temp.solvent = None
+
+                        # try to get the starting_energy
+                        try:
+                            val = loaded_json['molecule']['starting_energy']
+                            if not val in "N/A":
+                                temp.starting_energy = val
+                        except:
+                            temp.starting_energy = None
+
+                        # try to get the ending_energy
+                        try:
+                            val = loaded_json['results']['freq']['electronic_thermal_energy']
+                            if not val in "N/A":
+                                temp.ending_energy = val
+                        except:
+                            temp.ending_energy = None
+
+                        # try to get the HOMO
+                        try:
+                            val = loaded_json['results']['wavefunction']['homo_indexes']
+                            if not val in "N/A":
+                                temp.homo = val
+                        except:
+                            temp.homo = None
 
                         # getting the CID and the IUPAC
                         try:
@@ -105,19 +196,24 @@ class Command(BaseCommand):
                             reader = csv.reader(csv_file, delimiter=";")
                             for rows in reader:
                                 if formule == rows[1].strip():
-                                    temp.CID = rows[0].strip()
-                                    temp.IUPAC = rows[2].strip()  # we make a strip to escape all whitespace
+                                    temp.cid = rows[0].strip()
+                                    temp.iupac = rows[2].strip()  # we make a strip to escape all whitespace
                                     break
                             csv_file.close()
                         except:
                             print('error in parsing the relation file')
-                            temp.CID = "N/A"
-                            temp.CID = "N/A"
+                            temp.cid = None
+                            temp.cid = None
 
                         # store the file in data bank
-                        self.store(destination_dir, path)
+                        temp.path = self.store(destination_dir)
+                        subprocess.Popen(["cp", path, temp.path])#copie du JSON
+                        #TODO copie du pdf
+                        temp.date = datetime.now()
+                        temp.save()
                     else:
                         print("cant load " + source_dir+'/'+dir+'/'+filename)
+
     def handle(self, *args, **options):
         # absolute path to the source directory where are all the data
         source_dir = '/home/etudiant/Documents/stage/data_brice/fchk_log_files'
