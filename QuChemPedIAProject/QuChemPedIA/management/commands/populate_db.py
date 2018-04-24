@@ -7,6 +7,16 @@ import json
 import csv
 import subprocess
 from datetime import datetime
+"""
+    Utilisation de cette commande :
+                            -activer le virtualenv (source venv/bin/activate
+                            -mettez à jour le destination_dir et le source dir
+                            -mettez à jour la base de donnée avec les commandes suivantes :
+                                -python manage.py makemigrations QuChemPedIA
+                                -python manage.py migrate
+                            -déplacez vous dans le dossier QuChemPedIAProject 
+                            -entrer dans le terminal la commande : python manage.py populate_db
+"""
 
 
 class Command(BaseCommand):
@@ -174,7 +184,7 @@ class Command(BaseCommand):
 
                         # try to get the ending_energy
                         try:
-                            val = loaded_json['results']['freq']['electronic_thermal_energy']
+                            val = loaded_json["results"]["wavefunction"]["total_molecular_energy"]
                             if not val in "N/A":
                                 temp.ending_energy = val
                         except:
@@ -184,10 +194,19 @@ class Command(BaseCommand):
                         try:
                             val = loaded_json['results']['wavefunction']['homo_indexes']
                             if not val in "N/A":
-                                temp.homo = val
+                                temp.homo.append(val)
+                                print(temp.homo)
                         except:
                             temp.homo = None
 
+                        # try to get the solvent_method
+                        try:
+                            val = loaded_json
+                            if not val in "N/A":
+                                temp.homo.append(val)
+                                print(temp.homo)
+                        except:
+                            temp.homo = None
                         # getting the CID and the IUPAC
                         try:
                             formule = loaded_json['molecule']['formula']
@@ -206,9 +225,9 @@ class Command(BaseCommand):
                             temp.cid = None
 
                         # store the file in data bank
-                        temp.path = self.store(destination_dir)
-                        subprocess.Popen(["cp", path, temp.path])#copie du JSON
-                        #TODO copie du pdf
+                        temp.files_path = self.store(destination_dir)
+                        subprocess.Popen(["cp", path, temp.files_path])#copie du JSON
+                        #TODO copie du pdf+jpeg
                         temp.date = datetime.now()
                         temp.save()
                     else:
