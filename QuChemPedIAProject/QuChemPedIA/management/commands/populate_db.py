@@ -1,5 +1,4 @@
 from builtins import print
-
 from QuChemPedIA.models.QueryModel import Query
 from django.core.management.base import BaseCommand
 import os
@@ -7,6 +6,8 @@ import json
 import csv
 import subprocess
 from datetime import datetime
+from QuChemPedIA.models.userModel import utilisateur
+from QuChemPedIA.models.JobTypeModel import JobType
 """
     Utilisation de cette commande :
                             -activer le virtualenv (source venv/bin/activate
@@ -72,141 +73,179 @@ class Command(BaseCommand):
                 if '.json' in filename:
                     path = source_dir+'/'+dir+'/'+filename
                     temp = Query()
+                    user = utilisateur.objects
+                    job_type = JobType.objects
                     jsonfile = open(path)
                     if self.is_json(path):
                         loaded_json = json.load(jsonfile)
+                        #getting data for jobtype object
+                        try:
+                            name = "testing"
+                        except Exception as error:
+                            print(error)
 
+                        try:
+                            user, created= JobType.objects.update_or_create(name=name)
+                            if created:
+                                print(user)
+                        except Exception as error:
+                            print(error)
+
+                        # getting data for user object
+                        # try to get the name
+                        try:
+                            name = loaded_json['authorship']['primary_author']
+                        except Exception as error:
+                            print(error)
+
+                        # try to get the orcid
+                        try:
+                            orcid = loaded_json['authorship']['primary_author_orcid']
+                        except Exception as error:
+                            print(error)
+
+                        # try to get the affiliation
+                        try:
+                            affiliation = loaded_json['authorship']['primary_author_affiliation']
+                        except Exception as error:
+                            print(error)
+                        try:
+                            user, created= utilisateur.objects.update_or_create(name=name, orcid=orcid, affiliation=affiliation)
+                            if created:
+                                print(user)
+                        except Exception as error:
+                            print(error)
+
+                        # getting for query object
                         # try to get the inchi
                         try:
                             temp.inchi = loaded_json['molecule']['inchi'][0]
-                        except:
-                            temp.inchi = None
+                        except Exception as error :
+                            print(error)
 
                         # try to get the formula
                         try:
                             temp.formula =loaded_json['molecule']['formula']
-                        except:
-                            temp.formula = None
+                        except Exception as error:
+                            print(error)
 
                         # try to get the SMILES
                         try:
                             temp.smiles = loaded_json['molecule']['smi']
-                        except:
-                            temp.smiles = None
+                        except Exception as error:
+                            print(error)
 
                         # try to get the theory
                         try:
                             temp.theory = loaded_json['comp_details']['general']['all_unique_theory'][0]
-                        except:
-                            temp.theory = None
+                        except Exception as error:
+                            print(error)
 
                         # try to get the functionnal
                         try:
                             temp.functional = loaded_json['comp_details']['general']['functional']
-                        except:
-                            temp.functional = None
+                        except Exception as error:
+                            print(error)
 
                         # try to get the software
                         try:
                             temp.software = loaded_json['comp_details']['general']['package']
-                        except:
-                            temp.software = None
+                        except Exception as error:
+                            print(error)
 
                         # try to get the nuclear starting energy
                         try:
-                            val = loaded_json['comp_details']['molecule']['starting_energy']
-                            if not val in "N/A":
-                                temp.nuclear_starting_energy = val
-                        except:
-                            temp.nuclear_starting_energy = None
+                            temp.starting_nuclear_repulsion_energy = loaded_json['molecule']['starting_nuclear_repulsion']
+                        except Exception as error:
+                            print(error)
 
                         # try to get the nuclear ending energy
                         try:
-                            val = loaded_json['results']['geometry']['geometric_values']['nuclear_repulsion_energy_from_xyz']
-                            if not val in "N/A":
-                                temp.nuclear_ending_energy = val
-                        except:
-                            temp.nuclear_ending_energy = None
+                            temp.ending_nuclear_repulsion_energy = loaded_json['results']['geometry']['nuclear_repulsion_energy_from_xyz']
+                        except Exception as error:
+                            print(error)
 
                         # try to get the charge
                         try:
-                            val = loaded_json['molecule']['charge']
-                            if not val in "N/A":
-                                temp.charge = val
-                        except:
-                            temp.charge = None
+                            temp.charge = loaded_json['molecule']['charge']
+                        except Exception as error:
+                            print(error)
 
                         # try to get the cansmiles
                         try:
                             temp.cansmiles = loaded_json['molecule']['can']
-                        except:
-                            temp.cansmiles = None
+                        except Exception as error:
+                            print(error)
 
                         # try to get the multiplicity
                         try:
-                            val = loaded_json['molecule']['multiplicity']
-                            if not val in "N/A":
-                                temp.multiplicity = val
-                        except:
-                            temp.multiplicity = None
+                            temp.multiplicity = loaded_json['molecule']['multiplicity']
+                        except Exception as error:
+                            print(error)
 
                         # try to get the basis_set_name
                         try:
                             temp.basis_set_name = loaded_json['comp_details']['general']['basis_set_name']
-                        except:
-                            temp.basis_set_name = None
+                        except Exception as error:
+                            print(error)
 
                         # try to get the basis_set_size
                         try:
                             temp.basis_set_size = loaded_json['comp_details']['general']['basis_set_size']
-                        except:
-                            temp.basis_set_size = None
+                        except Exception as error:
+                            print(error)
 
                         # try to get the solvent_method
                         try:
                             temp.solvent_method = loaded_json['comp_details']['general']['solvent_reaction_field']
-                        except:
-                            temp.solvent_method = None
+                        except Exception as error:
+                            print(error)
 
                         # try to get the solvent
                         try:
                             temp.solvent = loaded_json['comp_details']['general']['solvent']
-                        except:
-                            temp.solvent = None
+                        except Exception as error:
+                            print(error)
 
                         # try to get the starting_energy
                         try:
-                            val = loaded_json['molecule']['starting_energy']
-                            if not val in "N/A":
-                                temp.starting_energy = val
-                        except:
-                            temp.starting_energy = None
+                            temp.starting_energy = loaded_json['molecule']['starting_energy']
+                        except Exception as error:
+                            print(error)
 
                         # try to get the ending_energy
                         try:
-                            val = loaded_json["results"]["wavefunction"]["total_molecular_energy"]
-                            if not val in "N/A":
-                                temp.ending_energy = val
-                        except:
-                            temp.ending_energy = None
+                            print(loaded_json["results"]["wavefunction"]["total_molecular_energy"])
+                            temp.ending_energy =loaded_json["results"]["wavefunction"]["total_molecular_energy"]
+                        except Exception as error:
+                            print(error)
 
                         # try to get the HOMO
                         try:
-                            val = loaded_json['results']['wavefunction']['homo_indexes']
-                            if not val in "N/A":
-                                temp.homo.append(val)
-                                print(temp.homo)
-                        except:
-                            temp.homo = None
+                            index = loaded_json ["results"]["wavefunction"]["homo_indexes"]
+                            if len(index) == 2:
+                                index = index[0]
+                                if not index == -1:
+                                    temp.homo_alpha_energy = loaded_json["results"]["wavefunction"]["MO_energies"][0][index]
+                                index = index[1]
+                                if not index == -1:
+                                    temp.homo_beta_energy = loaded_json["results"]["wavefunction"]["MO_energies"][1][index]
+                        except Exception as error:
+                            print(error)
 
-                        # try to get the solvent_method
+                        # try to get the Lumo
                         try:
-                            val = loaded_json
-                            if not val in "N/A":
-                                temp.homo.append(val)
-                                print(temp.homo)
-                        except:
-                            temp.homo = None
+                            index = loaded_json ["results"]["wavefunction"]["homo_indexes"]
+                            if len(index) == 2:
+                                index = index[0]
+                                if not index == -1:
+                                    temp.homo_alpha_energy = loaded_json["results"]["wavefunction"]["MO_energies"][0][index-1]
+                                index = index[1]
+                                if not index == -1:
+                                    temp.homo_beta_energy = loaded_json["results"]["wavefunction"]["MO_energies"][1][index-1]
+                        except Exception as error:
+                            print(error)
+
                         # getting the CID and the IUPAC
                         try:
                             formule = loaded_json['molecule']['formula']
@@ -219,20 +258,28 @@ class Command(BaseCommand):
                                     temp.iupac = rows[2].strip()  # we make a strip to escape all whitespace
                                     break
                             csv_file.close()
-                        except:
-                            print('error in parsing the relation file')
-                            temp.cid = None
-                            temp.cid = None
+                        except Exception as error:
+                            print(error)
+                        #todo replace it with the real value
+                        #setting the job_type :
+                        temp.job_type = "testing"
 
                         # store the file in data bank
-                        temp.files_path = self.store(destination_dir)
-                        subprocess.Popen(["cp", path, temp.files_path])#copie du JSON
+                        #temp.files_path = self.store(destination_dir)
+                        #subprocess.Popen(["cp", path, temp.files_path])#copie du JSON
                         #TODO copie du pdf+jpeg
+                        temp.files_path = path
                         temp.date = datetime.now()
-                        temp.save()
+                        temp.user = user
+                        try:
+                            temp.save()
+                        except Exception as error:
+                            print("error can't write this compute sheet :")
+                            print(error)
+                            print(temp.files_path)
+
                     else:
                         print("cant load " + source_dir+'/'+dir+'/'+filename)
-
     def handle(self, *args, **options):
         # absolute path to the source directory where are all the data
         source_dir = '/home/etudiant/Documents/stage/data_brice/fchk_log_files'

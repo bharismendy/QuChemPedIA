@@ -1,8 +1,6 @@
 from django.shortcuts import render, get_list_or_404
 from QuChemPedIA.forms.QueryForm import QueryForm
 from QuChemPedIA.models.QueryModel import Query
-from django.urls import reverse
-from django.http.response import HttpResponseRedirect
 
 
 def query(request):
