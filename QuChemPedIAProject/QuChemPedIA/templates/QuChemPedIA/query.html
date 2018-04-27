@@ -20,7 +20,7 @@
                 <tr>
                     <td>{{ result.id_log }}</td>
                     <td>{{ result.cid }}</td>
-                    <td><a href="{% url 'calcul' result.id_log %}">{{ result.iupac }}</a></td>
+                    <td><a href="{% url 'details' result.id_log %}">{{ result.iupac }}</a></td>
                     <td>{{ result.smiles }}</td>
                     <td>{{ result.inchi }}</td>
                     <td>{{ result.formula }}</td>
@@ -32,4 +32,5 @@
         {% else %}
             <p>no result</p>
     {% endif %}
+    <p>la requête à mis : {{ temp }}</p>
 {% endblock %}

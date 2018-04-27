@@ -7,5 +7,4 @@ urlpatterns = [
     path('query', views.query, name='query'),
     path('details/<int:id>',views.details, name='details'),
     path('rapport/<int:id>', views.rapport, name='rapport'),
-    path('calcul/<int:id>', views.calcul, name= 'calcul')
 ]

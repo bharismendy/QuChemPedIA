@@ -2,7 +2,16 @@ from django import forms
 
 
 class QueryForm(forms.Form):
-    CHOICES = (('CID', 'CID'), ('InChi', 'InChi'), ('IUPAC', 'IUPAC'), ('Formula', 'Formula'), ('SMILES', 'SMILES'))
+    CHOICES = (('CID', 'CID'),
+               ('InChi', 'InChi'),
+               ('IUPAC', 'IUPAC'),
+               ('Formula', 'Formula'),
+               ('SMILES', 'SMILES'),
+               ('id_log', 'id_log'),
+               ('homo_alpha_energy', 'homo_alpha_energy'),
+               ('homo_beta_energy', 'homo_beta_energy'),
+               ('lumo_alpha_energy', 'lumo_alpha_energy'),
+               ('lumo_beta_energy', 'lumo_beta_energy'))
     search = forms.CharField(max_length=500, label="your research", required=True)
     typeQuery = forms.CharField(widget=forms.Select(choices=CHOICES))
 
