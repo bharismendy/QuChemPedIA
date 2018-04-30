@@ -6,8 +6,11 @@ import json
 import csv
 import subprocess
 from datetime import datetime
-from QuChemPedIA.models.userModel import utilisateur
+from QuChemPedIA.models.UserModel import utilisateur
 from QuChemPedIA.models.JobTypeModel import JobType
+from QuChemPedIA.models.FunctionnalModel import functionnal
+from QuChemPedIA.models.TheoryModel import theory
+from QuChemPedIA.models.SoftwareModel import software
 """
     Utilisation de cette commande :
                             -activer le virtualenv (source venv/bin/activate
@@ -76,6 +79,10 @@ class Command(BaseCommand):
                     temp = Query()
                     user = utilisateur.objects
                     job = JobType.objects
+                    # TODO must be validate
+                    theorie = theory.objects
+                    soft = software.objects
+                    funct = functionnal.objects
                     jsonfile = open(path)
                     if self.is_json(path):
                         loaded_json = json.load(jsonfile)
@@ -150,23 +157,47 @@ class Command(BaseCommand):
 
                         # try to get the theory
                         try:
-                            temp.theory = loaded_json['comp_details']['general']['all_unique_theory'][0]
+                            nameTheorie = loaded_json['comp_details']['general']['all_unique_theory'][0]
                         except Exception as error:
                             print("error for getting the theory :")
                             print(error)
 
+                        # try to register the theory
+                        try:
+                            # we check if it's already exist, if not we register it
+                            theorie, created= theory.objects.update_or_create(name=nameTheorie)
+                        except Exception as error:
+                            print("error for registering the job_type : ")
+                            print(error)
+
                         # try to get the functionnal
                         try:
-                            temp.functional = loaded_json['comp_details']['general']['functional']
+                            nameFunctionnal = loaded_json['comp_details']['general']['functional']
                         except Exception as error:
                             print("error for getting the ending_energy : ")
                             print(error)
 
+                        # try to register the functionnal
+                        try:
+                            # we check if it's already exist, if not we register it
+                            funct, created= functionnal.objects.update_or_create(name=nameFunctionnal)
+                        except Exception as error:
+                            print("error for registering the job_type : ")
+                            print(error)
+
                         # try to get the software
                         try:
-                            temp.software = loaded_json['comp_details']['general']['package']
+                            nameSoftware = loaded_json['comp_details']['general']['package']
                         except Exception as error:
                             print("error for getting the functionnal : ")
+                            print(error)
+
+                        # try to register the software
+                        try:
+                            # we check if it's already exist, if not we register it
+                            soft, created= software.objects.update_or_create(name=nameSoftware)
+                        except Exception as error:
+                            print("error for registering the job_type : ")
                             print(error)
 
                         # try to get the starting_nuclear_repulsion_energy
@@ -294,9 +325,6 @@ class Command(BaseCommand):
                         except Exception as error:
                             print("error for getting the IUPAC/CID : ")
                             print(error)
-                        # todo replace it with the real value
-                        # setting the job_type :
-                        temp.job_type = "testing"
 
                         # store the file in data bank
                         # temp.files_path = self.store(destination_dir)
@@ -306,6 +334,9 @@ class Command(BaseCommand):
                         temp.date = datetime.now()
                         temp.job_type = job
                         temp.user = user
+                        temp.theory = theorie
+                        temp.functional = funct
+                        temp.software = soft
                         try:
                             temp.save()
                         except Exception as error:

@@ -1,6 +1,9 @@
 from django.db import models
-from .userModel import utilisateur
+from .UserModel import utilisateur
 from .JobTypeModel import JobType
+from .TheoryModel import theory
+from .SoftwareModel import software
+from .FunctionnalModel import functionnal
 
 class Query(models.Model):
     #base
@@ -10,7 +13,8 @@ class Query(models.Model):
 
     # lien vers la table utilisateur et job_type
     user = models.ForeignKey(utilisateur, on_delete=models.SET_NULL, null=True)
-    job_type = models.ForeignKey(JobType, on_delete=models.SET_DEFAULT, null=True)
+    job_type = models.ForeignKey(JobType, on_delete=models.SET_DEFAULT, null=True, default=1)
+
     #description
     cid = models.BigIntegerField(default=None,null=True)
     iupac = models.CharField(max_length=500,default=None,null=True)
@@ -20,12 +24,14 @@ class Query(models.Model):
     formula = models.CharField(max_length=30,default=None,null=True)#todo null ?
     charge = models.SmallIntegerField(default=0)
     multiplicity = models.SmallIntegerField(default=None)
-    job_type = models.CharField(max_length=40, default=None)
 
     #computational details
-    theory = models.CharField(max_length=10, default=None)#todo table ?
-    software = models.CharField(max_length=20, default=None)#todo table ?
-    functional = models.CharField(max_length=15, default=None)#todo code/table ?
+    #theory = models.CharField(max_length=10, default=None)#todo table ?
+    #software = models.CharField(max_length=20, default=None)#todo table ?
+    #functional = models.CharField(max_length=15, default=None)#todo code/table ?
+    theory = models.ForeignKey(theory, on_delete=models.SET_DEFAULT, null=False, default=None)
+    functional = models.ForeignKey(functionnal, on_delete=models.SET_DEFAULT, null=False, default=None)
+    software = models.ForeignKey(software, on_delete=models.SET_DEFAULT, null=False, default=None)
     basis_set_name = models.CharField(max_length=20, default=None, null=True)
     basis_set_size = models.IntegerField(default=None)
     solvatation_method = models.CharField(max_length=10, default=None, null=True)

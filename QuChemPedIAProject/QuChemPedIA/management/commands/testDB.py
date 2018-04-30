@@ -6,7 +6,7 @@ import json
 import csv
 import subprocess
 from datetime import datetime
-from QuChemPedIA.models.userModel import utilisateur
+from QuChemPedIA.models.UserModel import utilisateur
 from QuChemPedIA.models.JobTypeModel import JobType
 import random
 """
@@ -329,7 +329,7 @@ class Command(BaseCommand):
 
     # v2
     def __create_query(self):
-        nb_created = 0
+        nb_created = 1000000
         nb_of_primary_element = 232
         nb_element = 10000000-nb_of_primary_element
 
@@ -345,16 +345,6 @@ class Command(BaseCommand):
             except Exception as error:
                 print(error)
 
-    """            
-    def __create_query(self):
-        nb_created = 130000
-        nb_of_primary_element = 13250
-
-        while nb_created < nb_of_primary_element:
-            # get element betwin 0 and 232(number of primary element in DB
-            query = Query.objects.get(id_log=nb_created)
-            query.delete()
-    """
     def handle(self, *args, **options):
         # absolute path to the source directory where are all the data
         source_dir = '/home/etudiant/Documents/stage/data_brice/fchk_log_files'

@@ -17,7 +17,7 @@ def query(request):
 
         if 'InChi' in request.POST.get('typeQuery'):
             # here we looking for inchi wich contain a part of what we looking for
-            results = list(Query.objects.filter(inchi__contains=request.POST.get('search')))
+            results = list(Query.objects.filter(inchi=request.POST.get('search')))
         if 'Formula' in request.POST.get('typeQuery'):
             results = list(Query.objects.filter(formula=request.POST.get('search')))
 
