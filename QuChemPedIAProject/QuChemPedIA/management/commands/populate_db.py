@@ -105,21 +105,21 @@ class Command(BaseCommand):
                         # getting data for user object
                         # try to get the name
                         try:
-                            name = loaded_json['authorship']['primary_author']
+                            name = loaded_json['authorship']['primary_author'].strip()
                         except Exception as error:
                             print("error for getting the primary author : ")
                             print(error)
 
                         # try to get the orcid
                         try:
-                            orcid = loaded_json['authorship']['primary_author_orcid']
+                            orcid = loaded_json['authorship']['primary_author_orcid'].strip()
                         except Exception as error:
                             print("error for getting the orcid : ")
                             print(error)
 
                         # try to get the affiliation
                         try:
-                            affiliation = loaded_json['authorship']['primary_author_affiliation']
+                            affiliation = loaded_json['authorship']['primary_author_affiliation'].strip()
                         except Exception as error:
                             print("error for getting the affiliation : ")
                             print(error)
@@ -136,28 +136,28 @@ class Command(BaseCommand):
                         # getting for query object
                         # try to get the inchi
                         try:
-                            temp.inchi = loaded_json['molecule']['inchi'][0]
+                            temp.inchi = loaded_json['molecule']['inchi'][0].strip()
                         except Exception as error :
                             print("error for getting the InChi : ")
                             print(error)
 
                         # try to get the formula
                         try:
-                            temp.formula = loaded_json['molecule']['formula']
+                            temp.formula = loaded_json['molecule']['formula'].strip()
                         except Exception as error:
                             print("error for getting the formula : ")
                             print(error)
 
                         # try to get the SMILES
                         try:
-                            temp.smiles = loaded_json['molecule']['smi']
+                            temp.smiles = loaded_json['molecule']['smi'].strip()
                         except Exception as error:
                             print("error for getting the SMILES : ")
                             print(error)
 
                         # try to get the theory
                         try:
-                            nameTheorie = loaded_json['comp_details']['general']['all_unique_theory'][0]
+                            nameTheorie = loaded_json['comp_details']['general']['all_unique_theory'][0].strip()
                         except Exception as error:
                             print("error for getting the theory :")
                             print(error)
@@ -167,12 +167,12 @@ class Command(BaseCommand):
                             # we check if it's already exist, if not we register it
                             theorie, created= theory.objects.update_or_create(name=nameTheorie)
                         except Exception as error:
-                            print("error for registering the job_type : ")
+                            print("error for registering the theory : ")
                             print(error)
 
                         # try to get the functionnal
                         try:
-                            nameFunctionnal = loaded_json['comp_details']['general']['functional']
+                            nameFunctionnal = loaded_json['comp_details']['general']['functional'].strip()
                         except Exception as error:
                             print("error for getting the ending_energy : ")
                             print(error)
@@ -182,14 +182,14 @@ class Command(BaseCommand):
                             # we check if it's already exist, if not we register it
                             funct, created= functionnal.objects.update_or_create(name=nameFunctionnal)
                         except Exception as error:
-                            print("error for registering the job_type : ")
+                            print("error for registering the functionnal : ")
                             print(error)
 
                         # try to get the software
                         try:
-                            nameSoftware = loaded_json['comp_details']['general']['package']
+                            nameSoftware = loaded_json['comp_details']['general']['package'].strip()
                         except Exception as error:
-                            print("error for getting the functionnal : ")
+                            print("error for getting the software : ")
                             print(error)
 
                         # try to register the software
@@ -197,7 +197,7 @@ class Command(BaseCommand):
                             # we check if it's already exist, if not we register it
                             soft, created= software.objects.update_or_create(name=nameSoftware)
                         except Exception as error:
-                            print("error for registering the job_type : ")
+                            print("error for registering the software : ")
                             print(error)
 
                         # try to get the starting_nuclear_repulsion_energy
@@ -223,7 +223,7 @@ class Command(BaseCommand):
 
                         # try to get the cansmiles
                         try:
-                            temp.cansmiles = loaded_json['molecule']['can']
+                            temp.cansmiles = loaded_json['molecule']['can'].strip()
                         except Exception as error:
                             print("error for getting the cansmiles : ")
                             print(error)
@@ -237,7 +237,7 @@ class Command(BaseCommand):
 
                         # try to get the basis_set_name
                         try:
-                            temp.basis_set_name = loaded_json['comp_details']['general']['basis_set_name']
+                            temp.basis_set_name = loaded_json['comp_details']['general']['basis_set_name'].strip()
                         except Exception as error:
                             print("error for getting the basis_set_name : ")
                             print(error)
@@ -251,14 +251,14 @@ class Command(BaseCommand):
 
                         # try to get the solvent_method
                         try:
-                            temp.solvent_method = loaded_json['comp_details']['general']['solvent_reaction_field']
+                            temp.solvent_method = loaded_json['comp_details']['general']['solvent_reaction_field'].strip()
                         except Exception as error:
                             print("error for getting the solvent_method :")
                             print(error)
 
                         # try to get the solvent
                         try:
-                            temp.solvent = loaded_json['comp_details']['general']['solvent']
+                            temp.solvent = loaded_json['comp_details']['general']['solvent'].strip()
                         except Exception as error:
                             print("error for getting the solvent :")
                             print(error)
@@ -312,7 +312,7 @@ class Command(BaseCommand):
 
                         # getting the CID and the IUPAC
                         try:
-                            formule = loaded_json['molecule']['formula']
+                            formule = loaded_json['molecule']['formula'].strip()
                             # open the csv
                             csv_file = open(relation_file, 'r')
                             reader = csv.reader(csv_file, delimiter=";")

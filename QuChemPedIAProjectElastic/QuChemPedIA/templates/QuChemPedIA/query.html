@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+    <form action="{% url 'query' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <input type="submit" value="Submit" />
+    </form>
+<h1>Result of your research</h1>
+    {% if results|length >= 1 %}
+        <table>
+        <tr>
+            <th>ID</th>
+            <th>CID</th>
+            <th>IUPAC</th>
+            <th>SMILE</th>
+            <th>InChi</th>
+            <th>Formula</th>
+        </tr>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.id_log }}</td>
+                    <td>{{ result.cid }}</td>
+                    <td><a href="{% url 'details' result.id_log %}">{{ result.iupac }}</a></td>
+                    <td>{{ result.smiles }}</td>
+                    <td>{{ result.inchi }}</td>
+                    <td>{{ result.formula }}</td>
+                </tr>
+            {% empty %}
+                <p>no result</p>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>no result</p>
+    {% endif %}
+    <p>la requête à mis : {{ temp }}</p>
+{% endblock %}

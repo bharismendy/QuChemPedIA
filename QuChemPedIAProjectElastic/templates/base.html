@@ -1,0 +1,31 @@
+{# block used as header #}
+{% block header %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+   {# <link rel="stylesheet" href="/media/css/style.css" /> #}
+   <title>QuChemPedIA</title>
+</head>
+<body>
+{% endblock %}
+
+{# block used for the menu #}
+{% block nav %}
+<nav>
+   <ul>
+        <li><a href="{%  url 'accueil' %}">Accueil</a></li>
+   </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+{# block used for footer #}
+{% block footer%}
+        <footer>
+
+        </footer>
+    </body>
+</html>
+{%  endblock %}

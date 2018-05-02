@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="QuChemPedIADB@localhost">
+  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.8">
+    <root id="1">
+      <ServerVersion>9.5.12</ServerVersion>
+    </root>
+    <database id="2" parent="1" name="QuChemPedIADB">
+      <ObjectId>16384</ObjectId>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </database>
+    <database id="3" parent="1" name="postgres">
+      <ObjectId>12421</ObjectId>
+    </database>
+    <role id="4" parent="1" name="postgres">
+      <ObjectId>10</ObjectId>
+      <SuperRole>1</SuperRole>
+      <Inherit>1</Inherit>
+      <CreateRole>1</CreateRole>
+      <CreateDb>1</CreateDb>
+      <CanLogin>1</CanLogin>
+      <Replication>1</Replication>
+      <ConnectionLimit>-1</ConnectionLimit>
+      <BypassRls>1</BypassRls>
+    </role>
+    <schema id="5" parent="2" name="public">
+      <ObjectId>2200</ObjectId>
+      <IntrospectionTimestamp>2018-04-17.13:45:52.208</IntrospectionTimestamp>
+      <IntrospectionStateNumber>671</IntrospectionStateNumber>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="6" parent="2" name="pg_catalog">
+      <ObjectId>11</ObjectId>
+    </schema>
+    <schema id="7" parent="2" name="pg_toast">
+      <ObjectId>99</ObjectId>
+    </schema>
+    <schema id="8" parent="2" name="pg_temp_1">
+      <ObjectId>11816</ObjectId>
+    </schema>
+    <schema id="9" parent="2" name="pg_toast_temp_1">
+      <ObjectId>11817</ObjectId>
+    </schema>
+    <schema id="10" parent="2" name="information_schema">
+      <ObjectId>12129</ObjectId>
+    </schema>
+    <sequence id="11" parent="5" name="query_ID_mol_seq">
+      <ObjectId>16385</ObjectId>
+      <StateNumber>671</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <table id="12" parent="5" name="query">
+      <ObjectId>16387</ObjectId>
+      <StateNumber>671</StateNumber>
+    </table>
+    <column id="13" parent="12" name="ID_mol">
+      <Position>1</Position>
+      <DataType>bigint|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>671</StateNumber>
+      <DefaultExpression>nextval(&apos;&quot;query_ID_mol_seq&quot;&apos;::regclass)</DefaultExpression>
+      <TypeId>20</TypeId>
+      <SequenceName>query_ID_mol_seq</SequenceName>
+    </column>
+    <column id="14" parent="12" name="CID">
+      <Position>2</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>671</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="15" parent="12" name="IUPAC">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>671</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="16" parent="12" name="INCHI">
+      <Position>4</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>671</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="17" parent="12" name="SMILES">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>671</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="18" parent="12" name="InChi">
+      <Position>6</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>671</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="19" parent="12" name="PATH">
+      <Position>7</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>671</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="20" parent="12" name="query_pkey">
+      <ObjectId>16394</ObjectId>
+      <ColNames>ID_mol</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="21" parent="12" name="query_pkey">
+      <ObjectId>16395</ObjectId>
+      <ColNames>ID_mol</ColNames>
+      <UnderlyingIndexName>query_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

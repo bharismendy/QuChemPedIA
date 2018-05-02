@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Welcome on QuChemPedIA</h1>
+
+{% for article in derniers_articles %}
+    <div class="article">
+        <h3>{{ article.titre }}</h3>
+        <p>{{ article.contenu|truncatewords_html:80 }}</p>
+       <p><a href="{% url 'lire' id=article.id %}">Lire la suite</a>
+    </div>
+{% empty %}
+    <p>Aucun article.</p>
+{% endfor %}
+<form action="{% url 'query' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <input type="submit" value="Search" />
+</form>
+
+{% endblock %}
