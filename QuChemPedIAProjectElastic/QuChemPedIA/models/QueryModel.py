@@ -4,6 +4,8 @@ from .JobTypeModel import JobType
 from .TheoryModel import theory
 from .SoftwareModel import software
 from .FunctionnalModel import functionnal
+#from QuChemPedIA.search import QuChemPedIAIndex
+
 
 class Query(models.Model):
     #base
@@ -56,3 +58,15 @@ class Query(models.Model):
 
     def __str__(self):
         return self.iupac
+    """
+    def indexing(self):
+        obj = QuChemPedIAIndex(
+            meta={'id': self.id_log},
+            author=self.user.name,
+            date=self.date,
+            file_path=self.files_path,
+            theory=self.theory.name
+        )
+        obj.save()
+        return obj.to_dict(include_meta=True)
+    """
