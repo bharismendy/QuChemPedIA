@@ -28,9 +28,6 @@ class Query(models.Model):
     multiplicity = models.SmallIntegerField(default=None)
 
     #computational details
-    #theory = models.CharField(max_length=10, default=None)#todo table ?
-    #software = models.CharField(max_length=20, default=None)#todo table ?
-    #functional = models.CharField(max_length=15, default=None)#todo code/table ?
     theory = models.ForeignKey(theory, on_delete=models.SET_DEFAULT, null=False, default=None)
     functional = models.ForeignKey(functionnal, on_delete=models.SET_DEFAULT, null=False, default=None)
     software = models.ForeignKey(software, on_delete=models.SET_DEFAULT, null=False, default=None)
@@ -58,15 +55,3 @@ class Query(models.Model):
 
     def __str__(self):
         return self.iupac
-    """
-    def indexing(self):
-        obj = QuChemPedIAIndex(
-            meta={'id': self.id_log},
-            author=self.user.name,
-            date=self.date,
-            file_path=self.files_path,
-            theory=self.theory.name
-        )
-        obj.save()
-        return obj.to_dict(include_meta=True)
-    """

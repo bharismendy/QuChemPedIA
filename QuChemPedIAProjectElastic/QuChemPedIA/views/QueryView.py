@@ -2,6 +2,7 @@ from django.shortcuts import render
 from QuChemPedIA.forms.QueryForm import QueryForm
 from QuChemPedIA.models.QueryModel import Query
 from datetime import datetime
+from QuChemPedIA.search import *
 
 def query(request):
     form = QueryForm(request.POST or None)
@@ -17,7 +18,9 @@ def query(request):
 
         if 'InChi' in request.POST.get('typeQuery'):
             # here we looking for inchi wich contain a part of what we looking for
-            results = list(Query.objects.filter(inchi=request.POST.get('search')).order_by('id_log')[:25])
+            # results = list(Query.objects.filter(inchi=request.POST.get('search')).order_by('id_log')[:25])
+            results = search_inchi(inchi_value=request.POST.get('search'))
+            print(results)
         if 'Formula' in request.POST.get('typeQuery'):
             results = list(Query.objects.filter(formula=request.POST.get('search')))
 
@@ -25,7 +28,8 @@ def query(request):
             results = list(Query.objects.filter(smiles=request.POST.get('search')))
 
         if 'id_log' in request.POST.get('typeQuery'):
-            results = list(Query.objects.filter(id_log=request.POST.get('search')))
+            results = search_id(id=request.POST.get('search'))
+            print("---------------------------------------------")
             print(results)
 
         if 'homo_alpha_energy' in request.POST.get('typeQuery'):

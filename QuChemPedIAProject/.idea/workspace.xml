@@ -36,7 +36,20 @@
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="populate_db.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/QuChemPedIA/management/commands/populate_db.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="772">
+              <caret line="168" column="50" selection-start-line="168" selection-start-column="50" selection-end-line="168" selection-end-column="50" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -72,6 +85,7 @@
       <find>job</find>
       <find>loaded</find>
       <find>form</find>
+      <find>inchi</find>
     </findStrings>
     <replaceStrings>
       <replace>None</replace>
@@ -154,7 +168,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -162,17 +175,47 @@
               <item name="QuChemPedIAProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="QuChemPedIAProject" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="QuChemPedIAProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="QuChemPedIAProject" type="462c0819:PsiDirectoryNode" />
+              <item name="QuChemPedIA" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="QuChemPedIAProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="QuChemPedIAProject" type="462c0819:PsiDirectoryNode" />
+              <item name="QuChemPedIA" type="462c0819:PsiDirectoryNode" />
+              <item name="management" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="QuChemPedIAProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="QuChemPedIAProject" type="462c0819:PsiDirectoryNode" />
+              <item name="QuChemPedIA" type="462c0819:PsiDirectoryNode" />
+              <item name="management" type="462c0819:PsiDirectoryNode" />
+              <item name="commands" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="QuChemPedIAProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="QuChemPedIAProject" type="462c0819:PsiDirectoryNode" />
+              <item name="QuChemPedIA" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="QuChemPedIAProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="QuChemPedIAProject" type="462c0819:PsiDirectoryNode" />
+              <item name="QuChemPedIAProject" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="PostgreSQL" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../QuChemPedIAProjectElastic" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="settings.github" />
@@ -381,9 +424,9 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
     <list>
+      <item itemvalue="Django server.QuChemPedIAProject" />
       <item itemvalue="Python.urls" />
       <item itemvalue="JavaScript Debug.base.html" />
-      <item itemvalue="Django server.QuChemPedIAProject" />
     </list>
     <recent_temporary>
       <list>
@@ -408,6 +451,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1922" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50104165" side_tool="true" weight="0.32911393" />
@@ -445,6 +489,16 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/QuChemPedIA/management/commands/populate_db.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1095">
+          <caret line="85" column="41" lean-forward="true" selection-start-line="85" selection-start-column="20" selection-end-line="85" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/QuChemPedIA/templates/QuChemPedIA/lire.html" />
     <entry file="file://$PROJECT_DIR$/QuChemPedIAProject/urls.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -635,9 +689,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="19" column="103" selection-start-line="19" selection-start-column="103" selection-end-line="19" selection-end-column="103" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -652,9 +703,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="e#22#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -686,16 +734,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="29" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/QuChemPedIA/management/commands/populate_db.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="300" column="90" selection-start-line="300" selection-start-column="90" selection-end-line="300" selection-end-column="90" />
+        <state relative-caret-position="772">
+          <caret line="168" column="50" selection-start-line="168" selection-start-column="50" selection-end-line="168" selection-end-column="50" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
