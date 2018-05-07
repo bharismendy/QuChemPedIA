@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'QuChemPedIAProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'QuChemPedIADB',
+        'NAME': 'temp_test',
         'USER': 'dataSlave',
         'PASSWORD': 'P@ssw0rd',
         'HOST': 'localhost',

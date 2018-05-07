@@ -23,7 +23,7 @@ def query(request):
             # here we looking for inchi wich contain a part of what we looking for
             # results = list(Query.objects.filter(inchi=request.POST.get('search')).order_by('id_log')[:25])
             results = search_inchi(inchi_value=request.POST.get('search'))
-            
+
         if 'Formula' in request.POST.get('typeQuery'):
             results = list(Query.objects.filter(formula=request.POST.get('search')))
 
@@ -46,11 +46,14 @@ def query(request):
         if 'lumo_beta_energy' in request.POST.get('typeQuery'):
             results = list(Query.objects.filter(lumo_beta_energy=request.POST.get('search')))
 
-    except:
-        print("error in database")
+    except Exception as error:
+        print("error :")
+        print(error)
     date_fin = datetime.now()
     temp = date_fin-date_dep
-    # if we have only on result we display the details of the molecule
+    # if we have only one result we display the details of the molecule
+    if results is None:
+        results = []
     if len(results) == 1:
         url = reverse('details', kwargs={'id': results[0].id_log})
         return HttpResponseRedirect(url)

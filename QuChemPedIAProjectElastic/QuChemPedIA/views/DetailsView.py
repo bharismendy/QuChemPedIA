@@ -9,7 +9,6 @@ from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 @renderer_classes((JSONRenderer, TemplateHTMLRenderer))
 def details(request, id):
     # function that show details of molecule
-    result = search_id(id=id)
-    print("hel")
+    result = search_id(id)
     return Response(data=result, template_name='QuChemPedIA/details.html')
 
