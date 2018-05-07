@@ -1,12 +1,4 @@
 {% extends "base.html" %}
 {% block content %}
-    <p>molecule identifier :</p>
-        <ul>
-            <li>{{ result.IUPAC }}</li>
-            <li>{{ result.FormuleBrute }}</li>
-            <li>{{ result.InChi }}</li>
-            <li>{{ result.SMILES }}</li>
-            <li>{{ result.CID }}</li>
-        </ul>
-    <a href="{% url 'rapport' result.id %}"> see the report</a>
+
 {% endblock %}

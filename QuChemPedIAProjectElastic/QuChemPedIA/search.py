@@ -1,7 +1,5 @@
-from elasticsearch_dsl.connections import connections
-from elasticsearch_dsl import Search
 from elasticsearch import Elasticsearch
-
+from QuChemPedIA.models.json2obj import json2obj
 
 def search_inchi(inchi_value):
     ES_HOST = {"host": "localhost", "port": 9200}
@@ -17,4 +15,5 @@ def search_id(id):
     ES_HOST = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[ES_HOST])
     response = es.get(index="quchempedia_index", doc_type="log_file", id=id)
-    return response
+    res = response['_source']
+    return res

@@ -4,3 +4,4 @@ from .JobTypeModel import JobType
 from .FunctionnalModel import functionnal
 from .SoftwareModel import software
 from .TheoryModel import theory
+from .json2obj import json2obj

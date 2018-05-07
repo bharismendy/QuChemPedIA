@@ -1,9 +1,14 @@
-from django.shortcuts import render, get_object_or_404
-from QuChemPedIA.models.QueryModel import Query
+from django.shortcuts import render
 from QuChemPedIA.search import *
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-def details(request,id):
-    #function that show details on of molecule
+
+@api_view(['GET', ])
+def details(request, id):
+    # function that show details of molecule
     result = search_id(id=id)
-    return render(request, 'QuChemPedIA/details.html', locals())
+    print("hel")
+    return Response(result)
+    #return render(request, 'QuChemPedIA/details.html', locals())
 

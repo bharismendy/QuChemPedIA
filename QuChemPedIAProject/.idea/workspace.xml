@@ -40,8 +40,8 @@
       <file leaf-file-name="populate_db.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/QuChemPedIA/management/commands/populate_db.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="772">
-              <caret line="168" column="50" selection-start-line="168" selection-start-column="50" selection-end-line="168" selection-end-column="50" />
+            <state relative-caret-position="411">
+              <caret line="295" column="65" selection-start-line="295" selection-start-column="65" selection-end-line="295" selection-end-column="65" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -192,12 +192,6 @@
               <item name="QuChemPedIA" type="462c0819:PsiDirectoryNode" />
               <item name="management" type="462c0819:PsiDirectoryNode" />
               <item name="commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QuChemPedIAProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QuChemPedIAProject" type="462c0819:PsiDirectoryNode" />
-              <item name="QuChemPedIA" type="462c0819:PsiDirectoryNode" />
-              <item name="migrations" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="QuChemPedIAProject" type="b2602c69:ProjectViewProjectNode" />
@@ -739,8 +733,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/QuChemPedIA/management/commands/populate_db.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="772">
-          <caret line="168" column="50" selection-start-line="168" selection-start-column="50" selection-end-line="168" selection-end-column="50" />
+        <state relative-caret-position="411">
+          <caret line="295" column="65" selection-start-line="295" selection-start-column="65" selection-end-line="295" selection-end-column="65" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
