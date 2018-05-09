@@ -8,3 +8,4 @@
 [2018-05-04T17:28:52,350][WARN ][o.e.d.i.q.FuzzyQueryBuilder] fuzzy query is deprecated. Instead use the [match] query with fuzziness parameter
 [2018-05-05T18:14:10,590][WARN ][o.e.d.s.g.GroovyScriptEngineService] [groovy] scripts are deprecated, use [painless] scripts instead
 [2018-05-07T09:09:42,746][WARN ][o.e.d.s.g.GroovyScriptEngineService] [groovy] scripts are deprecated, use [painless] scripts instead
+[2018-05-09T10:26:50,024][WARN ][o.e.d.s.g.GroovyScriptEngineService] [groovy] scripts are deprecated, use [painless] scripts instead

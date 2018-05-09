@@ -36,7 +36,7 @@ class Command(BaseCommand):
         # creating the index
         INDEX_NAME = 'quchempedia_index'
         if not es.indices.exists(index=INDEX_NAME):
-            try :
+            try:
                 response = es.indices.create(index=INDEX_NAME)
                 print(response)
             except Exception as error:
@@ -51,7 +51,6 @@ class Command(BaseCommand):
                             loaded_json = json.load(jsonfile)
                             content = json.dumps(loaded_json, indent=4, sort_keys=True)
                             i += 1
-
                             # TODO inscrire l'id du document dans le json ou remplacer par l'id d'elastic de search
                             resp = es.index(index=INDEX_NAME, doc_type="log_file", body=content, id=i)
                         except Exception as error:
