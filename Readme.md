@@ -30,7 +30,9 @@
 ### installation du module de communication avec postgre
 	pip install psycopg2-binary
 
-
+### Read the doc here :
+	https://virtualenv.pypa.io/en/stable/userguide/
+ 
 ## Configuration
 ### creation du superutilisateur django
 	python manage.py createsuperuser
