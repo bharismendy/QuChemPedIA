@@ -4,20 +4,31 @@
 
 ### pour commencer mettons à jour notre système :
 	 sudo apt-get update && apt-get upgrade -y
+	 
 ### installation de postgreSQL ([CF](https://www.howtoforge.com/tutorial/ubuntu-postgresql-installation/))
 	sudo apt-get -y install postgresql postgresql-contrib phppgadmin
+	
 ### installation de virtualenv
 	cd /location
 	virtualenv nameOfEnv
 	source /path/to/the/directory/of/env
+	
 ### installation de django 
 	pip install django
+	
 ### librairie utilisé :
 	elasticsearch_dsl
 	rest_framework
 	elasticsearch
 	psycopg2-binary==2.7.4
 
+### Set up database :
+	create an user : "dataSlave", password : "P@ssw0rd"
+	and a database : "QuChemPedIADB"
+	to ask django to set up the connection with database :
+	python manage.py makemigrations QuChemPedIA
+	python manage.py migrate
+	
 ### to Generate a requirements file
 	pip freeze > requirements.txt
 
