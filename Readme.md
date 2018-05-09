@@ -22,13 +22,6 @@
 	elasticsearch
 	psycopg2-binary==2.7.4
 
-### Set up database :
-	create an user : "dataSlave", password : "P@ssw0rd"
-	and a database : "QuChemPedIADB"
-	to ask django to set up the connection with database :
-	python manage.py makemigrations QuChemPedIA
-	python manage.py migrate
-	
 ### to Generate a requirements file
 	pip freeze > requirements.txt
 
@@ -48,3 +41,9 @@
 ### creation du superutilisateur django
 	python manage.py createsuperuser
 
+### Set up database :
+	create an user : "dataSlave", password : "P@ssw0rd"
+	and a database : "QuChemPedIADB"
+	to ask django to set up the connection with database :
+	python manage.py makemigrations QuChemPedIA
+	python manage.py migrate
