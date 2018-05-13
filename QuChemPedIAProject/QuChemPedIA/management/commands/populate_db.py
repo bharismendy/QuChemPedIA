@@ -174,7 +174,7 @@ class Command(BaseCommand):
                         try:
                             nameFunctionnal = loaded_json['comp_details']['general']['functional'].strip()
                         except Exception as error:
-                            print("error for getting the ending_energy : ")
+                            print("error for getting the functionnal :")
                             print(error)
 
                         # try to register the functionnal

@@ -3,7 +3,7 @@
 <h1>Welcome on QuChemPedIA</h1>
 
 
-<form action="{% url 'query' %}" method="post">
+<form action="{% url 'query' %}" method="GET">
     {% csrf_token %}
     {{ form.as_table }}
     <input type="submit" value="Search" />

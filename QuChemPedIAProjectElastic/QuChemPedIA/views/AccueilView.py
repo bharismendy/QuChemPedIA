@@ -8,4 +8,4 @@ def accueil(request):
     if form.is_valid():
         return HttpResponseRedirect('query')
     print(form)
-    return render(request, 'QuChemPedIA/accueil.html',locals())
+    return render(request, 'QuChemPedIA/accueil.html', locals())
