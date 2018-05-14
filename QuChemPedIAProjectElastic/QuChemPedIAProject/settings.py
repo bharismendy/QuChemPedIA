@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',  # to use the rest framework
     'QuChemPedIA.apps.QuchempediaConfig',
-    'boostrap4'
+    'bootstrap4'
 ]
 
 MIDDLEWARE = [
