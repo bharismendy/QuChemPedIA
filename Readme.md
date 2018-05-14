@@ -8,9 +8,9 @@
 ### installation de postgreSQL ([CF](https://www.howtoforge.com/tutorial/ubuntu-postgresql-installation/))
 	sudo apt-get -y install postgresql postgresql-contrib phppgadmin
 	
-### installation de virtualenv
+### installation de virtualenv with python3
 	cd /location
-	virtualenv nameOfEnv
+	virtualenv -p python3 nameOfEnv
 	source /path/to/the/directory/of/env
 	
 ### installation de django 
@@ -18,9 +18,10 @@
 	
 ### librairie utilisé :
 	elasticsearch_dsl
-	rest_framework
+	django-rest-framework
 	elasticsearch
 	psycopg2-binary==2.7.4
+    django-bootstrap4
 
 ### to Generate a requirements file
 	pip freeze > requirements.txt
