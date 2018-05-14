@@ -1,9 +1,9 @@
 {% load static %}
 
 {# block used as header #}
+{% block header %}
 <!DOCTYPE html>
 <html lang="fr">
-{% block header %}
 <head>
   <!-- Chargement du CSS-->
   {% load bootstrap4 %}
@@ -17,32 +17,25 @@
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
 </head>
 {% endblock %}
-  <body>
+<body>
 
-    <nav class="border border-secondary border-right-0 border-left-0 navbar navbar-togleable-md navbar-expand-sm navbar-dark sticky-top">
-        <a class="navbar-brand" href="/">
-          <img class="img-responsive" src="{% static "media/logo.png" %}" alt="Logo" style="width:150px;">
-            QuChemPedIA
-        </a>
+{# block used for the menu #}
+{% block nav %}
+<nav>
+   <ul>
+        <li><a href="{%  url 'accueil' %}">Accueil</a></li>
+   </ul>
+</nav>
+{% endblock %}
 
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-          <ul class="navbar-nav">
-          <!-- pour les items de navigation -->
-          </ul>
-          <form class="form-inline" action="/action_page.php">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-success" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
+{% block content %}
+{% endblock %}
 
-    {% block content %}
-    {% endblock %}
+{# block used for footer #}
+{% block footer%}
+        <footer>
 
-    {% block footer %}
-    <footer>
-
-    </footer>
-    {% endblock %}
-  </body>
+        </footer>
+    </body>
 </html>
+{%  endblock %}

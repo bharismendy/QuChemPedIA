@@ -4,6 +4,11 @@ import json
 
 
 def search_inchi(inchi_value):
+    """
+    this function search all inchi wich are exactly like the one in parameter
+    :param inchi_value: string
+    :return: json list of result
+    """
     #  connect to elastic search
     ES_HOST = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[ES_HOST])
@@ -32,6 +37,11 @@ def search_inchi(inchi_value):
 
 
 def search_id(identifier):
+    """
+    get a unique json file in the database
+    :param identifier: integer that correspond to the id in elasticsearch file system
+    :return: the content of the json stored in elastic search
+    """
     ES_HOST = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[ES_HOST])
     response = es.get(index="quchempedia_index", doc_type="log_file", id=identifier)

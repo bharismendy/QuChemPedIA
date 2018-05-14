@@ -4,7 +4,12 @@ from django.http import HttpResponseRedirect
 
 
 def accueil(request):
-    form = QueryForm(request.POST or None)
+    """
+    controler of the template accueil.html
+    :param request: variable wich contains the value of the page
+    :return: template html
+    """
+    form = QueryForm(request.GET or None)
     if form.is_valid():
         return HttpResponseRedirect('query')
     print(form)
