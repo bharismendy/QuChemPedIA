@@ -3,24 +3,15 @@ from elasticsearch_dsl import Search, Q
 import json
 
 
-def search_inchi(inchi_value):
+def _search_to_json(search):
     """
-    this function search all inchi wich are exactly like the one in parameter
-    :param inchi_value: string
-    :return: json list of result
+    function that take a search as parameter and return a json table
+    :param search: result of search in elastic search
+    :return: json table
     """
-    #  connect to elastic search
-    ES_HOST = {"host": "localhost", "port": 9200}
-    es = Elasticsearch(hosts=[ES_HOST])
-    q = Q('bool',
-          must=[Q('match', molecule__inchi=inchi_value)],
-          )
-    s = Search().using(es).query(q)[0:20]
-    response = s.execute()
-    # create a json witch going to return data from extracted json
     result = {}
     i = 0
-    for hit in s:
+    for hit in search:
         result[str(i)] = []
         result[str(i)].append({
             "id_log": hit.meta.id,
@@ -36,6 +27,22 @@ def search_inchi(inchi_value):
     return result
 
 
+def search_inchi(inchi_value):
+    """
+    this function search all inchi wich are exactly like the one in parameter
+    :param inchi_value: string
+    :return: json list of result
+    """
+    #  connect to elastic search
+    ES_HOST = {"host": "localhost", "port": 9200}
+    es = Elasticsearch(hosts=[ES_HOST])
+    q = Q('bool',
+          must=[Q('match', molecule__inchi=inchi_value)],
+          )
+    s = Search().using(es).query(q)[0:20]
+    return _search_to_json(search=s.execute())
+
+
 def search_id(identifier):
     """
     get a unique json file in the database
@@ -45,5 +52,5 @@ def search_id(identifier):
     ES_HOST = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[ES_HOST])
     response = es.get(index="quchempedia_index", doc_type="log_file", id=identifier)
-    res = response['_source']
-    return res
+    result = response['_source']
+    return result
