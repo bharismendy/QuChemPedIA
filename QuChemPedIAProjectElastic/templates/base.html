@@ -1,13 +1,23 @@
+{% load static %}
+
 {# block used as header #}
 {% block header %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-   {# <link rel="stylesheet" href="/media/css/style.css" /> #}
-   <title>QuChemPedIA</title>
+  <!-- Chargement du CSS-->
+  {% load bootstrap4 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript jquery='full' %}
+  {% bootstrap_messages %}
+
+  <title>QuChemPedIA</title>
+  <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
 </head>
-<body>
 {% endblock %}
+<body>
 
 {# block used for the menu #}
 {% block nav %}
