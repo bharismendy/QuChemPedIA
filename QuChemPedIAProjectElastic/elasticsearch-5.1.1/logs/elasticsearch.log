@@ -23,3 +23,55 @@
 [2018-05-13T23:37:07,563][INFO ][o.e.n.Node               ] [EpSLy7b] started
 [2018-05-13T23:37:07,767][INFO ][o.e.g.GatewayService     ] [EpSLy7b] recovered [1] indices into cluster_state
 [2018-05-13T23:37:08,296][INFO ][o.e.c.r.a.AllocationService] [EpSLy7b] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][4]] ...]).
+[2018-05-14T14:51:56,770][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-05-14T14:51:56,869][INFO ][o.e.e.NodeEnvironment    ] [EpSLy7b] using [1] data paths, mounts [[/ (/dev/disk1s1)]], net usable_space [32.6gb], net total_space [112.8gb], spins? [unknown], types [apfs]
+[2018-05-14T14:51:56,870][INFO ][o.e.e.NodeEnvironment    ] [EpSLy7b] heap size [1.9gb], compressed ordinary object pointers [true]
+[2018-05-14T14:51:56,891][INFO ][o.e.n.Node               ] node name [EpSLy7b] derived from node ID [EpSLy7b8QCCFCKin_4aF-g]; set [node.name] to override
+[2018-05-14T14:51:56,895][INFO ][o.e.n.Node               ] version[5.1.1], pid[2608], build[5395e21/2016-12-06T12:36:15.409Z], OS[Mac OS X/10.13.4/x86_64], JVM[Oracle Corporation/Java HotSpot(TM) 64-Bit Server VM/1.8.0_102/25.102-b14]
+[2018-05-14T14:51:57,998][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [aggs-matrix-stats]
+[2018-05-14T14:51:57,998][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [ingest-common]
+[2018-05-14T14:51:57,999][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-expression]
+[2018-05-14T14:51:57,999][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-groovy]
+[2018-05-14T14:51:57,999][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-mustache]
+[2018-05-14T14:51:57,999][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-painless]
+[2018-05-14T14:51:57,999][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [percolator]
+[2018-05-14T14:51:58,000][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [reindex]
+[2018-05-14T14:51:58,000][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [transport-netty3]
+[2018-05-14T14:51:58,000][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [transport-netty4]
+[2018-05-14T14:51:58,001][INFO ][o.e.p.PluginsService     ] [EpSLy7b] no plugins loaded
+[2018-05-14T14:52:00,704][INFO ][o.e.n.Node               ] initialized
+[2018-05-14T14:52:00,704][INFO ][o.e.n.Node               ] [EpSLy7b] starting ...
+[2018-05-14T14:52:00,903][INFO ][o.e.t.TransportService   ] [EpSLy7b] publish_address {127.0.0.1:9300}, bound_addresses {[fe80::1]:9300}, {[::1]:9300}, {127.0.0.1:9300}
+[2018-05-14T14:52:03,983][INFO ][o.e.c.s.ClusterService   ] [EpSLy7b] new_master {EpSLy7b}{EpSLy7b8QCCFCKin_4aF-g}{mjxw8h6hTjCkJFUUn3M7zQ}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2018-05-14T14:52:04,039][INFO ][o.e.h.HttpServer         ] [EpSLy7b] publish_address {127.0.0.1:9200}, bound_addresses {[fe80::1]:9200}, {[::1]:9200}, {127.0.0.1:9200}
+[2018-05-14T14:52:04,040][INFO ][o.e.n.Node               ] [EpSLy7b] started
+[2018-05-14T14:52:04,245][INFO ][o.e.g.GatewayService     ] [EpSLy7b] recovered [1] indices into cluster_state
+[2018-05-14T14:52:04,696][INFO ][o.e.c.r.a.AllocationService] [EpSLy7b] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][0]] ...]).
+[2018-05-14T14:52:08,165][INFO ][o.e.n.Node               ] [EpSLy7b] stopping ...
+[2018-05-14T14:52:08,219][INFO ][o.e.n.Node               ] [EpSLy7b] stopped
+[2018-05-14T14:52:08,220][INFO ][o.e.n.Node               ] [EpSLy7b] closing ...
+[2018-05-14T14:52:08,233][INFO ][o.e.n.Node               ] [EpSLy7b] closed
+[2018-05-14T14:52:12,806][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-05-14T14:52:12,887][INFO ][o.e.e.NodeEnvironment    ] [EpSLy7b] using [1] data paths, mounts [[/ (/dev/disk1s1)]], net usable_space [32.6gb], net total_space [112.8gb], spins? [unknown], types [apfs]
+[2018-05-14T14:52:12,888][INFO ][o.e.e.NodeEnvironment    ] [EpSLy7b] heap size [1.9gb], compressed ordinary object pointers [true]
+[2018-05-14T14:52:12,906][INFO ][o.e.n.Node               ] node name [EpSLy7b] derived from node ID [EpSLy7b8QCCFCKin_4aF-g]; set [node.name] to override
+[2018-05-14T14:52:12,908][INFO ][o.e.n.Node               ] version[5.1.1], pid[2625], build[5395e21/2016-12-06T12:36:15.409Z], OS[Mac OS X/10.13.4/x86_64], JVM[Oracle Corporation/Java HotSpot(TM) 64-Bit Server VM/1.8.0_102/25.102-b14]
+[2018-05-14T14:52:13,827][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [aggs-matrix-stats]
+[2018-05-14T14:52:13,827][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [ingest-common]
+[2018-05-14T14:52:13,828][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-expression]
+[2018-05-14T14:52:13,828][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-groovy]
+[2018-05-14T14:52:13,828][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-mustache]
+[2018-05-14T14:52:13,828][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-painless]
+[2018-05-14T14:52:13,828][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [percolator]
+[2018-05-14T14:52:13,829][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [reindex]
+[2018-05-14T14:52:13,829][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [transport-netty3]
+[2018-05-14T14:52:13,829][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [transport-netty4]
+[2018-05-14T14:52:13,830][INFO ][o.e.p.PluginsService     ] [EpSLy7b] no plugins loaded
+[2018-05-14T14:52:16,094][INFO ][o.e.n.Node               ] initialized
+[2018-05-14T14:52:16,095][INFO ][o.e.n.Node               ] [EpSLy7b] starting ...
+[2018-05-14T14:52:16,338][INFO ][o.e.t.TransportService   ] [EpSLy7b] publish_address {127.0.0.1:9300}, bound_addresses {[fe80::1]:9300}, {[::1]:9300}, {127.0.0.1:9300}
+[2018-05-14T14:52:19,424][INFO ][o.e.c.s.ClusterService   ] [EpSLy7b] new_master {EpSLy7b}{EpSLy7b8QCCFCKin_4aF-g}{UGeatPh4R2aYDZyarONwZw}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2018-05-14T14:52:19,486][INFO ][o.e.h.HttpServer         ] [EpSLy7b] publish_address {127.0.0.1:9200}, bound_addresses {[fe80::1]:9200}, {[::1]:9200}, {127.0.0.1:9200}
+[2018-05-14T14:52:19,490][INFO ][o.e.n.Node               ] [EpSLy7b] started
+[2018-05-14T14:52:19,699][INFO ][o.e.g.GatewayService     ] [EpSLy7b] recovered [1] indices into cluster_state
+[2018-05-14T14:52:20,151][INFO ][o.e.c.r.a.AllocationService] [EpSLy7b] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][1]] ...]).

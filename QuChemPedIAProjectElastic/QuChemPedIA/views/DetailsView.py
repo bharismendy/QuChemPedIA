@@ -6,7 +6,7 @@ from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 
 
 @api_view(['GET', ])
-@renderer_classes((JSONRenderer, TemplateHTMLRenderer))
+@renderer_classes(( TemplateHTMLRenderer))
 def details(request, id):
     # function that show details of molecule
     result = search_id(id)
