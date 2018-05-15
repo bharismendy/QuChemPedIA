@@ -18,13 +18,22 @@
 </head>
 {% endblock %}
 
+
 {% block content %}
-<h1>Welcome on QuChemPedIA</h1>
+<div class="container" >
+  <div class="row">
+    <div class="Absolute-Center is-Responsive ">
+      <h1 class="display-2 text-center text-primary">QuChemPedIA</h1>
+      </br>
+      <form class="text-center border border-dark" action="{% url 'query' %}" method="GET" >
+          {% csrf_token %}
+          <div class="form-group" style="margin-top: 20px;">
+            {{ query_form.as_table }}
+          </div>
 
-
-<form action="{% url 'query' %}" method="GET">
-    {% csrf_token %}
-    {{ query_form.as_table }}
-    <input type="submit" value="Search" />
-</form>
+          <input type="submit" class="btn btn-info" value="Search" style="margin-bottom: 20px;"/>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
