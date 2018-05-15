@@ -3,6 +3,7 @@
 
 <div class="container">
 	<div class="row">
+		
 		<div class="col-lg-6">
 			<div class="card mt-3">
 				<div class="card-header">
@@ -32,7 +33,58 @@
 
 		</div>
 	</div>
+	
+	
+	
+	{% if results.comp_details %}
+		<div id="computationalDetails">
+			<div class="card mt-3">
+				<div class="card-header">
+					<h5>Computational details</h5>
+				</div>
+				<div class="container">
+					{% if results.comp_details.general.package %} <div class="row"><div class="col"><b>Software </b></div><div class="col"> {{ results.comp_details.general.package }} {% if results.comp_details.general.package_version %} ({{results.comp_details.general.package_version}}) {% endif %}</div></div> {% endif %}
+					{% if results.comp_details.general.last_theory %} <div class="row"><div class="col"><b>Computational method </b></div><div class="col"> {{ results.comp_details.general.last_theory }}</div></div> {% endif %}
+					{% if results.comp_details.general.functional %} <div class="row"><div class="col"><b>Functional </b></div><div class="col"> {{ results.comp_details.general.functional }}</div></div> {% endif %}
+					{% if results.comp_details.general.basis_set_name %} <div class="row"><div class="col"><b>Basis set name </b></div><div class="col"> {{ results.comp_details.general.basis_set_name }}</div></div> {% endif %}
+					{% if results.comp_details.general.basis_set_size %} <div class="row"><div class="col"><b>Number of basis set functions </b></div><div class="col"> {{ results.comp_details.general.basis_set_size }}</div></div> {% endif %}
+					{% if results.comp_details.general.is_closed_shell %} <div class="row"><div class="col"><b>Closed shell calculation </b></div><div class="col"> {{ results.comp_details.general.is_closed_shell }}</div></div> {% endif %}
+					<!-- {% if results.comp_details.general.scf_targets %} <div class="row"><div class="col"><b>Requested SCF convergence on density </b></div><div class="col"> {{ results.comp_details.general.scf_targets }}</div></div> {% endif %} -->
+					<div class="row"><div class="col"><b>Requested SCF convergence on density </b></div><div class="col"> XXXXX </div></div>
+					<div class="row"><div class="col"><b>Threshold on Maximum and RMS Force </b></div><div class="col"> XXXXX </div></div> 
 
+				</div>
+			</div>
+		</div>
+	{% endif %}
+		
+		
+			
+	{% if results.results %}
+		<div id="computationalDetails">
+			<div class="card mt-3">
+				<div class="card-header">
+					<h5>Results</h5>
+				</div>
+					{% if results.results.wavefunction %}
+						<div class="container">
+							<h5 class="card-title">Wavefunction</h5>
+							{% if results.results.wavefunction.total_molecular_energy %} <div class="row"><div class="col"><b>Total molecular energy </b></div><div class="col"> {{ results.results.wavefunction.total_molecular_energy }}</div></div> {% endif %}
+							{% if results.results.wavefunction.MO_number %} <div class="row"><div class="col"><b>HOMO number </b></div><div class="col"> {{ results.results.wavefunction.MO_number }}</div></div> {% endif %}
+
+							<!--
+							{% if results.comp_details.general.functional %} <div class="row"><div class="col"><b>Functional </b></div><div class="col"> {{ results.comp_details.general.functional }}</div></div> {% endif %}
+							<div class="row"><div class="col"><b>Requested SCF convergence on density </b></div><div class="col"> XXXXX </div></div>
+							-->
+						</div>						
+					{% endif %}
+			</div>
+		</div>
+	{% endif %}
+		
+		
+			
+	
 </div>
 
 {{ results }}
