@@ -10,6 +10,6 @@ def details(request, id):
     :return: html template
     """
     results = search_id(id)
-    return render(request, 'QuChemPedIA/details.html', {'results': results, 'cid': id})
+    return render(request, 'QuChemPedIA/details.html', {'results': results, 'cid': id, 'query_form': query_form})
 
 

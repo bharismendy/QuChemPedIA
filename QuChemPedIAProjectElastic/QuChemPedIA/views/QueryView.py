@@ -13,7 +13,7 @@ def query(request):
     :param request: environment variable that contains arguement of the research
     :return: template html with dictionnary of value to display
     """
-    form = QueryForm(request.GET or None)
+    query_form = QueryForm(request.GET or None)
     results = None
     try:
         # switch on what we are looking for
@@ -63,4 +63,4 @@ def query(request):
         # if we have only one result we forward it to the detail page
         url = reverse('details', kwargs={'id': int(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)
-    return render(request, 'QuChemPedIA/query.html', {'results': results, 'form': form})
+    return render(request, 'QuChemPedIA/query.html', {'results': results, 'query_form': query_form})
