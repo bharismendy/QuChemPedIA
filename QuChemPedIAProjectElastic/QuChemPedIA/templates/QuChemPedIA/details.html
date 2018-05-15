@@ -1,9 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-<<<<<<< HEAD
 
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="card mt-3">
+				<div class="card-header">
+					<h5>Authorship</h5>
+				</div>
+				<ul class="list-group list-group-flush">
+					{% if results.metadata.log_file %} <li class="list-group-item"><b>Original log file :</b> {{ results.metadata.log_file }}</li> {% endif %}
+					{% if results.metadata.primary_author %} <li class="list-group-item"><b>Primary author :</b> {{ results.metadata.primary_author }}</li> {% endif %}
+					{% if results.metadata.primary_author_affiliation %} <li class="list-group-item"><b>Affiliation :</b> {{ results.metadata.primary_author_affiliation }}</li> {% endif %}
+					{% if results.comp_details.general.package and results.comp_details.general.package_version %} <li class="list-group-item"><b>Software :</b> {{ results.comp_details.general.package }} {{ results.comp_details.general.package_version }}</li> {% endif %}
+				</ul>
+			</div>
+			<div class="card mt-3">
+				<div class="card-header">
+					<h5>Molecule</h5>
+				</div>
+				<ul class="list-group list-group-flush">
+					{% if results.molecule.inchi %} <li class="list-group-item"><b>InChI :</b> {{ results.molecule.inchi }}</li> {% endif %}
+					{% if results.molecule.smi %} <li class="list-group-item"><b>SMILES :</b> {{ results.molecule.smi }}</li> {% endif %}
+					{% if results.molecule.can %} <li class="list-group-item"><b>CANSMILES :</b> {{ results.molecule.can }}</li> {% endif %}
+					{% if results.molecule.iupac %} <li class="list-group-item"><b>Iupac :</b> {{ results.molecule.iupac }}</li> {% endif %}
+					{% if results.molecule.formula %} <li class="list-group-item"><b>Formula :</b> {{ results.molecule.formula }}</li> {% endif %}
+				</ul>
+			</div>
+		</div>
+		<div class="col-lg-offset-1 col-lg-5">
 
-=======
+		</div>
+	</div>
+
+</div>
+
 {{ results }}
->>>>>>> 2329d92af7b60799bd6ee76fc3a75d498172a590
+
 {% endblock %}
