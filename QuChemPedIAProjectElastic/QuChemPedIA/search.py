@@ -64,10 +64,12 @@ def _search_to_json(search):
     return result
 
 
-def search_inchi(inchi_value):
+def search_inchi(inchi_value, page, nbrpp):
     """
     this function search all inchi wich are exactly like the one in parameter
     :param inchi_value: string
+    :param page: number of displayed page of result
+    :param nbrpp: number of result in a page
     :return: json list of result
     """
     #  connect to elastic search
@@ -76,14 +78,16 @@ def search_inchi(inchi_value):
     q = Q('bool',
           must=[Q('match', molecule__inchi=inchi_value)],
           )
-    s = Search().using(es).query(q)[0:20]
+    s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
     return _search_to_json(search=s.execute())
 
 
-def search_cid(cid_value):
+def search_cid(cid_value, page, nbrpp):
     """
     this function get all the file for a CID (generally there is only one result)
     :param cid_value: integer, identifier from pubchem database
+    :param page: number of displayed page of result
+    :param nbrpp: number of result in a page
     :return: a list of json file
     """
     #  connect to elastic search
@@ -92,14 +96,16 @@ def search_cid(cid_value):
     q = Q('bool',
           must=[Q('match', molecule__cid=cid_value)],
           )
-    s = Search().using(es).query(q)[0:20]
+    s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
     return _search_to_json(search=s.execute())
 
 
-def search_iupac(iupac_value):
+def search_iupac(iupac_value, page, nbrpp):
     """
     this fnction get all iupac that contains the one in parameter
     :param iupac_value: string
+    :param page: number of displayed page of result
+    :param nbrpp: number of result in a page
     :return: json of result to let the user decide of wich one he want to see
     """
     #  connect to elastic search
@@ -108,14 +114,16 @@ def search_iupac(iupac_value):
     q = Q('bool',
           must=[Q('match', molecule__iupac=iupac_value)],
           )
-    s = Search().using(es).query(q)[0:20]
+    s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
     return _search_to_json(search=s.execute())
 
 
-def search_formula(formula_value):
+def search_formula(formula_value, page, nbrpp):
     """
     get a compound by it's formula
     :param formula_value: a string equal to a formula
+    :param page: number of displayed page of result
+    :param nbrpp: number of result in a page
     :return: json list of result
     """
     #  connect to elastic search
@@ -124,14 +132,16 @@ def search_formula(formula_value):
     q = Q('bool',
           must=[Q('match', molecule__formula=formula_value)],
           )
-    s = Search().using(es).query(q)[0:20]
+    s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
     return _search_to_json(search=s.execute())
 
 
-def search_smiles(smiles_value):
+def search_smiles(smiles_value, page, nbrpp):
     """
     get all compound similar to a smiles
     :param smiles_value: string that contains the smiles to search
+    :param page: number of displayed page of result
+    :param nbrpp: number of result in a page
     :return: json list of result
     """
     #  connect to elastic search
@@ -140,14 +150,14 @@ def search_smiles(smiles_value):
     q = Q('bool',
           must=[Q('match', molecule__smi=smiles_value)],
           )
-    s = Search().using(es).query(q)[0:20]
+    s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
     return _search_to_json(search=s.execute())
 
 
 def search_id(id_value):
     """
     get a unique json file in the database
-    :param identifier: integer that correspond to the id in elasticsearch file system
+    :param id_value: integer that correspond to the id in elasticsearch file system
     :return: the content of the json stored in elastic search
     """
     es_host = {"host": "localhost", "port": 9200}
