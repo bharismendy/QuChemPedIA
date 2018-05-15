@@ -49,7 +49,7 @@ def query(request):
             # if we want to access to an id we forward it to the details page as a parameter
             url = reverse('details', kwargs={'id': request.GET.get('search'), })
             return HttpResponseRedirect(url)
-        """ 
+        """
         if 'homo_alpha_energy' in request.GET.get('typeQuery'):
             results = list(Query.objects.filter(homo_alpha_energy=request.GET.get('search')))
 
@@ -75,4 +75,4 @@ def query(request):
         # if we have only one result we forward it to the detail page
         url = reverse('details', kwargs={'id': int(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)
-    return render(request, 'QuChemPedIA/query.html', {'results': results, 'query_form': query_form})
+    return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form})

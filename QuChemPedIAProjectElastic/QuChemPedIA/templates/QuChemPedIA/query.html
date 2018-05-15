@@ -1,17 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-    <form action="{% url 'query' %}" method="GET">
-        {% csrf_token %}
-        {{ query_form.as_table }}
-        <input type="submit" value="Submit" />
-    </form>
 <h1>Result of your research</h1>
     {% if results|length >= 1 %}
     <div class="container">
       <h2> Results </h2>
       <div class="list-group">
-        {% for result in results %}
-          <a href="" class="list-group-item list-group-item-action">{{ result }}</a>
+        {% for key, value in results.items %}
+          <a href="" class="list-group-item list-group-item-action">{{ value.0.solvent }}</a>
         {% endfor %}
       </div>
     </div>
