@@ -10,7 +10,7 @@ def accueil(request):
     :return: template html
     """
     query_form = QueryForm(request.GET or None)
-    if form.is_valid():
+    if query_form.is_valid():
         return HttpResponseRedirect('query')
-    print(form)
+    print(query_form)
     return render(request, 'QuChemPedIA/accueil.html', {'query_form': query_form})

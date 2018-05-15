@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from QuChemPedIA.forms.QueryForm import QueryForm
 from QuChemPedIA.search import *
 
 
@@ -10,6 +11,4 @@ def details(request, id):
     :return: html template
     """
     results = search_id(id)
-    return render(request, 'QuChemPedIA/details.html', {'results': results, 'cid': id, 'query_form': query_form})
-
-
+    return render(request, 'QuChemPedIA/details.html', {'results': results, 'cid': id,})
