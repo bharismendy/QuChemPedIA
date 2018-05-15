@@ -143,6 +143,7 @@ def search_smiles(smiles_value):
     s = Search().using(es).query(q)[0:20]
     return _search_to_json(search=s.execute())
 
+
 def search_id(id_value):
     """
     get a unique json file in the database

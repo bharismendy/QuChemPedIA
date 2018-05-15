@@ -31,13 +31,13 @@ def query(request):
             results = search_formula(formula_value=request.GET.get('search'))
 
         if 'SMILES' in request.GET.get('typeQuery'):
-            results = list(Query.objects.filter(smiles=request.GET.get('search')))
+            results = search_smiles(smiles_value=request.GET.get('search'))
 
         if 'id_log' in request.GET.get('typeQuery'):
             # if we want to access to an id we forward it to the details page as a parameter
             url = reverse('details', kwargs={'id': request.GET.get('search'), })
             return HttpResponseRedirect(url)
-        """
+        """ 
         if 'homo_alpha_energy' in request.GET.get('typeQuery'):
             results = list(Query.objects.filter(homo_alpha_energy=request.GET.get('search')))
 
