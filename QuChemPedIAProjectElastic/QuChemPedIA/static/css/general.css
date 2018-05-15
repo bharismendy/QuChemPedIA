@@ -9,6 +9,10 @@
 .secondary-text-color  { color: #757575; --secondary-text-color: #757575}
 .divider-color         { border-color: #BDBDBD; --divider-color: #BDBDBD}
 
+nav {
+  background-color: #FFFFFF;
+}
+
 #title {
   color: #2196F3;
   font-size: 25px;
