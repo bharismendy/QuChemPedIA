@@ -9,10 +9,16 @@
 .secondary-text-color  { color: #757575; --secondary-text-color: #757575}
 .divider-color         { border-color: #BDBDBD; --divider-color: #BDBDBD}
 
+#title {
+  color: #2196F3;
+  font-size: 25px;
+}
+
 #button-search {
-  border-color: var(--accent-color);
+  background-color: var(--default-primary-color);
+  border-color: var(--default-primary-color);
 }
 
 #button-search:hover {
-  background: #e54949;
+  background: #1d87da;
 }
