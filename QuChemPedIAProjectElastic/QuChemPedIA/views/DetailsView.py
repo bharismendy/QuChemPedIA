@@ -2,11 +2,6 @@ from django.shortcuts import render
 from QuChemPedIA.search import *
 
 
-<<<<<<< HEAD
-@api_view(['GET', ])
-@renderer_classes(( TemplateHTMLRenderer))
-=======
->>>>>>> 2329d92af7b60799bd6ee76fc3a75d498172a590
 def details(request, id):
     """
     function that return the json of a molecule
@@ -15,6 +10,6 @@ def details(request, id):
     :return: html template
     """
     results = search_id(id)
-    return render(request, 'QuChemPedIA/details.html', {'results': results})
+    return render(request, 'QuChemPedIA/details.html', {'results': results, 'cid': id})
 
 
