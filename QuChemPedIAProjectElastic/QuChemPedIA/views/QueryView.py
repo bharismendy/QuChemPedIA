@@ -13,31 +13,43 @@ def query(request):
     :param request: environment variable that contains arguement of the research
     :return: template html with dictionnary of value to display
     """
-    form = QueryForm(request.GET or None)
+    query_form = QueryForm(request.GET or None)
     results = None
+    try:
+        page = int(request.GET.get('page'))
+    except Exception as error:
+        print(error)
+        page = 0
+
+    try:
+        nbrpp = 20  # nombre de résultat par page
+    except Exception as error:
+        print(error)
+        nbrpp = 20
+
     try:
         # switch on what we are looking for
         if 'CID' in request.GET.get('typeQuery'):
-            results = search_cid(cid_value=request.GET.get('search'))
+            results = search_cid(cid_value=request.GET.get('search'), nbrpp=nbrpp, page=page)
 
         if 'IUPAC' in request.GET.get('typeQuery'):
-            results = search_iupac(iupac_value=request.GET.get('search'))
+            results = search_iupac(iupac_value=request.GET.get('search'), nbrpp=nbrpp, page=page)
 
         if 'InChi' in request.GET.get('typeQuery'):
             # here we looking for inchi wich contain a part of what we looking for
-            results = search_inchi(inchi_value=request.GET.get('search'))
+            results = search_inchi(inchi_value=request.GET.get('search'), nbrpp=nbrpp, page=page)
 
         if 'Formula' in request.GET.get('typeQuery'):
-            results = search_formula(formula_value=request.GET.get('search'))
+            results = search_formula(formula_value=request.GET.get('search'), nbrpp=nbrpp, page=page)
 
         if 'SMILES' in request.GET.get('typeQuery'):
-            results = list(Query.objects.filter(smiles=request.GET.get('search')))
+            results = search_smiles(smiles_value=request.GET.get('search'), nbrpp=nbrpp, page=page)
 
         if 'id_log' in request.GET.get('typeQuery'):
             # if we want to access to an id we forward it to the details page as a parameter
             url = reverse('details', kwargs={'id': request.GET.get('search'), })
             return HttpResponseRedirect(url)
-        """
+        """ 
         if 'homo_alpha_energy' in request.GET.get('typeQuery'):
             results = list(Query.objects.filter(homo_alpha_energy=request.GET.get('search')))
 
@@ -63,4 +75,4 @@ def query(request):
         # if we have only one result we forward it to the detail page
         url = reverse('details', kwargs={'id': int(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)
-    return render(request, 'QuChemPedIA/query.html', {'results': results, 'form': form})
+    return render(request, 'QuChemPedIA/query.html', {'results': results, 'query_form': query_form})

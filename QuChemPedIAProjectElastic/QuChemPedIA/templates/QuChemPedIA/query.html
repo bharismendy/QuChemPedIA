@@ -2,7 +2,7 @@
 {% block content %}
     <form action="{% url 'query' %}" method="GET">
         {% csrf_token %}
-        {{ form.as_table }}
+        {{ query_form.as_table }}
         <input type="submit" value="Submit" />
     </form>
 <h1>Result of your research</h1>

@@ -9,8 +9,8 @@ def accueil(request):
     :param request: variable wich contains the value of the page
     :return: template html
     """
-    form = QueryForm(request.GET or None)
+    query_form = QueryForm(request.GET or None)
     if form.is_valid():
         return HttpResponseRedirect('query')
     print(form)
-    return render(request, 'QuChemPedIA/accueil.html', locals())
+    return render(request, 'QuChemPedIA/accueil.html', {'query_form': query_form})

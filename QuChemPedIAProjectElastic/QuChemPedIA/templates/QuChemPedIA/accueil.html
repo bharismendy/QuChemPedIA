@@ -24,7 +24,7 @@
 
 <form action="{% url 'query' %}" method="GET">
     {% csrf_token %}
-    {{ form.as_table }}
+    {{ query_form.as_table }}
     <input type="submit" value="Search" />
 </form>
 {% endblock %}
