@@ -20,8 +20,8 @@
 <body>
 
 {% block nav %}
-<nav class="default-primary-color border border-secondary border-right-0 border-left-0 navbar navbar-togleable-md navbar-expand-sm navbar-dark sticky-top">
-  <a class="navbar-brand" href="/QuChemPedIA/">
+<nav class="border border-secondary border-right-0 border-left-0 navbar navbar-togleable-md navbar-expand-sm navbar-dark sticky-top">
+  <a id="title" class="navbar-brand" href="/QuChemPedIA/">
     <img class="img-responsive" src="{% static "media/logo.png" %}" alt="" style="width:150px;">
     QuChemPedIA
   </a>
@@ -29,9 +29,9 @@
     <ul class="navbar-nav">
     <!-- pour les items de navigation -->
     </ul>
-    <form class="form-inline" action="/action_page.php">
+    <form class="form-inline" action="{% url 'query' %}" method="GET">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button id="button-search" class="btn btn-success accent-color" type="submit">Search</button>
+      <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search</button>
     </form>
   </div>
 </nav>
