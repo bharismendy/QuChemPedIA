@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-<a href="/QuChemPedIA" > <i class="fa fa-arrow-left"></i>  Retour </a>
 
 <h1>Result of your research</h1>
     {% if results|length >= 1 %}
-    <div class="container">5
+    <div class="container">
       <h2> Results </h2>
-      <div class="list-group">
         {% for key, value in results.items %}
-          <a href="" class="list-group-item list-group-item-action">{{ value.0.solvent }}</a>
+        <div class="list-group">
+          <div class="card">
+            <div class="card-header list-group-item list-group-item-action">
+              <a href="" class="">{{ value.0.cansmiles }}</a>
+            </div>
+            <div class="card-body">
+              {{ value.0.ending_energy }}
+            </div>
+          </div>
+        </div>
         {% endfor %}
-      </div>
     </div>
         {% else %}
             <p>no result</p>
