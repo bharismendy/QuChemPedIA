@@ -16,8 +16,8 @@ class QueryForm(forms.Form):
                # ('lumo_alpha_energy', 'lumo_alpha_energy'),
                # ('lumo_beta_energy', 'lumo_beta_energy')
                )
-    search = forms.CharField(max_length=500, label="your research", required=True)
-    typeQuery = forms.CharField(widget=forms.Select(choices=CHOICES))
+    search = forms.CharField(max_length=500, label="", required=True)
+    typeQuery = forms.CharField(widget=forms.Select(choices=CHOICES), label="")
 
     """def clean_query(self):
         #use to reject some key words
