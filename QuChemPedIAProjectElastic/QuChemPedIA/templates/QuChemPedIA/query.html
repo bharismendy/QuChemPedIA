@@ -1,13 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-    <form action="{% url 'query' %}" method="GET">
-        {% csrf_token %}
-        {{ query_form.as_table }}
-        <input type="submit" value="Submit" />
-    </form>
+<a href="/QuChemPedIA" > <i class="fa fa-arrow-left"></i>  Retour </a>
+
 <h1>Result of your research</h1>
     {% if results|length >= 1 %}
-    <div class="container">
+    <div class="container">5
       <h2> Results </h2>
       <div class="list-group">
         {% for result in results %}
@@ -19,4 +16,4 @@
             <p>no result</p>
     {% endif %}
     <p>la requête à mis : {{ temp }}</p>
-{% endblock %}
+{% endblock %}margin-left: : 5px;
