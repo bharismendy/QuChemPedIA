@@ -7,18 +7,14 @@
     </form>
 <h1>Result of your research</h1>
     {% if results|length >= 1 %}
-        <table>
-        <tr>
-            <th>ID</th>
-            <th>CID</th>
-            <th>IUPAC</th>
-            <th>SMILE</th>
-            <th>InChi</th>
-            <th>Formula</th>
-        </tr>
-
-        </table>
-        {{ results }}
+    <div class="container">
+      <h2> Results </h2>
+      <div class="list-group">
+        {% for result in results %}
+          <a href="" class="list-group-item list-group-item-action">{{ result }}</a>
+        {% endfor %}
+      </div>
+    </div>
         {% else %}
             <p>no result</p>
     {% endif %}
