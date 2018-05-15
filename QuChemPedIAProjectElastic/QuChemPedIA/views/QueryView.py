@@ -1,3 +1,5 @@
+from xml.dom.minidom import _clear_id_cache
+
 from django.shortcuts import render
 from QuChemPedIA.forms.QueryForm import QueryForm
 from QuChemPedIA.search import *
@@ -15,23 +17,22 @@ def query(request):
     results = None
     try:
         # switch on what we are looking for
-        """
         if 'CID' in request.GET.get('typeQuery'):
-            results = list(Query.objects.filter(cid__contains=int(request.GET.get('search'))))
+            results = search_cid(cid_value=request.GET.get('search'))
 
         if 'IUPAC' in request.GET.get('typeQuery'):
-            results = list(Query.objects.filter(iupac=request.GET.get('search')))
-        """
+            results = search_iupac(iupac_value=request.GET.get('search'))
+
         if 'InChi' in request.GET.get('typeQuery'):
             # here we looking for inchi wich contain a part of what we looking for
             results = search_inchi(inchi_value=request.GET.get('search'))
-        """
+
         if 'Formula' in request.GET.get('typeQuery'):
-            results = list(Query.objects.filter(formula=request.GET.get('search')))
+            results = search_formula(formula_value=request.GET.get('search'))
 
         if 'SMILES' in request.GET.get('typeQuery'):
             results = list(Query.objects.filter(smiles=request.GET.get('search')))
-        """
+
         if 'id_log' in request.GET.get('typeQuery'):
             # if we want to access to an id we forward it to the details page as a parameter
             url = reverse('details', kwargs={'id': request.GET.get('search'), })
@@ -55,7 +56,7 @@ def query(request):
 
     # if we have only one result we display the details of the molecule
     if results is None:
-        results = {}
+        results = '{}'
 
     test_result = json.loads(results)
     if len(test_result) == 1:
