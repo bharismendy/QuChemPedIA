@@ -112,6 +112,37 @@ def search_iupac(iupac_value):
     return _search_to_json(search=s.execute())
 
 
+def search_formula(formula_value):
+    """
+    get a compound by it's formula
+    :param formula_value: a string equal to a formula
+    :return: json list of result
+    """
+    #  connect to elastic search
+    es_host = {"host": "localhost", "port": 9200}
+    es = Elasticsearch(hosts=[es_host])
+    q = Q('bool',
+          must=[Q('match', molecule__formula=formula_value)],
+          )
+    s = Search().using(es).query(q)[0:20]
+    return _search_to_json(search=s.execute())
+
+
+def search_smiles(smiles_value):
+    """
+    get all compound similar to a smiles
+    :param smiles_value: string that contains the smiles to search
+    :return: json list of result
+    """
+    #  connect to elastic search
+    es_host = {"host": "localhost", "port": 9200}
+    es = Elasticsearch(hosts=[es_host])
+    q = Q('bool',
+          must=[Q('match', molecule__smi=smiles_value)],
+          )
+    s = Search().using(es).query(q)[0:20]
+    return _search_to_json(search=s.execute())
+
 def search_id(id_value):
     """
     get a unique json file in the database
@@ -120,6 +151,6 @@ def search_id(id_value):
     """
     es_host = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[es_host])
-    response = es.get(index="quchempedia_index", doc_type="log_file", id=identifier)
+    response = es.get(index="quchempedia_index", doc_type="log_file", id=id_value)
     result = response['_source']
     return result
