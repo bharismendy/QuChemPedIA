@@ -19,12 +19,21 @@
 {% endblock %}
 <body>
 
-{# block used for the menu #}
 {% block nav %}
-<nav>
-   <ul>
-        <li><a href="{%  url 'accueil' %}">Accueil</a></li>
-   </ul>
+<nav class="default-primary-color border border-secondary border-right-0 border-left-0 navbar navbar-togleable-md navbar-expand-sm navbar-dark sticky-top">
+  <a class="navbar-brand" href="/QuChemPedIA/">
+    <img class="img-responsive" src="{% static "media/logo.png" %}" alt="" style="width:150px;">
+    QuChemPedIA
+  </a>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+    <!-- pour les items de navigation -->
+    </ul>
+    <form class="form-inline" action="/action_page.php">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+      <button id="button-search" class="btn btn-success accent-color" type="submit">Search</button>
+    </form>
+  </div>
 </nav>
 {% endblock %}
 
