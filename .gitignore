@@ -1,7 +1,3 @@
-QuChemPedIAProjectElastic/venv/
-QuChemPedIAProjectElastic/QuChemPedIA/__pycache__/
-QuChemPedIAProjectElastic/QuChemPedIA/forms/__pycache__/
-QuChemPedIAProjectElastic/QuChemPedIA/models/__pycache__/
-QuChemPedIAProjectElastic/QuChemPedIA/views/__pycache__/
-QuChemPedIAProjectElastic/QuChemPedIAProject/__pycache__/
 QuChemPedIAProjectElastic/elasticsearch-5.1.1/
+__pycache__/
+venv/
