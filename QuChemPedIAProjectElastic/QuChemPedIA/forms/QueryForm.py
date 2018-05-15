@@ -2,6 +2,9 @@ from django import forms
 
 
 class QueryForm(forms.Form):
+    """
+        The purpose of this form is to make research in the elasticsearch database
+    """
     CHOICES = (('CID', 'CID'),
                ('InChi', 'InChi'),
                ('IUPAC', 'IUPAC'),
@@ -16,6 +19,7 @@ class QueryForm(forms.Form):
     typeQuery = forms.CharField(widget=forms.Select(choices=CHOICES))
 
     """def clean_query(self):
+        #use to reject some key words
         message = self.cleaned_data['query']
         if "pizza" in message:
             raise forms.ValidationError("On ne veut pas entendre parler de pizza !")

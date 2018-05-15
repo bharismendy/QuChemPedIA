@@ -1,5 +1,4 @@
 from builtins import print
-from QuChemPedIA.models.QueryModel import Query
 from django.core.management.base import BaseCommand
 import os
 import json
@@ -26,7 +25,14 @@ class Command(BaseCommand):
                 return False
             return True
 
-    def _create_query(self, source_dir, destination_dir, relation_file):
+    def _create_query(self, source_dir, destination_dir):
+        """
+        this function get all file from the source directory to store them in the destination directory
+        we put the log in database and the json in elasticSearch
+        :param source_dir: directory or file path that contains the new .log
+        :param destination_dir: the directory where we are going to store our .log
+        :return: nothing
+        """
         # iterate on all file
         i = 0
         # setting conection to elastic search server
@@ -65,6 +71,4 @@ class Command(BaseCommand):
         # absolute path to the destination directory where we are going to store all the data
         destination_dir = '/home/etudiant/Documents/stage/data_dir/'
 
-        # absolute path to the reation file
-        relation_file = '/home/etudiant/Documents/stage/data_brice/names50k.csv'
-        self._create_query(source_dir=source_dir, destination_dir=destination_dir, relation_file=relation_file)
+        self._create_query(source_dir=source_dir, destination_dir=destination_dir)
