@@ -108,51 +108,5 @@ $(document).ready(function() {
 				
 			}
 		});
-		
-	
-	
-	/*
-	results = $("<div>").html(results).html();
-	results = results.substring(1,results.length-1);
-	results = jQuery.parseJSON(results);
-	
-	//console.log(results);
-	//console.log(Object.keys(results).length);
-	
-	
-	var keys = Object.keys(results);
-	var values = Object.values(results);	
-	for(var i=0;i<keys.length;i++){
-		console.log(keys[i]);
-		
-		var keys2 = Object.keys(values[i]);
-		var values2 = Object.values(values[i]);
-		for(var j=0;j<keys2.length;j++){
-			console.log("\t"+keys2[j]);
-			var html = "<li class=\"list-group-item list-group-item-light\">"+keys2[j]+"</li>";
-			$("#panneauLateralList").append(html);
-			
-			
-			var html2 = "<div class=\"card border-dark mb-3\" style=\"max-width: 18rem;\">"
-			  +"<div class=\"card-header\">Header</div>"
-			  +"<div class=\"card-body text-dark\">"
-				+"<h5 class=\"card-title\">Dark card title</h5>"
-				+"<p class=\"card-text\"></p>"
-			  +"</div>"
-			+"</div>";
-		}
-		
-	}
-		
-		
-		
-		
-		
-		
-	var inchi = results.molecule.inchi;
-	var formula = results.molecule.formula;
-	console.log(inchi);
-	console.log(formula);
-*/
 
 });

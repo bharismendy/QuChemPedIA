@@ -71,11 +71,6 @@
 							<h5 class="card-title">Wavefunction</h5>
 							{% if results.results.wavefunction.total_molecular_energy %} <div class="row"><div class="col"><b>Total molecular energy </b></div><div class="col"> {{ results.results.wavefunction.total_molecular_energy }}</div></div> {% endif %}
 							{% if results.results.wavefunction.MO_number %} <div class="row"><div class="col"><b>HOMO number </b></div><div class="col"> {{ results.results.wavefunction.MO_number }}</div></div> {% endif %}
-
-							<!--
-							{% if results.comp_details.general.functional %} <div class="row"><div class="col"><b>Functional </b></div><div class="col"> {{ results.comp_details.general.functional }}</div></div> {% endif %}
-							<div class="row"><div class="col"><b>Requested SCF convergence on density </b></div><div class="col"> XXXXX </div></div>
-							-->
 						</div>
 					{% endif %}
 			</div>
@@ -103,27 +98,6 @@
 	</div>
 
 	<script src="{% static "js/details.js" %}"></script>
-	
-	<!--
-
-    <script >
-        $.urlParam = function(name){//fonction qui permet de récupérer l'url
-            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-            return results[1] || 0;
-        }
-        $.ajax({
-                    //connection au serveur
-                   type: 'GET',
-                   url: 'http://127.0.0.1:8000/QuChemPedIA/details_json/'+$.urlParam('id'),
-                   processData: true,
-                   dataType: 'json',
-                   success: function(results) {//ce que l'on fait si on a le json
-                        console.log("Success");
-                        console.log(results);
-                       }
-                   });
-    </script>
-	-->
 {% endblock %}
 
 
