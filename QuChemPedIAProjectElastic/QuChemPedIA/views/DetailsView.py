@@ -2,6 +2,7 @@ from django.shortcuts import render
 from QuChemPedIA.forms.QueryForm import QueryForm
 from QuChemPedIA.search import *
 from django.http.response import HttpResponse
+import json
 
 
 def details(request):
@@ -24,5 +25,11 @@ def details_json(request,id):
     :return: json file
     """
     if request.is_ajax():
-        results = search_id(id)
+        if id == "demo":
+            json_data = open('QuChemPedIA/static/demo.json')
+            results = json.load(json_data)  # deserialize it
+            json_data.close()
+        else :
+            results = search_id(id)
         return HttpResponse(json.dumps(results), content_type="application/json")
+
