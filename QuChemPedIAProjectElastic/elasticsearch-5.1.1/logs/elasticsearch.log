@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [2018-05-16T11:01:47,357][INFO ][o.e.n.Node               ] [] initializing ...
 [2018-05-16T11:01:47,468][INFO ][o.e.e.NodeEnvironment    ] [EpSLy7b] using [1] data paths, mounts [[/home (/dev/sda5)]], net usable_space [1.4gb], net total_space [82.3gb], spins? [possibly], types [ext4]
 [2018-05-16T11:01:47,468][INFO ][o.e.e.NodeEnvironment    ] [EpSLy7b] heap size [1.9gb], compressed ordinary object pointers [true]
@@ -715,3 +716,89 @@
 [2018-05-16T14:51:55,976][WARN ][o.e.c.r.a.DiskThresholdMonitor] [EpSLy7b] high disk watermark [90%] exceeded on [EpSLy7b8QCCFCKin_4aF-g][EpSLy7b][/home/etudiant/Bureau/projetEtudiant/QuChemPedIAProjectElastic2/elasticsearch-5.1.1/data/nodes/0] free: 1.3gb[1.6%], shards will be relocated away from this node
 [2018-05-16T14:52:25,983][WARN ][o.e.c.r.a.DiskThresholdMonitor] [EpSLy7b] high disk watermark [90%] exceeded on [EpSLy7b8QCCFCKin_4aF-g][EpSLy7b][/home/etudiant/Bureau/projetEtudiant/QuChemPedIAProjectElastic2/elasticsearch-5.1.1/data/nodes/0] free: 1.3gb[1.6%], shards will be relocated away from this node
 [2018-05-16T14:52:25,983][INFO ][o.e.c.r.a.DiskThresholdMonitor] [EpSLy7b] rerouting shards: [high disk watermark exceeded on one or more nodes]
+=======
+[2018-05-16T01:37:34,250][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-05-16T01:37:34,332][INFO ][o.e.e.NodeEnvironment    ] [EpSLy7b] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [109.1gb], net total_space [133.8gb], spins? [no], types [ext4]
+[2018-05-16T01:37:34,333][INFO ][o.e.e.NodeEnvironment    ] [EpSLy7b] heap size [1.9gb], compressed ordinary object pointers [true]
+[2018-05-16T01:37:34,343][INFO ][o.e.n.Node               ] node name [EpSLy7b] derived from node ID [EpSLy7b8QCCFCKin_4aF-g]; set [node.name] to override
+[2018-05-16T01:37:34,345][INFO ][o.e.n.Node               ] version[5.1.1], pid[5393], build[5395e21/2016-12-06T12:36:15.409Z], OS[Linux/4.13.0-41-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/1.8.0_162/25.162-b12]
+[2018-05-16T01:37:35,224][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [aggs-matrix-stats]
+[2018-05-16T01:37:35,225][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [ingest-common]
+[2018-05-16T01:37:35,225][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-expression]
+[2018-05-16T01:37:35,225][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-groovy]
+[2018-05-16T01:37:35,225][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-mustache]
+[2018-05-16T01:37:35,225][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [lang-painless]
+[2018-05-16T01:37:35,225][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [percolator]
+[2018-05-16T01:37:35,225][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [reindex]
+[2018-05-16T01:37:35,226][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [transport-netty3]
+[2018-05-16T01:37:35,226][INFO ][o.e.p.PluginsService     ] [EpSLy7b] loaded module [transport-netty4]
+[2018-05-16T01:37:35,226][INFO ][o.e.p.PluginsService     ] [EpSLy7b] no plugins loaded
+[2018-05-16T01:37:37,438][INFO ][o.e.n.Node               ] initialized
+[2018-05-16T01:37:37,439][INFO ][o.e.n.Node               ] [EpSLy7b] starting ...
+[2018-05-16T01:37:37,575][INFO ][o.e.t.TransportService   ] [EpSLy7b] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2018-05-16T01:37:37,581][WARN ][o.e.b.BootstrapCheck     ] [EpSLy7b] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+[2018-05-16T01:37:40,658][INFO ][o.e.c.s.ClusterService   ] [EpSLy7b] new_master {EpSLy7b}{EpSLy7b8QCCFCKin_4aF-g}{Zn7yG9t9T_aYWEQHQc3HcQ}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2018-05-16T01:37:40,704][INFO ][o.e.h.HttpServer         ] [EpSLy7b] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2018-05-16T01:37:40,705][INFO ][o.e.n.Node               ] [EpSLy7b] started
+[2018-05-16T01:37:40,876][INFO ][o.e.g.GatewayService     ] [EpSLy7b] recovered [1] indices into cluster_state
+[2018-05-16T01:37:41,041][WARN ][o.e.i.t.Translog         ] [EpSLy7b] [quchempedia_index][4] deleted previously created, but not yet committed, next generation [translog-10.tlog]. This can happen due to a tragic exception when creating a new generation
+[2018-05-16T01:37:41,041][WARN ][o.e.i.t.Translog         ] [EpSLy7b] [quchempedia_index][0] deleted previously created, but not yet committed, next generation [translog-10.tlog]. This can happen due to a tragic exception when creating a new generation
+[2018-05-16T01:37:41,040][WARN ][o.e.i.t.Translog         ] [EpSLy7b] [quchempedia_index][2] deleted previously created, but not yet committed, next generation [translog-10.tlog]. This can happen due to a tragic exception when creating a new generation
+[2018-05-16T01:37:41,047][WARN ][o.e.i.t.Translog         ] [EpSLy7b] [quchempedia_index][1] deleted previously created, but not yet committed, next generation [translog-10.tlog]. This can happen due to a tragic exception when creating a new generation
+[2018-05-16T01:37:41,215][WARN ][o.e.i.t.Translog         ] [EpSLy7b] [quchempedia_index][3] deleted previously created, but not yet committed, next generation [translog-10.tlog]. This can happen due to a tragic exception when creating a new generation
+[2018-05-16T01:37:41,245][INFO ][o.e.c.r.a.AllocationService] [EpSLy7b] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][3]] ...]).
+[2018-05-16T14:40:50,946][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-05-16T14:40:51,323][INFO ][o.e.e.NodeEnvironment    ] [j3o-J63] using [1] data paths, mounts [[/home (/dev/sda5)]], net usable_space [722.6gb], net total_space [889.2gb], spins? [possibly], types [ext4]
+[2018-05-16T14:40:51,324][INFO ][o.e.e.NodeEnvironment    ] [j3o-J63] heap size [1.9gb], compressed ordinary object pointers [true]
+[2018-05-16T14:40:51,363][INFO ][o.e.n.Node               ] node name [j3o-J63] derived from node ID [j3o-J63VRjSSQBxXxmgmiQ]; set [node.name] to override
+[2018-05-16T14:40:51,365][INFO ][o.e.n.Node               ] version[5.1.1], pid[10971], build[5395e21/2016-12-06T12:36:15.409Z], OS[Linux/4.4.0-124-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/1.8.0_171/25.171-b11]
+[2018-05-16T14:40:52,768][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [aggs-matrix-stats]
+[2018-05-16T14:40:52,768][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [ingest-common]
+[2018-05-16T14:40:52,768][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [lang-expression]
+[2018-05-16T14:40:52,768][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [lang-groovy]
+[2018-05-16T14:40:52,768][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [lang-mustache]
+[2018-05-16T14:40:52,768][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [lang-painless]
+[2018-05-16T14:40:52,768][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [percolator]
+[2018-05-16T14:40:52,769][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [reindex]
+[2018-05-16T14:40:52,769][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [transport-netty3]
+[2018-05-16T14:40:52,769][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [transport-netty4]
+[2018-05-16T14:40:52,769][INFO ][o.e.p.PluginsService     ] [j3o-J63] no plugins loaded
+[2018-05-16T14:40:56,208][WARN ][o.e.c.u.IndexFolderUpgrader] [/home/etudiant/projet-chimie/Origin/QuChemPedIA/QuChemPedIAProjectElastic/elasticsearch-5.1.1/data/nodes/0/indices/I5LkcwBfTb6dazKEpPXW3w] no index state found - ignoring
+[2018-05-16T14:40:56,213][INFO ][o.e.n.Node               ] initialized
+[2018-05-16T14:40:56,214][INFO ][o.e.n.Node               ] [j3o-J63] starting ...
+[2018-05-16T14:40:56,561][INFO ][o.e.t.TransportService   ] [j3o-J63] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2018-05-16T14:40:56,567][WARN ][o.e.b.BootstrapCheck     ] [j3o-J63] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+[2018-05-16T14:40:59,686][INFO ][o.e.c.s.ClusterService   ] [j3o-J63] new_master {j3o-J63}{j3o-J63VRjSSQBxXxmgmiQ}{Vvv-Q_ZyQHOuqIKngteMkg}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2018-05-16T14:40:59,736][INFO ][o.e.h.HttpServer         ] [j3o-J63] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2018-05-16T14:40:59,736][INFO ][o.e.n.Node               ] [j3o-J63] started
+[2018-05-16T14:40:59,814][INFO ][o.e.g.GatewayService     ] [j3o-J63] recovered [0] indices into cluster_state
+[2018-05-16T14:41:50,899][INFO ][o.e.n.Node               ] [j3o-J63] stopping ...
+[2018-05-16T14:41:50,932][INFO ][o.e.n.Node               ] [j3o-J63] stopped
+[2018-05-16T14:41:50,933][INFO ][o.e.n.Node               ] [j3o-J63] closing ...
+[2018-05-16T14:41:50,940][INFO ][o.e.n.Node               ] [j3o-J63] closed
+[2018-05-16T14:42:13,397][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-05-16T14:42:13,559][INFO ][o.e.e.NodeEnvironment    ] [j3o-J63] using [1] data paths, mounts [[/home (/dev/sda5)]], net usable_space [722.6gb], net total_space [889.2gb], spins? [possibly], types [ext4]
+[2018-05-16T14:42:13,560][INFO ][o.e.e.NodeEnvironment    ] [j3o-J63] heap size [1.9gb], compressed ordinary object pointers [true]
+[2018-05-16T14:42:13,581][INFO ][o.e.n.Node               ] node name [j3o-J63] derived from node ID [j3o-J63VRjSSQBxXxmgmiQ]; set [node.name] to override
+[2018-05-16T14:42:13,584][INFO ][o.e.n.Node               ] version[5.1.1], pid[11213], build[5395e21/2016-12-06T12:36:15.409Z], OS[Linux/4.4.0-124-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/1.8.0_171/25.171-b11]
+[2018-05-16T14:42:14,137][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [aggs-matrix-stats]
+[2018-05-16T14:42:14,137][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [ingest-common]
+[2018-05-16T14:42:14,137][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [lang-expression]
+[2018-05-16T14:42:14,137][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [lang-groovy]
+[2018-05-16T14:42:14,137][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [lang-mustache]
+[2018-05-16T14:42:14,137][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [lang-painless]
+[2018-05-16T14:42:14,137][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [percolator]
+[2018-05-16T14:42:14,138][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [reindex]
+[2018-05-16T14:42:14,138][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [transport-netty3]
+[2018-05-16T14:42:14,138][INFO ][o.e.p.PluginsService     ] [j3o-J63] loaded module [transport-netty4]
+[2018-05-16T14:42:14,138][INFO ][o.e.p.PluginsService     ] [j3o-J63] no plugins loaded
+[2018-05-16T14:42:15,757][WARN ][o.e.c.u.IndexFolderUpgrader] [/home/etudiant/projet-chimie/Origin/QuChemPedIA/QuChemPedIAProjectElastic/elasticsearch-5.1.1/data/nodes/0/indices/I5LkcwBfTb6dazKEpPXW3w] no index state found - ignoring
+[2018-05-16T14:42:15,765][INFO ][o.e.n.Node               ] initialized
+[2018-05-16T14:42:15,765][INFO ][o.e.n.Node               ] [j3o-J63] starting ...
+[2018-05-16T14:42:15,910][INFO ][o.e.t.TransportService   ] [j3o-J63] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2018-05-16T14:42:15,916][WARN ][o.e.b.BootstrapCheck     ] [j3o-J63] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+[2018-05-16T14:42:18,983][INFO ][o.e.c.s.ClusterService   ] [j3o-J63] new_master {j3o-J63}{j3o-J63VRjSSQBxXxmgmiQ}{GefxHSe9SDiXOOu5FfvU6A}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2018-05-16T14:42:19,008][INFO ][o.e.h.HttpServer         ] [j3o-J63] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2018-05-16T14:42:19,008][INFO ][o.e.n.Node               ] [j3o-J63] started
+[2018-05-16T14:42:19,157][INFO ][o.e.g.GatewayService     ] [j3o-J63] recovered [0] indices into cluster_state
+>>>>>>> 9c65c70f72ad851cb165805abb5285aff660ec33
