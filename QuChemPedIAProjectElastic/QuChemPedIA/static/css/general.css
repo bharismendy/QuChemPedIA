@@ -46,3 +46,10 @@ nav {
 .tableformat td:nth-child(1){
     width: 300px;
 }
+
+#tableMO_energies tr{border-bottom : 1px solid;}
+#tableMO_energies td{width:20%;}
+
+
+#tableMulliken_partial_charges tr{border-bottom : 1px solid;}
+#tableMulliken_partial_charges td{width:20%;}
