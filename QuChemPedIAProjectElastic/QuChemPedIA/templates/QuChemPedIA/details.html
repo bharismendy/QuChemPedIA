@@ -61,7 +61,7 @@
 
 
 	{% if results.results %}
-		<div id="computationalDetails">
+		<div id="results">
 			<div class="card mt-3">
 				<div class="card-header">
 					<h5>Results</h5>
@@ -84,7 +84,28 @@
 
 </div>
 
+
+	
+	
 {% endcomment %}
+
+
+
+{% load static %}
+
+
+	<div id="ficheMolecule" class="container">
+		<div class="row">
+			<div id="autorshipMolecule" class="col-lg-6">
+
+			</div>
+		</div>
+	</div>
+
+	<script src="{% static "js/details.js" %}"></script>
+	
+	<!--
+
     <script >
         $.urlParam = function(name){//fonction qui permet de récupérer l'url
             var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -102,6 +123,30 @@
                        }
                    });
     </script>
-
-
+	-->
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
