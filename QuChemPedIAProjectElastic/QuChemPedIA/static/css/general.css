@@ -38,3 +38,11 @@ nav {
   height: 50%;
 
 }
+
+.borderless td, .borderless th {
+    border: none;
+}
+
+.tableformat td:nth-child(1){
+    width: 300px;
+}
