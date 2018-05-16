@@ -72,10 +72,43 @@ $(document).ready(function() {
 					$("#ficheMolecule").append(html);
 				}
 
+
+				// results category
+				if(results.results){
+					var html = "<div class=\"card mt-3\">"
+											+"<div class=\"card-header\">"
+												+"<h5>Results</h5>"
+											+"</div><div id=\"reultsSubList\">";
+					html += "</div></div>";
+					$("#ficheMolecule").append(html);
+				}
 				
+				if(results.results.wavefunction){
+					var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Wavefunction</h5><div class=\"container\">";
+					if (results.results.wavefunction.total_molecular_energy) html += "<div class=\"row\"><div class=\"col\"><b>Total molecular energy </b></div><div class=\"col\">"+results.results.wavefunction.total_molecular_energy+"</div></div>";
+					if (results.results.wavefunction.MO_number) html += "<div class=\"row\"><div class=\"col\"><b>HOMO number </b></div><div class=\"col\">"+results.results.wavefunction.MO_number+"</div></div>";
+					html += "</div></div>";
+					$("#reultsSubList").append(html);
+				}
+				
+				if(results.results.geometry){
+					var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Geometry</h5><div class=\"container\">";
+					if (results.results.geometry.nuclear_repulsion_energy_from_xyz) html += "<div class=\"row\"><div class=\"col\"><b>Nuclear repulsion energy in atomic units </b></div><div class=\"col\">"+results.results.geometry.nuclear_repulsion_energy_from_xyz+"</div></div>";
+					if (results.results.geometry.OPT_DONE) html += "<div class=\"row\"><div class=\"col\"><b>Nuclear repulsion energy in atomic units </b></div><div class=\"col\">"+results.results.geometry.OPT_DONE+"</div></div>";
+					html += "</div></div>";
+					$("#reultsSubList").append(html);
+				}
+				
+				if(results.results.excited_states){
+					var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Excited states</h5><div class=\"container\">";
+					
+					html += "</div></div>";
+					$("#reultsSubList").append(html);
+				}
 				
 			}
 		});
+		
 	
 	
 	/*
