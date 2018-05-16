@@ -9,10 +9,23 @@
         <div class="list-group">
           <div class="card">
             <div class="card-header list-group-item list-group-item-action">
-              <a href="" class="">{{ value.0.cansmiles }}</a>
+              <a href="" class="">{{ value.0.iupac }}</a>
             </div>
             <div class="card-body">
-              {{ value.0.ending_energy }}
+              <p>Inchi : {{ value.0.InChi }}</p>
+              <p>Cansmiles : {{ value.0.cansmiles }}</p>
+              <p>Software : {{ value.0.software }}</p>
+              <p>Theory : {{ value.0.theory }}</p>
+              <p>Functionnal : {{ value.0.functionnal }}</p>
+              <p>Basis set name : {{ value.0.basis_set_name }}</p>
+              <p>Charge : {{ value.0.charge }}</p>
+              <p>Basis set size : {{ value.0.basis_set_size }}</p>
+              <p>Multiplicity : {{ value.0.multiplicity }}</p>
+              <p>Solvatation method : {{ value.0.solvatation_method }}</p>
+              <p>Solvent : {{ value.0.solvent }}</p>
+              <p>Job_type : {{ value.0.job_type }}</p>
+              <p>Ending energy : {{ value.0.ending_energy }}</p>
+              <p>{{ value }}</p>
             </div>
           </div>
         </div>
