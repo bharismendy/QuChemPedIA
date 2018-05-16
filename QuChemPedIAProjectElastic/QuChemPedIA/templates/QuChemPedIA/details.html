@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-
+{% comment %}
 <div class="container">
 	<div class="row">
 		<div class="col-lg-6">
@@ -31,11 +31,11 @@
 			</div>
 		</div>
 		<div class="col-lg-offset-1 col-lg-5">
-			
+
 		</div>
 	</div>
-	
-	
+
+
 	{% if results.comp_details %}
 		<div id="computationalDetails">
 			<div class="card mt-3">
@@ -51,15 +51,15 @@
 					{% if results.comp_details.general.is_closed_shell %} <div class="row"><div class="col"><b>Closed shell calculation </b></div><div class="col"> {{ results.comp_details.general.is_closed_shell }}</div></div> {% endif %}
 					<!-- {% if results.comp_details.general.scf_targets %} <div class="row"><div class="col"><b>Requested SCF convergence on density </b></div><div class="col"> {{ results.comp_details.general.scf_targets }}</div></div> {% endif %} -->
 					<div class="row"><div class="col"><b>Requested SCF convergence on density </b></div><div class="col"> XXXXX </div></div>
-					<div class="row"><div class="col"><b>Threshold on Maximum and RMS Force </b></div><div class="col"> XXXXX </div></div> 
+					<div class="row"><div class="col"><b>Threshold on Maximum and RMS Force </b></div><div class="col"> XXXXX </div></div>
 
 				</div>
 			</div>
 		</div>
 	{% endif %}
-		
-		
-			
+
+
+
 	{% if results.results %}
 		<div id="computationalDetails">
 			<div class="card mt-3">
@@ -76,17 +76,32 @@
 							{% if results.comp_details.general.functional %} <div class="row"><div class="col"><b>Functional </b></div><div class="col"> {{ results.comp_details.general.functional }}</div></div> {% endif %}
 							<div class="row"><div class="col"><b>Requested SCF convergence on density </b></div><div class="col"> XXXXX </div></div>
 							-->
-						</div>						
+						</div>
 					{% endif %}
 			</div>
 		</div>
 	{% endif %}
-		
-		
-			
-	
+
 </div>
 
-{{ results }}
+{% endcomment %}
+    <script >
+        $.urlParam = function(name){//fonction qui permet de récupérer l'url
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            return results[1] || 0;
+        }
+        $.ajax({
+                    //connection au serveur
+                   type: 'GET',
+                   url: 'http://127.0.0.1:8000/QuChemPedIA/details_json/'+$.urlParam('id'),
+                   processData: true,
+                   dataType: 'json',
+                   success: function(results) {//ce que l'on fait si on a le json
+                        console.log("Success");
+                        console.log(results);
+                       }
+                   });
+    </script>
+
 
 {% endblock %}

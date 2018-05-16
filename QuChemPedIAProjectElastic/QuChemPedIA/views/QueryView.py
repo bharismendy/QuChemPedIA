@@ -1,10 +1,18 @@
 from xml.dom.minidom import _clear_id_cache
-
 from django.shortcuts import render
 from QuChemPedIA.forms.QueryForm import QueryForm
 from QuChemPedIA.search import *
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
+import urllib.parse
+
+
+def build_url(*args, **kwargs):
+    get = kwargs.pop('get', {})
+    url = reverse(*args, **kwargs)
+    if get:
+        url += '?' + urllib.parse.urlencode(get)
+    return url
 
 
 def query(request):
@@ -47,7 +55,7 @@ def query(request):
 
         if 'id_log' in request.GET.get('typeQuery'):
             # if we want to access to an id we forward it to the details page as a parameter
-            url = reverse('details', kwargs={'id': request.GET.get('search'), })
+            url = build_url('details', get={'id': request.GET.get('search')})
             return HttpResponseRedirect(url)
         """
         if 'homo_alpha_energy' in request.GET.get('typeQuery'):
@@ -73,6 +81,6 @@ def query(request):
     test_result = json.loads(results)
     if len(test_result) == 1:
         # if we have only one result we forward it to the detail page
-        url = reverse('details', kwargs={'id': int(test_result["0"][0]["id_log"])})
+        url = reverse('details', args={'id': int(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)
     return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form})

@@ -12,5 +12,4 @@ def accueil(request):
     query_form = QueryForm(request.GET or None)
     if query_form.is_valid():
         return HttpResponseRedirect('query')
-    print(query_form)
     return render(request, 'QuChemPedIA/accueil.html', {'query_form': query_form})
