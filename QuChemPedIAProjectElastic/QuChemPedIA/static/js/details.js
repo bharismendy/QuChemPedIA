@@ -52,6 +52,18 @@ $(document).ready(function() {
 						+"</div>";
 					$("#autorshipMolecule").append(html);
 				}
+
+				if(results.molecule.can) {
+		            let options = {};
+		            
+		            // Initialize the drawer
+		            let smilesDrawer = new SmilesDrawer.Drawer(options);
+
+		            SmilesDrawer.parse(results.molecule.can, function(tree) {
+	                    // Draw to the canvas
+	                    smilesDrawer.draw(tree, 'canvas', 'light', false);
+	                });
+				}
 				
 				// computational details category
 				if(results.comp_details){

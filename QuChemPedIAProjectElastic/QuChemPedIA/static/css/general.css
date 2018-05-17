@@ -13,6 +13,12 @@ nav {
   background-color: #FFFFFF;
 }
 
+canvas {
+  background-color: white; 
+  width: 100%;
+  height: auto;
+}
+
 #title {
   color: #2196F3;
   font-size: 25px;
