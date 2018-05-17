@@ -31,6 +31,7 @@
     <!-- pour les items de navigation -->
     </ul>
     <form class="form-inline" action="{% url 'query' %}" method="GET">
+      {% csrf_token %}
       {{ query_form.as_table }}
       <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search</button>
     </form>
