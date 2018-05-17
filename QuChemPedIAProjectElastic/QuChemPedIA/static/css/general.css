@@ -14,10 +14,12 @@ nav {
 }
 
 canvas {
-  background-color: white; 
+  padding: none;
+  margin: none;
+  background-color: white;
   width: 100%;
   height: auto;
-
+  display: block;
 }
 
 td {
