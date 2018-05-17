@@ -13,6 +13,30 @@ nav {
   background-color: #FFFFFF;
 }
 
+canvas {
+  background-color: white; 
+  width: 100%;
+  height: auto;
+
+}
+
+td {
+  font-size: 14px;
+}
+
+strong {
+  color: #212121;
+}
+
+.card-header {
+  color: var(--default-primary-color);
+}
+
+#result-title {
+  padding-bottom: 10px;
+  padding-top: 15px;
+}
+
 #title {
   color: #2196F3;
   font-size: 25px;
@@ -21,6 +45,7 @@ nav {
 #button-search {
   background-color: var(--default-primary-color);
   border-color: var(--default-primary-color);
+  margin-left: 15px;
 }
 
 #button-search:hover {
