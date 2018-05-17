@@ -6,10 +6,10 @@
     <div class="container">
       <h2> Results </h2>
         {% for key, value in results.items %}
-        <div class="list-group">
+        <div id="list-query-group" class="list-group">
           <div class="card">
             <div class="card-header list-group-item list-group-item-action">
-              <a href="" class="">{{ value.0.iupac }}</a>
+              <a href="http://127.0.0.1:8000/QuChemPedIA/details?id={{value.0.id_log}}" class="">{{ value.0.iupac }}</a>
             </div>
             <div class="card-body">
               <table class='table borderless table-condensed table-sm tableformat'>
@@ -33,7 +33,7 @@
                    <td>Functionnal : {{ value.0.functionnal }}</td>
                    <td></td>
                    <td></td>
-                   <td>Enfing energy : {{ value.0.ending_energy }}</td>
+                   <td>Ending energy : {{ value.0.ending_energy }}</td>
                  </tr>
                </tbody>
               </table>
