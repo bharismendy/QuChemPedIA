@@ -130,12 +130,36 @@ $(document).ready(function() {
 					// affichage du tableau des Mulliken atomic
 					var Mulliken_partial_charges = results.results.wavefunction.Mulliken_partial_charges;
 					if ((Mulliken_partial_charges)&&(Mulliken_partial_charges.length>0)){
+						
 						var atoms_Z = results.molecule.atoms_Z;
+						var indices = new Array();												
+						for(var j=0;j<Mulliken_partial_charges.length;j++)
+							indices[j]=j;
+							
+						//trier le tableau des enérgies
+						for(var j=0;j<Mulliken_partial_charges.length;j++){
+							for(var h=j;h<(Mulliken_partial_charges.length -1);h++){
+								if(Mulliken_partial_charges[h]<Mulliken_partial_charges[j]){
+									var temp = Mulliken_partial_charges[h];
+									var temp0 = indices[h];
+									var temp1 = atoms_Z[h];
+									
+									Mulliken_partial_charges[h] = Mulliken_partial_charges[j];
+									indices[h] = indices[j];
+									atoms_Z[h] = atoms_Z[j];
+									Mulliken_partial_charges[j] = temp;
+									indices[j] = temp0;
+									atoms_Z[j] = temp1;
+								}								
+							}
+						}
+						
 						html += "<div class=\"container\" align=center><b>Most intense Mulliken atomic charges (|q| > 0.1 e)</b>";
 						html += "<table class=\"tableauWavefunction\" id=\"tableMulliken_partial_charges\">";
 						html += "<tr><td>Atom</td><td>number</td><td>Mulliken partial charges</td></tr>";
+						
 						for(var j=0;j<Mulliken_partial_charges.length;j++){
-							html += "<tr><td>"+atoms_Z[j]+"</td><td>"+j+"</td><td>"+Mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
+							html += "<tr><td>"+atoms_Z[j]+"</td><td>"+indices[j]+"</td><td>"+Mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
 						}
 						html += "</table></div>";
 					}
