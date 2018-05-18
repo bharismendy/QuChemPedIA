@@ -3,10 +3,11 @@ from elasticsearch_dsl import Search, Q
 import json
 
 
-def _search_to_json(search):
+def _search_to_json(search,nbresult):
     """
     function that take a search as parameter and return a json table
     :param search: result of search in elastic search
+    ;:param nbresult : number of result
     :return: json table
     """
     result = {}
@@ -58,7 +59,7 @@ def _search_to_json(search):
             i += 1
         except Exception as error:
             print(error)
-
+    result['nbresult'] = nbresult
     result = str(result).replace("'", "\"")
     json.dumps(result)
     return result
@@ -76,10 +77,10 @@ def search_inchi(inchi_value, page, nbrpp):
     es_host = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
-          must=[Q('match', molecule__inchi=inchi_value)],
+          should=[Q('match', molecule__inchi=inchi_value)],
           )
     s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
-    return _search_to_json(search=s.execute())
+    return _search_to_json(search=s.execute(), nbresult=s.count())
 
 
 def search_cid(cid_value, page, nbrpp):
@@ -94,10 +95,10 @@ def search_cid(cid_value, page, nbrpp):
     es_host = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
-          must=[Q('match', molecule__cid=cid_value)],
+          should=[Q('match', molecule__cid=cid_value)],
           )
     s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
-    return _search_to_json(search=s.execute())
+    return _search_to_json(search=s.execute(), nbresult=s.count())
 
 
 def search_iupac(iupac_value, page, nbrpp):
@@ -112,10 +113,10 @@ def search_iupac(iupac_value, page, nbrpp):
     es_host = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
-          must=[Q('match', molecule__iupac=iupac_value)],
+          should=[Q('match', molecule__iupac=iupac_value)],
           )
     s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
-    return _search_to_json(search=s.execute())
+    return _search_to_json(search=s.execute(), nbresult=s.count())
 
 
 def search_formula(formula_value, page, nbrpp):
@@ -130,10 +131,10 @@ def search_formula(formula_value, page, nbrpp):
     es_host = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
-          must=[Q('match', molecule__formula=formula_value)],
+          should=[Q('match', molecule__formula=formula_value)],
           )
     s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
-    return _search_to_json(search=s.execute())
+    return _search_to_json(search=s.execute(), nbresult=s.count())
 
 
 def search_smiles(smiles_value, page, nbrpp):
@@ -148,10 +149,10 @@ def search_smiles(smiles_value, page, nbrpp):
     es_host = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
-          must=[Q('match', molecule__smi=smiles_value)],
+          should=[Q('match', molecule__smi=smiles_value)],
           )
     s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
-    return _search_to_json(search=s.execute())
+    return _search_to_json(search=s.execute(), nbresult=s.count())
 
 
 def search_id(id_value):
