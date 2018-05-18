@@ -42,7 +42,7 @@ $(document).ready(function() {
 											+"<ul class=\"list-group list-group-flush\">";
 					//if(cid) html += "<li class=\"list-group-item\"><b>CID :</b>"+cid+"</li>";
 					if(results.molecule.iupac) html += "<li class=\"list-group-item\"><b>Iupac :</b>"+results.molecule.iupac+"</li>";
-					if(results.molecule.inchi) html += "<li class=\"list-group-item\"><b>InChI :</b>"+results.molecule.inchi+"</li>";
+					if(results.molecule.inchi) html += "<li class=\"list-group-item\" title=\"L'International Chemical Identifier ou InChI (en français : Identifiant chimique international)\"><b>InChI :</b>"+results.molecule.inchi+"</li>";
 					if(results.molecule.can) html += "<li class=\"list-group-item\"><b>CanSMILES :</b>"+results.molecule.can+"</li>";
 					if(results.molecule.monoisotopic_mass) html += "<li class=\"list-group-item\"><b>Monoisotopic mass :</b>"+results.molecule.monoisotopic_mass+"</li>";
 					if(results.molecule.formula) html += "<li class=\"list-group-item\"><b>Formula :</b>"+results.molecule.formula+"</li>";
@@ -171,7 +171,8 @@ $(document).ready(function() {
 						html += "<tr><td>Atom</td><td>number</td><td>Mulliken partial charges</td></tr>";
 						
 						for(var j=0;j<Mulliken_partial_charges.length;j++){
-							html += "<tr><td>"+atoms_Z[j]+"</td><td>"+indices[j]+"</td><td>"+Mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
+							if(Math.abs(Mulliken_partial_charges[j])>0.1)
+								html += "<tr><td>"+atoms_Z[j]+"</td><td>"+indices[j]+"</td><td>"+Mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
 						}
 						html += "</table></div>";
 					}
