@@ -18,43 +18,10 @@ $(document).ready(function() {
 					results = recivedData.data;
 				else
 					results = recivedData;
-					
-				// autorship category
-				if(results.metadata){
-					var html = "<div class=\"card mt-3\">"
-											+"<div class=\"card-header\">"
-												+"<h5>Authorship</h5>"
-											+"</div>"
-											+"<ul class=\"list-group list-group-flush\">";
-					if(results.metadata.log_file) html += "<li class=\"list-group-item\"><b>Original log file :</b>"+results.metadata.log_file+"</li>";
-					if(results.metadata.primary_author) html += "<li class=\"list-group-item\"><b>Primary author :</b>"+results.metadata.primary_author+"</li>";
-					if(results.metadata.primary_author_affiliation) html += "<li class=\"list-group-item\"><b>Affiliation :</b>"+results.metadata.primary_author_affiliation+"</li>";
-					html += "</ul>"
-						+"</div>";
-					$("#autorshipMolecule").append(html);
-				}
-								
-				// molecule category
-				if(results.molecule){
-					var html = "<div class=\"card mt-3\">"
-											+"<div class=\"card-header\">"
-												+"<h5>Molecule</h5>"
-											+"</div>"
-											+"<ul class=\"list-group list-group-flush\">";
-					//if(cid) html += "<li class=\"list-group-item\"><b>CID :</b>"+cid+"</li>";
-					if(results.molecule.iupac) html += "<li class=\"list-group-item\"><b>Iupac :</b>"+results.molecule.iupac+"</li>";
-					if(results.molecule.inchi) html += "<li class=\"list-group-item\" title=\"L'International Chemical Identifier ou InChI (en français : Identifiant chimique international)\"><b>InChI :</b>"+results.molecule.inchi+"</li>";
-					if(results.molecule.can) html += "<li class=\"list-group-item\"><b>CanSMILES :</b>"+results.molecule.can+"</li>";
-					if(results.molecule.monoisotopic_mass) html += "<li class=\"list-group-item\"><b>Monoisotopic mass :</b>"+results.molecule.monoisotopic_mass+"</li>";
-					if(results.molecule.formula) html += "<li class=\"list-group-item\"><b>Formula :</b>"+results.molecule.formula+"</li>";
-					if(results.molecule.charge || (results.molecule.charge == 0)) html += "<li class=\"list-group-item\"><b>Charge :</b>"+results.molecule.charge+"</li>";
-					if(results.molecule.multiplicity || (results.molecule.charge == 0)) html += "<li class=\"list-group-item\"><b>Spin multiplicity :</b>"+results.molecule.multiplicity+"</li>";
-					html += "</ul>"
-						+"</div>";
-						
+
 				if (!results){
 					var html = "<h1>Error 404 : Inexistant Molecule.</h1>"
-					
+
 					$("#autorshipMolecule").append(html);
 				}else{
 					// autorship category
@@ -175,16 +142,7 @@ $(document).ready(function() {
 							}
 							html += "</table></div>";
 						}
-						
-						
-						html += "<div class=\"container\" align=center><b>Most intense Mulliken atomic charges (|q| > 0.1 e)</b>";
-						html += "<table class=\"tableauWavefunction\" id=\"tableMulliken_partial_charges\">";
-						html += "<tr><td>Atom</td><td>number</td><td>Mulliken partial charges</td></tr>";
-						
-						for(var j=0;j<Mulliken_partial_charges.length;j++){
-							if(Math.abs(Mulliken_partial_charges[j])>0.1)
-								html += "<tr><td>"+atoms_Z[j]+"</td><td>"+indices[j]+"</td><td>"+Mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
-								
+
 						html += "<div class=\"container\" align=center><b>Atom numbering scheme.</b>";
 
 						// affichage du tableau des Mulliken atomic
@@ -222,6 +180,7 @@ $(document).ready(function() {
 								html += "<tr><td>"+atoms_Z[j]+"</td><td>"+indices[j]+"</td><td>"+Mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
 							}
 							html += "</table></div>";
+
 						}
 
 
