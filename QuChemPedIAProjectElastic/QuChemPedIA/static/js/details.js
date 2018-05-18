@@ -116,8 +116,9 @@ $(document).ready(function() {
 						$("#ficheMolecule").append(html);
 					}
 
+					// la partie wavefunction dans results
 					if(results.results.wavefunction){
-						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Wavefunction</h5><div class=\"container\">";
+						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><h5 class=\"card-title subTitle\">Wavefunction</h5><div class=\"container\">";
 						if (results.results.wavefunction.total_molecular_energy) html += "<div class=\"row\"><div class=\"col\"><b>Total molecular energy </b></div><div class=\"col\">"+results.results.wavefunction.total_molecular_energy+"</div></div>";
 						var homo_indexes = results.results.wavefunction.homo_indexes;
 						if ((homo_indexes)&&(homo_indexes.length>0)){
@@ -134,7 +135,7 @@ $(document).ready(function() {
 						// affichage du tableau des homo energies
 						var MO_energies = results.results.wavefunction.MO_energies;
 						if ((MO_energies)&&(MO_energies.length>0)){
-							html += "<div class=\"container\" align=center><b>Calculated energies for the frontier molecular orbitals (in eV)</b>";
+							html += "<div class=\"container subWavefunction\" align=center><b>Calculated energies for the frontier molecular orbitals (in eV)</b>";
 							html += "<table class=\"tableauWavefunction\" id=\"tableMO_energies\">";
 							html += "<tr><td>HOMO-1</td><td>HOMO</td><td>LUMO</td><td>LUMO+1</td></tr>";
 							for(var j=0;j<homo_indexes.length;j++){
@@ -143,7 +144,7 @@ $(document).ready(function() {
 							html += "</table></div>";
 						}
 
-						html += "<div class=\"container\" align=center><b>Atom numbering scheme.</b>";
+						html += "<div class=\"container subWavefunction\" align=center><b>Atom numbering scheme.</b></div>";
 
 						// affichage du tableau des Mulliken atomic
 						var Mulliken_partial_charges = results.results.wavefunction.Mulliken_partial_charges;
@@ -172,7 +173,7 @@ $(document).ready(function() {
 								}
 							}
 
-							html += "<div class=\"container\" align=center><b>Most intense Mulliken atomic charges (|q| > 0.1 e)</b>";
+							html += "<div class=\"container subWavefunction\" align=center><b>Most intense Mulliken atomic charges (|q| > 0.1 e)</b>";
 							html += "<table class=\"tableauWavefunction\" id=\"tableMulliken_partial_charges\">";
 							html += "<tr><td>Atom</td><td>number</td><td>Mulliken partial charges</td></tr>";
 
@@ -187,6 +188,7 @@ $(document).ready(function() {
 						$("#reultsSubList").append(html);
 					}
 
+					// la partie geometry
 					if(results.results.geometry){
 						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Geometry</h5><div class=\"container\">";
 						if (results.results.geometry.nuclear_repulsion_energy_from_xyz) html += "<div class=\"row\"><div class=\"col\"><b>Nuclear repulsion energy in atomic units </b></div><div class=\"col\">"+results.results.geometry.nuclear_repulsion_energy_from_xyz+"</div></div>";
@@ -195,6 +197,7 @@ $(document).ready(function() {
 						$("#reultsSubList").append(html);
 					}
 
+					// la partie excited_states
 					if(results.results.excited_states){
 						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Excited states</h5><div class=\"container\">";
 
