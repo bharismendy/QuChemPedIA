@@ -19,7 +19,7 @@ $(document).ready(function() {
 				else
 					results = recivedData;
 				if (!results){
-					var html = "<h1>Erreur 404 : Molécule non existante.</h1>"
+					var html = "<h1>Error 404 : Inexistant Molecule.</h1>"
 					$("#autorshipMolecule").append(html);
 				}else{
 					// autorship category
