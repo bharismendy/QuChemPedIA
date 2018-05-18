@@ -116,11 +116,11 @@ strong {
 }
 #tableMO_energies {width:40%;}
 #tableMO_energies tr{border-bottom : 1px solid;}
-#tableMO_energies td{width:10%;}
+#tableMO_energies td{width:10%;text-align:center;}
 
 
 #tableMulliken_partial_charges {width:30%;}
 #tableMulliken_partial_charges tr{border-bottom : 1px solid;}
-#tableMulliken_partial_charges td{width:10%;}
+#tableMulliken_partial_charges td{width:10%;text-align:center;}
 
 .subWavefunction{padding-bottom:4%;}
