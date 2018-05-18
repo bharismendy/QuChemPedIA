@@ -85,6 +85,8 @@
 
 {% load static %}
 
+<div id="404error">
+</div>
 
 	<div id="ficheMolecule" class="container">
 		<div class="row">
@@ -99,5 +101,9 @@
 		</div>
 	</div>
 
+	<script>
+	var scientist = "{% static "media/confused_scientist.png" %}";
+	var molecule = "{% static "media/molecule.png" %}";
+	</script>
 	<script src="{% static "js/details.js" %}"></script>
 {% endblock %}

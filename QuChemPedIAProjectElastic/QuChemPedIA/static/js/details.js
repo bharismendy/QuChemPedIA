@@ -4,6 +4,7 @@ $(document).ready(function() {
 		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 		return results[1] || 0;
         }
+
         $.ajax({
 			//connection au serveur
 		   type: 'GET',
@@ -12,15 +13,24 @@ $(document).ready(function() {
 		   dataType: 'json',
 		   success: function(recivedData) {//ce que l'on fait si on a le json
 				console.log("Success");
-				//console.log(results);
+				console.log(results);
 				var results;
 				if($.urlParam('id')=="demo")
 					results = recivedData.data;
 				else
 					results = recivedData;
+					console.log(!results);
 				if (!results){
-					var html = "<h1>Error 404 : Inexistant Molecule.</h1>"
-					$("#autorshipMolecule").append(html);
+					var html = "<div class='container' style='margin-top:50px;'>";
+					html += '<div class="row row404">'
+					html += "<h1>404 - We can't find the molecule you're looking for.</h1>";
+					html += '</div>'
+					html += '<div class="row row404">'
+    			html += '<div class="col-xs-4 "><img src='+scientist+'/ style="height:300px;"></div>'
+    			html += '<div class="col-xs-4"><img src='+molecule+'/ style="height:300px;"></div>'
+					html += '</div>'
+					html += '</div>'
+					$("#404error").append(html);
 				}else{
 					// autorship category
 					if(results.metadata){
@@ -114,8 +124,9 @@ $(document).ready(function() {
 						$("#ficheMolecule").append(html);
 					}
 
+					// la partie wavefunction dans results
 					if(results.results.wavefunction){
-						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Wavefunction</h5><div class=\"container\">";
+						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><h5 class=\"card-title subTitle\">Wavefunction</h5><div class=\"container\">";
 						if (results.results.wavefunction.total_molecular_energy) html += "<div class=\"row\"><div class=\"col\"><b>Total molecular energy </b></div><div class=\"col\">"+results.results.wavefunction.total_molecular_energy+"</div></div>";
 						var homo_indexes = results.results.wavefunction.homo_indexes;
 						if ((homo_indexes)&&(homo_indexes.length>0)){
@@ -132,7 +143,7 @@ $(document).ready(function() {
 						// affichage du tableau des homo energies
 						var MO_energies = results.results.wavefunction.MO_energies;
 						if ((MO_energies)&&(MO_energies.length>0)){
-							html += "<div class=\"container\" align=center><b>Calculated energies for the frontier molecular orbitals (in eV)</b>";
+							html += "<div class=\"container subWavefunction\" align=center><b>Calculated energies for the frontier molecular orbitals (in eV)</b>";
 							html += "<table class=\"tableauWavefunction\" id=\"tableMO_energies\">";
 							html += "<tr><td>HOMO-1</td><td>HOMO</td><td>LUMO</td><td>LUMO+1</td></tr>";
 							for(var j=0;j<homo_indexes.length;j++){
@@ -141,7 +152,7 @@ $(document).ready(function() {
 							html += "</table></div>";
 						}
 
-						html += "<div class=\"container\" align=center><b>Atom numbering scheme.</b>";
+						html += "<div class=\"container subWavefunction\" align=center><b>Atom numbering scheme.</b></div>";
 
 						// affichage du tableau des Mulliken atomic
 						var Mulliken_partial_charges = results.results.wavefunction.Mulliken_partial_charges;
@@ -170,7 +181,7 @@ $(document).ready(function() {
 								}
 							}
 
-							html += "<div class=\"container\" align=center><b>Most intense Mulliken atomic charges (|q| > 0.1 e)</b>";
+							html += "<div class=\"container subWavefunction\" align=center><b>Most intense Mulliken atomic charges (|q| > 0.1 e)</b>";
 							html += "<table class=\"tableauWavefunction\" id=\"tableMulliken_partial_charges\">";
 							html += "<tr><td>Atom</td><td>number</td><td>Mulliken partial charges</td></tr>";
 
@@ -178,12 +189,14 @@ $(document).ready(function() {
 								html += "<tr><td>"+atoms_Z[j]+"</td><td>"+indices[j]+"</td><td>"+Mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
 							}
 							html += "</table></div>";
+
 						}
 
 
 						$("#reultsSubList").append(html);
 					}
 
+					// la partie geometry
 					if(results.results.geometry){
 						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Geometry</h5><div class=\"container\">";
 						if (results.results.geometry.nuclear_repulsion_energy_from_xyz) html += "<div class=\"row\"><div class=\"col\"><b>Nuclear repulsion energy in atomic units </b></div><div class=\"col\">"+results.results.geometry.nuclear_repulsion_energy_from_xyz+"</div></div>";
@@ -192,6 +205,7 @@ $(document).ready(function() {
 						$("#reultsSubList").append(html);
 					}
 
+					// la partie excited_states
 					if(results.results.excited_states){
 						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Excited states</h5><div class=\"container\">";
 
