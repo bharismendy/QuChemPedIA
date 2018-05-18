@@ -69,6 +69,10 @@ strong {
   height: 50%;
 
 }
+.row404 {
+    display: flex;
+    justify-content: center;
+}
 
 .borderless td, .borderless th {
     border: none;
@@ -87,27 +91,3 @@ strong {
 #tableMulliken_partial_charges td{width:30%;}
 
 .subWavefunction{padding-bottom:4%;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

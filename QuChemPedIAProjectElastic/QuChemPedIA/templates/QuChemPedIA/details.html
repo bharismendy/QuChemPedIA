@@ -84,6 +84,10 @@
 
 
 {% load static %}
+
+<div id="404error">
+</div>
+
 	<div id="ficheMolecule" class="container">
 		<div class="row">
 			<div id="autorshipMolecule" class="col-lg-6">
@@ -97,5 +101,9 @@
 		</div>
 	</div>
 
+	<script>
+	var scientist = "{% static "media/confused_scientist.png" %}";
+	var molecule = "{% static "media/molecule.png" %}";
+	</script>
 	<script src="{% static "js/details.js" %}"></script>
 {% endblock %}

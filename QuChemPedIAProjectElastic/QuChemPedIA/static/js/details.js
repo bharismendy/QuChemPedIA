@@ -4,7 +4,7 @@ $(document).ready(function() {
 		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 		return results[1] || 0;
         }
-        
+
         $.ajax({
 			//connection au serveur
 		   type: 'GET',
@@ -13,16 +13,24 @@ $(document).ready(function() {
 		   dataType: 'json',
 		   success: function(recivedData) {//ce que l'on fait si on a le json
 				console.log("Success");
-				//console.log(results);
+				console.log(results);
 				var results;
 				if($.urlParam('id')=="demo")
 					results = recivedData.data;
 				else
 					results = recivedData;
-
+					console.log(!results);
 				if (!results){
-					var html = "<h1>Error 404 : Inexistant Molecule.</h1>"
-					$("#autorshipMolecule").append(html);
+					var html = "<div class='container' style='margin-top:50px;'>";
+					html += '<div class="row row404">'
+					html += "<h1>404 - We can't find the molecule you're looking for.</h1>";
+					html += '</div>'
+					html += '<div class="row row404">'
+    			html += '<div class="col-xs-4 "><img src='+scientist+'/ style="height:300px;"></div>'
+    			html += '<div class="col-xs-4"><img src='+molecule+'/ style="height:300px;"></div>'
+					html += '</div>'
+					html += '</div>'
+					$("#404error").append(html);
 				}else{
 					// autorship category
 					if(results.metadata){
