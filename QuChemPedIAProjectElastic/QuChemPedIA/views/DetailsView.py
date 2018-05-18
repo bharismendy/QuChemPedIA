@@ -30,6 +30,8 @@ def details_json(request,id):
             results = json.load(json_data)  # deserialize it
             json_data.close()
         else :
-            results = search_id(id)
+            try:
+                results = search_id(id)
+            except:
+                results = None
         return HttpResponse(json.dumps(results), content_type="application/json")
-
