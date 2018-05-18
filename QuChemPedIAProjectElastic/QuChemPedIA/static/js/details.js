@@ -4,6 +4,7 @@ $(document).ready(function() {
 		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 		return results[1] || 0;
         }
+        
         $.ajax({
 			//connection au serveur
 		   type: 'GET',
@@ -21,7 +22,6 @@ $(document).ready(function() {
 
 				if (!results){
 					var html = "<h1>Error 404 : Inexistant Molecule.</h1>"
-
 					$("#autorshipMolecule").append(html);
 				}else{
 					// autorship category
