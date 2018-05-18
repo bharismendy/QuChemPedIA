@@ -73,5 +73,32 @@
       {% else %}
           <p>no result</p>
   {% endif %}
-  <p>la requête à mis : {{ temp }}</p>
+<div id="pagination">
+  <i id="btn-previous" class="fa fa-angle-left" style="font-size:24px"></i>
+  <span>Page : {{ page }}</span>
+  <i id="btn-next" class="fa fa-angle-right" style="font-size:24px"></i>
+</div>
+<script>
+  $(document).ready(function(){
+    var url = window.location.href;
+    console.log(window.location.href);
+    var urlParams = new URLSearchParams(window.location.search);
+    var actualPage = urlParams.get('page');
+    console.log(actualPage);
+    console.log(urlParams.toString());
+    if(actualPage == null){
+      actualPage = 0;
+    };
+    console.log(actualPage);
+    $("#btn-next").click(function(){
+      actualPage++;
+      console.log(actualPage);
+      urlParams.set('page',actualPage);
+      console.log(location.protocol + '//' + location.host + location.pathname);
+      var newUrl = location.protocol + '//' + location.host + location.pathname + "?" + urlParams.toString();
+      window.location.href = newUrl;
+    });
+  });
+
+</script>
 {% endblock %}

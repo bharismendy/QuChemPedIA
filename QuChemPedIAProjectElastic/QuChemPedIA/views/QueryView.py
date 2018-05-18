@@ -30,10 +30,10 @@ def query(request):
         page = 0
 
     try:
-        nbrpp = 20  # nombre de résultat par page
+        nbrpp = 10  # nombre de résultat par page
     except Exception as error:
         print(error)
-        nbrpp = 20
+        nbrpp = 10
 
     try:
         # switch on what we are looking for
@@ -83,4 +83,4 @@ def query(request):
         # if we have only one result we forward it to the detail page
         url = reverse('details', args={'id': int(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)
-    return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form})
+    return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form, 'page' : page+1})

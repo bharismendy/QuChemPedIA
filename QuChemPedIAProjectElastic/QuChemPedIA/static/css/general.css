@@ -34,6 +34,39 @@ strong {
   color: var(--default-primary-color);
 }
 
+#pagination {
+  text-align: center;
+  color: #2196F3;
+  font-size: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  vertical-align: center;
+}
+
+#btn-next {
+  padding-left: 5px;
+  color: #2196F3;
+  cursor: pointer;
+}
+
+#btn-next:hover {
+  padding-left: 5px;
+  color: #1d87da;
+  cursor: pointer;
+}
+
+#btn-previous {
+  padding-right: 5px;
+  color: #2196F3;
+  cursor: pointer;
+}
+
+#btn-previous:hover {
+  padding-right: 5px;
+  color: #1d87da;
+  cursor: pointer;
+}
+
 #result-title {
   padding-bottom: 10px;
   padding-top: 15px;
@@ -84,29 +117,3 @@ strong {
 
 #tableMulliken_partial_charges tr{border-bottom : 1px solid;}
 #tableMulliken_partial_charges td{width:20%;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
