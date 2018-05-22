@@ -38,12 +38,11 @@ $(document).ready(function() {
 												+"<div class=\"card-header\">"
 													+"<h5>Authorship</h5>"
 												+"</div>"
-												+"<ul class=\"list-group list-group-flush\">";
-						if(results.metadata.log_file) html += "<li class=\"list-group-item\"><b>Original log file :</b>"+results.metadata.log_file+"</li>";
-						if(results.metadata.primary_author) html += "<li class=\"list-group-item\"><b>Primary author :</b>"+results.metadata.primary_author+"</li>";
-						if(results.metadata.primary_author_affiliation) html += "<li class=\"list-group-item\"><b>Affiliation :</b>"+results.metadata.primary_author_affiliation+"</li>";
-						html += "</ul>"
-							+"</div>";
+												+"<div class=\"container\">";
+						if(results.metadata.log_file) html += "<div class=\"row\"><div class=\"col\"><b>Original log file</b></div><div class=\"col\">"+results.metadata.log_file+"</div></div>";
+						if(results.metadata.primary_author) html += "<div class=\"row\"><div class=\"col\"><b>Primary author</b></div><div class=\"col\">"+results.metadata.primary_author+"</div></div>";
+						if(results.metadata.primary_author_affiliation) html += "<div class=\"row\"><div class=\"col\"><b>Affiliation</b></div><div class=\"col\">"+results.metadata.primary_author_affiliation+"</div></div>";
+						html += "</div></div>";
 						$("#autorshipMolecule").append(html);
 					}
 
@@ -53,17 +52,20 @@ $(document).ready(function() {
 												+"<div class=\"card-header\">"
 													+"<h5>Molecule</h5>"
 												+"</div>"
-												+"<ul class=\"list-group list-group-flush\">";
+												+"<div class=\"container\">";
 
 						//if(cid) html += "<li class=\"list-group-item\"><b>CID :</b>"+cid+"</li>";
-						if(results.molecule.iupac) html += "<li class=\"list-group-item\"><b>Iupac <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span>  :</b>"+results.molecule.iupac+"</li>";
-						if(results.molecule.inchi) html += "<li class=\"list-group-item\"><b>InChI <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span>  :</b>"+results.molecule.inchi+"</li>";
-						if(results.molecule.can) html += "<li class=\"list-group-item\"><b>CanSMILES <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span>  :</b>"+results.molecule.can+"</li>";
-						if(results.molecule.monoisotopic_mass) html += "<li class=\"list-group-item\"><b>Monoisotopic mass :</b>"+results.molecule.monoisotopic_mass+"</li>";
-						if(results.molecule.formula) html += "<li class=\"list-group-item\"><b>Formula <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span>  :</b>"+results.molecule.formula+"</li>";
-						if(results.molecule.charge || (results.molecule.charge == 0)) html += "<li class=\"list-group-item\"><b>Charge :</b>"+results.molecule.charge+"</li>";
-						if(results.molecule.multiplicity || (results.molecule.charge == 0)) html += "<li class=\"list-group-item\"><b>Spin multiplicity :</b>"+results.molecule.multiplicity+"</li>";
-						html += "</ul>"
+						if(results.molecule.iupac) html += "<div class=\"row\"><div class=\"col\"><b>Iupac <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+results.molecule.iupac+"</div></div>";
+						if(results.molecule.inchi) {
+							var inchi = (results.molecule.inchi).replace("InChI=","");
+							html += "<div class=\"row\"><div class=\"col\"><b>InChI <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+inchi+"</div></div>";
+						}
+						if(results.molecule.can) html += "<div class=\"row\"><div class=\"col\"><b>Canonical SMILES <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+results.molecule.can+"</div></div>";
+						if(results.molecule.monoisotopic_mass) html += "<div class=\"row\"><div class=\"col\"><b>Monoisotopic mass</b></div><div class=\"col\">"+results.molecule.monoisotopic_mass+"</div></div>";
+						if(results.molecule.formula) html += "<div class=\"row\"><div class=\"col\"><b>Formula <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+results.molecule.formula+"</div></div>";
+						if(results.molecule.charge || (results.molecule.charge == 0)) html += "<div class=\"row\"><div class=\"col\"><b>Charge</b></div><div class=\"col\">"+results.molecule.charge+"</div></div>";
+						if(results.molecule.multiplicity || (results.molecule.charge == 0)) html += "<div class=\"row\"><div class=\"col\"><b>Spin multiplicity</b></div><div class=\"col\">"+results.molecule.multiplicity+"</div></div>";
+						html += "</div>"
 							+"</div>";
 						$("#autorshipMolecule").append(html);
 					}
@@ -88,7 +90,7 @@ $(document).ready(function() {
 												+"</div>"
 												+"<div class=\"container\">";
 						if(results.comp_details.general.package) html += "<div class=\"row\"><div class=\"col\"><b>Software </b></div><div class=\"col\">"+results.comp_details.general.package;
-						if (results.comp_details.general.package_version) html += "("+results.comp_details.general.package_version+")";
+						if (results.comp_details.general.package_version) html += " ("+results.comp_details.general.package_version+")";
 						html += "</div></div>";
 						if (results.comp_details.general.last_theory) html += "<div class=\"row\"><div class=\"col\"><b>Computational method </b></div><div class=\"col\">"+results.comp_details.general.last_theory+"</div></div>";
 						if (results.comp_details.general.functional) html += "<div class=\"row\"><div class=\"col\"><b>Functional </b></div><div class=\"col\">"+results.comp_details.general.functional+"</div></div>";
@@ -127,7 +129,7 @@ $(document).ready(function() {
 
 					// la partie wavefunction dans results
 					if(results.results.wavefunction){
-						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><h5 class=\"card-title subTitle\">Wavefunction</h5><div class=\"container\">";
+						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><div class=\"container\">";
 						if (results.results.wavefunction.total_molecular_energy) html += "<div class=\"row\"><div class=\"col\"><b>Total molecular energy </b></div><div class=\"col\">"+results.results.wavefunction.total_molecular_energy+"</div></div>";
 						var homo_indexes = results.results.wavefunction.homo_indexes;
 						if ((homo_indexes)&&(homo_indexes.length>0)){
