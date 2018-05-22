@@ -80,9 +80,16 @@
 </div>
 <script>
   $(document).ready(function(){
+    var nbresult = {{ results.nbresult }}
+    var result_per_page = {{ nbrpp }}
+    console.log(result_per_page);
+    console.log(nbresult);
+    var nbpages = Math.ceil(nbresult / result_per_page)
+    console.log(nbpages)
     var url = window.location.href;
     console.log(window.location.href);
     var urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams);
     var actualPage = urlParams.get('page');
     console.log(actualPage);
     console.log(urlParams.toString());
@@ -90,14 +97,32 @@
       actualPage = 0;
     };
     console.log(actualPage);
-    $("#btn-next").click(function(){
-      actualPage++;
-      console.log(actualPage);
-      urlParams.set('page',actualPage);
-      console.log(location.protocol + '//' + location.host + location.pathname);
-      var newUrl = location.protocol + '//' + location.host + location.pathname + "?" + urlParams.toString();
-      window.location.href = newUrl;
-    });
+    if ( actualPage < nbpages - 1){
+      $('#btn-next').removeClass('fa-disabled');
+      $("#btn-next").click(function(){
+        actualPage++;
+        console.log(actualPage);
+        urlParams.set('page',actualPage);
+        console.log(location.protocol + '//' + location.host + location.pathname);
+        var newUrl = location.protocol + '//' + location.host + location.pathname + "?" + urlParams.toString();
+        window.location.href = newUrl;
+      });
+    }else{
+      $('#btn-next').addClass('fa-disabled');
+    }
+    if( actualPage > 0 ) {
+      $('#btn-previous').removeClass('fa-disabled');
+      $("#btn-previous").click(function(){
+        actualPage--;
+        console.log(actualPage);
+        urlParams.set('page',actualPage);
+        console.log(location.protocol + '//' + location.host + location.pathname);
+        var newUrl = location.protocol + '//' + location.host + location.pathname + "?" + urlParams.toString();
+        window.location.href = newUrl;
+      });
+    }else{
+      $('#btn-previous').addClass('fa-disabled');
+    }
   });
 
 </script>
