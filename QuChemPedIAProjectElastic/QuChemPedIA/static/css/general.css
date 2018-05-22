@@ -114,10 +114,12 @@ strong {
 .tableformat td:nth-child(1){
     width: 300px;
 }
+
 .fa-disabled {
-  opacity: 0.6;
+  opacity: 0.3;
   pointer-events: none
 }
+
 #tableMO_energies {width:40%;}
 #tableMO_energies tr{border-bottom : 1px solid;}
 #tableMO_energies td{width:10%;text-align:center;}
