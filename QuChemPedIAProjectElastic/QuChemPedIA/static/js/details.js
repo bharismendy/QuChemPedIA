@@ -191,7 +191,7 @@ $(document).ready(function() {
 							html += "<tr><td>Atom</td><td>number</td><td>Mulliken partial charges</td></tr>";
 
 							for(var j=0;j<Mulliken_partial_charges.length;j++){
-								html += "<tr><td>"+Symbol[atoms_Z[j]]+"</td><td>"+indices[j]+"</td><td>"+Mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
+								html += "<tr><td>"+Symbol[atoms_Z[j]-1]+"</td><td>"+indices[j]+"</td><td>"+Mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
 							}
 							html += "</table></div>";
 
