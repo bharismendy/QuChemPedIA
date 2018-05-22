@@ -13,7 +13,6 @@ $(document).ready(function() {
 		   dataType: 'json',
 		   success: function(recivedData) {//ce que l'on fait si on a le json
 				console.log("Success");
-				console.log(results);
 				var results;
 				if($.urlParam('id')=="demo")
 					results = recivedData.data;
@@ -82,7 +81,20 @@ $(document).ready(function() {
 		                });
 					}
 
-// computational details category
+				}	
+				computationalDetailsEtResults(results);
+				$('[data-toggle="tooltip"]').tooltip();
+			},
+			error: function() {
+				console.log("ERROR");
+			},
+			
+		});
+		
+		
+		function computationalDetailsEtResults(results){
+			
+			// computational details category
 					if(results.comp_details){
 						var html = "<div class=\"card mt-3\">"
 												+"<div class=\"card-header\">"
@@ -216,11 +228,9 @@ $(document).ready(function() {
 
 						html += "</div></div>";
 						$("#reultsSubList").append(html);
-					}
-				}
-
-				$('[data-toggle="tooltip"]').tooltip();
-			}
-		});
+					}	
+						
+		}
+		 
 
 });
