@@ -23,7 +23,8 @@
                       var canvasH = $("#{{ value.0.id_log }}").height();
                       var canvasW = $("#{{ value.0.id_log }}").width();
                         let options = {width : canvasW,
-                                       height : canvasH};
+                                       height : canvasH,
+                        };
 
                         // Initialize the drawer
                         let smilesDrawer = new SmilesDrawer.Drawer(options);
@@ -40,12 +41,7 @@
                 <table class='table borderless table-condensed table-sm tableformat'>
                   <tbody>
                    <tr>
-                     <td id="inchi_{{ value.0.id_log }}"><strong>Inchi : </strong>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}N/A{% endif %}</td>
-                     <script type="text/javascript">
-                        var str = document.getElementById("inchi_{{ value.0.id_log }}").innerHTML; 
-                        var res = str.replace("InChI=", "");
-                        document.getElementById("inchi_{{ value.0.id_log }}").innerHTML = res;
-                     </script>
+                     <td><strong>Inchi : </strong>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}N/A{% endif %}</td>
                      <td><strong>Software : </strong>{% if value.0.software != "Null" or value.0.software == 0 %}{{ value.0.software }}{% else %}N/A{% endif %}</td>
                      <td><strong>Basis set name : </strong>{% if value.0.basis_set_name != "Null" or value.0.basis_set_name == 0 %}{{ value.0.basis_set_name }}{% else %}N/A{% endif %}</td>
                      <td><strong>Solvatation method : </strong>{% if value.0.solvatation_method != "Null" or value.0.solvatation_method == 0 %}{{ value.0.solvatation_method }}{% else %}N/A{% endif %}</td>
@@ -85,19 +81,13 @@
 <script>
   $(document).ready(function(){
     var nbresult = {{ results.nbresult }}
+    console.log(nbresult)
     var result_per_page = {{ nbrpp }}
-    console.log(result_per_page);
-    console.log(nbresult);
+    console.log(result_per_page)
     var nbpages = Math.ceil(nbresult / result_per_page)
     console.log(nbpages)
     var url = window.location.href;
     console.log(window.location.href);
-
-    console.log($(".inchi").text() + "\n");
-    $(".inchi").each(function() {
-      $(this).html($(this).html().replace("InchI=", ""));
-    });
-
     var urlParams = new URLSearchParams(window.location.search);
     console.log(urlParams);
     var actualPage = urlParams.get('page');
