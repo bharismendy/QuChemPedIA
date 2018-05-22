@@ -88,4 +88,4 @@ def query(request):
         url = reverse('details', args={'id': int(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)
 
-    return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form, 'page' : page+1})
+    return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form, 'page' : page+1, 'nbrpp' : nbrpp})
