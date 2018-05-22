@@ -115,7 +115,8 @@ $(document).ready(function() {
 		
 		function computationalDetailsEtResults(results){
 			
-			// computational details category
+					var htm;
+// computational details category
 					if(results.comp_details){
 						var html = "<div class=\"card mt-3\">"
 												+"<div class=\"card-header\">"
@@ -146,7 +147,7 @@ $(document).ready(function() {
 						}
 						html += "</div>"
 							+"</div>";
-						$("#ficheMolecule").append(html);
+						htm = html;
 					}
 
 
@@ -157,7 +158,9 @@ $(document).ready(function() {
 													+"<h5>Results</h5>"
 												+"</div><div id=\"reultsSubList\">";
 						html += "</div></div>";
-						$("#ficheMolecule").append(html);
+						htm += html;
+						$("#ficheMolecule").empty();
+						$("#ficheMolecule").append(htm);
 					}
 
 					// la partie wavefunction dans results
