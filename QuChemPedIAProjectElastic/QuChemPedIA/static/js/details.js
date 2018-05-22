@@ -31,19 +31,6 @@ $(document).ready(function() {
 					html += '</div>'
 					$("#404error").append(html);
 				}else{
-// autorship categorya
-					if(results.metadata){
-						var html = "<div class=\"card mt-3\">"
-												+"<div class=\"card-header\">"
-													+"<h5>Authorship</h5>"
-												+"</div>"
-												+"<div class=\"container\">";
-						if(results.metadata.log_file) html += "<div class=\"row\"><div class=\"col\"><b>Original log file</b></div><div class=\"col\">"+results.metadata.log_file+"</div></div>";
-						if(results.metadata.primary_author) html += "<div class=\"row\"><div class=\"col\"><b>Primary author</b></div><div class=\"col\">"+results.metadata.primary_author+"</div></div>";
-						if(results.metadata.primary_author_affiliation) html += "<div class=\"row\"><div class=\"col\"><b>Affiliation</b></div><div class=\"col\">"+results.metadata.primary_author_affiliation+"</div></div>";
-						html += "</div></div>";
-						$("#autorshipMolecule").append(html);
-					}
 
 // molecule category
 					if(results.molecule){
@@ -80,7 +67,8 @@ $(document).ready(function() {
 		                    smilesDrawer.draw(tree, 'canvas', 'light', false);
 		                });
 					}
-
+					
+// associated calculations category
 					var html1 = "<div class=\"card mt-3\">"
 												+"<div class=\"card-header\">"
 													+"<h5>Associated calculations</h5>"
@@ -91,19 +79,17 @@ $(document).ready(function() {
 					$.each(recivedData.siblings, function(key,val) {
 						html1 += "<div class=\"row\"><div class=\"col\">"+val.data.metadata.log_file+"</div><div class=\"col\">"+val.data.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id="+key+" class=\"btn btn-primary myButton\">Details</button></div></div>";
 					});
-
 					html1 += "</div></div>"
-					$("#autorshipMolecule").append(html1);
-
+					$("#associatedCalculations").append(html1);
 					$("#opt").click(function() {
 						computationalDetailsEtResults(results);
 					});
-
 					$(".myButton").click(function() {
 						computationalDetailsEtResults(recivedData.siblings[parseInt(this.id)].data);
 					});
-				}	
-
+				}
+				
+				computationalDetailsEtResults(results);
 				$('[data-toggle="tooltip"]').tooltip();
 			},
 			error: function() {
@@ -113,9 +99,23 @@ $(document).ready(function() {
 		});
 		
 		
-		function computationalDetailsEtResults(results){
-			
-					var htm;
+		function computationalDetailsEtResults(results){			
+					var htm = "";
+					
+// autorship categorya
+					if(results.metadata){
+						var html = "<div class=\"card mt-3\">"
+												+"<div class=\"card-header\">"
+													+"<h5>Authorship</h5>"
+												+"</div>"
+												+"<div class=\"container\">";
+						if(results.metadata.log_file) html += "<div class=\"row\"><div class=\"col\"><b>Original log file</b></div><div class=\"col\">"+results.metadata.log_file+"</div></div>";
+						if(results.metadata.primary_author) html += "<div class=\"row\"><div class=\"col\"><b>Primary author</b></div><div class=\"col\">"+results.metadata.primary_author+"</div></div>";
+						if(results.metadata.primary_author_affiliation) html += "<div class=\"row\"><div class=\"col\"><b>Affiliation</b></div><div class=\"col\">"+results.metadata.primary_author_affiliation+"</div></div>";
+						html += "</div></div>";
+						htm += html;						
+					}
+					
 // computational details category
 					if(results.comp_details){
 						var html = "<div class=\"card mt-3\">"
@@ -147,7 +147,7 @@ $(document).ready(function() {
 						}
 						html += "</div>"
 							+"</div>";
-						htm = html;
+						htm += html;
 					}
 
 
