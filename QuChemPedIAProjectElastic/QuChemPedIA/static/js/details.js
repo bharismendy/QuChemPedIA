@@ -54,9 +54,13 @@ $(document).ready(function() {
 													+"<h5>Molecule</h5>"
 												+"</div>"
 												+"<ul class=\"list-group list-group-flush\">";
+
 						//if(cid) html += "<li class=\"list-group-item\"><b>CID :</b>"+cid+"</li>";
 						if(results.molecule.iupac) html += "<li class=\"list-group-item\"><b>Iupac :</b>"+results.molecule.iupac+"</li>";
-						if(results.molecule.inchi) html += "<li  data-toggle=\"tooltip\" title=\"International Chemical Identifier ou InChI (en français : Identifiant chimique international)\" class=\"list-group-item\"><b>InChI :</b>"+results.molecule.inchi+"</li>";
+						if(results.molecule.inchi) {
+							var inchi = (results.molecule.inchi).replace("InChI=", "");
+							html += "<li  data-toggle=\"tooltip\" title=\"International Chemical Identifier ou InChI (en français : Identifiant chimique international)\" class=\"list-group-item\"><b>InChI :</b>"+inchi+"</li>";
+						}
 						if(results.molecule.can) html += "<li class=\"list-group-item\"><b>CanSMILES :</b>"+results.molecule.can+"</li>";
 						if(results.molecule.monoisotopic_mass) html += "<li class=\"list-group-item\"><b>Monoisotopic mass :</b>"+results.molecule.monoisotopic_mass+"</li>";
 						if(results.molecule.formula) html += "<li class=\"list-group-item\"><b>Formula :</b>"+results.molecule.formula+"</li>";
