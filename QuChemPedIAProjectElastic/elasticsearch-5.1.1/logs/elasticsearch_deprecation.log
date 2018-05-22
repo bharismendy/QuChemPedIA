@@ -33,4 +33,8 @@
 [2018-05-18T10:14:02,718][WARN ][o.e.d.s.g.GroovyScriptEngineService] [groovy] scripts are deprecated, use [painless] scripts instead
 [2018-05-18T10:19:09,311][WARN ][o.e.d.s.g.GroovyScriptEngineService] [groovy] scripts are deprecated, use [painless] scripts instead
 >>>>>>> 01b68ec14782930f6b8a6b7b15f09f29622fe239
+<<<<<<< HEAD
 [2018-05-22T09:56:25,605][WARN ][o.e.d.s.g.GroovyScriptEngineService] [groovy] scripts are deprecated, use [painless] scripts instead
+=======
+[2018-05-18T14:43:42,563][WARN ][o.e.d.s.g.GroovyScriptEngineService] [groovy] scripts are deprecated, use [painless] scripts instead
+>>>>>>> 422e30a03386358d8f57e4cce696a4262273058a
