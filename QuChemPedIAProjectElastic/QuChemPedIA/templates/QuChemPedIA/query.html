@@ -59,37 +59,46 @@
               -->
               </div>
               <div class="col-lg-7">
-                <!-- Partie détails -->
-                <div class="row">
-                  <div class="col-lg">
-
+              <!-- Partie détails -->
+                <div id="inchi_smiles_cid" class="row">
+                <!-- En fonction du critère de recherche afficher InChi ou formule ou CID - Par défault : InChi -->
+                  <div class="container row">
+                    <div class="col">
+                      <strong>Inchi: </strong>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}N/A{% endif %}
+                      <strong>Cansmiles: </strong>{% if value.0.cansmiles != "Null" or value.0.cansmiles == 0 %}{{ value.0.cansmiles }}{% else %}N/A{% endif %}
+                      <strong>CID: </strong>{% if value.0.cid != "Null" or value.0.cid == 0 %}{{ value.0.cid }}{% else %}N/A{% endif %}
+                    </div>
                   </div>
                 </div>
-                <table class='table borderless table-condensed table-sm tableformat'>
-                  <tbody>
-                   <tr>
-                     <td><strong>Inchi : </strong>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}N/A{% endif %}</td>
-                     <td><strong>Software : </strong>{% if value.0.software != "Null" or value.0.software == 0 %}{{ value.0.software }}{% else %}N/A{% endif %}</td>
-                     <td><strong>Basis set name : </strong>{% if value.0.basis_set_name != "Null" or value.0.basis_set_name == 0 %}{{ value.0.basis_set_name }}{% else %}N/A{% endif %}</td>
-                     <td><strong>Solvatation method : </strong>{% if value.0.solvatation_method != "Null" or value.0.solvatation_method == 0 %}{{ value.0.solvatation_method }}{% else %}N/A{% endif %}</td>
-                     <td><strong>Charge : </strong>{% if value.0.charge != "Null" or value.0.charge == 0 %}{{ value.0.charge }}{% else %}N/A{% endif %}</td>
-                   </tr>
-                   <tr>
-                     <td><strong>Cansmiles : </strong>{% if value.0.cansmiles != "Null" or value.0.cansmiles == 0 %}{{ value.0.cansmiles }}{% else %}N/A{% endif %}</td>
-                     <td><strong>Theory : </strong>{% if value.0.theory != "Null" or value.0.theory == 0 %}{{ value.0.theory }}{% else %}N/A{% endif %}</td>
-                     <td><strong>Basis set size : </strong>{% if value.0.basis_set_size != "Null" or value.0.basis_set_size == 0 %}{{ value.0.basis_set_size }}{% else %}N/A{% endif %}</td>
-                     <td><strong>Solvent : </strong>{% if value.0.solvent != "Null" or value.0.solvent == 0 %}{{ value.0.solvent }}{% else %}N/A{% endif %}</td>
-                     <td><strong>Multiplicity : </strong>{% if value.0.multiplicity != "Null" or value.0.multiplicity == 0 %}{{ value.0.multiplicity }}{% else %}N/A{% endif %}</td>
-                   </tr>
-                   <tr>
-                     <td><strong>Job type : </strong>{% if value.0.job_type != "Null" or value.0.job_type == 0 %}{{ value.0.job_type }}{% else %}N/A{% endif %}</td>
-                     <td><strong>Functionnal : </strong>{% if value.0.functionnal != "Null" or value.0.functionnal == 0 %}{{ value.0.functionnal }}{% else %}N/A{% endif %}</td>
-                     <td></td>
-                     <td></td>
-                     <td><strong>Ending energy : </strong>{% if value.0.ending_energy != "Null" or value.0.ending_energy == 0 %}{{ value.0.ending_energy }}{% else %}N/A{% endif %}</td>
-                   </tr>
-                 </tbody>
-                </table>
+                <div id="query_details" class="row">
+                  <div class="container row">
+                    <div class="col">
+                      <strong>Charge : </strong>{% if value.0.charge != "Null" or value.0.charge == 0 %}{{ value.0.charge }}{% else %}N/A{% endif %}
+                    </div>
+                    <div class="col">
+                      <strong>Multiplicity: </strong>{% if value.0.multiplicity != "Null" or value.0.multiplicity == 0 %}{{ value.0.multiplicity }}{% else %}N/A{% endif %}
+                    </div>
+                  </div>
+                  <div class="container row">
+                    <div class="col">
+                      <strong>{% if value.0.software != "Null" or value.0.software == 0 %}{{ value.0.software }}{% else %}N/A{% endif %}</strong>
+                    </div>
+                    <div class="col">
+                      {% if value.0.theory == "DFT" %}{{ value.0.functionnal }}{% else %}{{ value.0.theory }}/{{ value.0.functionnal }}{% endif %}/<strong>Basis set name : </strong>{% if value.0.basis_set_name != "Null" or value.0.basis_set_name == 0 %}{{ value.0.basis_set_name }}{% else %}N/A{% endif %}({% if value.0.basis_set_size != "Null" or value.0.basis_set_size == 0 %}{{ value.0.basis_set_size }}{% else %}N/A{% endif %})
+                    </div>
+                  </div>
+                  <div class="container row">
+                    <div class="col">
+                      <strong>Solvent : </strong>{% if value.0.solvent != "Null" or value.0.solvent == 0 %}{{ value.0.solvent }}{% else %}N/A{% endif %}
+                      {% if value.0.solvent != "Gas" %} / <strong>Solvatation method : </strong>{% if value.0.solvatation_method != "Null" or value.0.solvatation_method == 0 %}{{ value.0.solvatation_method }}{% else %}N/A{% endif %}{% else %}{% endif %}
+                    </div>
+                  </div>
+                  <div class="container row">
+                    <div class="col">
+                      <strong>Ending energy : </strong>{% if value.0.ending_energy != "Null" or value.0.ending_energy == 0 %}{{ value.0.ending_energy }}{% else %}N/A{% endif %}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
