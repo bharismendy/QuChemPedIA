@@ -54,6 +54,7 @@ $(document).ready(function() {
 													+"<h5>Molecule</h5>"
 												+"</div>"
 												+"<ul class=\"list-group list-group-flush\">";
+
 						//if(cid) html += "<li class=\"list-group-item\"><b>CID :</b>"+cid+"</li>";
 						if(results.molecule.iupac) html += "<li class=\"list-group-item\"><b>Iupac <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span>  :</b>"+results.molecule.iupac+"</li>";
 						if(results.molecule.inchi) html += "<li class=\"list-group-item\"><b>InChI <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span>  :</b>"+results.molecule.inchi+"</li>";
