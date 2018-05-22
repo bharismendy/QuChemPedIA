@@ -5,6 +5,7 @@ from QuChemPedIA.search import *
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 import urllib.parse
+import math
 
 
 def build_url(*args, **kwargs):
@@ -88,4 +89,4 @@ def query(request):
         url = reverse('details', args={'id': int(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)
 
-    return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form, 'page' : page+1, 'nbrpp' : nbrpp})
+    return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form, 'page' : page+1, 'nbrpp' : nbrpp, 'nbrpages' : math.ceil(test_result['nbresult'] / nbrpp)})

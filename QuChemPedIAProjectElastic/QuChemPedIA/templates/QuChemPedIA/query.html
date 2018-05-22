@@ -75,17 +75,14 @@
   {% endif %}
 <div id="pagination">
   <i id="btn-previous" class="fa fa-angle-left" style="font-size:24px"></i>
-  <span>Page : {{ page }}</span>
+  <span>Page : {{ page }} / {{nbrpages}} </span>
   <i id="btn-next" class="fa fa-angle-right" style="font-size:24px"></i>
 </div>
 <script>
   $(document).ready(function(){
-    var nbresult = {{ results.nbresult }}
-    console.log(nbresult)
-    var result_per_page = {{ nbrpp }}
-    console.log(result_per_page)
-    var nbpages = Math.ceil(nbresult / result_per_page)
-    console.log(nbpages)
+    var nbresult = {{ results.nbresult }};
+    var result_per_page = {{ nbrpp }};
+    var nbrpages = {{nbrpages}};
     var url = window.location.href;
     console.log(window.location.href);
     var urlParams = new URLSearchParams(window.location.search);
@@ -97,7 +94,7 @@
       actualPage = 0;
     };
     console.log(actualPage);
-    if ( actualPage < nbpages - 1){
+    if ( actualPage < nbrpages - 1){
       $('#btn-next').removeClass('fa-disabled');
       $("#btn-next").click(function(){
         actualPage++;
