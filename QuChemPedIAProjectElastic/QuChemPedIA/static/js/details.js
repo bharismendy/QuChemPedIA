@@ -32,7 +32,7 @@ $(document).ready(function() {
 					html += '</div>'
 					$("#404error").append(html);
 				}else{
-					// autorship categorya
+// autorship categorya
 					if(results.metadata){
 						var html = "<div class=\"card mt-3\">"
 												+"<div class=\"card-header\">"
@@ -47,7 +47,7 @@ $(document).ready(function() {
 						$("#autorshipMolecule").append(html);
 					}
 
-					// molecule category
+// molecule category
 					if(results.molecule){
 						var html = "<div class=\"card mt-3\">"
 												+"<div class=\"card-header\">"
@@ -56,14 +56,11 @@ $(document).ready(function() {
 												+"<ul class=\"list-group list-group-flush\">";
 
 						//if(cid) html += "<li class=\"list-group-item\"><b>CID :</b>"+cid+"</li>";
-						if(results.molecule.iupac) html += "<li class=\"list-group-item\"><b>Iupac :</b>"+results.molecule.iupac+"</li>";
-						if(results.molecule.inchi) {
-							var inchi = (results.molecule.inchi).replace("InChI=", "");
-							html += "<li  data-toggle=\"tooltip\" title=\"International Chemical Identifier ou InChI (en français : Identifiant chimique international)\" class=\"list-group-item\"><b>InChI :</b>"+inchi+"</li>";
-						}
-						if(results.molecule.can) html += "<li class=\"list-group-item\"><b>CanSMILES :</b>"+results.molecule.can+"</li>";
+						if(results.molecule.iupac) html += "<li class=\"list-group-item\"><b>Iupac <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span>  :</b>"+results.molecule.iupac+"</li>";
+						if(results.molecule.inchi) html += "<li class=\"list-group-item\"><b>InChI <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span>  :</b>"+results.molecule.inchi+"</li>";
+						if(results.molecule.can) html += "<li class=\"list-group-item\"><b>CanSMILES <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span>  :</b>"+results.molecule.can+"</li>";
 						if(results.molecule.monoisotopic_mass) html += "<li class=\"list-group-item\"><b>Monoisotopic mass :</b>"+results.molecule.monoisotopic_mass+"</li>";
-						if(results.molecule.formula) html += "<li class=\"list-group-item\"><b>Formula :</b>"+results.molecule.formula+"</li>";
+						if(results.molecule.formula) html += "<li class=\"list-group-item\"><b>Formula <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span>  :</b>"+results.molecule.formula+"</li>";
 						if(results.molecule.charge || (results.molecule.charge == 0)) html += "<li class=\"list-group-item\"><b>Charge :</b>"+results.molecule.charge+"</li>";
 						if(results.molecule.multiplicity || (results.molecule.charge == 0)) html += "<li class=\"list-group-item\"><b>Spin multiplicity :</b>"+results.molecule.multiplicity+"</li>";
 						html += "</ul>"
@@ -83,7 +80,7 @@ $(document).ready(function() {
 		                });
 					}
 
-					// computational details category
+// computational details category
 					if(results.comp_details){
 						var html = "<div class=\"card mt-3\">"
 												+"<div class=\"card-header\">"
@@ -218,10 +215,8 @@ $(document).ready(function() {
 					}
 				}
 
+				$('[data-toggle="tooltip"]').tooltip();
 			}
 		});
-		
-		
-		$('[data-toggle="tooltip"]').tooltip();   
 
 });
