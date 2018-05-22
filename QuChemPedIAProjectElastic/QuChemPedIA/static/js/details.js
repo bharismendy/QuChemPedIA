@@ -81,8 +81,29 @@ $(document).ready(function() {
 		                });
 					}
 
+					var html1 = "<div class=\"card mt-3\">"
+												+"<div class=\"card-header\">"
+													+"<h5>Associated calculations</h5>"
+												+"</div>"
+												+"<div class=\"container\">";
+
+					html1 += "<div class=\"row\"><div class=\"col\">"+results.metadata.log_file+"</div><div class=\"col\">"+results.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id=\"opt\" class=\"btn btn-primary\">Details</button></div></div>";
+					$.each(recivedData.siblings, function(key,val) {
+						html1 += "<div class=\"row\"><div class=\"col\">"+val.data.metadata.log_file+"</div><div class=\"col\">"+val.data.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id="+key+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+					});
+
+					html1 += "</div></div>"
+					$("#autorshipMolecule").append(html1);
+
+					$("#opt").click(function() {
+						computationalDetailsEtResults(results);
+					});
+
+					$(".myButton").click(function() {
+						computationalDetailsEtResults(recivedData.siblings[parseInt(this.id)].data);
+					});
 				}	
-				computationalDetailsEtResults(results);
+
 				$('[data-toggle="tooltip"]').tooltip();
 			},
 			error: function() {
