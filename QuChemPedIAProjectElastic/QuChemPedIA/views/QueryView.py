@@ -80,6 +80,7 @@ def query(request):
     if results is None:
         results = '{}'
     test_result = json.loads(results)
+    nbrpages = math.ceil(test_result['nbresult'] / nbrpp)
     if test_result['nbresult'] == 0 or len(test_result) == 1:
         results = '{}'
         test_result = json.loads(results)
@@ -90,4 +91,4 @@ def query(request):
         url = reverse('details', args={'id': int(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)
 
-    return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form, 'search': search, 'page' : page+1, 'nbrpp' : nbrpp, 'nbrpages' : math.ceil(test_result['nbresult'] / nbrpp)})
+    return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form, 'search': search, 'page' : page+1, 'nbrpp' : nbrpp, 'nbrpages' : nbrpages})
