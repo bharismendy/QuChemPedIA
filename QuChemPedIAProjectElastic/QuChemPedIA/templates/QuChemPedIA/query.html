@@ -4,6 +4,7 @@
   <div class="container">
     <h2 id="result-title"> Results </h2>
       {% for key, value in results.items %}
+      {% if key != 'nbresult' %}
       <div id="list-query-group" class="list-group">
         <div class="card">
             <a href="http://127.0.0.1:8000/QuChemPedIA/details?id={{value.0.id_log}}" class="">
@@ -104,6 +105,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
   </div>
       {% else %}
