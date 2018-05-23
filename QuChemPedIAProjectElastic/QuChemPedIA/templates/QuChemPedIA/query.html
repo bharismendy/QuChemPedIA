@@ -44,27 +44,51 @@
                   </script>
                 {% endif %}
               </div>
-              <div class ="col-lg-2">
+              <div class ="col-lg-1">
                 <div class="row">
 
-                <input type="checkbox" class="form-check-input" id="OPT" disabled {% if 'OPT' in value.0.job_type %} checked="checked" {%endif%}>
-                <label for="OPT" class="disabled form-check-label">OPT</label>
+                  {% if 'OPT' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="OPT" class="form-check-label">&nbsp;OPT</label>
 
-              </div>
+                </div>
                 <div class="row">
-                <input type="checkbox" class="form-check-input" id="FREQ" disabled {% if 'FREQ' in value.0.job_type %} checked="checked" {%endif%}>
-                <label for="FREQ" class="disabled form-check-label">FREQ</label>
+                  {% if 'FREQ' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="FREQ" class="form-check-label">&nbsp;FREQ</label>
                 </div>
-                  <div class="row">
-                <input type="checkbox" class="form-check-input" id="TD" disabled {% if 'TD' in value.0.job_type %} checked="checked" {%endif%}>
-                <label for="TD" class="disabled form-check-label">TD</label>
+                <div class="row">
+                  {% if 'TD' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="TD" class="form-check-label">&nbsp;TD</label>
                 </div>
-                  <div class="row">
-                <input type="checkbox" class="form-check-input" id="OPT_ES" disabled {% if 'OPT_ES' in value.0.job_type %} checked="checked" {%endif%}>
-                <label for="OPT_ES" class="disabled form-check-label">OPT_ES</label>
+                <div class="row">
+                  {% if 'OPT_ES' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="OPT_ES" class="form-check-label">&nbsp;OPT_ES</label>
+                </div>
+                <div class="row">
+                  {% if 'SP' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="SP" class="form-check-label">&nbsp;SP</label>
                 </div>
               </div>
-              <div class="col-lg-7">
+              <div class="col-lg-8">
               <!-- Partie détails -->
                 <div id="inchi_smiles_cid" class="row">
                 <!-- En fonction du critère de recherche afficher InChi ou formule ou CID - Par défault : InChi -->
@@ -129,15 +153,25 @@
       </div>
       {% endif %}
       {% endfor %}
+      <div id="pagination">
+        <i id="btn-previous" class="fa fa-angle-left" style="font-size:24px"></i>
+        <span>Page : {{ page }} / {{nbrpages}} </span>
+        <i id="btn-next" class="fa fa-angle-right" style="font-size:24px"></i>
+      </div>
   </div>
       {% else %}
-          <p>no result</p>
+      <div class='container' style='margin-top:50px;'>
+        <div class="row row404">
+          <h1>We couldn't find any molecule matching your search.</h1>
+        </div>
+        <div class="row row404">
+          {% load static %}
+          <div class="col-xs-4 "><img src="{% static "media/confused_scientist.png" %}" style="height:300px;"></div>
+          <div class="col-xs-4"><img src="{% static "media/molecule.png" %}" style="height:300px;"></div>
+        </div>
+      </div>
   {% endif %}
-<div id="pagination">
-  <i id="btn-previous" class="fa fa-angle-left" style="font-size:24px"></i>
-  <span>Page : {{ page }} / {{nbrpages}} </span>
-  <i id="btn-next" class="fa fa-angle-right" style="font-size:24px"></i>
-</div>
+
 <script>
   $(document).ready(function(){
     var nbresult = {{ results.nbresult }};
