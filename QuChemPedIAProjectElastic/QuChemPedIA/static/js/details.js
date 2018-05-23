@@ -14,6 +14,7 @@ $(document).ready(function() {
 		   success: function(recivedData) {//ce que l'on fait si on a le json
 				console.log("Success");
 				var results;
+				var ancienneCouleure;
 				if($.urlParam('id')=="demo")
 					results = recivedData.data;
 				else
@@ -75,27 +76,33 @@ $(document).ready(function() {
 												+"</div>"
 												+"<div class=\"container\">";
 
-					html1 += "<div class=\"row\"><div class=\"col\">"+results.metadata.log_file+"</div><div class=\"col\">"+results.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id=\"opt\" class=\"btn btn-primary\">Details</button></div></div>";
+					html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+results.metadata.log_file+"</div><div class=\"col\">"+results.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id=\"opt\" class=\"btn btn-primary\">Details</button></div></div>";
 					$.each(recivedData.siblings, function(key,val) {
-						html1 += "<div class=\"row\"><div class=\"col\">"+val.data.metadata.log_file+"</div><div class=\"col\">"+val.data.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id="+key+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+val.data.metadata.log_file+"</div><div class=\"col\">"+val.data.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id="+key+" class=\"btn btn-primary myButton\">Details</button></div></div>";
 					});
-					html1 += "</div></div>"
+					html1 += "</div></div>";
+					
 					$("#associatedCalculations").append(html1);
 					$("#opt").click(function() {
 						$("#"+this.id).parent().parent().parent().children().css( "background-color", "white" );
 						$("#"+this.id).parent().parent().css( "background-color", "#e5e7e9" );
+						ancienneCouleure = "#e5e7e9";
 						computationalDetailsEtResults(results);
 					});
 					$(".myButton").click(function() {
 						$("#"+this.id).parent().parent().parent().children().css( "background-color", "white" );
 						$("#"+this.id).parent().parent().css( "background-color", "#e5e7e9" );
+						ancienneCouleure = "#e5e7e9";
 						computationalDetailsEtResults(recivedData.siblings[parseInt(this.id)].data);
 					});
 				}
 				
+				//$(".mySiblingsRow").click(function(){ $(this).find("button").click(); });
+				
 				computationalDetailsEtResults(results);
 				$("#opt").parent().parent().css( "background-color", "#e5e7e9" );
 				$('[data-toggle="tooltip"]').tooltip();
+				$(".mySiblingsRow").hover(function(){ancienneCouleure = $(this).css( "background-color");$(this).css( "background-color", "#e5e7e9" );},function(){$(this).css( "background-color", ancienneCouleure );});
 			},
 			error: function() {
 				console.log("ERROR");
