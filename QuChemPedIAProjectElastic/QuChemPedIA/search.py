@@ -26,25 +26,21 @@ def _search_to_json(search,nbresult):
         try:
             iupac = hit.molecule.iupac
         except Exception as error:
-            print(error)
             iupac = "Null"
 
         try:
             basis_set_name = hit.comp_details.general.basis_set_name
         except Exception as error:
-            print(error)
             basis_set_name = "Null"
 
         try:
             solvatation_method = hit.comp_details.general.solvent_reaction_field
         except Exception as error:
-            print(error)
             solvatation_method = "Null"
 
         try:
             solvent = hit.comp_details.general.solvent
         except Exception as error:
-            print(error)
             solvent = "GAS"
 
         try:
@@ -58,6 +54,7 @@ def _search_to_json(search,nbresult):
                 "theory": hit.comp_details.general.all_unique_theory[0],
                 "functionnal": hit.comp_details.general.functional,
                 "basis_set_name": basis_set_name,
+                "formula": hit.molecule.formula,
                 "basis_set_size": hit.comp_details.general.basis_set_size,
                 "charge": hit.molecule.charge,
                 "multiplicity": hit.molecule.multiplicity,
