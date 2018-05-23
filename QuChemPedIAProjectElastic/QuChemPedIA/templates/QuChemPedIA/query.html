@@ -70,31 +70,26 @@
                 <!-- En fonction du critère de recherche afficher InChi ou formule ou CID - Par défault : InChi -->
                   <div class="container row">
                     <div id="molecule_{{ value.0.id_log }}" class="col molecule_name">
+                      <div id="inchi_{{ value.0.id_log }}"></div>
+                      <div id="cansmiles_{{ value.0.id_log }}"></div>
+                      <div id="cid_{{ value.0.id_log }}"></div>
                       <script>
                       $(document).ready(function() {
                           var url = window.location.href;
                           var urlParams = new URLSearchParams(window.location.search);
                           var actualSearch = urlParams.get('typeQuery');
-                          if(actualSearch == "InChi"){
+                          if (actualSearch == "SMILES") {
                             var x = document.getElementById("inchi_{{ value.0.id_log }}");
-                            x.innerHTML = "<strong>InChi: </strong><span>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}N/A{% endif %}<span>";
-                          } else if (actualSearch == "SMILES") {
-                            var x = document.getElementById("inchi_{{ value.0.id_log }}");
-                            x.innerHTML = "<strong>Canonical Smiles: </strong><span>{% if value.0.cansmiles != "Null" or value.0.cansmiles == 0 %}{{ value.0.cansmiles }}{% else %}N/A{% endif %}<span>";
+                            x.innerHTML = "<strong>Canonical Smiles: </strong><span>{% if value.0.cansmiles != "Null" or value.0.cansmiles == 0 %}{{ value.0.cansmiles }}{% else %}N/A{% endif %}</span>";
                           } else if (actualSearch == "CID") {
                             var x = document.getElementById("inchi_{{ value.0.id_log }}");
-                            x.innerHTML = "<strong>CID: </strong><span>{% if value.0.cid != "Null" or value.0.cid == 0 %}{{ value.0.cid }}{% else %}N/A{% endif %}<span>";
+                            x.innerHTML = "<strong>CID: </strong><span>{% if value.0.cid != "Null" or value.0.cid == 0 %}{{ value.0.cid }}{% else %}N/A{% endif %}</span>";
                           } else {
                             var x = document.getElementById("inchi_{{ value.0.id_log }}");
-                            x.innerHTML = "<strong>InChi: </strong><span>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}N/A{% endif %}<span>";
+                            $("#inchi_{{ value.0.id_log }}").html("<strong>InChi: </strong><span>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}N/A{% endif %}</span>");
                           };
                         });
                       </script>
-
-                      <p id="inchi_{{ value.0.id_log }}"></p>
-                      <p id="cansmiles_{{ value.0.id_log }}"></p>
-                      <p id="cid_{{ value.0.id_log }}"></p>
-
                     </div>
                   </div>
                 </div>
