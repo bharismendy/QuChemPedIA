@@ -76,9 +76,15 @@ $(document).ready(function() {
 												+"</div>"
 												+"<div class=\"container\">";
 
-					html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+results.metadata.log_file+"</div><div class=\"col\">"+results.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id=\"opt\" class=\"btn btn-primary\">Details</button></div></div>";
+					html1 += "<div class=\"row\"><div class=\"col\"><b>File</b></div><div class=\"col\"><b>Author</b></div><div class=\"col\"></div></div>";
+					html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+results.metadata.log_file+"</div><div class=\"col\">"+(results.metadata.primary_author?results.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id=\"opt\" class=\"btn btn-primary\">Details</button></div></div>";
 					$.each(recivedData.siblings, function(key,val) {
-						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+val.data.metadata.log_file+"</div><div class=\"col\">"+val.data.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id="+key+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+val.data.metadata.log_file+"</div><div class=\"col\">"+(val.data.metadata.primary_author?val.data.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id="+key+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+						if(val.job_type=="TD") {
+							$.each(val.siblings, function(key2,val2) {
+								html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">&nbsp;&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.data.metadata.log_file+"</div><div class=\"col\">"+(val2.data.metadata.primary_author?val2.data.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id="+key+"_"+key2+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+							});
+						}
 					});
 					html1 += "</div></div>";
 					
@@ -90,10 +96,15 @@ $(document).ready(function() {
 						computationalDetailsEtResults(results);
 					});
 					$(".myButton").click(function() {
+						var arrayKeys = this.id.split("_");
 						$("#"+this.id).parent().parent().parent().children().css( "background-color", "white" );
 						$("#"+this.id).parent().parent().css( "background-color", "#e5e7e9" );
 						ancienneCouleure = "#e5e7e9";
-						computationalDetailsEtResults(recivedData.siblings[parseInt(this.id)].data);
+						if(arrayKeys.length==1) {
+							computationalDetailsEtResults(recivedData.siblings[parseInt(this.id)].data);
+						} else {
+							computationalDetailsEtResults(recivedData.siblings[arrayKeys[0]].siblings[arrayKeys[1]].data);
+						}
 					});
 				}
 				
