@@ -24,6 +24,7 @@ def query(request):
     """
     query_form = QueryForm(request.GET or None)
     results = None
+    search = None
     try:
         page = int(request.GET.get('page'))
     except Exception as error:
@@ -89,4 +90,4 @@ def query(request):
         url = reverse('details', args={'id': int(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)
 
-    return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form, 'page' : page+1, 'nbrpp' : nbrpp, 'nbrpages' : math.ceil(test_result['nbresult'] / nbrpp)})
+    return render(request, 'QuChemPedIA/query.html', {'results': test_result, 'query_form': query_form, 'search': search, 'page' : page+1, 'nbrpp' : nbrpp, 'nbrpages' : math.ceil(test_result['nbresult'] / nbrpp)})

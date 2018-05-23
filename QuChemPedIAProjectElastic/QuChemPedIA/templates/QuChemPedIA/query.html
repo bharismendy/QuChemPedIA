@@ -40,33 +40,39 @@
               </div>
               <div class ="col-lg-2">
                 <!-- Partie calculs disponibles - TOI COCO <3 tu travaille ici regarde
-                ………………………………………._¸„„„„_
-                …………………….…………...„--~*'¯…….'\
-                ………….…………………… („-~~--„¸_….,/ì'Ì
-                …….…………………….¸„-^"¯ : : : : :¸-¯"¯/'
-                ……………………¸„„-^"¯ : : : : : : : '\¸„„,-"
-                **¯¯¯'^^~-„„„----~^*'"¯ : : : : : : : : : :¸-"
-                .:.:.:.:.„-^" : : : : : : : : : : : : : : : : :„-"
-                :.:.:.:.:.:.:.:.:.:.: : : : : : : : : : ¸„-^¯
-                .::.:.:.:.:.:.:.:. : : : : : : : ¸„„-^¯
-                :.' : : '\ : : : : : : : ;¸„„-~"
-                :.:.:: :"-„""***/*'ì¸'¯
-                :.': : : : :"-„ : : :"\
-                .:.:.: : : : :" : : : : \,
-                :.: : : : : : : : : : : : 'Ì
-                : : : : : : :, : : : : : :/
-                "-„_::::_„-*__„„~"
-              -->
+                -->
               </div>
               <div class="col-lg-7">
               <!-- Partie détails -->
                 <div id="inchi_smiles_cid" class="row">
                 <!-- En fonction du critère de recherche afficher InChi ou formule ou CID - Par défault : InChi -->
                   <div class="container row">
-                    <div class="col">
-                      <strong>Inchi: </strong>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}N/A{% endif %}
-                      <strong>Cansmiles: </strong>{% if value.0.cansmiles != "Null" or value.0.cansmiles == 0 %}{{ value.0.cansmiles }}{% else %}N/A{% endif %}
-                      <strong>CID: </strong>{% if value.0.cid != "Null" or value.0.cid == 0 %}{{ value.0.cid }}{% else %}N/A{% endif %}
+                    <div id="molecule_{{ value.0.id_log }}" class="col molecule_name">
+                      <script>
+                      $(document).ready(function() {
+                          var url = window.location.href;
+                          var urlParams = new URLSearchParams(window.location.search);
+                          var actualSearch = urlParams.get('typeQuery');
+                          if(actualSearch == "InChi"){
+                            var x = document.getElementById("inchi_{{ value.0.id_log }}");
+                            x.innerHTML = "<strong>InChi: </strong><span>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}N/A{% endif %}<span>";
+                          } else if (actualSearch == "SMILES") {
+                            var x = document.getElementById("inchi_{{ value.0.id_log }}");
+                            x.innerHTML = "<strong>Canonical Smiles: </strong><span>{% if value.0.cansmiles != "Null" or value.0.cansmiles == 0 %}{{ value.0.cansmiles }}{% else %}N/A{% endif %}<span>";
+                          } else if (actualSearch == "CID") {
+                            var x = document.getElementById("inchi_{{ value.0.id_log }}");
+                            x.innerHTML = "<strong>CID: </strong><span>{% if value.0.cid != "Null" or value.0.cid == 0 %}{{ value.0.cid }}{% else %}N/A{% endif %}<span>";
+                          } else {
+                            var x = document.getElementById("inchi_{{ value.0.id_log }}");
+                            x.innerHTML = "<strong>InChi: </strong><span>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}N/A{% endif %}<span>";
+                          };
+                        });
+                      </script>
+
+                      <p id="inchi_{{ value.0.id_log }}"></p>
+                      <p id="cansmiles_{{ value.0.id_log }}"></p>
+                      <p id="cid_{{ value.0.id_log }}"></p>
+
                     </div>
                   </div>
                 </div>
@@ -120,23 +126,24 @@
     var result_per_page = {{ nbrpp }};
     var nbrpages = {{nbrpages}};
     var url = window.location.href;
-    console.log(window.location.href);
     var urlParams = new URLSearchParams(window.location.search);
-    console.log(urlParams);
     var actualPage = urlParams.get('page');
-    console.log(actualPage);
-    console.log(urlParams.toString());
+    var actualSearch = urlParams.get('typeQuery');
+
+    $(".molecule_name").children().each(function(){
+      if(this.id.split("_")[0] == "inchi"){
+        $("#"+this.id+" span").html($("#"+this.id+" span").text().replace("InChI=",""));
+      }
+    });
+
     if(actualPage == null){
       actualPage = 0;
     };
-    console.log(actualPage);
     if ( actualPage < nbrpages - 1){
       $('#btn-next').removeClass('fa-disabled');
       $("#btn-next").click(function(){
         actualPage++;
-        console.log(actualPage);
         urlParams.set('page',actualPage);
-        console.log(location.protocol + '//' + location.host + location.pathname);
         var newUrl = location.protocol + '//' + location.host + location.pathname + "?" + urlParams.toString();
         window.location.href = newUrl;
       });
@@ -147,9 +154,7 @@
       $('#btn-previous').removeClass('fa-disabled');
       $("#btn-previous").click(function(){
         actualPage--;
-        console.log(actualPage);
         urlParams.set('page',actualPage);
-        console.log(location.protocol + '//' + location.host + location.pathname);
         var newUrl = location.protocol + '//' + location.host + location.pathname + "?" + urlParams.toString();
         window.location.href = newUrl;
       });
