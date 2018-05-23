@@ -18,7 +18,6 @@
 	
 ### librairie utilisé :
 	elasticsearch_dsl
-	django-rest-framework
 	elasticsearch
 	psycopg2-binary==2.7.4
     django-bootstrap4
