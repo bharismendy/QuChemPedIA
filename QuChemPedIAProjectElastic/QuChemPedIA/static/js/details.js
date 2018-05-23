@@ -87,6 +87,8 @@ $(document).ready(function() {
 					html1 += "</div></div>"
 					$("#associatedCalculations").append(html1);
 					$("#opt").click(function() {
+						$("#"+this.id).parent().parent().parent().children().css( "background-color", "white" );
+						$("#"+this.id).parent().parent().css( "background-color", "#e5e7e9" );
 						computationalDetailsEtResults(results);
 					});
 					$(".myButton").click(function() {
@@ -96,10 +98,13 @@ $(document).ready(function() {
 						} else {
 							computationalDetailsEtResults(recivedData.siblings[arrayKeys[0]].siblings[arrayKeys[1]].data);
 						}
+						$("#"+this.id).parent().parent().parent().children().css( "background-color", "white" );
+						$("#"+this.id).parent().parent().css( "background-color", "#e5e7e9" );
 					});
 				}
 				
 				computationalDetailsEtResults(results);
+				$("#opt").parent().parent().css( "background-color", "#e5e7e9" );
 				$('[data-toggle="tooltip"]').tooltip();
 			},
 			error: function() {
