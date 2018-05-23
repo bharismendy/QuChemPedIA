@@ -78,6 +78,11 @@ $(document).ready(function() {
 					html1 += "<div class=\"row\"><div class=\"col\">"+results.metadata.log_file+"</div><div class=\"col\">"+results.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id=\"opt\" class=\"btn btn-primary\">Details</button></div></div>";
 					$.each(recivedData.siblings, function(key,val) {
 						html1 += "<div class=\"row\"><div class=\"col\">"+val.data.metadata.log_file+"</div><div class=\"col\">"+val.data.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id="+key+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+						if(val.job_type=="TD") {
+							$.each(val.siblings, function(key2,val2) {
+								html1 += "<div class=\"row\"><div class=\"col\">&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.data.metadata.log_file+"</div><div class=\"col\">"+val2.data.metadata.primary_author+"</div><div class=\"col\"><button type=\"button\" id="+key+";"+key2+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+							});
+						}
 					});
 					html1 += "</div></div>"
 					$("#associatedCalculations").append(html1);
@@ -85,7 +90,12 @@ $(document).ready(function() {
 						computationalDetailsEtResults(results);
 					});
 					$(".myButton").click(function() {
-						computationalDetailsEtResults(recivedData.siblings[parseInt(this.id)].data);
+						var arrayKeys = this.id.split(";");
+						if(arrayKeys.length==1) {
+							computationalDetailsEtResults(recivedData.siblings[parseInt(this.id)].data);
+						} else {
+							computationalDetailsEtResults(recivedData.siblings[arrayKeys[0]].siblings[arrayKeys[1]].data);
+						}
 					});
 				}
 				
