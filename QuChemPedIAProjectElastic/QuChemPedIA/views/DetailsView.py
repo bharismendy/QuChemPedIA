@@ -29,6 +29,10 @@ def details_json(request,id):
             json_data = open('QuChemPedIA/static/demo.json')
             results = json.load(json_data)  # deserialize it
             json_data.close()
+        elif id == "opt":
+            json_data = open('QuChemPedIA/static/OPT_only_freq_TD.json')
+            results = json.load(json_data)  # deserialize it
+            json_data.close()
         else :
             try:
                 results = search_id(id)

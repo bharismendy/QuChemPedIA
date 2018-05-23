@@ -133,6 +133,23 @@ strong {
 #tableMulliken_partial_charges tr{border-bottom : 1px solid;}
 #tableMulliken_partial_charges td{width:10%;text-align:center;}
 
+
+#geometric_targets {width:45%;}
+#geometric_targets tr{border-bottom : 1px solid;}
+#geometric_targets td{width:15%;text-align:center;}
+#geometric_targets .cellulTitre{text-align:left;}
+
+#elements_3D_coords_converged {width:40%;}
+#elements_3D_coords_converged tr{border-bottom : 1px solid;}
+#elements_3D_coords_converged td{width:10%;text-align:center;}
+
+#vibrational_int {width:30%;}
+#vibrational_int tr{border-bottom : 1px solid;}
+#vibrational_int td{width:10%;text-align:center;}
+
+
+
+
 .subWavefunction{padding-bottom:4%;}
 
 .monBadge{border:1px solid blue;color:blue;cursor:pointer;}
