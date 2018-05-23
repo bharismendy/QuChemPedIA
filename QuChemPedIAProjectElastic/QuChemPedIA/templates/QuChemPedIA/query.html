@@ -4,12 +4,18 @@
   <div class="container">
     <h2 id="result-title"> Results </h2>
       {% for key, value in results.items %}
+      {% if key != 'nbresult' %}
       <div id="list-query-group" class="list-group">
         <div class="card">
             <a href="http://127.0.0.1:8000/QuChemPedIA/details?id={{value.0.id_log}}" class="">
               <div class="card-header list-group-item list-group-item-action">
-                {% if value.0.iupac != "Null" or value.0.iupac == 0 %}{{ value.0.iupac }}{% else %}N/A{% endif %}
-              </div>
+                {% if value.0.iupac != "Null" or value.0.iupac == 0 %}
+                {{ value.0.iupac }}
+                {% elif value.0.formula != "Null" %}
+                {{value.0.formula}}
+                {% else%}
+                N/A
+                {% endif %}</div>
             </a>
           <div class="card-body">
             <div class="row">
@@ -39,8 +45,24 @@
                 {% endif %}
               </div>
               <div class ="col-lg-2">
-                <!-- Partie calculs disponibles - TOI COCO <3 tu travaille ici regarde
-                -->
+                <div class="row">
+
+                <input type="checkbox" class="form-check-input" id="OPT" disabled {% if 'OPT' in value.0.job_type %} checked="checked" {%endif%}>
+                <label for="OPT" class="disabled form-check-label">OPT</label>
+
+              </div>
+                <div class="row">
+                <input type="checkbox" class="form-check-input" id="FREQ" disabled {% if 'FREQ' in value.0.job_type %} checked="checked" {%endif%}>
+                <label for="FREQ" class="disabled form-check-label">FREQ</label>
+                </div>
+                  <div class="row">
+                <input type="checkbox" class="form-check-input" id="TD" disabled {% if 'TD' in value.0.job_type %} checked="checked" {%endif%}>
+                <label for="TD" class="disabled form-check-label">TD</label>
+                </div>
+                  <div class="row">
+                <input type="checkbox" class="form-check-input" id="OPT_ES" disabled {% if 'OPT_ES' in value.0.job_type %} checked="checked" {%endif%}>
+                <label for="OPT_ES" class="disabled form-check-label">OPT_ES</label>
+                </div>
               </div>
               <div class="col-lg-7">
               <!-- Partie détails -->
@@ -110,6 +132,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
   </div>
       {% else %}
