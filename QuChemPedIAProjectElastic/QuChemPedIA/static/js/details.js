@@ -82,14 +82,19 @@ $(document).ready(function() {
 					html1 += "</div></div>"
 					$("#associatedCalculations").append(html1);
 					$("#opt").click(function() {
+						$("#"+this.id).parent().parent().parent().children().css( "background-color", "white" );
+						$("#"+this.id).parent().parent().css( "background-color", "#e5e7e9" );
 						computationalDetailsEtResults(results);
 					});
 					$(".myButton").click(function() {
+						$("#"+this.id).parent().parent().parent().children().css( "background-color", "white" );
+						$("#"+this.id).parent().parent().css( "background-color", "#e5e7e9" );
 						computationalDetailsEtResults(recivedData.siblings[parseInt(this.id)].data);
 					});
 				}
 				
 				computationalDetailsEtResults(results);
+				$("#opt").parent().parent().css( "background-color", "#e5e7e9" );
 				$('[data-toggle="tooltip"]').tooltip();
 			},
 			error: function() {
