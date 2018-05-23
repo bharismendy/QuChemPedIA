@@ -2,6 +2,16 @@ from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, Q
 import json
 
+def _get_job_type(json):
+    """
+    function that return a list of job_type from a document
+    :param json: json to analyze
+    :return: array of job_type
+    """
+    job_type = ["OPT", "FREQ"]
+
+    return job_type
+
 
 def _search_to_json(search,nbresult):
     """
@@ -53,7 +63,7 @@ def _search_to_json(search,nbresult):
                 "multiplicity": hit.molecule.multiplicity,
                 "solvatation_method": solvatation_method,
                 "solvent": solvent,
-                "job_type": "Null",
+                "job_type": _get_job_type(hit),
                 "ending_energy": hit.results.wavefunction.total_molecular_energy
             })
             i += 1
