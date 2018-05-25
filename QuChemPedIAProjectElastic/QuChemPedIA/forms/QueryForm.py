@@ -5,10 +5,10 @@ class QueryForm(forms.Form):
     """
         The purpose of this form is to make research in the elasticsearch database
     """
-    CHOICES = (('CID', 'CID'),
+    CHOICES = (('Formula', 'Formula'),
                ('InChi', 'InChi'),
                ('IUPAC', 'IUPAC'),
-               ('Formula', 'Formula'),
+               ('CID', 'CID'),
                ('SMILES', 'SMILES'),
                ('id_log', 'id_log'),
                # ('homo_alpha_energy', 'homo_alpha_energy'),
@@ -17,8 +17,8 @@ class QueryForm(forms.Form):
                # ('lumo_beta_energy', 'lumo_beta_energy')
                )
 
-    search = forms.CharField(max_length=500, label="", required=False)
-    typeQuery = forms.CharField(widget=forms.Select(choices=CHOICES,), label="", required=False,)
+    search = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), max_length=500, label="", required=False)
+    typeQuery = forms.CharField(widget=forms.Select(choices=CHOICES,attrs={'class': 'custom-select'}), label="", required=False,)
 
 
     """def clean_query(self):

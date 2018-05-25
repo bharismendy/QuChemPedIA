@@ -27,13 +27,10 @@
     QuChemPedIA
   </a>
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-    <ul class="navbar-nav">
-    <!-- pour les items de navigation -->
-    </ul>
     <form class="form-inline" action="{% url 'query' %}" method="GET">
       {% csrf_token %}
       {{ query_form.as_table }}
-      <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search</button>
+      <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
     </form>
   </div>
 </nav>

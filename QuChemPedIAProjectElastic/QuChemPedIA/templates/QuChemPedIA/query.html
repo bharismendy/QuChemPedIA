@@ -2,52 +2,59 @@
 {% block content %}
   {% if results|length >= 1 %}
   <div class="container">
-    <h2 id="result-title"> Results : {{ results.nbresult }} result(s)</h2>
-    <div id="pagination">
-      <i id="btn-previous" class="fa fa-angle-left" style="font-size:24px"></i>
-      <span>Page : {{ page }} / {{nbrpages}} </span>
-      <i id="btn-next" class="fa fa-angle-right" style="font-size:24px"></i>
+    <h2 id="result-title">{{ results.nbresult }} result{% if results.nbresult > 1 %}s{% endif %} for <strong>{{ query_form.search.value }}</strong>.</h2>
+    <div class="row">
+      <div class="col">
+      </div>
+      <div id="pagination-2" class="col">
+        <i id="btn-previous" class="fa fa-angle-left" style="font-size:24px"></i>
+        <span>Page : {{ page }} / {{nbrpages}} </span>
+        <i id="btn-next" class="fa fa-angle-right" style="font-size:24px"></i>
+      </div>
+      <div class="col text-right">
+        <div class="dropdown">
+          <span>Results per page : 10</span>
+          <i class="fa fa-angle-down" data-toggle="dropdown" style="font-size:24px"></i>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="">50</a>
+            <a class="dropdown-item" href="">20</a>
+            <a class="dropdown-item" href="">10</a>
+          </div>
+        </div>
+      </div>
     </div>
       {% for key, value in results.items %}
       {% if key != 'nbresult' %}
       <div id="list-query-group" class="list-group">
-        <div class="card">
-            <a href="http://127.0.0.1:8000/QuChemPedIA/details?id={{value.0.id_log}}" class="">
-              <div class="card-header list-group-item list-group-item-action">
-                {% if value.0.iupac != "Null" or value.0.iupac == 0 %}
-                {{ value.0.iupac }}
-                {% elif value.0.formula != "Null" %}
-                {{value.0.formula}}
-                {% else%}
-                N/A
-                {% endif %}</div>
-            </a>
-          <div class="card-body">
+        <div>
+          <div>
             <div class="row">
               <div class="col-lg-3">
                 <!-- smiles drawer -->
-                <canvas id="{{ value.0.id_log }}">
-                  Sorry, your browser doesn't support the &lt;canvas&gt; element.
-                </canvas>
-                {% if value.0.cansmiles %}
-                  <script>
-                    $(document).ready(function() {
-                      var canvasH = $("#{{ value.0.id_log }}").height();
-                      var canvasW = $("#{{ value.0.id_log }}").width();
-                        let options = {width : canvasW,
-                                       height : canvasH,
-                        };
+                <a href="http://127.0.0.1:8000/QuChemPedIA/details?id={{value.0.id_log}}" class="">
+                  <canvas id="{{ value.0.id_log }}">
+                    Sorry, your browser doesn't support the &lt;canvas&gt; element.
+                  </canvas>
+                  {% if value.0.cansmiles %}
+                    <script>
+                      $(document).ready(function() {
+                        var canvasH = $("#{{ value.0.id_log }}").height();
+                        var canvasW = $("#{{ value.0.id_log }}").width();
+                          let options = {width : canvasW,
+                                         height : canvasH,
+                          };
 
-                        // Initialize the drawer
-                        let smilesDrawer = new SmilesDrawer.Drawer(options);
+                          // Initialize the drawer
+                          let smilesDrawer = new SmilesDrawer.Drawer(options);
 
-                        SmilesDrawer.parse("{{ value.0.cansmiles }}", function(tree) {
-                              // Draw to the canvas
-                        smilesDrawer.draw(tree, '{{ value.0.id_log }}', 'light', false);
-                        });
-                    });
-                  </script>
-                {% endif %}
+                          SmilesDrawer.parse("{{ value.0.cansmiles }}", function(tree) {
+                                // Draw to the canvas
+                          smilesDrawer.draw(tree, '{{ value.0.id_log }}', 'light', false);
+                          });
+                      });
+                    </script>
+                  {% endif %}
+                </a>
               </div>
               <div class ="col-lg-1">
                 <div class="row">
@@ -99,59 +106,53 @@
                 <!-- En fonction du critère de recherche afficher InChi ou formule ou CID - Par défault : InChi -->
                   <div class="container row">
                     <div id="molecule_{{ value.0.id_log }}" class="col molecule_name">
-                      <div id="inchi_{{ value.0.id_log }}"></div>
-                      <div id="cansmiles_{{ value.0.id_log }}"></div>
-                      <div id="cid_{{ value.0.id_log }}"></div>
-                      <script>
-                      $(document).ready(function() {
-                          var url = window.location.href;
-                          var urlParams = new URLSearchParams(window.location.search);
-                          var actualSearch = urlParams.get('typeQuery');
-                          if (actualSearch == "SMILES") {
-                            var x = document.getElementById("inchi_{{ value.0.id_log }}");
-                            x.innerHTML = "<strong>Canonical Smiles: </strong><span>{% if value.0.cansmiles != "Null" or value.0.cansmiles == 0 %}{{ value.0.cansmiles }}{% else %}N/A{% endif %}</span>";
-                          } else if (actualSearch == "CID") {
-                            var x = document.getElementById("inchi_{{ value.0.id_log }}");
-                            x.innerHTML = "<strong>CID: </strong><span>{% if value.0.cid != "Null" or value.0.cid == 0 %}{{ value.0.cid }}{% else %}N/A{% endif %}</span>";
-                          } else {
-                            var x = document.getElementById("inchi_{{ value.0.id_log }}");
-                            $("#inchi_{{ value.0.id_log }}").html("<strong>InChi: </strong><span>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}N/A{% endif %}</span>");
-                          };
-                        });
-                      </script>
+                      {% if query_form.typeQuery.value ==  "InChi" %}<div id="inchi_{{ value.0.id_log }}"><strong>InChi: </strong><span>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}Unknown{% endif %}</span></div>{% endif %}
+                      {% if query_form.typeQuery.value ==  "SMILES" %}<div><strong>Canonical smiles: </strong><span>{% if value.0.cansmiles != "Null" or value.0.cansmiles == 0 %}{{ value.0.cansmiles }}{% else %}Unknown{% endif %}</span></div>{% endif %}
+                      {% if query_form.typeQuery.value ==  "CID" %}<div><strong>CID: </strong><span>{% if value.0.cid != "Null" or value.0.cid == 0 %}{{ value.0.cid }}{% else %}Unknown{% endif %}</span></div>{% endif %}
                     </div>
                   </div>
                 </div>
                 <div id="query_details" class="row">
                   <div class="container row">
-                    <div class="col">
-                      <strong>Charge : </strong>{% if value.0.charge != "Null" or value.0.charge == 0 %}{{ value.0.charge }}{% else %}N/A{% endif %}
+                    <div class="col-lg-4">
+                      <a href="http://127.0.0.1:8000/QuChemPedIA/details?id={{value.0.id_log}}" class="">
+                        <b>Formula : </b>{% if value.0.formula != "Null" %}{{value.0.formula}}{% else%}Unknown{% endif %}
+                      </a>
                     </div>
-                    <div class="col">
-                      <strong>Multiplicity: </strong>{% if value.0.multiplicity != "Null" or value.0.multiplicity == 0 %}{{ value.0.multiplicity }}{% else %}N/A{% endif %}
-                    </div>
-                  </div>
-                  <div class="container row">
-                    <div class="col">
-                      <strong>{% if value.0.software != "Null" or value.0.software == 0 %}{{ value.0.software }}{% else %}N/A{% endif %}</strong>
-                    </div>
-                    <div class="col">
-                      {% if value.0.theory == "DFT" %}{{ value.0.functionnal }}{% else %}{{ value.0.theory }}/{{ value.0.functionnal }}{% endif %}/<strong>Basis set name : </strong>{% if value.0.basis_set_name != "Null" or value.0.basis_set_name == 0 %}{{ value.0.basis_set_name }}{% else %}N/A{% endif %}({% if value.0.basis_set_size != "Null" or value.0.basis_set_size == 0 %}{{ value.0.basis_set_size }}{% else %}N/A{% endif %})
+                    <div class="col-lg-8">
+                      <a href="http://127.0.0.1:8000/QuChemPedIA/details?id={{value.0.id_log}}" class="">
+                        <b>IUPAC : </b>{% if value.0.iupac != "Null" %}{{value.0.iupac}}{% else%}Unknown{% endif %}
+                      </a>
                     </div>
                   </div>
                   <div class="container row">
-                    <div class="col">
-                      <strong>Solvent : </strong>{% if value.0.solvent != "Null" or value.0.solvent == 0 %}{{ value.0.solvent }}{% else %}N/A{% endif %}
-                      {% if value.0.solvent != "Gas" %} / <strong>Solvatation method : </strong>{% if value.0.solvatation_method != "Null" or value.0.solvatation_method == 0 %}{{ value.0.solvatation_method }}{% else %}N/A{% endif %}{% else %}{% endif %}
+                    <div class="col-lg-4">
+                      <strong>Charge : </strong>{% if value.0.charge != "Null" or value.0.charge == 0 %}{{ value.0.charge }}{% else %}Unknown{% endif %}
+                    </div>
+                    <div class="col-lg-8">
+                      {% if value.0.software != "Null" or value.0.software == 0 %}{{ value.0.software }}{% else %}Unknown{% endif %}
                     </div>
                   </div>
                   <div class="container row">
-                    <div class="col">
-                      <strong>Ending energy : </strong>{% if value.0.ending_energy != "Null" or value.0.ending_energy == 0 %}{{ value.0.ending_energy|floatformat:"7" }}{% else %}N/A{% endif %}
+                    <div class="col-lg-4">
+                      <strong>Multiplicity: </strong>{% if value.0.multiplicity != "Null" or value.0.multiplicity == 0 %}{{ value.0.multiplicity }}{% else %}Unknown{% endif %}
+                    </div>
+                    <div class="col-lg-8">
+                      {% if value.0.theory == "DFT" %}{{ value.0.functionnal }}{% else %}{{ value.0.theory }}/{{ value.0.functionnal }}{% endif %} / <strong>Basis set : </strong>{% if value.0.basis_set_name != "Null" or value.0.basis_set_name == 0 %}{{ value.0.basis_set_name }}{% else %}Unknown{% endif %} ({% if value.0.basis_set_size != "Null" or value.0.basis_set_size == 0 %}{{ value.0.basis_set_size }} functions{% else %}Unknown{% endif %})
+                    </div>
+                  </div>
+                  <div class="container row">
+                    <div class="col-lg-4">
+                      <strong>Solvent : </strong>{% if value.0.solvent != "Null" or value.0.solvent == 0 %}{{ value.0.solvent }}{% else %}Unknown{% endif %}
+                      {% if value.0.solvent != "Gas" %} / <strong>Solvatation method : </strong>{% if value.0.solvatation_method != "Null" or value.0.solvatation_method == 0 %}{{ value.0.solvatation_method }}{% else %}Unknown{% endif %}{% else %}{% endif %}
+                    </div>
+                    <div class="col-lg-8">
+                      <strong>Ending energy : </strong>{% if value.0.ending_energy != "Null" or value.0.ending_energy == 0 %}{{ value.0.ending_energy|floatformat:"7" }} a.u. {% else %}Unknown{% endif %}
                     </div>
                   </div>
                 </div>
               </div>
+              <hr>
             </div>
           </div>
         </div>
