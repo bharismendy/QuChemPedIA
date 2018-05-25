@@ -12,7 +12,7 @@ $(document).ready(function() {
 		   processData: true,
 		   dataType: 'json',
 		   success: function(recivedData) {//ce que l'on fait si on a le json
-				console.log("Success");
+				//console.log("Success");
 				var results;
 				var ancienneCouleure;
 				if($.urlParam('id')=="demo")
@@ -42,17 +42,17 @@ $(document).ready(function() {
 												+"<div class=\"container\">";
 
 						//if(cid) html += "<li class=\"list-group-item\"><b>CID :</b>"+cid+"</li>";
-						if(results.molecule.iupac) html += "<div class=\"row\"><div class=\"col\"><b>Iupac <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+results.molecule.iupac+"</div></div>";
+						if(results.molecule.iupac) html += "<div class=\"row\"><div class=\"col\"><b>Iupac <a href=\"https://en.wikipedia.org/wiki/Union_internationale_de_chimie_pure_et_appliqu%C3%A9e\" target=\"_blank\"><span data-placement=\"right\" data-toggle=\"tooltip\" title=\"International Union of Pure and Applied Chemistry\" class=\"badge badge-pill monBadge\">?</span></a></b></div><div class=\"col\">"+results.molecule.iupac+"</div></div>";
 						if(results.molecule.inchi) {
 							var inch = results.molecule.inchi;
 							var inchi;
 							if($.isArray(inch)) inchi = inch[0].replace("InChI=","");
 							else inchi = inch.replace("InChI=","");
-							html += "<div class=\"row\"><div class=\"col\"><b>InChI <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+inchi+"</div></div>";
+							html += "<div class=\"row\"><div class=\"col\"><b>InChI <a href=\"https://en.wikipedia.org/wiki/International_Chemical_Identifier\" target=\"_blank\"><span data-placement=\"right\" data-toggle=\"tooltip\" title=\"International Chemical Identifier\" class=\"badge badge-pill monBadge\">?</span></a></b></div><div class=\"col\">"+inchi+"</div></div>";
 						}
-						if(results.molecule.can) html += "<div class=\"row\"><div class=\"col\"><b>Canonical SMILES <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+results.molecule.can+"</div></div>";
+						if(results.molecule.can) html += "<div class=\"row\"><div class=\"col\"><b>Canonical SMILES <a href=\"https://en.wikipedia.org/wiki/Simplified_Molecular_Input_Line_Entry_Specification\" target=\"_blank\"><span data-placement=\"right\" data-toggle=\"tooltip\" title=\"Simplified Molecular Input Line Entry Specification\" class=\"badge badge-pill monBadge\">?</span></a></b></div><div class=\"col\">"+results.molecule.can+"</div></div>";
 						if(results.molecule.monoisotopic_mass) html += "<div class=\"row\"><div class=\"col\"><b>Monoisotopic mass</b></div><div class=\"col\">"+results.molecule.monoisotopic_mass+"</div></div>";
-						if(results.molecule.formula) html += "<div class=\"row\"><div class=\"col\"><b>Formula <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+results.molecule.formula+"</div></div>";
+						if(results.molecule.formula) html += "<div class=\"row\"><div class=\"col\"><b>Formula</b></div><div class=\"col\">"+results.molecule.formula+"</div></div>";
 						if(results.molecule.charge || (results.molecule.charge == 0)) html += "<div class=\"row\"><div class=\"col\"><b>Charge</b></div><div class=\"col\">"+results.molecule.charge+"</div></div>";
 						if(results.molecule.multiplicity || (results.molecule.charge == 0)) html += "<div class=\"row\"><div class=\"col\"><b>Spin multiplicity</b></div><div class=\"col\">"+results.molecule.multiplicity+"</div></div>";
 						html += "</div>"
@@ -80,13 +80,13 @@ $(document).ready(function() {
 													+"</div>"
 													+"<div class=\"container\">";
 
-						html1 += "<div class=\"row\"><div class=\"col\"><b>File</b></div><div class=\"col\"><b>Author</b></div><div class=\"col\"></div></div>";
-						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+results.metadata.log_file+"</div><div class=\"col\">"+(results.metadata.primary_author?results.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id=\"opt\" class=\"btn btn-primary\">Details</button></div></div>";
+						html1 += "<div class=\"row\"><div class=\"col\"><b>Job type</b></div><div class=\"col\"><b>Author</b></div><div class=\"col\"><b>Description</b></div><div class=\"col\"></div></div>";
+						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+recivedData.job_type+"</div><div class=\"col my-auto\">"+(results.metadata.primary_author?results.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id=\"opt\" class=\"btn btn-primary-outline\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 						$.each(recivedData.siblings, function(key,val) {
-							html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+val.data.metadata.log_file+"</div><div class=\"col\">"+(val.data.metadata.primary_author?val.data.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id="+key+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+							html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+val.data.metadata.log_file+"</div><div class=\"col my-auto\">"+(val.data.metadata.primary_author?val.data.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 							if(val.job_type=="TD") {
 								$.each(val.siblings, function(key2,val2) {
-									html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">&nbsp;&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.data.metadata.log_file+"</div><div class=\"col\">"+(val2.data.metadata.primary_author?val2.data.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id="+key+"_"+key2+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+									html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">&nbsp;&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.data.metadata.log_file+"</div><div class=\"col my-auto\">"+(val2.data.metadata.primary_author?val2.data.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+"_"+key2+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 								});
 							}
 						});
@@ -160,20 +160,26 @@ $(document).ready(function() {
 						if (results.comp_details.general.basis_set_name) html += "<div class=\"row\"><div class=\"col\"><b>Basis set name </b></div><div class=\"col\">"+results.comp_details.general.basis_set_name+"</div></div>";
 
 						if (results.comp_details.general.basis_set_size) html += "<div class=\"row\"><div class=\"col\"><b>Number of basis set functions </b></div><div class=\"col\">"+results.comp_details.general.basis_set_size+"</div></div>";
-						if (results.comp_details.general.is_closed_shell) html += "<div class=\"row\"><div class=\"col\"><b>Closed shell calculation </b></div><div class=\"col\">"+results.comp_details.general.is_closed_shell+"</div></div>";
+						if (results.comp_details.general.is_closed_shell != null) html += "<div class=\"row\"><div class=\"col\"><b>Closed shell calculation </b></div><div class=\"col\">"+results.comp_details.general.is_closed_shell+"</div></div>";
+
+
+						if (results.comp_details.general.integration_grid) html += "<div class=\"row\"><div class=\"col\"><b>Integration grid </b></div><div class=\"col\">"+results.comp_details.general.integration_grid+"</div></div>";
+						if (results.comp_details.general.solvent) html += "<div class=\"row\"><div class=\"col\"><b>Solvent </b></div><div class=\"col\">"+results.comp_details.general.solvent+"</div></div>";
+
 
 						var scf_targets = results.comp_details.general.scf_targets;
 						if((scf_targets)&&(scf_targets.length>0)){
 							var val = scf_targets[scf_targets.length-1];
-							html +="<div class=\"row\"><div class=\"col\"><b>Requested SCF convergence on density </b></div><div class=\"col\">"+val[0]+"</div></div>";
-							html +="<div class=\"row\"><div class=\"col\"><b>Threshold on Maximum and RMS Force </b></div><div class=\"col\"> ";
-							for(var j=1;j<val.length;j++){
-								html += val[j];
-								if(j!=(val.length-1))
-									html +=", ";
-							}
-							html += "</div></div>";
+							html +="<div class=\"row\"><div class=\"col\"><b>Requested SCF convergence on RMS density matrix </b></div><div class=\"col\">"+val[0]+"</div></div>";
+							html +="<div class=\"row\"><div class=\"col\"><b>Requested SCF convergence on MAX density matrix </b></div><div class=\"col\">"+val[1]+"</div></div>";
+							html +="<div class=\"row\"><div class=\"col\"><b>Requested SCF convergence on energy </b></div><div class=\"col\">"+val[2]+"</div></div>";
 						}
+						
+						if (results.comp_details.freq.temperature) html += "<div class=\"row\"><div class=\"col\"><b>Temperature </b></div><div class=\"col\">"+results.comp_details.freq.temperature+" K</div></div>";
+						if (results.comp_details.freq.anharmonicity != null) html += "<div class=\"row\"><div class=\"col\"><b>Anharmonic effects </b></div><div class=\"col\">"+results.comp_details.freq.anharmonicity+"</div></div>";
+						if (results.comp_details.excited_states.nb_et_states != null) html += "<div class=\"row\"><div class=\"col\"><b>Number of excited states </b></div><div class=\"col\">"+results.comp_details.excited_states.nb_et_states+"</div></div>";
+						
+						
 						html += "</div>"
 							+"</div>";
 						htm += html;
@@ -195,7 +201,7 @@ $(document).ready(function() {
 		// la partie wavefunction dans results
 					if(results.results.wavefunction){
 						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><div class=\"container\">";
-						if (results.results.wavefunction.total_molecular_energy) html += "<div class=\"row\"><div class=\"col\"><b>Total molecular energy </b></div><div class=\"col\">"+results.results.wavefunction.total_molecular_energy+"</div></div>";
+						if (results.results.wavefunction.total_molecular_energy) html += "<div class=\"row\"><div class=\"col\"><b>Total molecular energy </b></div><div class=\"col\">"+results.results.wavefunction.total_molecular_energy+" a.u.</div></div>";
 						var homo_indexes = results.results.wavefunction.homo_indexes;
 						if ((homo_indexes)&&(homo_indexes.length>0)){
 							html += "<div class=\"row\"><div class=\"col\"><b>HOMO number </b></div><div class=\"col\">";
@@ -208,12 +214,12 @@ $(document).ready(function() {
 						}
 						html += "</div></div>";
 
-		// affichage du tableau des homo energies
+				// affichage du tableau des homo energies
 						var MO_energies = results.results.wavefunction.MO_energies;
 						if ((MO_energies)&&(MO_energies.length>0)){
 							html += "<div class=\"container subWavefunction\" align=center><b>Calculated energies for the frontier molecular orbitals (in eV)</b>";
-							html += "<table class=\"tableauWavefunction\" id=\"tableMO_energies\">";
-							html += "<tr><td>HOMO-1</td><td>HOMO</td><td>LUMO</td><td>LUMO+1</td></tr>";
+							html += "<table class=\"tab4Cols\" id=\"tableMO_energies\">";
+							html += "<tr class=\"ligneSoulignee\"><td>HOMO-1</td><td>HOMO</td><td>LUMO</td><td>LUMO+1</td></tr>";
 							for(var j=0;j<homo_indexes.length;j++){
 								html += "<tr><td>"+MO_energies[j][homo_indexes[j]-1].toFixed(2)+"</td><td>"+MO_energies[j][homo_indexes[j]].toFixed(2)+"</td><td>"+MO_energies[j][homo_indexes[j]+1].toFixed(2)+"</td><td>"+MO_energies[j][homo_indexes[j]+2].toFixed(2)+"</td></tr>";
 							}
@@ -222,7 +228,7 @@ $(document).ready(function() {
 
 						html += "<div class=\"container subWavefunction\" align=center><b>Atom numbering scheme.</b></div>";
 
-		// affichage du tableau des Mulliken atomic
+				// affichage du tableau des Mulliken atomic
 						var Mulliken_partial_charges = results.results.wavefunction.Mulliken_partial_charges;
 						if ((Mulliken_partial_charges)&&(Mulliken_partial_charges.length>0)){
 
@@ -257,12 +263,31 @@ $(document).ready(function() {
 								}
 							}
 
-							html += "<div class=\"container subWavefunction\" align=center><b>Most intense Mulliken atomic charges (|q| > 0.1 e)</b>";
-							html += "<table class=\"tableauWavefunction\" id=\"tableMulliken_partial_charges\">";
-							html += "<tr><td>Atom</td><td>number</td><td>Mulliken partial charges</td></tr>";
-
+							//clacule de la moyenne
+							var sum = 0;
+							for(var j=0;j<mulliken_partial_charges.length;j++)
+								sum += mulliken_partial_charges[j];
+							var moyenne = sum/mulliken_partial_charges.length;
+							//calcule de l'écart type
+							sum = 0;
 							for(var j=0;j<mulliken_partial_charges.length;j++){
-								html += "<tr><td>"+Symbol[atom_z[j]-1]+"</td><td>"+indices[j]+"</td><td>"+mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
+								var inter = mulliken_partial_charges[j] - moyenne;
+								sum += Math.pow(inter, 2);
+							}
+							var std =  Math.sqrt(sum/mulliken_partial_charges.length);
+							
+							html += "<div class=\"container subWavefunction\" align=center><b>Most intense Mulliken atomic charges</b>";
+							html += "<div class=\"container subWavefunction\" align=center><b>mean = "+moyenne.toFixed(3)+" e, std = "+std.toFixed(3)+" </b>";
+							
+							html += "<table class=\"tab3Cols\" id=\"tableMulliken_partial_charges\">";
+							html += "<tr class=\"ligneSoulignee\"><td>Atom</td><td>number</td><td>Mulliken partial charges</td></tr>";
+							var thres_max = moyenne + std;
+							var thres_min = moyenne - std;
+							for(var j=0;j<mulliken_partial_charges.length;j++){
+								if(mulliken_partial_charges.length < 5 )
+									html += "<tr><td>"+Symbol[atom_z[j]-1]+"</td><td>"+indices[j]+"</td><td>"+mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
+								else if( (mulliken_partial_charges[j] > thres_max) || (mulliken_partial_charges[j] < thres_min))
+									html += "<tr><td>"+Symbol[atom_z[j]-1]+"</td><td>"+indices[j]+"</td><td>"+mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
 							}
 							html += "</table></div>";
 
@@ -274,9 +299,8 @@ $(document).ready(function() {
 
 		// la partie geometry
 					if(results.results.geometry){
-						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Geometry</h5><div class=\"container\">";
-						if (results.results.geometry.nuclear_repulsion_energy_from_xyz) html += "<div class=\"row\"><div class=\"col\"><b>Nuclear repulsion energy in atomic units </b></div><div class=\"col\">"+results.results.geometry.nuclear_repulsion_energy_from_xyz+"</div></div>";
-						if (results.results.geometry.OPT_DONE) html += "<div class=\"row\"><div class=\"col\"><b>Is it a result of a geometry optimization? </b></div><div class=\"col\">"+results.results.geometry.OPT_DONE+"</div></div>";
+						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><h5 class=\"card-title subTitle\">Geometry</h5><div class=\"container\">";
+						if (results.results.geometry.nuclear_repulsion_energy_from_xyz) html += "<div class=\"row\"><div class=\"col\"><b>Nuclear repulsion energy in atomic units </b></div><div class=\"col\">"+results.results.geometry.nuclear_repulsion_energy_from_xyz+" a.u.</div></div>";
 						
 						html += "</br><p>This calculation is the result of a geometry optimization process.</p>";
 						
@@ -287,11 +311,11 @@ $(document).ready(function() {
 								var geometric_targets = results.comp_details.geometry.geometric_targets;
 								var geometric_values = results.results.geometry.geometric_values[results.results.geometry.geometric_values.length -1 ];
 								var titreCols = ["Maximum Force","RMS Force","Maximum Displacement","RMS Displacement"];
-								html += "<div class=\"container subConvergence\" align=center><b>Geometry optimization convergence criteria</b>";
-								html += "<table class=\"tableauConvergence\" id=\"geometric_targets\">";
-								html += "<tr><td></td><td>Value</td><td>Threshold</td></tr>";
+								html += "<div class=\"container subWavefunction\" align=center><b>Geometry optimization convergence criteria</b>";
+								html += "<table class=\"tab3Cols\" id=\"geometric_targets\">";
+								html += "<tr class=\"ligneSoulignee\"><td></td><td>Value</td><td>Threshold</td></tr>";
 								for(var i=0;i<geometric_targets.length && i< titreCols.length;i++){
-									html += "<tr><td class=\"cellulTitre\">"+titreCols[i]+"</td><td>"+geometric_values[i]+"</td><td>"+geometric_targets[i]+"</td></tr>";
+									html += "<tr><td class=\"cellulTitre\">"+titreCols[i]+"</td><td>"+geometric_values[i].toFixed(6)+"</td><td>"+geometric_targets[i].toFixed(6)+"</td></tr>";
 								}
 								html += "</table></div>";
 							}
@@ -304,10 +328,10 @@ $(document).ready(function() {
 							var elements_3D_coords_converged = results.results.geometry.elements_3D_coords_converged;
 							var atoms_Z = results.molecule.atoms_Z;
 							html += "<div class=\"container subCartesian\" align=center><b>Cartesian atomic coordinates in Angstroms</b>";
-							html += "<table class=\"tableauCartesian\" id=\"elements_3D_coords_converged\">";
-							html += "<tr><td>Atom</td><td>X</td><td>Y</td><td>Z</td></tr>";
+							html += "<table class=\"tab4Cols\" id=\"elements_3D_coords_converged\">";
+							html += "<tr class=\"ligneSoulignee\"><td>Atom</td><td>X</td><td>Y</td><td>Z</td></tr>";
 							for(var i=0;i<elements_3D_coords_converged.length;i+=3){
-								html += "<tr><td>"+Symbol[atoms_Z[i/3]-1]+"</td><td>"+elements_3D_coords_converged[i]+"</td><td>"+elements_3D_coords_converged[i+1]+"</td><td>"+elements_3D_coords_converged[i+2]+"</td></tr>";
+								html += "<tr><td>"+Symbol[atoms_Z[i/3]-1]+"</td><td>"+elements_3D_coords_converged[i].toFixed(4)+"</td><td>"+elements_3D_coords_converged[i+1].toFixed(4)+"</td><td>"+elements_3D_coords_converged[i+2].toFixed(4)+"</td></tr>";
 							}
 							html += "</table></div>";
 						}
@@ -319,41 +343,70 @@ $(document).ready(function() {
 					
 		// la partie Thermochemistry and normal modes
 					if(results.results.freq){
-						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Thermochemistry and normal modes</h5><div class=\"container\">";
-						if (results.results.freq.zero_point_energy) html += "<div class=\"row\"><div class=\"col\"><b>Sum of electronic and zero-point energy in Hartrees </b></div><div class=\"col\">"+results.results.freq.zero_point_energy+"</div></div>";
-						if (results.results.freq.electronic_thermal_energy) html += "<div class=\"row\"><div class=\"col\"><b>Sum of electronic and thermal at 298.150000 K energies in atomic units </b></div><div class=\"col\">"+results.results.freq.electronic_thermal_energy+"</div></div>";
+						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><h5 class=\"card-title subTitle\">Thermochemistry and normal modes</h5><div class=\"container subWavefunction\">";
+						html += "<i>All values was calculated at 298.150000 K in atomic units.</i>";
+						if (results.results.freq.zero_point_energy) html += "<div class=\"row\"><div class=\"col\"><b>Sum of electronic and zero-point energy </b></div><div class=\"col\">"+results.results.freq.zero_point_energy+"</div></div>";
+						if (results.results.freq.electronic_thermal_energy) html += "<div class=\"row\"><div class=\"col\"><b>Sum of electronic and thermal </b></div><div class=\"col\">"+results.results.freq.electronic_thermal_energy+"</div></div>";
+						if (results.results.freq.entropy) html += "<div class=\"row\"><div class=\"col\"><b>Entropy </b></div><div class=\"col\">"+results.results.freq.entropy.toFixed(15)+"</div></div>";
+						if (results.results.freq.enthalpy) html += "<div class=\"row\"><div class=\"col\"><b>Enthalpy </b></div><div class=\"col\">"+results.results.freq.enthalpy+"</div></div>";
+						if (results.results.freq.free_energy) html += "<div class=\"row\"><div class=\"col\"><b>Gibbs free energy </b></div><div class=\"col\">"+results.results.freq.free_energy+"</div></div>";
 						
-						
-						if (results.results.freq.entropy) html += "<div class=\"row\"><div class=\"col\"><b>Entropy at 298.150000 K in atomic units </b></div><div class=\"col\">"+results.results.freq.entropy.toFixed(15)+"</div></div>";
-						if (results.results.freq.enthalpy) html += "<div class=\"row\"><div class=\"col\"><b>Enthalpy at 298.150000 K in atomic units </b></div><div class=\"col\">"+results.results.freq.enthalpy+"</div></div>";
-						if (results.results.freq.free_energy) html += "<div class=\"row\"><div class=\"col\"><b>Gibbs free energy at 298.150000 K in atomic units </b></div><div class=\"col\">"+results.results.freq.free_energy+"</div></div>";
-						
-						html += "</div></div>";
-						
+						html += "</div>";
 						
 				// dessin du tableau des vibrations
 						if(results.results.freq.vibrational_int){
 							var vibrational_freq = results.results.freq.vibrational_freq;
 							var vibrational_int = results.results.freq.vibrational_int;
 							var vibrational_sym = results.results.freq.vibrational_sym;
-							html += "<div class=\"container subVibrations\" align=center><b>Table of the most intense molecular vibrations (> 20 km/mol) (14)</b>";
-							html += "<table class=\"tableauVibrations\" id=\"vibrational_int\">";
-							html += "<tr><td>Frequencies</td><td>Intensity</td><td>Symmetry</td></tr>";
-							for(var i=0;i<vibrational_int.length;i+=3){
-								if(vibrational_int[i] > 20)
+							html += "<div class=\"container subVibrations\" align=center><b>Table of the most intense molecular vibrations (> 20 km/mol) (<span id=\"molVibNumb\">/</span>)</b>";
+							html += "<table class=\"tab3Cols\" id=\"vibrational_int\">";
+							html += "<tr class=\"ligneSoulignee\"><td>Frequencies (cm<sup>-1</sup>)</td><td>Intensity (km/mol)</td><td>Symmetry</td></tr>";
+							var nbRes = 0;
+							for(var i=0;i<vibrational_int.length;i++){
+								if(vibrational_int.length < 5){
 									html += "<tr><td>"+vibrational_freq[i]+"</td><td>"+vibrational_int[i]+"</td><td>"+vibrational_sym[i]+"</td></tr>";
+									nbRes++;
+								}else if(vibrational_int[i] > 20){
+									html += "<tr><td>"+Math.round(vibrational_freq[i])+"</td><td>"+Math.round(vibrational_int[i])+"</td><td>"+vibrational_sym[i]+"</td></tr>";
+									nbRes++;
+								}
 							}
 							html += "</table></div>";
 						}
 						
-						
+						html += "</div>";
 						$("#reultsSubList").append(html);
+						$("#molVibNumb").html(nbRes);
 					}
 					
 
 		// la partie excited_states
 					if(results.results.excited_states){
 						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Excited states</h5><div class=\"container\">";
+
+
+				// dessin du tableau des excitations
+						if(results.results.excited_states.et_energies){
+							var et_energies = results.results.excited_states.et_energies;
+							var inde = new Array();
+							for(var i=0;i<et_energies.length;i++)
+								inde[i]=i+1;
+							var et_sym = results.results.excited_states.et_sym;
+							var et_oscs = results.results.excited_states.et_oscs;
+							var et_rot = results.results.excited_states.et_rot;
+							
+							html += "<div class=\"container\" align=center><b>Calculated mono-electronic excitations</b>";
+							html += "<table class=\"tab6Cols\" id=\"excitations\">";
+							html += "<tr class=\"ligneSoulignee\"><td>Number</td><td>Energy (cm<sup>-1</sup>)</td><td>Energy (nm)</td><td>Symmetry</td><td>Oscillator strength</td><td>Rotatory strength</td></tr>";
+							var nbRes = 0;
+							for(var i=0;i<et_energies.length;i++){
+								var nm = 10000000/et_energies[i];
+								html += "<tr><td>"+inde[i]+"</td><td>"+Math.round(et_energies[i])+"</td><td>"+Math.round(nm)+"</td><td>"+et_sym[i]+"</td><td>"+et_oscs[i].toFixed(4)+"</td><td>"+et_rot[i].toFixed(4)+"</td></tr>";
+							}
+								
+							html += "</table></div>";
+						}
+
 
 						html += "</div></div>";
 						$("#reultsSubList").append(html);
