@@ -19,7 +19,7 @@ $(document).ready(function() {
 					results = recivedData.data;
 				else
 					results = recivedData;
-					console.log(!results);
+					//console.log(results);
 				if (!results){
 					var html = "<div class='container' style='margin-top:50px;'>";
 					html += '<div class="row row404">'
@@ -44,7 +44,10 @@ $(document).ready(function() {
 						//if(cid) html += "<li class=\"list-group-item\"><b>CID :</b>"+cid+"</li>";
 						if(results.molecule.iupac) html += "<div class=\"row\"><div class=\"col\"><b>Iupac <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+results.molecule.iupac+"</div></div>";
 						if(results.molecule.inchi) {
-							var inchi = (results.molecule.inchi).replace("InChI=","");
+							var inch = results.molecule.inchi;
+							var inchi;
+							if($.isArray(inch)) inchi = inch[0].replace("InChI=","");
+							else inchi = inch.replace("InChI=","");
 							html += "<div class=\"row\"><div class=\"col\"><b>InChI <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+inchi+"</div></div>";
 						}
 						if(results.molecule.can) html += "<div class=\"row\"><div class=\"col\"><b>Canonical SMILES <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+results.molecule.can+"</div></div>";
@@ -70,25 +73,26 @@ $(document).ready(function() {
 					}
 					
 // associated calculations category
-					var html1 = "<div class=\"card mt-3\">"
-												+"<div class=\"card-header\">"
-													+"<h5>Associated calculations</h5>"
-												+"</div>"
-												+"<div class=\"container\">";
+					if(results.metadata) {
+						var html1 = "<div class=\"card mt-3\">"
+													+"<div class=\"card-header\">"
+														+"<h5>Associated calculations</h5>"
+													+"</div>"
+													+"<div class=\"container\">";
 
-					html1 += "<div class=\"row\"><div class=\"col\"><b>File</b></div><div class=\"col\"><b>Author</b></div><div class=\"col\"></div></div>";
-					html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+results.metadata.log_file+"</div><div class=\"col\">"+(results.metadata.primary_author?results.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id=\"opt\" class=\"btn btn-primary\">Details</button></div></div>";
-					$.each(recivedData.siblings, function(key,val) {
-						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+val.data.metadata.log_file+"</div><div class=\"col\">"+(val.data.metadata.primary_author?val.data.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id="+key+" class=\"btn btn-primary myButton\">Details</button></div></div>";
-						if(val.job_type=="TD") {
-							$.each(val.siblings, function(key2,val2) {
-								html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">&nbsp;&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.data.metadata.log_file+"</div><div class=\"col\">"+(val2.data.metadata.primary_author?val2.data.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id="+key+"_"+key2+" class=\"btn btn-primary myButton\">Details</button></div></div>";
-							});
-						}
-					});
-					html1 += "</div></div>";
-					
-					$("#associatedCalculations").append(html1);
+						html1 += "<div class=\"row\"><div class=\"col\"><b>File</b></div><div class=\"col\"><b>Author</b></div><div class=\"col\"></div></div>";
+						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+results.metadata.log_file+"</div><div class=\"col\">"+(results.metadata.primary_author?results.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id=\"opt\" class=\"btn btn-primary\">Details</button></div></div>";
+						$.each(recivedData.siblings, function(key,val) {
+							html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+val.data.metadata.log_file+"</div><div class=\"col\">"+(val.data.metadata.primary_author?val.data.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id="+key+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+							if(val.job_type=="TD") {
+								$.each(val.siblings, function(key2,val2) {
+									html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">&nbsp;&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.data.metadata.log_file+"</div><div class=\"col\">"+(val2.data.metadata.primary_author?val2.data.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id="+key+"_"+key2+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+								});
+							}
+						});
+						html1 += "</div></div>";
+						$("#associatedCalculations").append(html1);
+					}
 					$("#opt").click(function() {
 						$("#"+this.id).parent().parent().parent().children().css( "background-color", "white" );
 						$("#"+this.id).parent().parent().css( "background-color", "#e5e7e9" );
@@ -123,7 +127,9 @@ $(document).ready(function() {
 		
 		
 		function computationalDetailsEtResults(results){			
-					var htm = "";
+					var htm = "";						
+					var Symbol = ["H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe","Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu","Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn","Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr","Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Uut","Uuq","Uup","Uuh","Uus","Uuo"];
+
 					
 // autorship categorya
 					if(results.metadata){
@@ -174,7 +180,7 @@ $(document).ready(function() {
 					}
 
 
-					// results category
+// results category
 					if(results.results){
 						var html = "<div class=\"card mt-3\">"
 												+"<div class=\"card-header\">"
@@ -186,7 +192,7 @@ $(document).ready(function() {
 						$("#ficheMolecule").append(htm);
 					}
 
-					// la partie wavefunction dans results
+		// la partie wavefunction dans results
 					if(results.results.wavefunction){
 						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><div class=\"container\">";
 						if (results.results.wavefunction.total_molecular_energy) html += "<div class=\"row\"><div class=\"col\"><b>Total molecular energy </b></div><div class=\"col\">"+results.results.wavefunction.total_molecular_energy+"</div></div>";
@@ -202,7 +208,7 @@ $(document).ready(function() {
 						}
 						html += "</div></div>";
 
-						// affichage du tableau des homo energies
+		// affichage du tableau des homo energies
 						var MO_energies = results.results.wavefunction.MO_energies;
 						if ((MO_energies)&&(MO_energies.length>0)){
 							html += "<div class=\"container subWavefunction\" align=center><b>Calculated energies for the frontier molecular orbitals (in eV)</b>";
@@ -215,32 +221,38 @@ $(document).ready(function() {
 						}
 
 						html += "<div class=\"container subWavefunction\" align=center><b>Atom numbering scheme.</b></div>";
-						
-						var Symbol = ["H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe","Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu","Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn","Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr","Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Uut","Uuq","Uup","Uuh","Uus","Uuo"];
 
-						// affichage du tableau des Mulliken atomic
+		// affichage du tableau des Mulliken atomic
 						var Mulliken_partial_charges = results.results.wavefunction.Mulliken_partial_charges;
 						if ((Mulliken_partial_charges)&&(Mulliken_partial_charges.length>0)){
 
 							var atoms_Z = results.molecule.atoms_Z;
+							var atom_z = new Array();
+							for(var j=0;j<atoms_Z.length;j++)
+								atom_z[j]=atoms_Z[j];
+								
 							var indices = new Array();
 							for(var j=0;j<Mulliken_partial_charges.length;j++)
 								indices[j]=j;
+								
+							var mulliken_partial_charges = new Array();
+							for(var j=0;j<Mulliken_partial_charges.length;j++)
+								mulliken_partial_charges[j]=Mulliken_partial_charges[j];
 
-							//trier le tableau des enérgies
-							for(var j=0;j<Mulliken_partial_charges.length;j++){
-								for(var h=j;h<(Mulliken_partial_charges.length -1);h++){
-									if(Mulliken_partial_charges[h]<Mulliken_partial_charges[j]){
-										var temp = Mulliken_partial_charges[h];
+				//trier le tableau des enérgies
+							for(var j=0;j<mulliken_partial_charges.length;j++){
+								for(var h=j;h<(mulliken_partial_charges.length -1);h++){
+									if(mulliken_partial_charges[h]<mulliken_partial_charges[j]){
+										var temp = mulliken_partial_charges[h];
 										var temp0 = indices[h];
-										var temp1 = atoms_Z[h];
+										var temp1 = atom_z[h];
 
-										Mulliken_partial_charges[h] = Mulliken_partial_charges[j];
+										mulliken_partial_charges[h] = mulliken_partial_charges[j];
 										indices[h] = indices[j];
-										atoms_Z[h] = atoms_Z[j];
-										Mulliken_partial_charges[j] = temp;
+										atom_z[h] = atom_z[j];
+										mulliken_partial_charges[j] = temp;
 										indices[j] = temp0;
-										atoms_Z[j] = temp1;
+										atom_z[j] = temp1;
 									}
 								}
 							}
@@ -249,8 +261,8 @@ $(document).ready(function() {
 							html += "<table class=\"tableauWavefunction\" id=\"tableMulliken_partial_charges\">";
 							html += "<tr><td>Atom</td><td>number</td><td>Mulliken partial charges</td></tr>";
 
-							for(var j=0;j<Mulliken_partial_charges.length;j++){
-								html += "<tr><td>"+Symbol[atoms_Z[j]-1]+"</td><td>"+indices[j]+"</td><td>"+Mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
+							for(var j=0;j<mulliken_partial_charges.length;j++){
+								html += "<tr><td>"+Symbol[atom_z[j]-1]+"</td><td>"+indices[j]+"</td><td>"+mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
 							}
 							html += "</table></div>";
 
@@ -260,16 +272,86 @@ $(document).ready(function() {
 						$("#reultsSubList").append(html);
 					}
 
-					// la partie geometry
+		// la partie geometry
 					if(results.results.geometry){
 						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Geometry</h5><div class=\"container\">";
 						if (results.results.geometry.nuclear_repulsion_energy_from_xyz) html += "<div class=\"row\"><div class=\"col\"><b>Nuclear repulsion energy in atomic units </b></div><div class=\"col\">"+results.results.geometry.nuclear_repulsion_energy_from_xyz+"</div></div>";
 						if (results.results.geometry.OPT_DONE) html += "<div class=\"row\"><div class=\"col\"><b>Is it a result of a geometry optimization? </b></div><div class=\"col\">"+results.results.geometry.OPT_DONE+"</div></div>";
+						
+						html += "</br><p>This calculation is the result of a geometry optimization process.</p>";
+						
+			// dessin du tableau des convergence
+			// cas ou le logiciel est "Gaussian"
+						if(results.comp_details.general.package && (results.comp_details.general.package=="Gaussian")){
+							if(results.comp_details.geometry.geometric_targets){
+								var geometric_targets = results.comp_details.geometry.geometric_targets;
+								var geometric_values = results.results.geometry.geometric_values[results.results.geometry.geometric_values.length -1 ];
+								var titreCols = ["Maximum Force","RMS Force","Maximum Displacement","RMS Displacement"];
+								html += "<div class=\"container subConvergence\" align=center><b>Geometry optimization convergence criteria</b>";
+								html += "<table class=\"tableauConvergence\" id=\"geometric_targets\">";
+								html += "<tr><td></td><td>Value</td><td>Threshold</td></tr>";
+								for(var i=0;i<geometric_targets.length && i< titreCols.length;i++){
+									html += "<tr><td class=\"cellulTitre\">"+titreCols[i]+"</td><td>"+geometric_values[i]+"</td><td>"+geometric_targets[i]+"</td></tr>";
+								}
+								html += "</table></div>";
+							}
+						}// else if "un autre logiciel"
+
+				
+						
+			// dessin du tableau Cartesian atomic coordinates
+						if(results.results.geometry.elements_3D_coords_converged){
+							var elements_3D_coords_converged = results.results.geometry.elements_3D_coords_converged;
+							var atoms_Z = results.molecule.atoms_Z;
+							html += "<div class=\"container subCartesian\" align=center><b>Cartesian atomic coordinates in Angstroms</b>";
+							html += "<table class=\"tableauCartesian\" id=\"elements_3D_coords_converged\">";
+							html += "<tr><td>Atom</td><td>X</td><td>Y</td><td>Z</td></tr>";
+							for(var i=0;i<elements_3D_coords_converged.length;i+=3){
+								html += "<tr><td>"+Symbol[atoms_Z[i/3]-1]+"</td><td>"+elements_3D_coords_converged[i]+"</td><td>"+elements_3D_coords_converged[i+1]+"</td><td>"+elements_3D_coords_converged[i+2]+"</td></tr>";
+							}
+							html += "</table></div>";
+						}
+						
+						
 						html += "</div></div>";
 						$("#reultsSubList").append(html);
 					}
+					
+		// la partie Thermochemistry and normal modes
+					if(results.results.freq){
+						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Thermochemistry and normal modes</h5><div class=\"container\">";
+						if (results.results.freq.zero_point_energy) html += "<div class=\"row\"><div class=\"col\"><b>Sum of electronic and zero-point energy in Hartrees </b></div><div class=\"col\">"+results.results.freq.zero_point_energy+"</div></div>";
+						if (results.results.freq.electronic_thermal_energy) html += "<div class=\"row\"><div class=\"col\"><b>Sum of electronic and thermal at 298.150000 K energies in atomic units </b></div><div class=\"col\">"+results.results.freq.electronic_thermal_energy+"</div></div>";
+						
+						
+						if (results.results.freq.entropy) html += "<div class=\"row\"><div class=\"col\"><b>Entropy at 298.150000 K in atomic units </b></div><div class=\"col\">"+results.results.freq.entropy.toFixed(15)+"</div></div>";
+						if (results.results.freq.enthalpy) html += "<div class=\"row\"><div class=\"col\"><b>Enthalpy at 298.150000 K in atomic units </b></div><div class=\"col\">"+results.results.freq.enthalpy+"</div></div>";
+						if (results.results.freq.free_energy) html += "<div class=\"row\"><div class=\"col\"><b>Gibbs free energy at 298.150000 K in atomic units </b></div><div class=\"col\">"+results.results.freq.free_energy+"</div></div>";
+						
+						html += "</div></div>";
+						
+						
+				// dessin du tableau des vibrations
+						if(results.results.freq.vibrational_int){
+							var vibrational_freq = results.results.freq.vibrational_freq;
+							var vibrational_int = results.results.freq.vibrational_int;
+							var vibrational_sym = results.results.freq.vibrational_sym;
+							html += "<div class=\"container subVibrations\" align=center><b>Table of the most intense molecular vibrations (> 20 km/mol) (14)</b>";
+							html += "<table class=\"tableauVibrations\" id=\"vibrational_int\">";
+							html += "<tr><td>Frequencies</td><td>Intensity</td><td>Symmetry</td></tr>";
+							for(var i=0;i<vibrational_int.length;i+=3){
+								if(vibrational_int[i] > 20)
+									html += "<tr><td>"+vibrational_freq[i]+"</td><td>"+vibrational_int[i]+"</td><td>"+vibrational_sym[i]+"</td></tr>";
+							}
+							html += "</table></div>";
+						}
+						
+						
+						$("#reultsSubList").append(html);
+					}
+					
 
-					// la partie excited_states
+		// la partie excited_states
 					if(results.results.excited_states){
 						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Excited states</h5><div class=\"container\">";
 
@@ -281,3 +363,21 @@ $(document).ready(function() {
 		 
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
