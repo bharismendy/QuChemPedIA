@@ -42,17 +42,17 @@ $(document).ready(function() {
 												+"<div class=\"container\">";
 
 						//if(cid) html += "<li class=\"list-group-item\"><b>CID :</b>"+cid+"</li>";
-						if(results.molecule.iupac) html += "<div class=\"row\"><div class=\"col\"><b>Iupac <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+results.molecule.iupac+"</div></div>";
+						if(results.molecule.iupac) html += "<div class=\"row\"><div class=\"col\"><b>Iupac <a href=\"https://fr.wikipedia.org/wiki/Union_internationale_de_chimie_pure_et_appliqu%C3%A9e\" target=\"_blank\"><span data-placement=\"right\" data-toggle=\"tooltip\" title=\"International Union of Pure and Applied Chemistry\" class=\"badge badge-pill monBadge\">?</span></a></b></div><div class=\"col\">"+results.molecule.iupac+"</div></div>";
 						if(results.molecule.inchi) {
 							var inch = results.molecule.inchi;
 							var inchi;
 							if($.isArray(inch)) inchi = inch[0].replace("InChI=","");
 							else inchi = inch.replace("InChI=","");
-							html += "<div class=\"row\"><div class=\"col\"><b>InChI <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+inchi+"</div></div>";
+							html += "<div class=\"row\"><div class=\"col\"><b>InChI <a href=\"https://fr.wikipedia.org/wiki/International_Chemical_Identifier\" target=\"_blank\"><span data-placement=\"right\" data-toggle=\"tooltip\" title=\"International Chemical Identifier\" class=\"badge badge-pill monBadge\">?</span></a></b></div><div class=\"col\">"+inchi+"</div></div>";
 						}
-						if(results.molecule.can) html += "<div class=\"row\"><div class=\"col\"><b>Canonical SMILES <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+results.molecule.can+"</div></div>";
+						if(results.molecule.can) html += "<div class=\"row\"><div class=\"col\"><b>Canonical SMILES <a href=\"https://fr.wikipedia.org/wiki/Simplified_Molecular_Input_Line_Entry_Specification\" target=\"_blank\"><span data-placement=\"right\" data-toggle=\"tooltip\" title=\"Simplified Molecular Input Line Entry Specification\" class=\"badge badge-pill monBadge\">?</span></a></b></div><div class=\"col\">"+results.molecule.can+"</div></div>";
 						if(results.molecule.monoisotopic_mass) html += "<div class=\"row\"><div class=\"col\"><b>Monoisotopic mass</b></div><div class=\"col\">"+results.molecule.monoisotopic_mass+"</div></div>";
-						if(results.molecule.formula) html += "<div class=\"row\"><div class=\"col\"><b>Formula <span data-placement=\"right\" data-toggle=\"tooltip\" title=\"explicaion info-bulle\" class=\"badge badge-pill monBadge\">?</span></b></div><div class=\"col\">"+results.molecule.formula+"</div></div>";
+						if(results.molecule.formula) html += "<div class=\"row\"><div class=\"col\"><b>Formula</b></div><div class=\"col\">"+results.molecule.formula+"</div></div>";
 						if(results.molecule.charge || (results.molecule.charge == 0)) html += "<div class=\"row\"><div class=\"col\"><b>Charge</b></div><div class=\"col\">"+results.molecule.charge+"</div></div>";
 						if(results.molecule.multiplicity || (results.molecule.charge == 0)) html += "<div class=\"row\"><div class=\"col\"><b>Spin multiplicity</b></div><div class=\"col\">"+results.molecule.multiplicity+"</div></div>";
 						html += "</div>"
