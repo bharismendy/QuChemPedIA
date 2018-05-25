@@ -359,7 +359,7 @@ $(document).ready(function() {
 							var vibrational_freq = results.results.freq.vibrational_freq;
 							var vibrational_int = results.results.freq.vibrational_int;
 							var vibrational_sym = results.results.freq.vibrational_sym;
-							html += "<div class=\"container subVibrations\" align=center><b>Table of the most intense molecular vibrations (> 20 km/mol) (<span id=\"molVibNumb\">/</span>)</b>";
+							html += "<div class=\"container subVibrations\" align=center><b>Table of the most intense molecular vibrations (> 20 km/mol)</b>";
 							html += "<table class=\"tab3Cols\" id=\"vibrational_int\">";
 							html += "<tr class=\"ligneSoulignee\"><td>Frequencies (cm<sup>-1</sup>)</td><td>Intensity (km/mol)</td><td>Symmetry</td><td></td></tr>";
 							var nbRes = 0;
@@ -377,7 +377,6 @@ $(document).ready(function() {
 						
 						html += "</div>";
 						$("#reultsSubList").append(html);
-						$("#molVibNumb").html(nbRes);
 					}
 					
 
