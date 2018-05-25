@@ -80,13 +80,13 @@ $(document).ready(function() {
 													+"</div>"
 													+"<div class=\"container\">";
 
-						html1 += "<div class=\"row\"><div class=\"col\"><b>File</b></div><div class=\"col\"><b>Author</b></div><div class=\"col\"></div></div>";
-						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+results.metadata.log_file+"</div><div class=\"col\">"+(results.metadata.primary_author?results.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id=\"opt\" class=\"btn btn-primary\">Details</button></div></div>";
+						html1 += "<div class=\"row\"><div class=\"col\"><b>Job type</b></div><div class=\"col\"><b>Author</b></div><div class=\"col\"><b>Description</b></div><div class=\"col\"></div></div>";
+						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+recivedData.job_type+"</div><div class=\"col my-auto\">"+(results.metadata.primary_author?results.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id=\"opt\" class=\"btn btn-primary-outline\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 						$.each(recivedData.siblings, function(key,val) {
-							html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">"+val.data.metadata.log_file+"</div><div class=\"col\">"+(val.data.metadata.primary_author?val.data.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id="+key+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+							html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+val.data.metadata.log_file+"</div><div class=\"col my-auto\">"+(val.data.metadata.primary_author?val.data.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 							if(val.job_type=="TD") {
 								$.each(val.siblings, function(key2,val2) {
-									html1 += "<div class=\"row mySiblingsRow\"><div class=\"col\">&nbsp;&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.data.metadata.log_file+"</div><div class=\"col\">"+(val2.data.metadata.primary_author?val2.data.metadata.primary_author:"N/A")+"</div><div class=\"col\"><button type=\"button\" id="+key+"_"+key2+" class=\"btn btn-primary myButton\">Details</button></div></div>";
+									html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">&nbsp;&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.data.metadata.log_file+"</div><div class=\"col my-auto\">"+(val2.data.metadata.primary_author?val2.data.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+"_"+key2+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 								});
 							}
 						});
