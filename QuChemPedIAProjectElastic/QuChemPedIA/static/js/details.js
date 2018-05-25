@@ -219,7 +219,8 @@ $(document).ready(function() {
 						if ((MO_energies)&&(MO_energies.length>0)){
 							html += "<div class=\"container subWavefunction\" align=center><b>Calculated energies for the frontier molecular orbitals (in eV)</b>";
 							html += "<table class=\"tab4Cols\" id=\"tableMO_energies\">";
-							html += "<tr class=\"ligneSoulignee\"><td>HOMO-1</td><td>HOMO</td><td>LUMO</td><td>LUMO+1</td></tr>";
+							html += "<tr class=\"ligneSoulignee\"><td>HOMO-1</td><td>HOMO</td><td>LUMO</td><td>LUMO+1</td><td></td></tr>";
+							//html += "<div class=\"ligneDiv\"></div>";
 							for(var j=0;j<homo_indexes.length;j++){
 								html += "<tr><td>"+MO_energies[j][homo_indexes[j]-1].toFixed(2)+"</td><td>"+MO_energies[j][homo_indexes[j]].toFixed(2)+"</td><td>"+MO_energies[j][homo_indexes[j]+1].toFixed(2)+"</td><td>"+MO_energies[j][homo_indexes[j]+2].toFixed(2)+"</td></tr>";
 							}
@@ -280,7 +281,7 @@ $(document).ready(function() {
 							html += "<div class=\"container subWavefunction\" align=center><b>mean = "+moyenne.toFixed(3)+" e, std = "+std.toFixed(3)+" </b>";
 							
 							html += "<table class=\"tab3Cols\" id=\"tableMulliken_partial_charges\">";
-							html += "<tr class=\"ligneSoulignee\"><td>Atom</td><td>number</td><td>Mulliken partial charges</td></tr>";
+							html += "<tr class=\"ligneSoulignee\"><td>Atom</td><td>number</td><td>Mulliken partial charges</td><td></td></tr>";
 							var thres_max = moyenne + std;
 							var thres_min = moyenne - std;
 							for(var j=0;j<mulliken_partial_charges.length;j++){
@@ -329,7 +330,7 @@ $(document).ready(function() {
 							var atoms_Z = results.molecule.atoms_Z;
 							html += "<div class=\"container subCartesian\" align=center><b>Cartesian atomic coordinates in Angstroms</b>";
 							html += "<table class=\"tab4Cols\" id=\"elements_3D_coords_converged\">";
-							html += "<tr class=\"ligneSoulignee\"><td>Atom</td><td>X</td><td>Y</td><td>Z</td></tr>";
+							html += "<tr class=\"ligneSoulignee\"><td>Atom</td><td>X</td><td>Y</td><td>Z</td><td></td></tr>";
 							for(var i=0;i<elements_3D_coords_converged.length;i+=3){
 								html += "<tr><td>"+Symbol[atoms_Z[i/3]-1]+"</td><td>"+elements_3D_coords_converged[i].toFixed(4)+"</td><td>"+elements_3D_coords_converged[i+1].toFixed(4)+"</td><td>"+elements_3D_coords_converged[i+2].toFixed(4)+"</td></tr>";
 							}
@@ -360,7 +361,7 @@ $(document).ready(function() {
 							var vibrational_sym = results.results.freq.vibrational_sym;
 							html += "<div class=\"container subVibrations\" align=center><b>Table of the most intense molecular vibrations (> 20 km/mol) (<span id=\"molVibNumb\">/</span>)</b>";
 							html += "<table class=\"tab3Cols\" id=\"vibrational_int\">";
-							html += "<tr class=\"ligneSoulignee\"><td>Frequencies (cm<sup>-1</sup>)</td><td>Intensity (km/mol)</td><td>Symmetry</td></tr>";
+							html += "<tr class=\"ligneSoulignee\"><td>Frequencies (cm<sup>-1</sup>)</td><td>Intensity (km/mol)</td><td>Symmetry</td><td></td></tr>";
 							var nbRes = 0;
 							for(var i=0;i<vibrational_int.length;i++){
 								if(vibrational_int.length < 5){
@@ -397,7 +398,7 @@ $(document).ready(function() {
 							
 							html += "<div class=\"container\" align=center><b>Calculated mono-electronic excitations</b>";
 							html += "<table class=\"tab6Cols\" id=\"excitations\">";
-							html += "<tr class=\"ligneSoulignee\"><td>Number</td><td>Energy (cm<sup>-1</sup>)</td><td>Energy (nm)</td><td>Symmetry</td><td>Oscillator strength</td><td>Rotatory strength</td></tr>";
+							html += "<tr class=\"ligneSoulignee\"><td>Number</td><td>Energy (cm<sup>-1</sup>)</td><td>Energy (nm)</td><td>Symmetry</td><td>Oscillator strength</td><td>Rotatory strength</td><td></td></tr>";
 							var nbRes = 0;
 							for(var i=0;i<et_energies.length;i++){
 								var nm = 10000000/et_energies[i];
