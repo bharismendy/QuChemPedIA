@@ -29,17 +29,17 @@
     width: 27%;
 }*/
 
-#form-accueil {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .form-control {
   width: 40%;
+  margin-left: auto;
 }
 
 .custom-select {
   width: 24%;
+}
+
+#button-search {
+  margin-right: auto;
 }
 
 hr {
