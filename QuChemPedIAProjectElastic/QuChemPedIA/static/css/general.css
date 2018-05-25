@@ -158,17 +158,17 @@ strong {
 .tab4Cols {width:40%;border-bottom : 1px solid;}
 .tab4Cols .ligneSoulignee{border-bottom : 1px solid;}
 .tab4Cols .cellulTitre{text-align:left;}
-.tab4Cols td{width:10%;text-align:center;}
+.tab4Cols td{width:10%;text-align:right;}
 
 .tab3Cols {width:45%;border-bottom : 1px solid;}
 .tab3Cols .ligneSoulignee{border-bottom : 1px solid;}
 .tab3Cols .cellulTitre{text-align:left;}
-.tab3Cols td{width:15%;text-align:center;}
+.tab3Cols td{width:15%;text-align:right;}
 
-.tab5Cols {width:50%;border-bottom : 1px solid;}
-.tab5Cols .ligneSoulignee{border-bottom : 1px solid;}
-.tab5Cols .cellulTitre{text-align:left;}
-.tab5Cols td{width:10%;text-align:center;}
+.tab6Cols {width:60%;border-bottom : 1px solid;}
+.tab6Cols .ligneSoulignee{border-bottom : 1px solid;}
+.tab6Cols .cellulTitre{text-align:left;}
+.tab6Cols td{width:10%;text-align:right;}
 
 
 

@@ -268,7 +268,6 @@ $(document).ready(function() {
 							for(var j=0;j<mulliken_partial_charges.length;j++)
 								sum += mulliken_partial_charges[j];
 							var moyenne = sum/mulliken_partial_charges.length;
-							
 							//calcule de l'écart type
 							sum = 0;
 							for(var j=0;j<mulliken_partial_charges.length;j++){
@@ -285,8 +284,10 @@ $(document).ready(function() {
 							var thres_max = moyenne + std;
 							var thres_min = moyenne - std;
 							for(var j=0;j<mulliken_partial_charges.length;j++){
-								if( (mulliken_partial_charges[j] > thres_max) || (mulliken_partial_charges[j] < thres_min))
-								html += "<tr><td>"+Symbol[atom_z[j]-1]+"</td><td>"+indices[j]+"</td><td>"+mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
+								if(mulliken_partial_charges.length < 5 )
+									html += "<tr><td>"+Symbol[atom_z[j]-1]+"</td><td>"+indices[j]+"</td><td>"+mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
+								else if( (mulliken_partial_charges[j] > thres_max) || (mulliken_partial_charges[j] < thres_min))
+									html += "<tr><td>"+Symbol[atom_z[j]-1]+"</td><td>"+indices[j]+"</td><td>"+mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
 							}
 							html += "</table></div>";
 
@@ -366,7 +367,7 @@ $(document).ready(function() {
 									html += "<tr><td>"+vibrational_freq[i]+"</td><td>"+vibrational_int[i]+"</td><td>"+vibrational_sym[i]+"</td></tr>";
 									nbRes++;
 								}else if(vibrational_int[i] > 20){
-									html += "<tr><td>"+vibrational_freq[i]+"</td><td>"+vibrational_int[i]+"</td><td>"+vibrational_sym[i]+"</td></tr>";
+									html += "<tr><td>"+Math.round(vibrational_freq[i])+"</td><td>"+Math.round(vibrational_int[i])+"</td><td>"+vibrational_sym[i]+"</td></tr>";
 									nbRes++;
 								}
 							}
@@ -395,11 +396,13 @@ $(document).ready(function() {
 							var et_rot = results.results.excited_states.et_rot;
 							
 							html += "<div class=\"container\" align=center><b>Calculated mono-electronic excitations</b>";
-							html += "<table class=\"tab5Cols\" id=\"excitations\">";
-							html += "<tr class=\"ligneSoulignee\"><td>Number</td><td>Energy</td><td>Symmetry</td><td>Oscillator strength</td><td>Rotatory strength</td></tr>";
+							html += "<table class=\"tab6Cols\" id=\"excitations\">";
+							html += "<tr class=\"ligneSoulignee\"><td>Number</td><td>Energy (cm<sup>-1</sup>)</td><td>Energy (nm)</td><td>Symmetry</td><td>Oscillator strength</td><td>Rotatory strength</td></tr>";
 							var nbRes = 0;
-							for(var i=0;i<et_energies.length;i++)
-								html += "<tr><td>"+inde[i]+"</td><td>"+et_energies[i].toFixed(2)+"</td><td>"+et_sym[i]+"</td><td>"+et_oscs[i].toFixed(6)+"</td><td>"+et_rot[i].toFixed(4)+"</td></tr>";
+							for(var i=0;i<et_energies.length;i++){
+								var nm = 10000000/et_energies[i];
+								html += "<tr><td>"+inde[i]+"</td><td>"+Math.round(et_energies[i])+"</td><td>"+Math.round(nm)+"</td><td>"+et_sym[i]+"</td><td>"+et_oscs[i].toFixed(4)+"</td><td>"+et_rot[i].toFixed(4)+"</td></tr>";
+							}
 								
 							html += "</table></div>";
 						}
