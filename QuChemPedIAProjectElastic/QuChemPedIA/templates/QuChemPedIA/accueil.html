@@ -26,14 +26,13 @@
       <h1 class="display-2 text-center text-primary">QuChemPedIA</h1>
       <h2 id="subtitle" class="diplay-2 text-center">Quantum Chemistry Collaborative EncyclopedIA</h2>
       <br/>
-      <form class="text-center" action="{% url 'query' %}" method="GET" >
-          {% csrf_token %}
-          <div class="form-group" style="margin-top: 20px;">
+      <div id="form-accueil">
+        <form class="form-inline" action="{% url 'query' %}" method="GET" >
+            {% csrf_token %}
             {{ query_form.as_table }}
-          </div>
-
-          <input type="submit" class="btn btn-info" value="Search" style="margin-bottom: 20px;"/>
-      </form>
+            <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
@@ -52,7 +51,6 @@
       /*$("#id_search").addClass("form-control");
       $("#id_search").css("width","15%");*/
       $("#id_search").attr("placeholder","Search...");
-      $("#id_typeQuery").addClass("custom-select");
       $("#id_typeQuery").css("width","15%");
       //$("#id_typeQuery").children().addClass("dropdown-item select-item");
   });
