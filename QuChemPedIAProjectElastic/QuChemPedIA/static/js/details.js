@@ -327,7 +327,6 @@ $(document).ready(function() {
 						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><h5 class=\"card-title subTitle\">Thermochemistry and normal modes</h5><div class=\"container subWavefunction\">";
 						html += "<i>All values was calculated at 298.150000 K in atomic units.</i>";
 						if (results.results.freq.zero_point_energy) html += "<div class=\"row\"><div class=\"col\"><b>Sum of electronic and zero-point energy </b></div><div class=\"col\">"+results.results.freq.zero_point_energy+"</div></div>";
-						
 						if (results.results.freq.electronic_thermal_energy) html += "<div class=\"row\"><div class=\"col\"><b>Sum of electronic and thermal </b></div><div class=\"col\">"+results.results.freq.electronic_thermal_energy+"</div></div>";
 						if (results.results.freq.entropy) html += "<div class=\"row\"><div class=\"col\"><b>Entropy </b></div><div class=\"col\">"+results.results.freq.entropy.toFixed(15)+"</div></div>";
 						if (results.results.freq.enthalpy) html += "<div class=\"row\"><div class=\"col\"><b>Enthalpy </b></div><div class=\"col\">"+results.results.freq.enthalpy+"</div></div>";
