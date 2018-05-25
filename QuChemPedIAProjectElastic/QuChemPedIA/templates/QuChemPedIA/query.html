@@ -2,7 +2,12 @@
 {% block content %}
   {% if results|length >= 1 %}
   <div class="container">
-    <h2 id="result-title"> Results </h2>
+    <h2 id="result-title"> Results : {{ results.nbresult }} result(s)</h2>
+    <div id="pagination">
+      <i id="btn-previous" class="fa fa-angle-left" style="font-size:24px"></i>
+      <span>Page : {{ page }} / {{nbrpages}} </span>
+      <i id="btn-next" class="fa fa-angle-right" style="font-size:24px"></i>
+    </div>
       {% for key, value in results.items %}
       {% if key != 'nbresult' %}
       <div id="list-query-group" class="list-group">
@@ -142,7 +147,7 @@
                   </div>
                   <div class="container row">
                     <div class="col">
-                      <strong>Ending energy : </strong>{% if value.0.ending_energy != "Null" or value.0.ending_energy == 0 %}{{ value.0.ending_energy }}{% else %}N/A{% endif %}
+                      <strong>Ending energy : </strong>{% if value.0.ending_energy != "Null" or value.0.ending_energy == 0 %}{{ value.0.ending_energy|floatformat:"7" }}{% else %}N/A{% endif %}
                     </div>
                   </div>
                 </div>
