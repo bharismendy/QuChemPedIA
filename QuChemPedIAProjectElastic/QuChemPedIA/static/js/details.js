@@ -12,7 +12,7 @@ $(document).ready(function() {
 		   processData: true,
 		   dataType: 'json',
 		   success: function(recivedData) {//ce que l'on fait si on a le json
-				console.log("Success");
+				//console.log("Success");
 				var results;
 				var ancienneCouleure;
 				if($.urlParam('id')=="demo")
@@ -263,11 +263,29 @@ $(document).ready(function() {
 								}
 							}
 
-							html += "<div class=\"container subWavefunction\" align=center><b>Most intense Mulliken atomic charges (|q| > 0.1 e)</b>";
+							//clacule de la moyenne
+							var sum = 0;
+							for(var j=0;j<mulliken_partial_charges.length;j++)
+								sum += mulliken_partial_charges[j];
+							var moyenne = sum/mulliken_partial_charges.length;
+							
+							//calcule de l'écart type
+							sum = 0;
+							for(var j=0;j<mulliken_partial_charges.length;j++){
+								var inter = mulliken_partial_charges[j] - moyenne;
+								sum += Math.pow(inter, 2);
+							}
+							var std =  Math.sqrt(sum/mulliken_partial_charges.length);
+							
+							html += "<div class=\"container subWavefunction\" align=center><b>Most intense Mulliken atomic charges</b>";
+							html += "<div class=\"container subWavefunction\" align=center><b>mean = "+moyenne.toFixed(3)+" e, std = "+std.toFixed(3)+" </b>";
+							
 							html += "<table class=\"tab3Cols\" id=\"tableMulliken_partial_charges\">";
 							html += "<tr class=\"ligneSoulignee\"><td>Atom</td><td>number</td><td>Mulliken partial charges</td></tr>";
-
+							var thres_max = moyenne + std;
+							var thres_min = moyenne - std;
 							for(var j=0;j<mulliken_partial_charges.length;j++){
+								if( (mulliken_partial_charges[j] > thres_max) || (mulliken_partial_charges[j] < thres_min))
 								html += "<tr><td>"+Symbol[atom_z[j]-1]+"</td><td>"+indices[j]+"</td><td>"+mulliken_partial_charges[j].toFixed(3)+"</td></tr>";
 							}
 							html += "</table></div>";
