@@ -148,29 +148,16 @@ strong {
   pointer-events: none
 }
 
-#tableMO_energies {width:40%;}
-#tableMO_energies tr{border-bottom : 1px solid;}
-#tableMO_energies td{width:10%;text-align:center;}
+.tab4Cols {width:40%;border-bottom : 1px solid;}
+.tab4Cols .ligneSoulignee{border-bottom : 1px solid;}
+.tab4Cols .cellulTitre{text-align:left;}
+.tab4Cols td{width:10%;text-align:center;}
 
 
-#tableMulliken_partial_charges {width:30%;}
-#tableMulliken_partial_charges tr{border-bottom : 1px solid;}
-#tableMulliken_partial_charges td{width:10%;text-align:center;}
-
-
-#geometric_targets {width:45%;}
-#geometric_targets tr{border-bottom : 1px solid;}
-#geometric_targets td{width:15%;text-align:center;}
-#geometric_targets .cellulTitre{text-align:left;}
-
-#elements_3D_coords_converged {width:40%;}
-#elements_3D_coords_converged tr{border-bottom : 1px solid;}
-#elements_3D_coords_converged td{width:10%;text-align:center;}
-
-#vibrational_int {width:30%;}
-#vibrational_int tr{border-bottom : 1px solid;}
-#vibrational_int td{width:10%;text-align:center;}
-
+.tab3Cols {width:45%;border-bottom : 1px solid;}
+.tab3Cols .ligneSoulignee{border-bottom : 1px solid;}
+.tab3Cols .cellulTitre{text-align:left;}
+.tab3Cols td{width:15%;text-align:center;}
 
 
 
