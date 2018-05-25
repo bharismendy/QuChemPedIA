@@ -33,6 +33,16 @@ nav {
   background-color: #FFFFFF;
 }
 
+.footer {
+  text-align: center;
+  width: 100%;
+}
+
+.link-footer {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 canvas {
   padding: none;
   margin: none;
