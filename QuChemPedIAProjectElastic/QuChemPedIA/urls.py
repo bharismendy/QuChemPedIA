@@ -7,6 +7,6 @@ urlpatterns = [
     path('query', views.query, name='query'),
     path('details',views.details, name='details'),
     path('details_json/<int:id>',views.details_json, name='details_json'),
-    path('details_json/<str:id>',views.details_json, name='details_json'),
+    path('details_image/<int:id>',views.details_image, name='details_image'),
     path('rapport/<int:id>', views.rapport, name='rapport'),
 ]

@@ -39,3 +39,15 @@ def details_json(request,id):
             except:
                 results = None
         return HttpResponse(json.dumps(results), content_type="application/json")
+
+
+def details_image(request,id):
+    """
+    function that return the json of a molecule to an ajax request
+    :param request: request environment variable
+    :param id: id of the json that we want to show
+    :return: json file
+    """
+    if request.isPost():
+        image_data = open("QuChemPedIA/static/image_test.png", "rb").read()
+        return HttpResponse(image_data, content_type="image/png")
