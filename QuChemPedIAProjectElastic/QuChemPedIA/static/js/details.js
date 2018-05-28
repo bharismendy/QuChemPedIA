@@ -4,7 +4,7 @@ $(document).ready(function() {
 		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 		return results[1] || 0;
         }
-
+		$("#mySidenav").hide();
         $.ajax({
 			//connection au serveur
 		   type: 'GET',
@@ -34,8 +34,10 @@ $(document).ready(function() {
 				}else{
 
 // molecule category
+					$("#mySidenav").show();
 					if(results.molecule){
-						var html = "<div class=\"card mt-3\">"
+						$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1 fa fa-flask flaskChem1\"></div><div class=\"col-lg-1 fa fa-flask flaskChem\" id=\"flsk_Molecule\"></div><div class=\"col-lg-10 hrefClick\" id=\"_Molecule\">Molecule</div></div></a>");
+						var html = "<div class=\"card mt-3\" id=\"Molecule\">"
 												+"<div class=\"card-header\">"
 													+"<h5>Molecule</h5>"
 												+"</div>"
@@ -74,7 +76,8 @@ $(document).ready(function() {
 					
 // associated calculations category
 					if(results.metadata) {
-						var html1 = "<div class=\"card mt-3\">"
+						$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1 fa fa-flask flaskChem1\"></div><div class=\"col-lg-1 fa fa-flask flaskChem\" id=\"flsk_associatedCalculations\"></div><div class=\"col-lg-10 hrefClick\" id=\"_associatedCalculations\">Associated calculations</div></div></a>");
+						var html1 = "<div class=\"card mt-3\"  id=\"associatedCalculations\">"
 													+"<div class=\"card-header\">"
 														+"<h5>Associated calculations</h5>"
 													+"</div>"
@@ -118,6 +121,39 @@ $(document).ready(function() {
 				$("#opt").parent().parent().css( "background-color", "#e5e7e9" );
 				$('[data-toggle="tooltip"]').tooltip();
 				$(".mySiblingsRow").hover(function(){ancienneCouleure = $(this).css( "background-color");$(this).css( "background-color", "#e5e7e9" );},function(){$(this).css( "background-color", ancienneCouleure );});
+				
+				
+				
+				//gestion de l'affichage du menu latéral
+				$(".hrefClick").parent().find(".flaskChem").hide();
+				$(".hrefClick").parent().find(".flaskChem1").hide();
+				
+				$(".hrefClick").click(function(e){
+					var lid = this.id
+					lid = lid.substring(1, lid.length);
+					var valscroll = $("#"+lid).offset().top - 100 ;
+					$('html, body').animate({
+						scrollTop: valscroll
+					});
+					
+					$(".hrefClick").parent().find(".flaskChem1").hide();
+					$(".hrefClick").parent().find(".flaskChem").hide();
+					$(this).parent().find(".flaskChem1").show();
+					$(this).parent().parent().parent().find("a").css("color","#2196F3");
+					$(this).parent().parent().css("color","#064579");
+				});
+				
+				$(".hrefClick").parent().hover(function(){
+					if(!$(this).find(".flaskChem1").is(":visible"))
+						$(this).find(".flaskChem").show();
+					$(this).parent().css("color","#FF5252");
+					
+				},function(){
+					$(this).find(".flaskChem").hide();
+					
+					if(!$(this).find(".flaskChem1").is(":visible"))
+						$(this).parent().css("color","#2196F3");
+				});
 			},
 			error: function() {
 				console.log("ERROR");
@@ -133,7 +169,8 @@ $(document).ready(function() {
 					
 // autorship categorya
 					if(results.metadata){
-						var html = "<div class=\"card mt-3\">"
+						$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1 fa fa-flask flaskChem1\"></div><div class=\"col-lg-1 fa fa-flask flaskChem\" id=\"flsk_Authorship\"></div><div class=\"col-lg-10 hrefClick\" id=\"_Authorship\">Authorship</div></div></a>");
+						var html = "<div class=\"card mt-3\" id=\"Authorship\">"
 												+"<div class=\"card-header\">"
 													+"<h5>Authorship</h5>"
 												+"</div>"
@@ -147,7 +184,8 @@ $(document).ready(function() {
 					
 // computational details category
 					if(results.comp_details){
-						var html = "<div class=\"card mt-3\">"
+						$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1 fa fa-flask flaskChem1\"></div><div class=\"col-lg-1 fa fa-flask flaskChem\" id=\"flsk_Molecule\"></div><div class=\"col-lg-10 hrefClick\" id=\"_ComputationalDetails\">Computational details</div></div></a>");
+						var html = "<div class=\"card mt-3\" id=\"ComputationalDetails\">"
 												+"<div class=\"card-header\">"
 													+"<h5>Computational details</h5>"
 												+"</div>"
@@ -188,7 +226,8 @@ $(document).ready(function() {
 
 // results category
 					if(results.results){
-						var html = "<div class=\"card mt-3\">"
+						$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1 fa fa-flask flaskChem1\"></div><div class=\"col-lg-1 fa fa-flask flaskChem\" id=\"flsk_Results\"></div><div class=\"col-lg-10 hrefClick\" id=\"_Results\">Results</div></div></a>");
+						var html = "<div class=\"card mt-3\" id=\"Results\">"
 												+"<div class=\"card-header\">"
 													+"<h5>Results</h5>"
 												+"</div><div id=\"reultsSubList\">";
@@ -300,7 +339,8 @@ $(document).ready(function() {
 
 		// la partie geometry
 					if(results.results.geometry){
-						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><h5 class=\"card-title subTitle\">Geometry</h5><div class=\"container\">";
+						$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1 fa fa-flask flaskChem1\"></div><div class=\"col-lg-1 fa fa-flask flaskChem\" id=\"flsk_Molecule\"></div><div class=\"col-lg-10 hrefClick\" id=\"_Geometry\">&nbsp;> Geometry</div></div></a>");
+						var html = "<div class=\"container subWavefunction\" class=\"subCard\" id=\"Geometry\"><h5 class=\"card-title subTitle\">Geometry</h5><div class=\"container\">";
 						if (results.results.geometry.nuclear_repulsion_energy_from_xyz) html += "<div class=\"row\"><div class=\"col\"><b>Nuclear repulsion energy in atomic units </b></div><div class=\"col\">"+results.results.geometry.nuclear_repulsion_energy_from_xyz+" a.u.</div></div>";
 						
 						html += "</br><p>This calculation is the result of a geometry optimization process.</p>";
@@ -344,7 +384,8 @@ $(document).ready(function() {
 					
 		// la partie Thermochemistry and normal modes
 					if(results.results.freq){
-						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><h5 class=\"card-title subTitle\">Thermochemistry and normal modes</h5><div class=\"container subWavefunction\">";
+						$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1 fa fa-flask flaskChem1\"></div><div class=\"col-lg-1 fa fa-flask flaskChem\" id=\"flsk_Molecule\"></div><div class=\"col-lg-10 hrefClick\" id=\"_Thermochemistry\">&nbsp;> Thermochemistry</div></div></a>");
+						var html = "<div class=\"container subWavefunction\" class=\"subCard\" id=\"Thermochemistry\"><h5 class=\"card-title subTitle\">Thermochemistry and normal modes</h5><div class=\"container subWavefunction\">";
 						html += "<i>All values was calculated at 298.150000 K in atomic units.</i>";
 						if (results.results.freq.zero_point_energy) html += "<div class=\"row\"><div class=\"col\"><b>Sum of electronic and zero-point energy </b></div><div class=\"col\">"+results.results.freq.zero_point_energy+"</div></div>";
 						if (results.results.freq.electronic_thermal_energy) html += "<div class=\"row\"><div class=\"col\"><b>Sum of electronic and thermal </b></div><div class=\"col\">"+results.results.freq.electronic_thermal_energy+"</div></div>";
@@ -382,7 +423,8 @@ $(document).ready(function() {
 
 		// la partie excited_states
 					if(results.results.excited_states){
-						var html = "<div class=\"container\" class=\"subCard\"><h5 class=\"card-title subTitle\">Excited states</h5><div class=\"container\">";
+						$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1 fa fa-flask flaskChem1\"></div><div class=\"col-lg-1 fa fa-flask flaskChem\" id=\"flsk_Molecule\"></div><div class=\"col-lg-10 hrefClick\" id=\"_ExcitedStates\">&nbsp;> Excited states</div></div></a>");
+						var html = "<div class=\"container subCard\" id=\"ExcitedStates\"><h5 class=\"card-title subTitle\">Excited states</h5><div class=\"container\">";
 
 
 				// dessin du tableau des excitations
@@ -395,7 +437,7 @@ $(document).ready(function() {
 							var et_oscs = results.results.excited_states.et_oscs;
 							var et_rot = results.results.excited_states.et_rot;
 							
-							html += "<div class=\"container\" align=center><b>Calculated mono-electronic excitations</b>";
+							html += "<div class=\"container subWavefunction\" align=center><b>Calculated mono-electronic excitations</b>";
 							html += "<table class=\"tab6Cols\" id=\"excitations\">";
 							html += "<tr class=\"ligneSoulignee\"><td>Number</td><td>Energy (cm<sup>-1</sup>)</td><td>Energy (nm)</td><td>Symmetry</td><td>Oscillator strength</td><td>Rotatory strength</td><td></td></tr>";
 							var nbRes = 0;
@@ -413,8 +455,8 @@ $(document).ready(function() {
 					}	
 						
 		}
-		 
-
+		
+		
 });
 
 
