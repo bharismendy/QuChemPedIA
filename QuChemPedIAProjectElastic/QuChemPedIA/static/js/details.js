@@ -462,7 +462,10 @@ $(document).ready(function() {
 							var nbRes = 0;
 							for(var i=0;i<et_energies.length;i++){
 								var nm = 10000000/et_energies[i];
-								html += "<tr><td>"+inde[i]+"</td><td>"+Math.round(et_energies[i])+"</td><td>"+Math.round(nm)+"</td><td>"+et_sym[i]+"</td><td>"+et_oscs[i].toFixed(4)+"</td><td>"+et_rot[i].toFixed(4)+"</td></tr>";
+								html += "<tr><td>"+inde[i]+"</td><td>"+Math.round(et_energies[i])+"</td><td>"+Math.round(nm)+"</td><td>"+et_sym[i]+"</td><td>"+et_oscs[i].toFixed(4)+"</td><td>";
+								if(et_rot[i]) html+=et_rot[i].toFixed(4);
+								else  html+= "Unknown";
+								html+="</td></tr>";
 							}
 
 							html += "</table></div>";
