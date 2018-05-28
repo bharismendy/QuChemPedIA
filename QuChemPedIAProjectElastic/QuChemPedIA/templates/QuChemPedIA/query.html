@@ -156,7 +156,6 @@
                     var charge = {{ value.0.charge }};
                     var formula = $("#formula_{{ value.0.id_log }}").html();
                     var str = "";
-                    console.log(formula);
                     for (var i = formula.length-1; i >= 0; i--) {
                       if( i == formula.length-1 && charge != 0 ){
                         if( charge > 1 || charge < -1){
@@ -171,7 +170,6 @@
                         str = formula.charAt(i) + str;
                       };
                     };
-                    console.log(str);
                     $("#formula_{{ value.0.id_log }}").html(str);
                   });
                 </script>

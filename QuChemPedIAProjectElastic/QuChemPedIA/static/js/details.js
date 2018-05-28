@@ -52,7 +52,26 @@ $(document).ready(function() {
 						}
 						if(results.molecule.can) html += "<div class=\"row\"><div class=\"col\"><b>Canonical SMILES <a href=\"https://en.wikipedia.org/wiki/Simplified_Molecular_Input_Line_Entry_Specification\" target=\"_blank\"><span data-placement=\"right\" data-toggle=\"tooltip\" title=\"Simplified Molecular Input Line Entry Specification\" class=\"badge badge-pill monBadge\">?</span></a></b></div><div class=\"col\">"+results.molecule.can+"</div></div>";
 						if(results.molecule.monoisotopic_mass) html += "<div class=\"row\"><div class=\"col\"><b>Monoisotopic mass</b></div><div class=\"col\">"+results.molecule.monoisotopic_mass+"</div></div>";
-						if(results.molecule.formula) html += "<div class=\"row\"><div class=\"col\"><b>Formula</b></div><div class=\"col\">"+results.molecule.formula+"</div></div>";
+						if(results.molecule.formula){
+							var charge = results.molecule.charge;
+							var formula = results.molecule.formula;
+							var str = "";
+							for (var i = formula.length-1; i >= 0; i--) {
+								if( i == formula.length-1 && charge != 0 ){
+									if( charge > 1 || charge < -1){
+										str = formula.charAt(i-1).sup() + formula.charAt(i).sup() + str;
+										i--;
+									} else {
+										str = formula.charAt(i).sup() + str;
+									}
+								} else if ( $.isNumeric(formula.charAt(i)) ){
+									str = formula.charAt(i).sub() + str;
+								} else {
+									str = formula.charAt(i) + str;
+								};
+							};
+							html += "<div class=\"row\"><div class=\"col\"><b>Formula</b></div><div class=\"col\">"+str+"</div></div>";
+						}
 						if(results.molecule.charge || (results.molecule.charge == 0)) html += "<div class=\"row\"><div class=\"col\"><b>Charge</b></div><div class=\"col\">"+results.molecule.charge+"</div></div>";
 						if(results.molecule.multiplicity || (results.molecule.charge == 0)) html += "<div class=\"row\"><div class=\"col\"><b>Spin multiplicity</b></div><div class=\"col\">"+results.molecule.multiplicity+"</div></div>";
 						html += "</div>"
@@ -71,7 +90,7 @@ $(document).ready(function() {
 		                    smilesDrawer.draw(tree, 'canvas', 'light', false);
 		                });
 					}
-					
+
 // associated calculations category
 					if(results.metadata) {
 						var html1 = "<div class=\"card mt-3\">"
@@ -111,9 +130,9 @@ $(document).ready(function() {
 						}
 					});
 				}
-				
+
 				//$(".mySiblingsRow").click(function(){ $(this).find("button").click(); });
-				
+
 				computationalDetailsEtResults(results);
 				$("#opt").parent().parent().css( "background-color", "#e5e7e9" );
 				$('[data-toggle="tooltip"]').tooltip();
@@ -122,15 +141,15 @@ $(document).ready(function() {
 			error: function() {
 				console.log("ERROR");
 			},
-			
+
 		});
-		
-		
-		function computationalDetailsEtResults(results){			
-					var htm = "";						
+
+
+		function computationalDetailsEtResults(results){
+					var htm = "";
 					var Symbol = ["H","He","Li","Be","B","C","N","O","F","Ne","Na","Mg","Al","Si","P","S","Cl","Ar","K","Ca","Sc","Ti","V","Cr","Mn","Fe","Co","Ni","Cu","Zn","Ga","Ge","As","Se","Br","Kr","Rb","Sr","Y","Zr","Nb","Mo","Tc","Ru","Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe","Cs","Ba","La","Ce","Pr","Nd","Pm","Sm","Eu","Gd","Tb","Dy","Ho","Er","Tm","Yb","Lu","Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn","Fr","Ra","Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr","Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Uut","Uuq","Uup","Uuh","Uus","Uuo"];
 
-					
+
 // autorship categorya
 					if(results.metadata){
 						var html = "<div class=\"card mt-3\">"
@@ -142,9 +161,9 @@ $(document).ready(function() {
 						if(results.metadata.primary_author) html += "<div class=\"row\"><div class=\"col\"><b>Primary author</b></div><div class=\"col\">"+results.metadata.primary_author+"</div></div>";
 						if(results.metadata.primary_author_affiliation) html += "<div class=\"row\"><div class=\"col\"><b>Affiliation</b></div><div class=\"col\">"+results.metadata.primary_author_affiliation+"</div></div>";
 						html += "</div></div>";
-						htm += html;						
+						htm += html;
 					}
-					
+
 // computational details category
 					if(results.comp_details){
 						var html = "<div class=\"card mt-3\">"
@@ -174,12 +193,12 @@ $(document).ready(function() {
 							html +="<div class=\"row\"><div class=\"col\"><b>Requested SCF convergence on MAX density matrix </b></div><div class=\"col\">"+val[1]+"</div></div>";
 							html +="<div class=\"row\"><div class=\"col\"><b>Requested SCF convergence on energy </b></div><div class=\"col\">"+val[2]+"</div></div>";
 						}
-						
+
 						if (results.comp_details.freq.temperature) html += "<div class=\"row\"><div class=\"col\"><b>Temperature </b></div><div class=\"col\">"+results.comp_details.freq.temperature+" K</div></div>";
 						if (results.comp_details.freq.anharmonicity != null) html += "<div class=\"row\"><div class=\"col\"><b>Anharmonic effects </b></div><div class=\"col\">"+results.comp_details.freq.anharmonicity+"</div></div>";
 						if (results.comp_details.excited_states.nb_et_states != null) html += "<div class=\"row\"><div class=\"col\"><b>Number of excited states </b></div><div class=\"col\">"+results.comp_details.excited_states.nb_et_states+"</div></div>";
-						
-						
+
+
 						html += "</div>"
 							+"</div>";
 						htm += html;
@@ -237,11 +256,11 @@ $(document).ready(function() {
 							var atom_z = new Array();
 							for(var j=0;j<atoms_Z.length;j++)
 								atom_z[j]=atoms_Z[j];
-								
+
 							var indices = new Array();
 							for(var j=0;j<Mulliken_partial_charges.length;j++)
 								indices[j]=j;
-								
+
 							var mulliken_partial_charges = new Array();
 							for(var j=0;j<Mulliken_partial_charges.length;j++)
 								mulliken_partial_charges[j]=Mulliken_partial_charges[j];
@@ -276,10 +295,10 @@ $(document).ready(function() {
 								sum += Math.pow(inter, 2);
 							}
 							var std =  Math.sqrt(sum/mulliken_partial_charges.length);
-							
+
 							html += "<div class=\"container subWavefunction\" align=center><b>Most intense Mulliken atomic charges</b>";
 							html += "<div class=\"container subWavefunction\" align=center><b>mean = "+moyenne.toFixed(3)+" e, std = "+std.toFixed(3)+" </b>";
-							
+
 							html += "<table class=\"tab3Cols\" id=\"tableMulliken_partial_charges\">";
 							html += "<tr class=\"ligneSoulignee\"><td>Atom</td><td>number</td><td>Mulliken partial charges</td><td></td></tr>";
 							var thres_max = moyenne + std;
@@ -302,9 +321,9 @@ $(document).ready(function() {
 					if(results.results.geometry){
 						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><h5 class=\"card-title subTitle\">Geometry</h5><div class=\"container\">";
 						if (results.results.geometry.nuclear_repulsion_energy_from_xyz) html += "<div class=\"row\"><div class=\"col\"><b>Nuclear repulsion energy in atomic units </b></div><div class=\"col\">"+results.results.geometry.nuclear_repulsion_energy_from_xyz+" a.u.</div></div>";
-						
+
 						html += "</br><p>This calculation is the result of a geometry optimization process.</p>";
-						
+
 			// dessin du tableau des convergence
 			// cas ou le logiciel est "Gaussian"
 						if(results.comp_details.general.package && (results.comp_details.general.package=="Gaussian")){
@@ -322,8 +341,8 @@ $(document).ready(function() {
 							}
 						}// else if "un autre logiciel"
 
-				
-						
+
+
 			// dessin du tableau Cartesian atomic coordinates
 						if(results.results.geometry.elements_3D_coords_converged){
 							var elements_3D_coords_converged = results.results.geometry.elements_3D_coords_converged;
@@ -336,12 +355,12 @@ $(document).ready(function() {
 							}
 							html += "</table></div>";
 						}
-						
-						
+
+
 						html += "</div></div>";
 						$("#reultsSubList").append(html);
 					}
-					
+
 		// la partie Thermochemistry and normal modes
 					if(results.results.freq){
 						var html = "<div class=\"container subWavefunction\" class=\"subCard\"><h5 class=\"card-title subTitle\">Thermochemistry and normal modes</h5><div class=\"container subWavefunction\">";
@@ -351,9 +370,9 @@ $(document).ready(function() {
 						if (results.results.freq.entropy) html += "<div class=\"row\"><div class=\"col\"><b>Entropy </b></div><div class=\"col\">"+results.results.freq.entropy.toFixed(15)+"</div></div>";
 						if (results.results.freq.enthalpy) html += "<div class=\"row\"><div class=\"col\"><b>Enthalpy </b></div><div class=\"col\">"+results.results.freq.enthalpy+"</div></div>";
 						if (results.results.freq.free_energy) html += "<div class=\"row\"><div class=\"col\"><b>Gibbs free energy </b></div><div class=\"col\">"+results.results.freq.free_energy+"</div></div>";
-						
+
 						html += "</div>";
-						
+
 				// dessin du tableau des vibrations
 						if(results.results.freq.vibrational_int){
 							var vibrational_freq = results.results.freq.vibrational_freq;
@@ -374,11 +393,11 @@ $(document).ready(function() {
 							}
 							html += "</table></div>";
 						}
-						
+
 						html += "</div>";
 						$("#reultsSubList").append(html);
 					}
-					
+
 
 		// la partie excited_states
 					if(results.results.excited_states){
@@ -394,7 +413,7 @@ $(document).ready(function() {
 							var et_sym = results.results.excited_states.et_sym;
 							var et_oscs = results.results.excited_states.et_oscs;
 							var et_rot = results.results.excited_states.et_rot;
-							
+
 							html += "<div class=\"container\" align=center><b>Calculated mono-electronic excitations</b>";
 							html += "<table class=\"tab6Cols\" id=\"excitations\">";
 							html += "<tr class=\"ligneSoulignee\"><td>Number</td><td>Energy (cm<sup>-1</sup>)</td><td>Energy (nm)</td><td>Symmetry</td><td>Oscillator strength</td><td>Rotatory strength</td><td></td></tr>";
@@ -403,34 +422,16 @@ $(document).ready(function() {
 								var nm = 10000000/et_energies[i];
 								html += "<tr><td>"+inde[i]+"</td><td>"+Math.round(et_energies[i])+"</td><td>"+Math.round(nm)+"</td><td>"+et_sym[i]+"</td><td>"+et_oscs[i].toFixed(4)+"</td><td>"+et_rot[i].toFixed(4)+"</td></tr>";
 							}
-								
+
 							html += "</table></div>";
 						}
 
 
 						html += "</div></div>";
 						$("#reultsSubList").append(html);
-					}	
-						
+					}
+
 		}
-		 
+
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
