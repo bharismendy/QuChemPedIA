@@ -43,10 +43,10 @@ def details_json(request,id):
 
 def details_image(request,id):
     """
-    function that return the json of a molecule to an ajax request
+    function that return a png of a molecule to an ajax/post request
     :param request: request environment variable
-    :param id: id of the json that we want to show
-    :return: json file
+    :param id: id of the molecule that we want to show
+    :return: png file
     """
     if request.isPost():
         image_data = open("QuChemPedIA/static/image_test.png", "rb").read()
