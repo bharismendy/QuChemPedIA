@@ -13,8 +13,19 @@
 
   <title>QuChemPedIA</title>
   <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
+  <script src="{% static "js/dropzone.js" %}"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+  <script>
+    Dropzone.options.myDropzone = {
+      url: 'file:///home/etudiant/projet-chimie/Origin/QuChemPedIA/QuChemPedIAProjectElastic/QuChemPedIA/static/',
+      autoProcessQueue: true,
+      dictDefaultMessage: "Drop your log files here or click to upload",
+      acceptedFiles: '.log',
+      dictInvalidFileType: "You can't upload files of this type. Please upload a file with '.log' extension",
+      addRemoveLinks: true,
+    };
+  </script>
 </head>
 {% endblock %}
 
@@ -31,6 +42,13 @@
             {% csrf_token %}
             {{ query_form.as_table }}
             <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
+        </form>
+      </div>
+      <div>
+        <form id="myDropzone" action="/upload" class="dropzone text-center">
+          <div class="fallback">
+            <input name="file" type="file" multiple />
+          </div>
         </form>
       </div>
     </div>
@@ -54,7 +72,5 @@
       $("#id_typeQuery").css("width","15%");
       //$("#id_typeQuery").children().addClass("dropdown-item select-item");
   });
-
-
 </script>
 {% endblock %}
