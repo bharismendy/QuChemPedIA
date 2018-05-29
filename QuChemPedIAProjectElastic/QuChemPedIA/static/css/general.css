@@ -18,10 +18,10 @@
     border: 2px dashed #2196F3;
     border-image: none;
     max-width: 500px;
-    margin-top: 20px;
+    margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 100px;
+    margin-bottom: 20px;
     padding-top: 20px;
     padding-left: auto;
     padding-right: auto;
@@ -209,11 +209,6 @@
   width: 24%;
 }
 
-/* Boutton de recherche */
-#button-search {
-  margin-right: auto;
-}
-
 /* Navbar */
 nav {
   background-color: #FFFFFF;
@@ -339,15 +334,73 @@ strong {
   padding-top: 15px;
 }
 
+/* Boutton de recherche */
+#button-search {
+  margin-right: auto;
+}
+
 #button-search {
   background-color: var(--default-primary-color);
   border-color: var(--default-primary-color);
   margin-left: 15px;
+  color: white;
 }
 
 #button-search:hover {
   background: #1d87da;
 }
+
+#div-buttons {
+  width: 50%;
+}
+
+#button-login {
+  background-color: var(--default-primary-color);
+  border-color: var(--default-primary-color);
+  margin-bottom: 100px;
+  color: white;
+}
+
+#button-login:hover {
+  background: #1d87da;
+}
+
+#button-signin {
+  background-color: var(--default-primary-color);
+  border-color: var(--default-primary-color);
+  margin-bottom: 100px;
+  color: white;
+}
+
+#button-signin:hover {
+  background: #1d87da;
+}
+
+#button-calcul {
+  background-color: var(--default-primary-color);
+  border-color: var(--default-primary-color);
+  margin-bottom: 100px;
+  color: white;
+}
+
+#button-calcul:hover {
+  background: #1d87da;
+}
+
+#button-submit {
+  background-color: var(--default-primary-color);
+  border-color: var(--default-primary-color);
+}
+
+#button-submit:hover {
+  background: #1d87da;
+}
+
+.col-perso {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 
 #list-query-group {
   padding-bottom: 10px;
@@ -367,8 +420,8 @@ strong {
 .Absolute-Center.is-Responsive {
   width: 50%;
   height: 50%;
-
 }
+
 .row404 {
     display: flex;
     justify-content: center;
