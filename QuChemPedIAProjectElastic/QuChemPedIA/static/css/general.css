@@ -340,7 +340,7 @@ strong {
 
 .subWavefunction{padding-bottom:4%;}
 
-.monBadge{border:1px solid blue;color:blue;cursor:pointer;}
+.monBadge{border:1px solid #2196F3;color:var(--default-primary-color);cursor:pointer;}
 
 
 .sidenav {
@@ -350,7 +350,7 @@ strong {
     z-index: 1;
     top: 20px;
     left: 10px;
-    background: #eee;
+    background: rgba(0,0,0,.03);
     overflow-x: hidden;
     padding: 8px 0;
 }
@@ -410,22 +410,3 @@ strong {
 }
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -140,13 +140,13 @@ $(document).ready(function() {
 				$("#opt").parent().parent().css( "background-color", "#e5e7e9" );
 				$('[data-toggle="tooltip"]').tooltip();
 				$(".mySiblingsRow").hover(function(){ancienneCouleure = $(this).css( "background-color");$(this).css( "background-color", "#e5e7e9" );},function(){$(this).css( "background-color", ancienneCouleure );});
-				
-				
-				
+
+
+
 				//gestion de l'affichage du menu latéral
 				$(".hrefClick").parent().find(".flaskChem").hide();
 				$(".hrefClick").parent().find(".flaskChem1").hide();
-				
+
 				$(".hrefClick").click(function(e){
 					var lid = this.id
 					lid = lid.substring(1, lid.length);
@@ -154,22 +154,22 @@ $(document).ready(function() {
 					$('html, body').animate({
 						scrollTop: valscroll
 					});
-					
+
 					$(".hrefClick").parent().find(".flaskChem1").hide();
 					$(".hrefClick").parent().find(".flaskChem").hide();
 					$(this).parent().find(".flaskChem1").show();
 					$(this).parent().parent().parent().find("a").css("color","#2196F3");
-					$(this).parent().parent().css("color","#064579");
+					$(this).parent().parent().css("color","##1d87da");
 				});
-				
+
 				$(".hrefClick").parent().hover(function(){
 					if(!$(this).find(".flaskChem1").is(":visible"))
 						$(this).find(".flaskChem").show();
 					$(this).parent().css("color","#FF5252");
-					
+
 				},function(){
 					$(this).find(".flaskChem").hide();
-					
+
 					if(!$(this).find(".flaskChem1").is(":visible"))
 						$(this).parent().css("color","#2196F3");
 				});
@@ -455,7 +455,7 @@ $(document).ready(function() {
 							var et_sym = results.results.excited_states.et_sym;
 							var et_oscs = results.results.excited_states.et_oscs;
 							var et_rot = results.results.excited_states.et_rot;
-							
+
 							html += "<div class=\"container subWavefunction\" align=center><b>Calculated mono-electronic excitations</b>";
 							html += "<table class=\"tab6Cols\" id=\"excitations\">";
 							html += "<tr class=\"ligneSoulignee\"><td>Number</td><td>Energy (cm<sup>-1</sup>)</td><td>Energy (nm)</td><td>Symmetry</td><td>Oscillator strength</td><td>Rotatory strength</td><td></td></tr>";
@@ -474,11 +474,9 @@ $(document).ready(function() {
 
 						html += "</div></div>";
 						$("#reultsSubList").append(html);
-					}	
-						
+					}
+
 		}
-		
-		
+
+
 });
-
-
