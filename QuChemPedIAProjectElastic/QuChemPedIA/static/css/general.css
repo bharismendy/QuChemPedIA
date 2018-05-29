@@ -342,15 +342,18 @@ strong {
 
 .monBadge{border:1px solid #2196F3;color:var(--default-primary-color);cursor:pointer;}
 
+#autorshipMolecule{
+    padding-top: 20px;
+}
 
 .sidenav {
-    margin-top: 5%;
-    width: 15%;
+    margin-top: 80px;
+    min-width: 300px;    
     position: fixed;
     z-index: 1;
     top: 20px;
     left: 10px;
-    background: rgba(0,0,0,.03);
+    background-color:#F7F7F7;
     overflow-x: hidden;
     padding: 8px 0;
 }
@@ -365,6 +368,21 @@ strong {
 
 .sidenav a:hover {
     color: #064579;
+}
+
+#openNav{
+    position: fixed;
+}
+
+.sidenav #closebtn {
+	cursor:pointer;
+	padding:0px;
+	margin:0px;
+	width:5%;
+	text-align:right;
+    font-size: 20px;
+    margin-left: 90%;
+    margin-right: 5%;
 }
 
 

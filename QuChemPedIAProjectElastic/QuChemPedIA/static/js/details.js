@@ -5,6 +5,16 @@ $(document).ready(function() {
 		return results[1] || 0;
         }
 		$("#mySidenav").hide();
+		$("#openNav").hide();
+		$("#closebtn").hide();
+		$("#openNav").click(function(){
+			if(!$("#mySidenav").is(":visible"))
+				$("#mySidenav").show();
+			else
+				$("#mySidenav").hide();
+		});
+		$("#closebtn").click(function(){$("#mySidenav").hide();});
+		
         $.ajax({
 			//connection au serveur
 		   type: 'GET',
@@ -141,7 +151,7 @@ $(document).ready(function() {
 
 
 
-				//gestion de l'affichage du menu latéral				
+			//gestion de l'affichage du menu latéral				
 				$(".hrefClick").parent().find(".col-lg-1").find(".flaskChem").hide();
 				$(".hrefClick").parent().find(".col-lg-1").find(".flaskChem1").hide();
 				
@@ -171,6 +181,137 @@ $(document).ready(function() {
 					if(!$(this).find(".col-lg-1").find(".flaskChem1").is(":visible"))
 						$(this).parent().css("color","#2196F3");
 				});
+				
+				
+			// tester la taille de l'écan pour adapter le menu
+				$(window).resize(function(){
+					if (window.matchMedia("(max-width: 1700px)").matches) {
+						$("#mySidenav").hide();
+						$("#openNav").show();
+						$("#closebtn").show();
+					} else {
+						$("#mySidenav").show();
+						$("#openNav").hide();
+						$("#closebtn").hide();
+					}
+				});
+				if (window.matchMedia("(max-width: 1700px)").matches) {
+					$("#mySidenav").hide();
+					$("#openNav").show();
+					$("#closebtn").show();
+				} else {
+					$("#mySidenav").show();
+					$("#openNav").hide();
+					$("#closebtn").hide();
+				}
+	
+
+				$(window).scroll(function(){
+						var window_top = $(window).scrollTop() + 12; 
+						var associatedCalculations = $('#associatedCalculations').offset().top -100;
+						var Molecule = $('#Molecule').offset().top -100;
+						var Authorship = $('#Authorship').offset().top -100;
+						var ComputationalDetails = $('#ComputationalDetails').offset().top -100;
+						var Results = $('#Results').offset().top -100;
+						var Geometry = $('#Geometry').offset().top -100;
+						var Thermochemistry = $('#Thermochemistry').offset().top -100;
+						var ExcitedStates = $('#ExcitedStates').offset().top -100;
+						
+						if ((window_top >= Molecule) && (window_top < associatedCalculations) ) {	
+							$("#_Molecule").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Molecule").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Molecule").parent().find(".col-lg-1").find(".flaskChem1").show();
+							$("#_Molecule").parent().parent().parent().find("a").css("color","#2196F3");
+							$("#_Molecule").parent().parent().css("color","#064579");
+						}else{
+							$("#_Molecule").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Molecule").parent().find(".col-lg-1").find(".flaskChem").hide();
+							
+						}
+						if ((window_top >= associatedCalculations) && (window_top < Authorship) ){							
+							$("#_associatedCalculations").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_associatedCalculations").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_associatedCalculations").parent().find(".col-lg-1").find(".flaskChem1").show();
+							$("#_associatedCalculations").parent().parent().parent().find("a").css("color","#2196F3");
+							$("#_associatedCalculations").parent().parent().css("color","#064579");
+						}else{
+							$("#_associatedCalculations").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_associatedCalculations").parent().find(".col-lg-1").find(".flaskChem").hide();
+						}
+						if ((window_top >= Authorship) && (window_top < ComputationalDetails) ){							
+							$("#_Authorship").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Authorship").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Authorship").parent().find(".col-lg-1").find(".flaskChem1").show();
+							$("#_Authorship").parent().parent().parent().find("a").css("color","#2196F3");
+							$("#_Authorship").parent().parent().css("color","#064579");
+						}else{
+							$("#_Authorship").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Authorship").parent().find(".col-lg-1").find(".flaskChem").hide();
+							
+						}
+						if ((window_top >= ComputationalDetails) && (window_top < Results) ){							
+							$("#_ComputationalDetails").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_ComputationalDetails").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_ComputationalDetails").parent().find(".col-lg-1").find(".flaskChem1").show();
+							$("#_ComputationalDetails").parent().parent().parent().find("a").css("color","#2196F3");
+							$("#_ComputationalDetails").parent().parent().css("color","#064579");
+						}else{
+							$("#_ComputationalDetails").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_ComputationalDetails").parent().find(".col-lg-1").find(".flaskChem").hide();
+							
+						}
+						if ((window_top >= Results) && (window_top < Geometry) ){							
+							$("#_Results").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Results").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Results").parent().find(".col-lg-1").find(".flaskChem1").show();
+							$("#_Results").parent().parent().parent().find("a").css("color","#2196F3");
+							$("#_Results").parent().parent().css("color","#064579");
+						}else{
+							$("#_Results").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Results").parent().find(".col-lg-1").find(".flaskChem").hide();
+							
+						}
+						if ((window_top >= Geometry) && (window_top < Thermochemistry) ){							
+							$("#_Geometry").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Geometry").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Geometry").parent().find(".col-lg-1").find(".flaskChem1").show();
+							$("#_Geometry").parent().parent().parent().find("a").css("color","#2196F3");
+							$("#_Geometry").parent().parent().css("color","#064579");
+						}else{
+							$("#_Geometry").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Geometry").parent().find(".col-lg-1").find(".flaskChem").hide();
+							
+						}
+						if ((window_top >= Thermochemistry) && (window_top < ExcitedStates) ){							
+							$("#_Thermochemistry").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Thermochemistry").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Thermochemistry").parent().find(".col-lg-1").find(".flaskChem1").show();
+							$("#_Thermochemistry").parent().parent().parent().find("a").css("color","#2196F3");
+							$("#_Thermochemistry").parent().parent().css("color","#064579");
+						}else{
+							$("#_Thermochemistry").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Thermochemistry").parent().find(".col-lg-1").find(".flaskChem").hide();
+						}
+						if (window_top >= ExcitedStates){							
+							$("#_ExcitedStates").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_ExcitedStates").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_ExcitedStates").parent().find(".col-lg-1").find(".flaskChem1").show();
+							$("#_ExcitedStates").parent().parent().parent().find("a").css("color","#2196F3");
+							$("#_ExcitedStates").parent().parent().css("color","#064579");
+						}else{
+							$("#_ExcitedStates").parent().find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_ExcitedStates").parent().find(".col-lg-1").find(".flaskChem").hide();
+							
+						}
+
+
+
+				}); 
+    
+    
+    
+				
+			
 			},
 			error: function() {
 				console.log("ERROR");
@@ -382,7 +523,7 @@ $(document).ready(function() {
 
 
 			// dessin du tableau Cartesian atomic coordinates
-						if(results.results.geometry.elements_3D_coords_converged){
+						if(results.results.geometry.elements_3D_coords_converged){ 
 							var elements_3D_coords_converged = results.results.geometry.elements_3D_coords_converged;
 							var atoms_Z = results.molecule.atoms_Z;
 							html += "<div class=\"container subCartesian\" align=center><b>Cartesian atomic coordinates in Angstroms</b>";
@@ -475,6 +616,5 @@ $(document).ready(function() {
 					}
 
 		}
-
 
 });
