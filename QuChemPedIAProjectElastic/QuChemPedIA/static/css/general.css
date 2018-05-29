@@ -9,6 +9,9 @@
 .secondary-text-color  { color: #757575; --secondary-text-color: #757575}
 .divider-color         { border-color: #BDBDBD; --divider-color: #BDBDBD}
 
+
+/* Gestion de la Dropzone
+*/
 .dropzone {
     background: white;
     border-radius: 5px;
@@ -35,6 +38,7 @@
   background: rgba(0,0,0,0.04);
 }
 
+/* Partie preview quand on insère un item */
 .dropzone .dz-preview,
 .dropzone-previews .dz-preview {
   background: rgba(255,255,255,0.8);
@@ -51,6 +55,7 @@
   display: none;
 }
 
+/* Partie détails - Conteneur du nom et de la taille */
 .dropzone .dz-preview .dz-details,
 .dropzone-previews .dz-preview .dz-details {
   width: 100px;
@@ -61,6 +66,7 @@
   margin-bottom: 22px;
 }
 
+/* Preview quand on ajoute une image */
 .dropzone .dz-image-preview {
   position: relative;
 }
@@ -77,11 +83,13 @@
   height: auto;
 }
 
+/* Preview du nom du fichier */
 .dropzone .dz-preview .dz-details .dz-filename,
 .dropzone-previews .dz-preview .dz-details .dz-filename {
   overflow: hidden;
   height: 100%;
 }
+/* Preview de l'image */
 .dropzone .dz-preview .dz-details img,
 .dropzone-previews .dz-preview .dz-details img {
   position: absolute;
@@ -90,6 +98,7 @@
   width: 100px;
   height: 100px;
 }
+/* Preview de la taille du fichier */
 .dropzone .dz-preview .dz-details .dz-size,
 .dropzone-previews .dz-preview .dz-details .dz-size {
   position: absolute;
@@ -98,6 +107,8 @@
   height: 28px;
   line-height: 28px;
 }
+
+/* Preview des marqueur pour le succès ou non du transfert*/
 .dropzone .dz-preview.dz-error .dz-error-mark,
 .dropzone-previews .dz-preview.dz-error .dz-error-mark {
   display: block;
@@ -111,6 +122,7 @@
   display: none;
 }
 
+/* Propriété du svg */
 .dropzone .dz-preview .dz-success-mark,
 .dropzone-previews .dz-preview .dz-success-mark,
 .dropzone .dz-preview .dz-error-mark,
@@ -124,16 +136,18 @@
   right: -10px;
   top: -10px;
 }
+/* Couleur du svg quand succès */
 .dropzone .dz-preview .dz-success-mark svg g g,
 .dropzone-previews .dz-preview .dz-success-mark svg g g {
   color: #8cc657;
 }
-
+/* Couleur du svg quand erreur */
 .dropzone .dz-preview .dz-error-mark svg g g,
 .dropzone-previews .dz-preview .dz-error-mark svg g g{
   fill: #ee162d;
 }
 
+/* Barre de progression du transfert du fichier */
 .dropzone .dz-preview .dz-progress,
 .dropzone-previews .dz-preview .dz-progress {
   position: absolute;
@@ -145,6 +159,7 @@
   display: none;
   border-radius: 0.5px;
 }
+/* Barre de progression quand le transfert est en cours */
 .dropzone .dz-preview .dz-progress .dz-upload,
 .dropzone-previews .dz-preview .dz-progress .dz-upload {
   position: absolute;
@@ -158,6 +173,7 @@
 .dropzone-previews .dz-preview.dz-processing .dz-progress {
   display: block;
 }
+/* Message d'erreur dans le preview au survol de la souris */
 .dropzone .dz-preview .dz-error-message,
 .dropzone-previews .dz-preview .dz-error-message {
   display: none;
@@ -176,36 +192,34 @@
   display: block;
 }
 
+
+/* Formulaire de recherche et barre de navifation
+*
+*
+*/
+
+/* Formulaire de recherche */
 .form-control {
   width: 40%;
   margin-left: auto;
 }
 
+/* Selection du type pour la recherche */
 .custom-select {
   width: 24%;
 }
 
+/* Boutton de recherche */
 #button-search {
   margin-right: auto;
 }
 
-hr {
-  height: .05rem;
-  width: 65%;
-  background: #444;
-  border: none;
-  transition: .3s ease-in-out;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  opacity: 0.5;
-}
-
+/* Navbar */
 nav {
   background-color: #FFFFFF;
 }
 
+/* Footer */
 .footer {
   text-align: center;
   width: 100%;
@@ -216,6 +230,7 @@ nav {
   padding-right: 10px;
 }
 
+/* Canvas pour le cansmiles */
 canvas {
   padding: none;
   margin: none;
@@ -229,10 +244,36 @@ td {
   font-size: 14px;
 }
 
+#title {
+  color: #2196F3;
+  font-size: 25px;
+}
+
+/* Sous titre de la page d'accueil */
+#subtitle {
+  color: #212121;
+}
+
+/* Barre de séparation entre les items de la recherche */
+hr {
+  height: .05rem;
+  width: 65%;
+  background: #444;
+  border: none;
+  transition: .3s ease-in-out;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  opacity: 0.5;
+}
+
+/* Balise de mise en gras */
 strong {
   color: #212121;
 }
 
+/* Oui */
 .vertical-center {
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
   min-height: 100vh; /* These two lines are counted as one 🙂       */
@@ -244,14 +285,7 @@ strong {
   background-color: blue;
 }
 
-.card-header {
-  color: var(--default-primary-color);
-}
-
-#subtitle {
-  color: #212121;
-}
-
+/* Pagination bot */
 #pagination {
   text-align: center;
   color: #2196F3;
@@ -261,6 +295,7 @@ strong {
   vertical-align: center;
 }
 
+/* Pagination top */
 #pagination-2 {
   text-align: center;
   color: #2196F3;
@@ -269,6 +304,7 @@ strong {
   vertical-align: center;
 }
 
+/* Gestion de la navigation des page */
 #btn-next {
   padding-left: 5px;
   color: #2196F3;
@@ -293,14 +329,14 @@ strong {
   cursor: pointer;
 }
 
+.fa-disabled {
+  opacity: 0.3;
+  pointer-events: none
+}
+
 #result-title {
   padding-bottom: 10px;
   padding-top: 15px;
-}
-
-#title {
-  color: #2196F3;
-  font-size: 25px;
 }
 
 #button-search {
@@ -316,6 +352,11 @@ strong {
 #list-query-group {
   padding-bottom: 10px;
 }
+
+/* Gestion du positionnement de la page d'accueil
+*
+*
+*/
 
 .Absolute-Center {
   margin: auto;
@@ -333,17 +374,13 @@ strong {
     justify-content: center;
 }
 
+/* Oui */
 .borderless td, .borderless th {
     border: none;
 }
 
 .tableformat td:nth-child(1){
     width: 300px;
-}
-
-.fa-disabled {
-  opacity: 0.3;
-  pointer-events: none
 }
 
 .tab4Cols {width:40%;border-bottom : 1px solid;}
@@ -389,16 +426,3 @@ strong {
 .sidenav a:hover {
     color: #064579;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

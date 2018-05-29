@@ -1,11 +1,13 @@
 {% load static %}
-
+<!-- Page de base pour tout le site sauf la page d'accueil
+     Incluant notamment le header avec titre et formulaire
+   -->
 {# block used as header #}
 {% block header %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <!-- Chargement du CSS-->
+  <!-- Chargement du CSS, bootstrap, javascript et jQuery -->
   {% load bootstrap4 %}
   {% bootstrap_css %}
   {% bootstrap_javascript jquery='full' %}
@@ -21,11 +23,14 @@
 <body>
 
 {% block nav %}
+<!-- Barre de navigation header contenant formulaire et titre pour retour sur la page d'accueil -->
 <nav class="border border-secondary border-right-0 border-left-0 navbar navbar-togleable-md navbar-expand-sm navbar-dark sticky-top">
   <a id="title" class="navbar-brand" href="/QuChemPedIA/">
+    <!-- potention logo -->
     <img class="img-responsive" src="{% static "" %}" alt="" style="width:150px;">
     QuChemPedIA
   </a>
+  <!-- formulaire de recherche -->
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
     <form class="form-inline" action="{% url 'query' %}" method="GET">
       {% csrf_token %}
