@@ -158,16 +158,18 @@ $(document).ready(function() {
 				$(".hrefClick").click(function(e){
 					var lid = this.id
 					lid = lid.substring(1, lid.length);
-					var valscroll = $("#"+lid).offset().top - 100 ;
-					$('html, body').animate({
-						scrollTop: valscroll
-					});
+					if($("#"+lid)){
+						var valscroll = $("#"+lid).offset().top - 100 ;
+						$('html, body').animate({
+							scrollTop: valscroll
+						});
 
-					$(".hrefClick").parent().find(".col-lg-1").find(".flaskChem1").hide();
-					$(".hrefClick").parent().find(".col-lg-1").find(".flaskChem").hide();
-					$(this).parent().find(".col-lg-1").find(".flaskChem1").show();
-					$(this).parent().parent().parent().find("a").css("color","#2196F3");
-					$(this).parent().parent().css("color","#064579");
+						$(".hrefClick").parent().find(".col-lg-1").find(".flaskChem1").hide();
+						$(".hrefClick").parent().find(".col-lg-1").find(".flaskChem").hide();
+						$(this).parent().find(".col-lg-1").find(".flaskChem1").show();
+						$(this).parent().parent().parent().find("a").css("color","#2196F3");
+						$(this).parent().parent().css("color","#064579");
+					}
 				});
 
 				$(".hrefClick").parent().hover(function(){
@@ -499,14 +501,15 @@ $(document).ready(function() {
 					if(results.results.geometry){
 						$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_Geometry\">&nbsp;> Geometry</div></div></a>");
 						var html = "<div class=\"container subWavefunction\" class=\"subCard\" id=\"Geometry\"><h5 class=\"card-title subTitle\">Geometry</h5><div class=\"container\">";
+						
 						if (results.results.geometry.nuclear_repulsion_energy_from_xyz) html += "<div class=\"row\"><div class=\"col\"><b>Nuclear repulsion energy in atomic units </b></div><div class=\"col\">"+results.results.geometry.nuclear_repulsion_energy_from_xyz+" a.u.</div></div>";
 
-						html += "</br><p>This calculation is the result of a geometry optimization process.</p>";
 
 			// dessin du tableau des convergence
 			// cas ou le logiciel est "Gaussian"
 						if(results.comp_details.general.package && (results.comp_details.general.package=="Gaussian")){
 							if(results.comp_details.geometry.geometric_targets){
+								html += "</br><p>This calculation is the result of a geometry optimization process.</p>";
 								var geometric_targets = results.comp_details.geometry.geometric_targets;
 								var geometric_values = results.results.geometry.geometric_values[results.results.geometry.geometric_values.length -1 ];
 								var titreCols = ["Maximum Force","RMS Force","Maximum Displacement","RMS Displacement"];
@@ -521,8 +524,7 @@ $(document).ready(function() {
 						}// else if "un autre logiciel"
 
 
-						html="<div id=\"emplacementDesImages\" classe=\"container\"></div>";
-
+						html +="<div id=\"emplacementDesImages\" classe=\"container\"></div>";
 			// dessin du tableau Cartesian atomic coordinates
 						if(results.results.geometry.elements_3D_coords_converged){ 
 							var elements_3D_coords_converged = results.results.geometry.elements_3D_coords_converged;
@@ -534,11 +536,10 @@ $(document).ready(function() {
 								html += "<tr><td>"+Symbol[atoms_Z[i/3]-1]+"</td><td>"+elements_3D_coords_converged[i].toFixed(4)+"</td><td>"+elements_3D_coords_converged[i+1].toFixed(4)+"</td><td>"+elements_3D_coords_converged[i+2].toFixed(4)+"</td></tr>";
 							}
 							html += "</table></div>";
-						}					
+						}
 						html += "</div></div>";
 						
 						$("#reultsSubList").append(html);
-						
 						
 						
 						var im = "<div class=\"row\" id=\"imagesGeometry\"><div/>";
