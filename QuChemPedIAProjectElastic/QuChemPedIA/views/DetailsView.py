@@ -3,6 +3,7 @@ from QuChemPedIA.forms.QueryForm import QueryForm
 from QuChemPedIA.search import *
 from django.http.response import HttpResponse
 import json
+import base64
 
 
 def details(request):
@@ -48,6 +49,6 @@ def details_image(request,id):
     :param id: id of the molecule that we want to show
     :return: png file
     """
-    if request.isPost():
-        image_data = open("QuChemPedIA/static/image_test.png", "rb").read()
+    if request.is_ajax():
+        image_data = base64.b64encode(open("QuChemPedIA/static/image_test.png", "rb").read())
         return HttpResponse(image_data, content_type="image/png")

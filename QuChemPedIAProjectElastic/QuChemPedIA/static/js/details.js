@@ -521,6 +521,7 @@ $(document).ready(function() {
 						}// else if "un autre logiciel"
 
 
+						html="<div id=\"emplacementDesImages\" classe=\"container\"></div>";
 
 			// dessin du tableau Cartesian atomic coordinates
 						if(results.results.geometry.elements_3D_coords_converged){ 
@@ -533,11 +534,93 @@ $(document).ready(function() {
 								html += "<tr><td>"+Symbol[atoms_Z[i/3]-1]+"</td><td>"+elements_3D_coords_converged[i].toFixed(4)+"</td><td>"+elements_3D_coords_converged[i+1].toFixed(4)+"</td><td>"+elements_3D_coords_converged[i+2].toFixed(4)+"</td></tr>";
 							}
 							html += "</table></div>";
+						}					
+						html += "</div></div>";
+						
+						$("#reultsSubList").append(html);
+						
+						
+						
+						var im = "<div class=\"row\" id=\"imagesGeometry\"><div/>";
+						$("#emplacementDesImages").append(im);
+						
+				// récupération des images et insertion
+						var idIms = $.urlParam('id');
+						var nbIms = 8;
+						var comptids = 0;
+						for(var i=0; i<nbIms;i++){
+							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\"  align=center><img id=\"imagesGeometry"+i+"_"+idIms+"\" class=\"imageMol\" src=\"#\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
+							$("#imagesGeometry").append(image);
+						}
+						$("#imagesGeometry").append("<div style=\"width:100%;\" align=center><p>Representation of the frontier molecular orbitals with a cutoff value of 0.05. From up to bottom: LUMO+1, LUMO, HOMO, HOMO-1.</p></div>");
+						for(var j=0; j<nbIms;j++){
+							$.ajax({
+								type: 'GET',
+								url : "http://127.0.0.1:8000/QuChemPedIA/details_image/"+j,
+								processData: true,
+								success: function(recivedData) {
+									var imageDescription="Atom numbering scheme.";
+									$("#imagesGeometry"+comptids+"_"+idIms).attr("src","data:image/png;base64, "+recivedData+"");
+									comptids++;
+								},
+								error: function(recivedData) {
+								   console.log("error");
+								}
+							});
 						}
 
-
-						html += "</div></div>";
-						$("#reultsSubList").append(html);
+						var im1 = "<div class=\"row\" id=\"imagesGeometry1\"><div/>";
+						$("#emplacementDesImages").append(im1);
+						var nbIms1 = 2;
+						var comptids1 = 0;
+						for(var i=0; i<nbIms1;i++){
+							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\"  align=center><img id=\"imagesGeometry1"+i+"_"+idIms+"\" class=\"imageMol\" src=\"#\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
+							$("#imagesGeometry1").append(image);
+						}
+						$("#imagesGeometry1").append("<div style=\"width:100%;\" align=center><p>Atom numbering scheme.</p></div>");
+						for(var j=0; j<nbIms1;j++){
+							$.ajax({
+								type: 'GET',
+								url : "http://127.0.0.1:8000/QuChemPedIA/details_image/"+j,
+								processData: true,
+								success: function(recivedData) {
+									var imageDescription="Atom numbering scheme.";
+									$("#imagesGeometry1"+comptids1+"_"+idIms).attr("src","data:image/png;base64, "+recivedData+"");
+									comptids1++;
+								},
+								error: function(recivedData) {
+								   console.log("error");
+								}
+							});
+						}
+						var im1 = "<div class=\"row\" id=\"imagesGeometry2\"><div/>";
+						$("#emplacementDesImages").append(im1);
+						var nbIms2 = 2;
+						var comptids2 = 0;
+						for(var i=0; i<nbIms2;i++){
+							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\"  align=center><img id=\"imagesGeometry2"+i+"_"+idIms+"\" class=\"imageMol\" src=\"#\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
+							$("#imagesGeometry2").append(image);
+						}
+						$("#imagesGeometry2").append("<div style=\"width:100%;\" align=center><p>Representation of the molecular electrostatic potential at the distance of the van der Waals radii of the atoms. The red/blue regions depict the most negative (-0.1) / positive (+0.1) regions.</p></div>");
+						for(var j=0; j<nbIms2;j++){
+							$.ajax({
+								type: 'GET',
+								url : "http://127.0.0.1:8000/QuChemPedIA/details_image/"+j,
+								processData: true,
+								success: function(recivedData) {
+									var imageDescription="Atom numbering scheme.";
+									$("#imagesGeometry2"+comptids2+"_"+idIms).attr("src","data:image/png;base64, "+recivedData+"");
+									comptids2++;
+								},
+								error: function(recivedData) {
+								   console.log("error");
+								}
+							});
+						}
+						
+						
+						
+						
 					}
 
 		// la partie Thermochemistry and normal modes
