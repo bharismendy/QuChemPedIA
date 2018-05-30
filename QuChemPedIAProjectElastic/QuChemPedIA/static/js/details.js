@@ -656,6 +656,7 @@ $(document).ready(function() {
 							var vibrational_int = results.results.freq.vibrational_int;
 							var vibrational_sym = results.results.freq.vibrational_sym;
 							html += "<div class=\"container subVibrations\" align=center><b>Table of the most intense molecular vibrations (> 20 km/mol)</b>";
+							html += "<div class=\"row\"><div class=\"col-md-6 col-sm-6 col-xs-6\">";
 							html += "<table class=\"tab3Cols\" id=\"vibrational_int\">";
 							html += "<tr class=\"ligneSoulignee\"><td>Frequencies (cm<sup>-1</sup>)</td><td>Intensity (km/mol)</td><td>Symmetry</td><td></td></tr>";
 							var nbRes = 0;
@@ -669,10 +670,26 @@ $(document).ready(function() {
 								}
 							}
 							html += "</table></div>";
+							html += "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px;margin-top:45px;\" class=\"col-md-6 col-sm-6 col-xs-6\"><img id=\"ThermochemistryChart\" class=\"imageMol\" src=\"#\" alt=\"Thermochemistry and normal modes chart\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div></div>";
+							html += "</div>";
 						}
 
 						html += "</div>";
 						$("#reultsSubList").append(html);
+						
+						$.ajax({
+							type: 'GET',
+							url : "http://127.0.0.1:8000/QuChemPedIA/details_image/"+j,
+							processData: true,
+							success: function(recivedData) {
+								var imageDescription="Atom numbering scheme.";
+								$("#ThermochemistryChart").attr("src","data:image/png;base64, "+recivedData+"");
+								comptids2++;
+							},
+							error: function(recivedData) {
+							   console.log("error");
+							}
+						});
 					}
 
 
@@ -695,8 +712,7 @@ $(document).ready(function() {
 
 							html += "<div class=\"container subWavefunction\" align=center><b>Calculated mono-electronic excitations</b>";
 							
-							html += "<div class=\"col-md-6 col-sm-6 col-xs-6\"></div>";
-							
+							html += "<div class=\"row\"><div class=\"col-md-6 col-sm-6 col-xs-6\">";
 							html += "<table class=\"tab6Cols\" id=\"excitations\">";
 							html += "<tr class=\"ligneSoulignee\"><td>Number</td><td>Energy (cm<sup>-1</sup>)</td><td>Energy (nm)</td><td>Symmetry</td><td>Oscillator strength</td><td>Rotatory strength</td><td></td></tr>";
 							var nbRes = 0;
@@ -709,11 +725,27 @@ $(document).ready(function() {
 							}
 
 							html += "</table></div>";
+							html += "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px;margin-top:45px;\" class=\"col-md-6 col-sm-6 col-xs-6\"><img id=\"exitedStatesChart\" class=\"imageMol\" src=\"#\" alt=\"Excited states chart\" width=\"400px\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div></div>";
+							html += "</div>";
+							
 						}
 
 
 						html += "</div></div>";
 						$("#reultsSubList").append(html);
+						$.ajax({
+							type: 'GET',
+							url : "http://127.0.0.1:8000/QuChemPedIA/details_image/"+j,
+							processData: true,
+							success: function(recivedData) {
+								var imageDescription="Atom numbering scheme.";
+								$("#exitedStatesChart").attr("src","data:image/png;base64, "+recivedData+"");
+								comptids2++;
+							},
+							error: function(recivedData) {
+							   console.log("error");
+							}
+						});
 					}
 
 		}

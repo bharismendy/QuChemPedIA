@@ -446,7 +446,7 @@ strong {
 .tab3Cols .cellulTitre{text-align:left;}
 .tab3Cols td{width:15%;text-align:right;}
 
-.tab6Cols {width:60%;border-bottom : 1px solid;}
+.tab6Cols {width:100%;border-bottom : 1px solid;}
 .tab6Cols .ligneSoulignee{border-bottom : 1px solid;}
 .tab6Cols .cellulTitre{text-align:left;}
 .tab6Cols td{width:10%;text-align:right;}
