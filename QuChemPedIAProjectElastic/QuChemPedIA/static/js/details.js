@@ -210,14 +210,22 @@ $(document).ready(function() {
 
 				$(window).scroll(function(){
 						var window_top = $(window).scrollTop() + 12; 
-						var associatedCalculations = $('#associatedCalculations').offset().top -100;
-						var Molecule = $('#Molecule').offset().top -100;
-						var Authorship = $('#Authorship').offset().top -100;
-						var ComputationalDetails = $('#ComputationalDetails').offset().top -100;
-						var Results = $('#Results').offset().top -100;
-						var Geometry = $('#Geometry').offset().top -100;
-						var Thermochemistry = $('#Thermochemistry').offset().top -100;
-						var ExcitedStates = $('#ExcitedStates').offset().top -100;
+						var associatedCalculations = 0;
+						if($('#associatedCalculations').offset()) associatedCalculations = $('#associatedCalculations').offset().top -100;
+						var Molecule = 0;
+						if($('#Molecule').offset()) Molecule = $('#Molecule').offset().top -100;
+						var Authorship = 0;
+						if($('#Authorship').offset()) Authorship = $('#Authorship').offset().top -100;
+						var ComputationalDetails = 0;
+						if($('#ComputationalDetails')) ComputationalDetails = $('#ComputationalDetails').offset().top -100;
+						var Results = 0;
+						if($('#Results').offset()) Results = $('#Results').offset().top -100;
+						var Geometry = 0;
+						if($('#Geometry').offset()) Geometry = $('#Geometry').offset().top -100;
+						var Thermochemistry = 0;
+						if($('#Thermochemistry').offset()) Thermochemistry = $('#Thermochemistry').offset().top -100;
+						var ExcitedStates = 0;
+						if($('#ExcitedStates').offset()) ExcitedStates = $('#ExcitedStates').offset().top -100;
 						
 						if ((window_top >= Molecule) && (window_top < associatedCalculations) ) {	
 							$("#_Molecule").parent().find(".col-lg-1").find(".flaskChem1").hide();
@@ -680,6 +688,9 @@ $(document).ready(function() {
 							var et_rot = results.results.excited_states.et_rot;
 
 							html += "<div class=\"container subWavefunction\" align=center><b>Calculated mono-electronic excitations</b>";
+							
+							html += "<div class=\"col-md-6 col-sm-6 col-xs-6\"></div>";
+							
 							html += "<table class=\"tab6Cols\" id=\"excitations\">";
 							html += "<tr class=\"ligneSoulignee\"><td>Number</td><td>Energy (cm<sup>-1</sup>)</td><td>Energy (nm)</td><td>Symmetry</td><td>Oscillator strength</td><td>Rotatory strength</td><td></td></tr>";
 							var nbRes = 0;
