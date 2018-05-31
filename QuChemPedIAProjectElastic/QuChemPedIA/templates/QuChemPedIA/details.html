@@ -87,7 +87,8 @@
 
 <div id="404error">
 </div>
-
+		<div id="loadingImage" align=center><img src="{% static "/media/loading.gif" %}" alt="loading"></div>
+		
 		<span style="font-size:30px;cursor:pointer;" id="openNav">&#9776;</span>
 
 		<div class="card sidenav" id="mySidenav">
@@ -119,6 +120,7 @@
 
 
 	<script>
+	var loadingImage = "{% static "/media/loading.gif" %}";
 	var scientist = "{% static "media/confused_scientist.png" %}";
 	var molecule = "{% static "media/molecule.png" %}";
 	</script>

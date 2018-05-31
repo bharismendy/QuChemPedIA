@@ -22,6 +22,7 @@ $(document).ready(function() {
 		   processData: true,
 		   dataType: 'json',
 		   success: function(recivedData) {//ce que l'on fait si on a le json
+				$("#loadingImage").hide();				
 				//console.log("Success");
 				var results;
 				var ancienneCouleure;
@@ -323,6 +324,7 @@ $(document).ready(function() {
 			
 			},
 			error: function() {
+				$("#loadingImage").hide();
 				console.log("ERROR");
 			},
 
@@ -565,7 +567,7 @@ $(document).ready(function() {
 						var nbIms = 4;
 						var comptids = 0;
 						for(var i=0; i<nbIms;i++){
-							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\"  align=center><img id=\"imagesGeometry"+i+"_"+idIms+"\" class=\"imageMol\" src=\"#\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
+							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\"  align=center><img id=\"imagesGeometry"+i+"_"+idIms+"\" class=\"imageMol\" src=\""+loadingImage+"\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
 							$("#imagesGeometry").append(image);
 						}
 						$("#imagesGeometry").append("<div style=\"width:100%;\" align=center><p>Representation of the frontier molecular orbitals with a cutoff value of 0.05. From up to bottom: LUMO+1, LUMO, HOMO, HOMO-1.</p></div>");
@@ -590,7 +592,7 @@ $(document).ready(function() {
 						var nbIms1 = 1;
 						var comptids1 = 0;
 						for(var i=0; i<nbIms1;i++){
-							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\" align=center><img id=\"imagesGeometry1"+i+"_"+idIms+"\" class=\"imageMol\" src=\"#\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
+							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\" align=center><img id=\"imagesGeometry1"+i+"_"+idIms+"\" class=\"imageMol\" src=\""+loadingImage+"\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
 							$("#imagesGeometry1").append(image);
 						}
 						$("#imagesGeometry1").append("<div style=\"width:100%;\" align=center><p>Atom numbering scheme.</p></div>");
@@ -614,7 +616,7 @@ $(document).ready(function() {
 						var nbIms2 = 1;
 						var comptids2 = 0;
 						for(var i=0; i<nbIms2;i++){
-							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\"  align=center><img id=\"imagesGeometry2"+i+"_"+idIms+"\" class=\"imageMol\" src=\"#\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
+							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\"  align=center><img id=\"imagesGeometry2"+i+"_"+idIms+"\" class=\"imageMol\" src=\""+loadingImage+"\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
 							$("#imagesGeometry2").append(image);
 						}
 						$("#imagesGeometry2").append("<div style=\"width:100%;\" align=center><p>Representation of the molecular electrostatic potential at the distance of the van der Waals radii of the atoms. The red/blue regions depict the most negative (-0.1) / positive (+0.1) regions.</p></div>");
@@ -674,14 +676,14 @@ $(document).ready(function() {
 								}
 							}
 							html += "</table></div>";
-							html += "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px;margin-top:45px;\" class=\"col-md-6 col-sm-6 col-xs-6\"><img id=\"ThermochemistryChart\" class=\"imageMol\" src=\"#\" alt=\"Thermochemistry and normal modes chart\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div></div>";
+							html += "<div style=\"border-radius: 25px;border: 1px dashed; height: 300px;margin-top:45px;\" class=\"col-md-6 col-sm-6 col-xs-6\"><img id=\"ThermochemistryChart\" class=\"imageMol\" src=\""+loadingImage+"\" alt=\"Thermochemistry and normal modes chart\" height=\"300px\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div></div>";
 							html += "</div>";
 						}
 
 						html += "</div>";
 						$("#reultsSubList").append(html);
-						
-						$.ajax({
+						// à décomenter pour le fonctionnement final
+						/*$.ajax({
 							type: 'GET',
 							url : "http://127.0.0.1:8000/QuChemPedIA/details_image/"+j,
 							processData: true,
@@ -693,7 +695,7 @@ $(document).ready(function() {
 							error: function(recivedData) {
 							   console.log("error");
 							}
-						});
+						});*/
 					}
 
 
@@ -730,13 +732,14 @@ $(document).ready(function() {
 							}
 
 							html += "</table></div>";
-							html += "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px;margin-top:45px;\" class=\"col-md-6 col-sm-6 col-xs-6\"><img id=\"exitedStatesChart\" class=\"imageMol\" src=\"#\" alt=\"Excited states chart\" width=\"400px\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div></div>";
+							html += "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px;margin-top:45px;\" class=\"col-md-6 col-sm-6 col-xs-6\"><img id=\"exitedStatesChart\" class=\"imageMol\" src=\""+loadingImage+"\" alt=\"Excited states chart\" height=\"300px\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div></div>";
 							html += "</div>";
 							
 						}
 
 
 						html += "</div></div>";
+						
 						$("#reultsSubList").append(html);
 						$.ajax({
 							type: 'GET',
