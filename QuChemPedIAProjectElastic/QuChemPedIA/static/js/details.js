@@ -46,7 +46,8 @@ $(document).ready(function() {
 // molecule category
 					$("#mySidenav").show();
 					if(results.molecule){
-						$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_Molecule\">Molecule</div></div></a>");
+						//$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_Molecule\">Molecule</div></div></a>");
+						$("#mySidenav").append("<a href=\"#\"><div class=\"row hrefClick\" id=\"_Molecule\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10\">Molecule</div></div></a>");
 						var html = "<div class=\"card mt-3\" id=\"Molecule\">"
 												+"<div class=\"card-header\">"
 													+"<h5>Molecule</h5>"
@@ -105,7 +106,7 @@ $(document).ready(function() {
 
 // associated calculations category
 					if(results.metadata) {
-						$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_associatedCalculations\">Associated calculations</div></div></a>");
+						$("#mySidenav").append("<a href=\"#\"><div class=\"row hrefClick\" id=\"_associatedCalculations\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10\">Associated calculations</div></div></a>");
 						var html1 = "<div class=\"card mt-3\"  id=\"associatedCalculations\">"
 													+"<div class=\"card-header\">"
 														+"<h5>Associated calculations</h5>"
@@ -152,8 +153,8 @@ $(document).ready(function() {
 
 
 			//gestion de l'affichage du menu latéral				
-				$(".hrefClick").parent().find(".col-lg-1").find(".flaskChem").hide();
-				$(".hrefClick").parent().find(".col-lg-1").find(".flaskChem1").hide();
+				$(".hrefClick").find(".col-lg-1").find(".flaskChem").hide();
+				$(".hrefClick").find(".col-lg-1").find(".flaskChem1").hide();
 				
 				$(".hrefClick").click(function(e){
 					var lid = this.id
@@ -163,16 +164,15 @@ $(document).ready(function() {
 						$('html, body').animate({
 							scrollTop: valscroll
 						});
-
-						$(".hrefClick").parent().find(".col-lg-1").find(".flaskChem1").hide();
-						$(".hrefClick").parent().find(".col-lg-1").find(".flaskChem").hide();
-						$(this).parent().find(".col-lg-1").find(".flaskChem1").show();
-						$(this).parent().parent().parent().find("a").css("color","#2196F3");
-						$(this).parent().parent().css("color","#064579");
+						$(".hrefClick").find(".col-lg-1").find(".flaskChem1").hide();
+						$(".hrefClick").find(".col-lg-1").find(".flaskChem").hide();
+						$(this).find(".col-lg-1").find(".flaskChem1").show();
+						$(this).parent().parent().find("a").css("color","#2196F3");
+						$(this).parent().css("color","#064579");
 					}
 				});
 
-				$(".hrefClick").parent().hover(function(){
+				$(".hrefClick").hover(function(){
 					if(!$(this).find(".col-lg-1").find(".flaskChem1").is(":visible"))
 						$(this).find(".col-lg-1").find(".flaskChem").show();
 					$(this).parent().css("color","#064579");
@@ -183,7 +183,6 @@ $(document).ready(function() {
 					if(!$(this).find(".col-lg-1").find(".flaskChem1").is(":visible"))
 						$(this).parent().css("color","#2196F3");
 				});
-				
 				
 			// tester la taille de l'écan pour adapter le menu
 				$(window).resize(function(){
@@ -228,89 +227,89 @@ $(document).ready(function() {
 						if($('#ExcitedStates').offset()) ExcitedStates = $('#ExcitedStates').offset().top -100;
 						
 						if ((window_top >= Molecule) && (window_top < associatedCalculations) ) {	
-							$("#_Molecule").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_Molecule").parent().find(".col-lg-1").find(".flaskChem").hide();
-							$("#_Molecule").parent().find(".col-lg-1").find(".flaskChem1").show();
-							$("#_Molecule").parent().parent().parent().find("a").css("color","#2196F3");
-							$("#_Molecule").parent().parent().css("color","#064579");
+							$("#_Molecule").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Molecule").find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Molecule").find(".col-lg-1").find(".flaskChem1").show();
+							$("#_Molecule").parent().parent().find("a").css("color","#2196F3");
+							$("#_Molecule").parent().css("color","#064579");
 						}else{
-							$("#_Molecule").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_Molecule").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Molecule").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Molecule").find(".col-lg-1").find(".flaskChem").hide();
 							
 						}
 						if ((window_top >= associatedCalculations) && (window_top < Authorship) ){							
-							$("#_associatedCalculations").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_associatedCalculations").parent().find(".col-lg-1").find(".flaskChem").hide();
-							$("#_associatedCalculations").parent().find(".col-lg-1").find(".flaskChem1").show();
-							$("#_associatedCalculations").parent().parent().parent().find("a").css("color","#2196F3");
-							$("#_associatedCalculations").parent().parent().css("color","#064579");
+							$("#_associatedCalculations").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_associatedCalculations").find(".col-lg-1").find(".flaskChem").hide();
+							$("#_associatedCalculations").find(".col-lg-1").find(".flaskChem1").show();
+							$("#_associatedCalculations").parent().parent().find("a").css("color","#2196F3");
+							$("#_associatedCalculations").parent().css("color","#064579");
 						}else{
-							$("#_associatedCalculations").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_associatedCalculations").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_associatedCalculations").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_associatedCalculations").find(".col-lg-1").find(".flaskChem").hide();
 						}
 						if ((window_top >= Authorship) && (window_top < ComputationalDetails) ){							
-							$("#_Authorship").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_Authorship").parent().find(".col-lg-1").find(".flaskChem").hide();
-							$("#_Authorship").parent().find(".col-lg-1").find(".flaskChem1").show();
-							$("#_Authorship").parent().parent().parent().find("a").css("color","#2196F3");
-							$("#_Authorship").parent().parent().css("color","#064579");
+							$("#_Authorship").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Authorship").find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Authorship").find(".col-lg-1").find(".flaskChem1").show();
+							$("#_Authorship").parent().parent().find("a").css("color","#2196F3");
+							$("#_Authorship").parent().css("color","#064579");
 						}else{
-							$("#_Authorship").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_Authorship").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Authorship").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Authorship").find(".col-lg-1").find(".flaskChem").hide();
 							
 						}
 						if ((window_top >= ComputationalDetails) && (window_top < Results) ){							
-							$("#_ComputationalDetails").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_ComputationalDetails").parent().find(".col-lg-1").find(".flaskChem").hide();
-							$("#_ComputationalDetails").parent().find(".col-lg-1").find(".flaskChem1").show();
-							$("#_ComputationalDetails").parent().parent().parent().find("a").css("color","#2196F3");
-							$("#_ComputationalDetails").parent().parent().css("color","#064579");
+							$("#_ComputationalDetails").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_ComputationalDetails").find(".col-lg-1").find(".flaskChem").hide();
+							$("#_ComputationalDetails").find(".col-lg-1").find(".flaskChem1").show();
+							$("#_ComputationalDetails").parent().parent().find("a").css("color","#2196F3");
+							$("#_ComputationalDetails").parent().css("color","#064579");
 						}else{
-							$("#_ComputationalDetails").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_ComputationalDetails").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_ComputationalDetails").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_ComputationalDetails").find(".col-lg-1").find(".flaskChem").hide();
 							
 						}
 						if ((window_top >= Results) && (window_top < Geometry) ){							
-							$("#_Results").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_Results").parent().find(".col-lg-1").find(".flaskChem").hide();
-							$("#_Results").parent().find(".col-lg-1").find(".flaskChem1").show();
-							$("#_Results").parent().parent().parent().find("a").css("color","#2196F3");
-							$("#_Results").parent().parent().css("color","#064579");
+							$("#_Results").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Results").find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Results").find(".col-lg-1").find(".flaskChem1").show();
+							$("#_Results").parent().parent().find("a").css("color","#2196F3");
+							$("#_Results").parent().css("color","#064579");
 						}else{
-							$("#_Results").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_Results").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Results").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Results").find(".col-lg-1").find(".flaskChem").hide();
 							
 						}
 						if ((window_top >= Geometry) && (window_top < Thermochemistry) ){							
-							$("#_Geometry").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_Geometry").parent().find(".col-lg-1").find(".flaskChem").hide();
-							$("#_Geometry").parent().find(".col-lg-1").find(".flaskChem1").show();
-							$("#_Geometry").parent().parent().parent().find("a").css("color","#2196F3");
-							$("#_Geometry").parent().parent().css("color","#064579");
+							$("#_Geometry").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Geometry").find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Geometry").find(".col-lg-1").find(".flaskChem1").show();
+							$("#_Geometry").parent().parent().find("a").css("color","#2196F3");
+							$("#_Geometry").parent().css("color","#064579");
 						}else{
-							$("#_Geometry").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_Geometry").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Geometry").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Geometry").find(".col-lg-1").find(".flaskChem").hide();
 							
 						}
 						if ((window_top >= Thermochemistry) && (window_top < ExcitedStates) ){							
-							$("#_Thermochemistry").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_Thermochemistry").parent().find(".col-lg-1").find(".flaskChem").hide();
-							$("#_Thermochemistry").parent().find(".col-lg-1").find(".flaskChem1").show();
-							$("#_Thermochemistry").parent().parent().parent().find("a").css("color","#2196F3");
-							$("#_Thermochemistry").parent().parent().css("color","#064579");
+							$("#_Thermochemistry").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Thermochemistry").find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Thermochemistry").find(".col-lg-1").find(".flaskChem1").show();
+							$("#_Thermochemistry").parent().parent().find("a").css("color","#2196F3");
+							$("#_Thermochemistry").parent().css("color","#064579");
 						}else{
-							$("#_Thermochemistry").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_Thermochemistry").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_Thermochemistry").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_Thermochemistry").find(".col-lg-1").find(".flaskChem").hide();
 						}
 						if (window_top >= ExcitedStates){							
-							$("#_ExcitedStates").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_ExcitedStates").parent().find(".col-lg-1").find(".flaskChem").hide();
-							$("#_ExcitedStates").parent().find(".col-lg-1").find(".flaskChem1").show();
-							$("#_ExcitedStates").parent().parent().parent().find("a").css("color","#2196F3");
-							$("#_ExcitedStates").parent().parent().css("color","#064579");
+							$("#_ExcitedStates").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_ExcitedStates").find(".col-lg-1").find(".flaskChem").hide();
+							$("#_ExcitedStates").find(".col-lg-1").find(".flaskChem1").show();
+							$("#_ExcitedStates").parent().parent().find("a").css("color","#2196F3");
+							$("#_ExcitedStates").parent().css("color","#064579");
 						}else{
-							$("#_ExcitedStates").parent().find(".col-lg-1").find(".flaskChem1").hide();
-							$("#_ExcitedStates").parent().find(".col-lg-1").find(".flaskChem").hide();
+							$("#_ExcitedStates").find(".col-lg-1").find(".flaskChem1").hide();
+							$("#_ExcitedStates").find(".col-lg-1").find(".flaskChem").hide();
 							
 						}
 
@@ -338,7 +337,8 @@ $(document).ready(function() {
 // autorship categorya
 					if(results.metadata){
 						if(itmesMenu == 1)
-							$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_Authorship\">Authorship</div></div></a>");
+							//$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_Authorship\">Authorship</div></div></a>");
+							$("#mySidenav").append("<a href=\"#\"><div class=\"row hrefClick\" id=\"_Authorship\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10\">Authorship</div></div></a>");
 						var html = "<div class=\"card mt-3\" id=\"Authorship\">"
 												+"<div class=\"card-header\">"
 													+"<h5>Authorship</h5>"
@@ -354,7 +354,8 @@ $(document).ready(function() {
 // computational details category
 					if(results.comp_details){
 						if(itmesMenu == 1)
-							$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_ComputationalDetails\">Computational details</div></div></a>");
+							//$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_ComputationalDetails\">Computational details</div></div></a>");
+							$("#mySidenav").append("<a href=\"#\"><div class=\"row hrefClick\" id=\"_ComputationalDetails\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10\">Computational details</div></div></a>");
 						var html = "<div class=\"card mt-3\" id=\"ComputationalDetails\">"
 												+"<div class=\"card-header\">"
 													+"<h5>Computational details</h5>"
@@ -397,7 +398,8 @@ $(document).ready(function() {
 // results category
 					if(results.results){
 						if(itmesMenu == 1)
-							$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_Results\">Results</div></div></a>");
+							//$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_Results\">Results</div></div></a>");
+							$("#mySidenav").append("<a href=\"#\"><div class=\"row hrefClick\" id=\"_Results\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10\">Results</div></div></a>");
 						var html = "<div class=\"card mt-3\" id=\"Results\">"
 												+"<div class=\"card-header\">"
 													+"<h5>Results</h5>"
@@ -511,7 +513,8 @@ $(document).ready(function() {
 		// la partie geometry
 					if(results.results.geometry){
 						if(itmesMenu == 1)
-							$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_Geometry\">&nbsp;> Geometry</div></div></a>");
+							//$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_Geometry\">&nbsp;> Geometry</div></div></a>");
+							$("#mySidenav").append("<a href=\"#\"><div class=\"row hrefClick\" id=\"_Geometry\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10\">&nbsp;> Geometry</div></div></a>");
 						var html = "<div class=\"container subWavefunction\" class=\"subCard\" id=\"Geometry\"><h5 class=\"card-title subTitle\">Geometry</h5><div class=\"container\">";
 						
 						if (results.results.geometry.nuclear_repulsion_energy_from_xyz) html += "<div class=\"row\"><div class=\"col\"><b>Nuclear repulsion energy in atomic units </b></div><div class=\"col\">"+results.results.geometry.nuclear_repulsion_energy_from_xyz+" a.u.</div></div>";
@@ -582,7 +585,7 @@ $(document).ready(function() {
 							});
 						}
 
-						var im1 = "<div class=\"row justify-content-center\" id=\"imagesGeometry1\"><div/>";
+						var im1 = "<div class=\"row justify-content-center\" id=\"imagesGeometry1\"s><div/>";
 						$("#emplacementDesImages").append(im1);
 						var nbIms1 = 1;
 						var comptids1 = 0;
@@ -639,7 +642,8 @@ $(document).ready(function() {
 		// la partie Thermochemistry and normal modes
 					if(results.results.freq){
 						if(itmesMenu == 1)
-							$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_Thermochemistry\">&nbsp;> Thermochemistry</div></div></a>");
+							//$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_Thermochemistry\">&nbsp;> Thermochemistry</div></div></a>");
+							$("#mySidenav").append("<a href=\"#\"><div class=\"row hrefClick\" id=\"_Thermochemistry\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10\">&nbsp;> Thermochemistry</div></div></a>");
 						var html = "<div class=\"container subWavefunction\" class=\"subCard\" id=\"Thermochemistry\"><h5 class=\"card-title subTitle\">Thermochemistry and normal modes</h5><div class=\"container subWavefunction\">";
 						html += "<i>All values was calculated at 298.150000 K in atomic units.</i>";
 						if (results.results.freq.zero_point_energy) html += "<div class=\"row\"><div class=\"col\"><b>Sum of electronic and zero-point energy </b></div><div class=\"col\">"+results.results.freq.zero_point_energy+"</div></div>";
@@ -696,7 +700,8 @@ $(document).ready(function() {
 		// la partie excited_states
 					if(results.results.excited_states){
 						if(itmesMenu == 1)
-							$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_ExcitedStates\">&nbsp;> Excited states</div></div></a>");
+							//$("#mySidenav").append("<a href=\"#\"><div class=\"row\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10 hrefClick\" id=\"_ExcitedStates\">&nbsp;> Excited states</div></div></a>");
+							$("#mySidenav").append("<a href=\"#\"><div class=\"row hrefClick\" id=\"_ExcitedStates\"><div class=\"col-lg-1\"><div class=\"fa fa-flask flaskChem1\"></div><div class=\"fa fa-flask flaskChem\"></div></div><div class=\"col-lg-10\">&nbsp;> Excited states</div></div></a>");
 						var html = "<div class=\"container subCard\" id=\"ExcitedStates\"><h5 class=\"card-title subTitle\">Excited states</h5><div class=\"container\">";
 
 
