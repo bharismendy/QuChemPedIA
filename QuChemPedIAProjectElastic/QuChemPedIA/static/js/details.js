@@ -559,7 +559,7 @@ $(document).ready(function() {
 						
 				// récupération des images et insertion
 						var idIms = $.urlParam('id');
-						var nbIms = 8;
+						var nbIms = 4;
 						var comptids = 0;
 						for(var i=0; i<nbIms;i++){
 							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\"  align=center><img id=\"imagesGeometry"+i+"_"+idIms+"\" class=\"imageMol\" src=\"#\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
@@ -582,12 +582,12 @@ $(document).ready(function() {
 							});
 						}
 
-						var im1 = "<div class=\"row\" id=\"imagesGeometry1\"><div/>";
+						var im1 = "<div class=\"row justify-content-center\" id=\"imagesGeometry1\"><div/>";
 						$("#emplacementDesImages").append(im1);
-						var nbIms1 = 2;
+						var nbIms1 = 1;
 						var comptids1 = 0;
 						for(var i=0; i<nbIms1;i++){
-							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\"  align=center><img id=\"imagesGeometry1"+i+"_"+idIms+"\" class=\"imageMol\" src=\"#\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
+							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\" align=center><img id=\"imagesGeometry1"+i+"_"+idIms+"\" class=\"imageMol\" src=\"#\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
 							$("#imagesGeometry1").append(image);
 						}
 						$("#imagesGeometry1").append("<div style=\"width:100%;\" align=center><p>Atom numbering scheme.</p></div>");
@@ -606,9 +606,9 @@ $(document).ready(function() {
 								}
 							});
 						}
-						var im1 = "<div class=\"row\" id=\"imagesGeometry2\"><div/>";
+						var im1 = "<div class=\"row  justify-content-center\" id=\"imagesGeometry2\"><div/>";
 						$("#emplacementDesImages").append(im1);
-						var nbIms2 = 2;
+						var nbIms2 = 1;
 						var comptids2 = 0;
 						for(var i=0; i<nbIms2;i++){
 							var image = "<div style=\"border-radius: 25px;border: 1px dashed; min-height: 300px\" class=\"col-md-6 col-sm-6 col-xs-6\"  align=center><img id=\"imagesGeometry2"+i+"_"+idIms+"\" class=\"imageMol\" src=\"#\" alt=\"molecule\" width=\"100%\"/><div class=\"img-responsive\">Description</div></div>"
