@@ -4,7 +4,11 @@
   <!-- Page de résultat de recherche -->
   <div class="container">
     <!-- Affichage du nombre de résultat et valeur de la recherche - Test si le nombre est >1 pour accorder en nombre le texte -->
-    <h2 id="result-title">{{ results.nbresult }} result{% if results.nbresult > 1 %}s{% endif %} for <strong>{{ query_form.search.value }}</strong>.</h2>
+    <div class="row">
+      <h2 id="result-title">{{ results.nbresult }} result{% if results.nbresult > 1 %}s{% endif %} for <strong>{{ query_form.search.value }}</strong>.</h2>
+      <a id="button-login" href="/QuChemPedIA/details?id=demo" class="btn btn-info" role="button">Demo</a>
+      <a id="button-login" href="/QuChemPedIA/details?id=opt" class="btn btn-info" role="button">OPT</a>
+    </div>
     <div class="row">
       <div class="col">
       </div>
@@ -12,9 +16,9 @@
         ATTENTION LA GESION DU NOMBRE DE RESULTAT N'EST PAS ENCORE GEREE
       -->
       <div id="pagination-2" class="col">
-        <i id="btn-previous" class="fa fa-angle-left" style="font-size:24px"></i>
+        <i id="" class="fa fa-angle-left btn-previous" style="font-size:24px"></i>
         <span>Page : {{ page }} / {{nbrpages}} </span>
-        <i id="btn-next" class="fa fa-angle-right" style="font-size:24px"></i>
+        <i id="" class="fa fa-angle-right btn-next" style="font-size:24px"></i>
       </div>
       <div class="col text-right">
         <div class="dropdown">
@@ -214,9 +218,9 @@
       {% endfor %}
       <!-- Pagination et gestion du nombre de page -->
       <div id="pagination">
-        <i id="btn-previous" class="fa fa-angle-left" style="font-size:24px"></i>
+        <i id="" class="fa fa-angle-left btn-previous" style="font-size:24px"></i>
         <span>Page : {{ page }} / {{nbrpages}} </span>
-        <i id="btn-next" class="fa fa-angle-right" style="font-size:24px"></i>
+        <i id="" class="fa fa-angle-right btn-next" style="font-size:24px"></i>
       </div>
   </div>
       {% else %}
@@ -257,27 +261,27 @@
     };
     // On test si la page actuelle est inférieur à la page max
     if ( actualPage < nbrpages - 1){
-      $('#btn-next').removeClass('fa-disabled');
-      $("#btn-next").click(function(){
+      $('.btn-next').removeClass('fa-disabled');
+      $(".btn-next").click(function(){
         actualPage++;
         urlParams.set('page',actualPage);
         var newUrl = location.protocol + '//' + location.host + location.pathname + "?" + urlParams.toString();
         window.location.href = newUrl;
       });
     }else{
-      $('#btn-next').addClass('fa-disabled');
+      $('.btn-next').addClass('fa-disabled');
     }
     // On test si la page actuelle est suppérieur à 0
     if( actualPage > 0 ) {
-      $('#btn-previous').removeClass('fa-disabled');
-      $("#btn-previous").click(function(){
+      $('.btn-previous').removeClass('fa-disabled');
+      $(".btn-previous").click(function(){
         actualPage--;
         urlParams.set('page',actualPage);
         var newUrl = location.protocol + '//' + location.host + location.pathname + "?" + urlParams.toString();
         window.location.href = newUrl;
       });
     }else{
-      $('#btn-previous').addClass('fa-disabled');
+      $('.btn-previous').addClass('fa-disabled');
     }
   });
 

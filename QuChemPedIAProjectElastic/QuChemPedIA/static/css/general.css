@@ -300,25 +300,25 @@ strong {
 }
 
 /* Gestion de la navigation des page */
-#btn-next {
+.btn-next {
   padding-left: 5px;
   color: #2196F3;
   cursor: pointer;
 }
 
-#btn-next:hover {
+.btn-next:hover {
   padding-left: 5px;
   color: #1d87da;
   cursor: pointer;
 }
 
-#btn-previous {
+.btn-previous {
   padding-right: 5px;
   color: #2196F3;
   cursor: pointer;
 }
 
-#btn-previous:hover {
+.btn-previous:hover {
   padding-right: 5px;
   color: #1d87da;
   cursor: pointer;
@@ -501,14 +501,3 @@ strong {
 #emplacementDesImages{
 	margin-top:10px;
 }
-
-
-
-
-
-
-
-
-
-
-
