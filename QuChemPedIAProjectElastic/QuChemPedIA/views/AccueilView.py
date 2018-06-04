@@ -13,3 +13,4 @@ def accueil(request):
     if query_form.is_valid():
         return HttpResponseRedirect('query')
     return render(request, 'QuChemPedIA/accueil.html', {'query_form': query_form})
+

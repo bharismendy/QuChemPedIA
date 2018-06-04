@@ -1,12 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class utilisateur(models.Model):
+class Utilisateur(models.Model):
     # data about the user
     id_user = models.BigAutoField(primary_key=True)
-    name = models.CharField(max_length=100,default=None)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, default=None)
+    group = models.CharField(max_length=50, default="user")
     affiliation = models.TextField(default=None)
-    #TODO DOI && link to log file
     orcid = models.CharField(max_length=19, default=None, null=True)
 
     """
@@ -17,4 +18,4 @@ class utilisateur(models.Model):
         verbose_name = "utilisateur"
 
     def __str__(self):
-        return self.name
+        return self.user.username

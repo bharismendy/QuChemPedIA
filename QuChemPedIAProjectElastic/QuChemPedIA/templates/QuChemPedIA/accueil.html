@@ -31,8 +31,40 @@
   </script>
 </head>
 {% endblock %}
-
-
+{% block nav %}
+        <div align=right>
+      <div id="div-buttons" class="row">
+        <div class="col">
+          <div  id="sign" class="row">
+                <!-- Bouton login-->
+                  {% if not user.is_authenticated %}
+                    <div id="sign" class="col col-perso" align=right>
+                        <form method="get" action="{% url 'auth' %}">
+                          <button id="button-login" type="submit" class="btn btn-info default-primary-color">
+                            Sign In&nbsp;/&nbsp;Sign Up
+                          </button>
+                        </form>
+                    </div>
+                  {% else %}
+                      <!-- Bouton Request calcul-->
+                        <div class="col"  align=right>
+                          <button id="button-calcul" class="btn btn-info default-primary-color" >
+                            Calcul request
+                          </button>
+                        </div>
+                      <div align=right>
+                        <form method="POST" action="{% url 'logout' %}">
+                          <button id="button-login" type="submit" class="btn btn-info default-primary-color">
+                            Sign out
+                          </button>
+                        </form>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+{% endblock %}
 {% block content %}
 <div class="container" >
   <div class="Absolute-Center is-Responsive ">
@@ -55,109 +87,6 @@
         </div>
       </form>
     </div>
-    <div align=center>
-      <div id="div-buttons" class="row">
-        <!-- Bouton Request calcul-->
-        <div class="col" align=right>
-          <button id="button-calcul" class="btn btn-info default-primary-color" data-toggle="modal" data-target="#calculModal">
-            Calcul request
-          </button>
-          <div id="calculModal" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title">Calcul request</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                  THIS IS NOT IMPLEMENTED YET
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row">
-            <!-- Bouton login-->
-            <div class="col col-perso" align=right>
-              <button id="button-login" type="button" class="btn btn-info default-primary-color" data-toggle="modal" data-target="#loginModal">
-                Login
-              </button>
-              <div id="loginModal" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <form action="">
-                      <div class="modal-header">
-                        <h4 class="modal-title">Login</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      </div>
-                      <div class="modal-body">
-                        <div class="form-inline">
-                          <label for="email">Email:</label>
-                          <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-                        </div>
-                        <div class="form-inline">
-                          <label for="pwd">Password:</label>
-                          <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <div class="form-inline form-check">
-                          <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" name="remember"> Remember me
-                          </label>
-                        </div>
-                        <button id="button-submit" type="button" class="btn btn-info default-primary-color">Login</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Bouton sign in-->
-            <div class="col col-perso" align=left>
-              <button id="button-signin" type="button" class="btn btn-info default-primary-color" data-toggle="modal" data-target="#signinModal">
-                Sign in
-              </button>
-              <div id="signinModal" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <form action="">
-                      <div class="modal-header">
-                        <h4 class="modal-title">Sign in</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      </div>
-                      <div class="modal-body">
-                        <div class="form-inline">
-                          <label for="email">Email:</label>
-                          <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-                        </div>
-                        <div class="form-inline">
-                          <label for="pwd">Password:</label>
-                          <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
-                        </div>
-                        <div class="form-inline">
-                          <label for="pwd">Confirm password:</label>
-                          <input type="password" class="form-control" id="conf-pwd" placeholder="Confirm password" name="pswd">
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button id="button-submit" type="button" class="btn btn-info default-primary-color">Sign in</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 <footer>
   <!-- Génération de la navbar pour footer -->
   <nav class="navbar navbar-expand-sm fixed-bottom">

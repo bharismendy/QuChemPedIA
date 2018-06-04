@@ -1,0 +1,37 @@
+{% load static %}
+
+{# block used as header #}
+{% block header %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Chargement du CSS, bootstrap4, javascript et jQuery-->
+  {% load bootstrap4 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript jquery='full' %}
+  {% bootstrap_messages %}
+
+  <title>QuChemPedIA</title>
+  <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+</head>
+
+{% endblock %}
+{% block content %}
+    <h1>Se connecter</h1>
+
+    {% if error %}
+        <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        Vous êtes connecté, {{ user.username }} !
+    {% else %}
+        <form method="post" action={% url 'auth' %}>
+            {% csrf_token %}
+            {{ login_form.as_p }}
+            <input type="submit" value="Se connecter" />
+        </form>
+    {% endif %}
+{% endblock %}
