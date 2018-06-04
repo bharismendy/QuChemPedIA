@@ -18,7 +18,7 @@ def details(request):
     return render(request, 'QuChemPedIA/details.html', {'query_form': query_form})
 
 
-def details_json(request,id):
+def details_json(request, id):
     """
     function that return the json of a molecule to an ajax request
     :param request: request environment variable

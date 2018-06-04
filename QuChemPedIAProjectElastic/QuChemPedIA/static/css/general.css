@@ -251,7 +251,7 @@ td {
 
 /* Barre de séparation entre les items de la recherche */
 hr {
-  height: .05rem;
+  height: 1px;
   width: 65%;
   background: #444;
   border: none;

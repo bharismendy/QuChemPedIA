@@ -24,22 +24,22 @@ def _search_to_json(search,nbresult):
     i = 0
     for hit in search:
         try:
-            iupac = hit.molecule.iupac
+            iupac = hit.data.molecule.iupac
         except Exception as error:
             iupac = "Null"
 
         try:
-            basis_set_name = hit.comp_details.general.basis_set_name
+            basis_set_name = hit.data.comp_details.general.basis_set_name
         except Exception as error:
             basis_set_name = "Null"
 
         try:
-            solvatation_method = hit.comp_details.general.solvent_reaction_field
+            solvatation_method = hit.data.comp_details.general.solvent_reaction_field
         except Exception as error:
             solvatation_method = "Null"
 
         try:
-            solvent = hit.comp_details.general.solvent
+            solvent = hit.data.comp_details.general.solvent
         except Exception as error:
             solvent = "GAS"
 
@@ -47,21 +47,21 @@ def _search_to_json(search,nbresult):
             result[str(i)] = []
             result[str(i)].append({
                 "id_log": hit.meta.id,
-                "InChi": hit.molecule.inchi,
-                "cansmiles": hit.molecule.can,
+                "InChi": hit.data.molecule.inchi,
+                "cansmiles": hit.data.molecule.can,
                 "iupac": iupac,  # can be null
-                "software": hit.comp_details.general.package,
-                "theory": hit.comp_details.general.all_unique_theory[0],
-                "functionnal": hit.comp_details.general.functional,
+                "software": hit.data.comp_details.general.package,
+                "theory": hit.data.comp_details.general.all_unique_theory[0],
+                "functionnal": hit.data.comp_details.general.functional,
                 "basis_set_name": basis_set_name,
-                "formula": hit.molecule.formula,
-                "basis_set_size": hit.comp_details.general.basis_set_size,
-                "charge": hit.molecule.charge,
-                "multiplicity": hit.molecule.multiplicity,
+                "formula": hit.data.molecule.formula,
+                "basis_set_size": hit.data.comp_details.general.basis_set_size,
+                "charge": hit.data.molecule.charge,
+                "multiplicity": hit.data.molecule.multiplicity,
                 "solvatation_method": solvatation_method,
                 "solvent": solvent,
                 "job_type": _get_job_type(hit),
-                "ending_energy": hit.results.wavefunction.total_molecular_energy
+                "ending_energy": hit.data.results.wavefunction.total_molecular_energy
             })
             i += 1
         except Exception as error:
@@ -84,7 +84,7 @@ def search_inchi(inchi_value, page, nbrpp):
     es_host = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
-          should=[Q('match', molecule__inchi=inchi_value)],
+          should=[Q('match', data__molecule__inchi=inchi_value)],
           )
     s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
     return _search_to_json(search=s.execute(), nbresult=s.count())
@@ -102,7 +102,7 @@ def search_cid(cid_value, page, nbrpp):
     es_host = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
-          should=[Q('match', molecule__cid=cid_value)],
+          should=[Q('match', data__molecule__cid=cid_value)],
           )
     s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
     return _search_to_json(search=s.execute(), nbresult=s.count())
@@ -120,7 +120,7 @@ def search_iupac(iupac_value, page, nbrpp):
     es_host = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
-          should=[Q('match', molecule__iupac=iupac_value)],
+          should=[Q('match', data__molecule__iupac=iupac_value)],
           )
     s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
     return _search_to_json(search=s.execute(), nbresult=s.count())
@@ -138,7 +138,7 @@ def search_formula(formula_value, page, nbrpp):
     es_host = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
-          should=[Q('match', molecule__formula=formula_value)],
+          should=[Q('match', data__molecule__formula=formula_value)],
           )
     s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
     return _search_to_json(search=s.execute(), nbresult=s.count())
@@ -156,7 +156,7 @@ def search_smiles(smiles_value, page, nbrpp):
     es_host = {"host": "localhost", "port": 9200}
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
-          should=[Q('match', molecule__smi=smiles_value)],
+          should=[Q('match', data__molecule__smi=smiles_value)],
           )
     s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
     return _search_to_json(search=s.execute(), nbresult=s.count())
@@ -165,7 +165,7 @@ def search_smiles(smiles_value, page, nbrpp):
 def search_id(id_value):
     """
     get a unique json file in the database
-    :param id_value: integer that correspond to the id in elasticsearch file system
+    :param id_value: string that correspond to the id in elasticsearch file system
     :return: the content of the json stored in elastic search
     """
     es_host = {"host": "localhost", "port": 9200}

@@ -6,8 +6,6 @@
     <!-- Affichage du nombre de résultat et valeur de la recherche - Test si le nombre est >1 pour accorder en nombre le texte -->
     <div class="row">
       <h2 id="result-title">{{ results.nbresult }} result{% if results.nbresult > 1 %}s{% endif %} for <strong>{{ query_form.search.value }}</strong>.</h2>
-      <a id="button-login" href="/QuChemPedIA/details?id=demo" class="btn btn-info" role="button">Demo</a>
-      <a id="button-login" href="/QuChemPedIA/details?id=opt" class="btn btn-info" role="button">OPT</a>
     </div>
     <div class="row">
       <div class="col">
@@ -17,7 +15,7 @@
       -->
       <div id="pagination-2" class="col">
         <i id="" class="fa fa-angle-left btn-previous" style="font-size:24px"></i>
-        <span>Page : {{ page }} / {{nbrpages}} </span>
+               <span class="content_btn_page"></span>
         <i id="" class="fa fa-angle-right btn-next" style="font-size:24px"></i>
       </div>
       <div class="col text-right">
@@ -46,7 +44,7 @@
             <div class="row">
               <div class="col-lg-3">
                 <!-- smiles drawer -->
-                <a href="http://127.0.0.1:8000/QuChemPedIA/details?id={{value.0.id_log}}" class="">
+                <a href="./details?id={{value.0.id_log}}" class="">
                   <canvas id="{{ value.0.id_log }}">
                     Sorry, your browser doesn't support the &lt;canvas&gt; element.
                   </canvas>
@@ -98,6 +96,14 @@
                   <label for="TD" class="form-check-label">&nbsp;TD</label>
                 </div>
                 <div class="row">
+                  {% if 'SP' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="SP" class="form-check-label">&nbsp;SP</label>
+                </div>
+                <div class="row">
                   {% if 'OPT_ES' in value.0.job_type %}
                   <i class="fa fa-check-square-o" aria-hidden="true"></i>
                   {% else%}
@@ -106,12 +112,12 @@
                   <label for="OPT_ES" class="form-check-label">&nbsp;OPT_ES</label>
                 </div>
                 <div class="row">
-                  {% if 'SP' in value.0.job_type %}
+                  {% if 'FREQ_ES' in value.0.job_type %}
                   <i class="fa fa-check-square-o" aria-hidden="true"></i>
                   {% else%}
                   <i class="fa fa-square-o" aria-hidden="true"></i>
                   {% endif %}
-                  <label for="SP" class="form-check-label">&nbsp;SP</label>
+                  <label for="FREQ_ES" class="form-check-label">&nbsp;FREQ_ES</label>
                 </div>
               </div>
               <div class="col-lg-8">
@@ -132,13 +138,13 @@
                   <div class="container row">
                     <div class="col-lg-4">
                       <!-- Formule -->
-                      <a href="http://127.0.0.1:8000/QuChemPedIA/details?id={{value.0.id_log}}" class="formula">
+                      <a href="./details?id={{value.0.id_log}}" class="formula">
                         <b>Formula : </b>{% if value.0.formula != "Null" %}<span id="formula_{{ value.0.id_log }}">{{value.0.formula}}</span>{% else%}Unknown{% endif %}
                       </a>
                     </div>
                     <div class="col-lg-8">
                       <!-- Iupac -->
-                      <a href="http://127.0.0.1:8000/QuChemPedIA/details?id={{value.0.id_log}}" class="">
+                      <a href="./details?id={{value.0.id_log}}" class="">
                         <b>IUPAC : </b>{% if value.0.iupac != "Null" %}{{value.0.iupac}}{% else%}Unknown{% endif %}
                       </a>
                     </div>
@@ -189,7 +195,7 @@
                     // On parcourt la formule
                     for (var i = formula.length-1; i >= 0; i--) {
                       // Si la charge n'est pas nul alors on aura au moins un charactère en exposant
-                      if( i == formula.length-1 && charge != 0 ){
+                      if( i === formula.length-1 && charge !== 0 ){
                         // Si la charge est différente de 1 alors il faudra afficher le signe et le numéro du signe en exposant
                         if( charge > 1 || charge < -1){
                           str = formula.charAt(i-1).sup() + formula.charAt(i).sup() + str;
@@ -209,7 +215,11 @@
                   });
                 </script>
               </div>
-              <hr>
+              <hr/>
+
+                <br/>
+            <br/>
+            <br/>
             </div>
           </div>
         </div>
@@ -218,9 +228,9 @@
       {% endfor %}
       <!-- Pagination et gestion du nombre de page -->
       <div id="pagination">
-        <i id="" class="fa fa-angle-left btn-previous" style="font-size:24px"></i>
-        <span>Page : {{ page }} / {{nbrpages}} </span>
-        <i id="" class="fa fa-angle-right btn-next" style="font-size:24px"></i>
+        <i class="fa fa-angle-left btn-previous" style="font-size:24px"></i>
+        <span class="content_btn_page"></span>
+        <i class="fa fa-angle-right btn-next" style="font-size:24px"></i>
       </div>
   </div>
       {% else %}
@@ -239,17 +249,28 @@
 
 <script>
   $(document).ready(function(){
-    var nbresult = {{ results.nbresult }};
-    var result_per_page = {{ nbrpp }};
-    var nbrpages = {{nbrpages}};
-    var url = window.location.href;
     var urlParams = new URLSearchParams(window.location.search);
-    var actualPage = urlParams.get('page');
+    var nbresult = {{ results.nbresult }};
+    var result_per_page = null;
+    if (urlParams.get('nbrpp') == null){
+        result_per_page = 10;
+    }
+    else{
+        result_per_page = urlParams.get('nbrpp');
+    }
+    var url = window.location.href;
+    var actualPage = null;
+    if (urlParams.get('page') == null){
+        actualPage = 1;
+    }
+    else{
+        actualPage = urlParams.get('page');
+    }
     var actualSearch = urlParams.get('typeQuery');
-
+    var nbrpages = Math.ceil(nbresult/result_per_page);
     /* fonction qui enlève le "InChi=" dans la donnée */
     $(".molecule_name").children().each(function(){
-      if(this.id.split("_")[0] == "inchi"){
+      if(this.id.split("_")[0] === "inchi"){
         $("#"+this.id+" span").html($("#"+this.id+" span").text().replace("InChI=",""));
       }
     });
@@ -259,9 +280,10 @@
     if(actualPage == null){
       actualPage = 0;
     };
+    $(".content_btn_page").text("Page : "+actualPage+" / "+nbrpages);
     // On test si la page actuelle est inférieur à la page max
     if ( actualPage < nbrpages - 1){
-      $('.btn-next').removeClass('fa-disabled');
+      $(".btn-next").removeClass('fa-disabled');
       $(".btn-next").click(function(){
         actualPage++;
         urlParams.set('page',actualPage);

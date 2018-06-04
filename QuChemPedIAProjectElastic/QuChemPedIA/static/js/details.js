@@ -26,10 +26,7 @@ $(document).ready(function() {
 				//console.log("Success");
 				var results;
 				var ancienneCouleure;
-				if($.urlParam('id')=="demo")
-					results = recivedData.data;
-				else
-					results = recivedData;
+				results = recivedData.data;
 					//console.log(results);
 				if (!results){
 					var html = "<div class='container' style='margin-top:50px;'>";
@@ -117,10 +114,10 @@ $(document).ready(function() {
 						html1 += "<div class=\"row\"><div class=\"col\"><b>Job type</b></div><div class=\"col\"><b>Author</b></div><div class=\"col\"><b>Description</b></div><div class=\"col\"></div></div>";
 						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+recivedData.job_type+"</div><div class=\"col my-auto\">"+(results.metadata.primary_author?results.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id=\"opt\" class=\"btn btn-primary-outline\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 						$.each(recivedData.siblings, function(key,val) {
-							html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+val.data.metadata.log_file+"</div><div class=\"col my-auto\">"+(val.data.metadata.primary_author?val.data.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
+							html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+val.job_type+"</div><div class=\"col my-auto\">"+(val.data.metadata.primary_author?val.data.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 							if(val.job_type=="TD") {
 								$.each(val.siblings, function(key2,val2) {
-									html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">&nbsp;&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.data.metadata.log_file+"</div><div class=\"col my-auto\">"+(val2.data.metadata.primary_author?val2.data.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+"_"+key2+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
+									html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">&nbsp;&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.job_type+"</div><div class=\"col my-auto\">"+(val2.data.metadata.primary_author?val2.data.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+"_"+key2+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 								});
 							}
 						});
