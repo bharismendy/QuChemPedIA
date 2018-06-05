@@ -1,58 +1,25 @@
-[2018-06-04T10:40:54,271][INFO ][o.e.n.Node               ] [] initializing ...
-[2018-06-04T10:40:54,342][INFO ][o.e.e.NodeEnvironment    ] [H05_qDk] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [106.3gb], net total_space [133.8gb], spins? [no], types [ext4]
-[2018-06-04T10:40:54,342][INFO ][o.e.e.NodeEnvironment    ] [H05_qDk] heap size [1.9gb], compressed ordinary object pointers [true]
-[2018-06-04T10:40:54,344][INFO ][o.e.n.Node               ] node name [H05_qDk] derived from node ID [H05_qDkqRiaMkpVrOTSfKw]; set [node.name] to override
-[2018-06-04T10:40:54,346][INFO ][o.e.n.Node               ] version[5.1.1], pid[9499], build[5395e21/2016-12-06T12:36:15.409Z], OS[Linux/4.13.0-43-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/1.8.0_171/25.171-b11]
-[2018-06-04T10:40:55,061][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [aggs-matrix-stats]
-[2018-06-04T10:40:55,061][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [ingest-common]
-[2018-06-04T10:40:55,061][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-expression]
-[2018-06-04T10:40:55,061][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-groovy]
-[2018-06-04T10:40:55,061][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-mustache]
-[2018-06-04T10:40:55,062][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-painless]
-[2018-06-04T10:40:55,062][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [percolator]
-[2018-06-04T10:40:55,062][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [reindex]
-[2018-06-04T10:40:55,062][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [transport-netty3]
-[2018-06-04T10:40:55,062][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [transport-netty4]
-[2018-06-04T10:40:55,063][INFO ][o.e.p.PluginsService     ] [H05_qDk] no plugins loaded
-[2018-06-04T10:40:57,023][INFO ][o.e.n.Node               ] initialized
-[2018-06-04T10:40:57,024][INFO ][o.e.n.Node               ] [H05_qDk] starting ...
-[2018-06-04T10:40:57,238][INFO ][o.e.t.TransportService   ] [H05_qDk] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
-[2018-06-04T10:40:57,252][WARN ][o.e.b.BootstrapCheck     ] [H05_qDk] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
-[2018-06-04T10:41:00,349][INFO ][o.e.c.s.ClusterService   ] [H05_qDk] new_master {H05_qDk}{H05_qDkqRiaMkpVrOTSfKw}{-zdqiK-nTUSvCCCqRss2ZA}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
-[2018-06-04T10:41:00,390][INFO ][o.e.g.GatewayService     ] [H05_qDk] recovered [0] indices into cluster_state
-[2018-06-04T10:41:00,393][INFO ][o.e.h.HttpServer         ] [H05_qDk] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
-[2018-06-04T10:41:00,393][INFO ][o.e.n.Node               ] [H05_qDk] started
-[2018-06-04T10:41:38,335][INFO ][o.e.c.m.MetaDataCreateIndexService] [H05_qDk] [quchempedia_index] creating index, cause [api], templates [], shards [5]/[1], mappings []
-[2018-06-04T10:41:38,981][INFO ][o.e.c.m.MetaDataMappingService] [H05_qDk] [quchempedia_index/6Km4tIclQ1ywu5usncI2RQ] create_mapping [log_file]
-[2018-06-04T10:41:39,610][INFO ][o.e.c.m.MetaDataMappingService] [H05_qDk] [quchempedia_index/6Km4tIclQ1ywu5usncI2RQ] update_mapping [log_file]
-[2018-06-04T10:41:40,291][INFO ][o.e.c.m.MetaDataMappingService] [H05_qDk] [quchempedia_index/6Km4tIclQ1ywu5usncI2RQ] update_mapping [log_file]
-[2018-06-04T10:41:40,684][INFO ][o.e.c.m.MetaDataMappingService] [H05_qDk] [quchempedia_index/6Km4tIclQ1ywu5usncI2RQ] update_mapping [log_file]
-[2018-06-04T12:17:37,061][INFO ][o.e.n.Node               ] [H05_qDk] stopping ...
-[2018-06-04T12:17:37,178][INFO ][o.e.n.Node               ] [H05_qDk] stopped
-[2018-06-04T12:17:37,178][INFO ][o.e.n.Node               ] [H05_qDk] closing ...
-[2018-06-04T12:17:37,194][INFO ][o.e.n.Node               ] [H05_qDk] closed
-[2018-06-04T14:19:56,551][INFO ][o.e.n.Node               ] [] initializing ...
-[2018-06-04T14:19:56,623][INFO ][o.e.e.NodeEnvironment    ] [H05_qDk] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [106.1gb], net total_space [133.8gb], spins? [no], types [ext4]
-[2018-06-04T14:19:56,624][INFO ][o.e.e.NodeEnvironment    ] [H05_qDk] heap size [1.9gb], compressed ordinary object pointers [true]
-[2018-06-04T14:19:56,635][INFO ][o.e.n.Node               ] node name [H05_qDk] derived from node ID [H05_qDkqRiaMkpVrOTSfKw]; set [node.name] to override
-[2018-06-04T14:19:56,637][INFO ][o.e.n.Node               ] version[5.1.1], pid[4834], build[5395e21/2016-12-06T12:36:15.409Z], OS[Linux/4.13.0-43-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/1.8.0_171/25.171-b11]
-[2018-06-04T14:19:57,511][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [aggs-matrix-stats]
-[2018-06-04T14:19:57,511][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [ingest-common]
-[2018-06-04T14:19:57,511][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-expression]
-[2018-06-04T14:19:57,511][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-groovy]
-[2018-06-04T14:19:57,512][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-mustache]
-[2018-06-04T14:19:57,512][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-painless]
-[2018-06-04T14:19:57,512][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [percolator]
-[2018-06-04T14:19:57,512][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [reindex]
-[2018-06-04T14:19:57,512][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [transport-netty3]
-[2018-06-04T14:19:57,512][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [transport-netty4]
-[2018-06-04T14:19:57,513][INFO ][o.e.p.PluginsService     ] [H05_qDk] no plugins loaded
-[2018-06-04T14:20:00,051][INFO ][o.e.n.Node               ] initialized
-[2018-06-04T14:20:00,057][INFO ][o.e.n.Node               ] [H05_qDk] starting ...
-[2018-06-04T14:20:00,240][INFO ][o.e.t.TransportService   ] [H05_qDk] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
-[2018-06-04T14:20:00,252][WARN ][o.e.b.BootstrapCheck     ] [H05_qDk] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
-[2018-06-04T14:20:03,379][INFO ][o.e.c.s.ClusterService   ] [H05_qDk] new_master {H05_qDk}{H05_qDkqRiaMkpVrOTSfKw}{OZjnPf3LTHSX9Th97-ju7Q}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
-[2018-06-04T14:20:03,446][INFO ][o.e.h.HttpServer         ] [H05_qDk] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
-[2018-06-04T14:20:03,447][INFO ][o.e.n.Node               ] [H05_qDk] started
-[2018-06-04T14:20:03,680][INFO ][o.e.g.GatewayService     ] [H05_qDk] recovered [1] indices into cluster_state
-[2018-06-04T14:20:04,251][INFO ][o.e.c.r.a.AllocationService] [H05_qDk] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][3]] ...]).
+[2018-06-05T11:44:22,347][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-06-05T11:44:22,429][INFO ][o.e.e.NodeEnvironment    ] [H05_qDk] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [106gb], net total_space [133.8gb], spins? [no], types [ext4]
+[2018-06-05T11:44:22,429][INFO ][o.e.e.NodeEnvironment    ] [H05_qDk] heap size [1.9gb], compressed ordinary object pointers [true]
+[2018-06-05T11:44:22,439][INFO ][o.e.n.Node               ] node name [H05_qDk] derived from node ID [H05_qDkqRiaMkpVrOTSfKw]; set [node.name] to override
+[2018-06-05T11:44:22,441][INFO ][o.e.n.Node               ] version[5.1.1], pid[7026], build[5395e21/2016-12-06T12:36:15.409Z], OS[Linux/4.13.0-43-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/1.8.0_171/25.171-b11]
+[2018-06-05T11:44:23,307][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [aggs-matrix-stats]
+[2018-06-05T11:44:23,307][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [ingest-common]
+[2018-06-05T11:44:23,307][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-expression]
+[2018-06-05T11:44:23,307][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-groovy]
+[2018-06-05T11:44:23,308][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-mustache]
+[2018-06-05T11:44:23,308][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-painless]
+[2018-06-05T11:44:23,308][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [percolator]
+[2018-06-05T11:44:23,308][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [reindex]
+[2018-06-05T11:44:23,308][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [transport-netty3]
+[2018-06-05T11:44:23,308][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [transport-netty4]
+[2018-06-05T11:44:23,309][INFO ][o.e.p.PluginsService     ] [H05_qDk] no plugins loaded
+[2018-06-05T11:44:25,749][INFO ][o.e.n.Node               ] initialized
+[2018-06-05T11:44:25,750][INFO ][o.e.n.Node               ] [H05_qDk] starting ...
+[2018-06-05T11:44:25,907][INFO ][o.e.t.TransportService   ] [H05_qDk] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2018-06-05T11:44:25,914][WARN ][o.e.b.BootstrapCheck     ] [H05_qDk] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+[2018-06-05T11:44:29,008][INFO ][o.e.c.s.ClusterService   ] [H05_qDk] new_master {H05_qDk}{H05_qDkqRiaMkpVrOTSfKw}{Ery7uw82TKSOXF-oQiJhAA}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2018-06-05T11:44:29,061][INFO ][o.e.h.HttpServer         ] [H05_qDk] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2018-06-05T11:44:29,061][INFO ][o.e.n.Node               ] [H05_qDk] started
+[2018-06-05T11:44:29,270][INFO ][o.e.g.GatewayService     ] [H05_qDk] recovered [1] indices into cluster_state
+[2018-06-05T11:44:29,866][INFO ][o.e.c.r.a.AllocationService] [H05_qDk] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][1]] ...]).

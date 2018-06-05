@@ -505,3 +505,17 @@ strong {
     margin-top: 0.5%;
     margin-right: 1.5%;
 }
+#form_sign_in{
+    border-right: 1px solid black;
+}
+#content_sign_in_up{
+    margin: auto;
+    width: 100%;
+}
+#button-dashboard{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+#button_connect{
+
+}

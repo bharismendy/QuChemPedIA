@@ -38,7 +38,42 @@
       <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
     </form>
   </div>
+
 </nav>
+    <div id="div-buttons" class="row pull-right">
+        <div class="col">
+          <div  id="sign" class="row float-right">
+                <!-- Bouton login-->
+                  {% if not user.is_authenticated %}
+                    <div id="sign" class="col col-perso" align=right>
+                        <form method="get" action="{% url 'auth' %}">
+                          <button id="button-login" type="submit" class="btn btn-info default-primary-color">
+                            Sign In&nbsp;/&nbsp;Sign Up
+                          </button>
+                        </form>
+                    </div>
+                  {% else %}
+                      <!-- Bouton Request calcul-->
+                          <button id="button-calcul" class="btn btn-info default-primary-color" >
+                            Calcul request
+                          </button>
+
+                        <form method="POST" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                          <button id="button-dashboard" type="submit" class="btn btn-info default-primary-color">
+                            Dashboard
+                          </button>
+                        </form>
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                      <button id="" type="submit" class="btn btn-info default-primary-color">
+                        Sign out
+                      </button>
+                    </form>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
 {% endblock %}
 
 {% block content %}

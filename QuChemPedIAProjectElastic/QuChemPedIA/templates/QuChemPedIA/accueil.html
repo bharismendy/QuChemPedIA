@@ -32,10 +32,9 @@
 </head>
 {% endblock %}
 {% block nav %}
-        <div align=right>
-      <div id="div-buttons" class="row">
+      <div id="div-buttons" class="row pull-right">
         <div class="col">
-          <div  id="sign" class="row">
+          <div  id="sign" class="row float-right">
                 <!-- Bouton login-->
                   {% if not user.is_authenticated %}
                     <div id="sign" class="col col-perso" align=right>
@@ -47,23 +46,26 @@
                     </div>
                   {% else %}
                       <!-- Bouton Request calcul-->
-                        <div class="col"  align=right>
                           <button id="button-calcul" class="btn btn-info default-primary-color" >
                             Calcul request
                           </button>
-                        </div>
-                      <div align=right>
+
                         <form method="POST" action="{% url 'logout' %}">
-                          <button id="button-login" type="submit" class="btn btn-info default-primary-color">
-                            Sign out
+                            {% csrf_token %}
+                          <button id="button-dashboard" type="submit" class="btn btn-info default-primary-color">
+                            Dashboard
                           </button>
                         </form>
-                    </div>
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                      <button id="" type="submit" class="btn btn-info default-primary-color">
+                        Sign out
+                      </button>
+                    </form>
                   {% endif %}
                 </div>
               </div>
             </div>
-          </div>
 {% endblock %}
 {% block content %}
 <div class="container" >
