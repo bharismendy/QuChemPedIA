@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('', views.accueil, name='accueil'),
@@ -11,5 +12,7 @@ urlpatterns = [
     path('details_json/<str:id>', views.details_json, name='details_json'),
     path('details_image/<str:id>', views.details_image, name='details_image'),
     path('rapport/<str:id>', views.rapport, name='rapport'),
-    path('dashboard', views.dashboard, name='rapport'),
+    path('dashboard', login_required(views.dashboard), name='dashboard'),
+    path('dashboard/account', login_required(views.account), name='dasboard/account'),
+    path('dashboard/password', login_required(views.password), name='dashboard/change_password')
 ]

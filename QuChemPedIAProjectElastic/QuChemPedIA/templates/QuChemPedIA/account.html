@@ -1,0 +1,23 @@
+{% extends "base_account.html" %}
+{% block content %}
+        <main role="main" class="col-md-9" id="edit_profil">
+            <form method="post" action="{% url 'dasboard/account' %}">
+            {%  csrf_token %}
+             {% for field in form_edit_utilisateur.visible_fields %}
+                <div class="row form-group">
+                    <div class="col-lg-3">
+                        {{ field.label_tag }}
+                    </div>
+                    <div class="col-lg-7">
+                      {{ field.errors }}
+                      {{ field }}
+                      {{ field.help_text }}
+                    </div>
+                </div>
+            {% endfor %}
+            <button class="btn btn-success default-primary-color" name="btn-register" type="submit">Update my profile</button>
+        </form>
+        </main>
+        </div>
+    </div>
+{% endblock %}

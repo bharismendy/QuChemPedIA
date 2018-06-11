@@ -12,7 +12,18 @@
                             Vous êtes connecté, {{ user.username }} !
                         {% else %}
                                 {% csrf_token %}
-                                {{ login_form.as_p }}
+                                {% for field in login_form.visible_fields %}
+                                    <div class="row form-group">
+                                        <div class="col-lg-4">
+                                            {{ field.label_tag }}
+                                        </div>
+                                        <div class="col-lg-7">
+                                          {{ field.errors }}
+                                          {{ field }}
+                                          {{ field.help_text }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             <button class="btn btn-success default-primary-color" name="btn-login" type="submit">Sign In</button>
                         {% endif %}
                     </form>
@@ -26,9 +37,20 @@
                     {% if user.is_authenticated %}
                         Vous êtes connecté, {{ user.username }} !
                     {% else %}
-                            {% csrf_token %}
-                            {{ register_form.as_p }}
-                            <button class="btn btn-success default-primary-color" name="btn-register" type="submit">Sign Up</button>
+                        {% csrf_token %}
+                        {% for field in register_form.visible_fields %}
+                            <div class="row form-group">
+                                <div class="col-lg-4">
+                                    {{ field.label_tag }}
+                                </div>
+                                <div class="col-lg-7">
+                                  {{ field.errors }}
+                                  {{ field }}
+                                  {{ field.help_text }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <button class="btn btn-success default-primary-color" name="btn-register" type="submit">Sign Up</button>
                     {% endif %}
                 </form>
             </div>

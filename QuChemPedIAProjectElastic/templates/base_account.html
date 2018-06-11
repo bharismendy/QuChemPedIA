@@ -1,0 +1,143 @@
+{% load static %}
+<!-- Page de base pour tout le site sauf la page d'accueil
+     Incluant notamment le header avec titre et formulaire
+   -->
+{# block used as header #}
+{% block header %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Chargement du CSS, bootstrap, javascript et jQuery -->
+  {% load bootstrap4 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript jquery='full' %}
+  {% bootstrap_messages %}
+
+  <title>QuChemPedIA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+  <script src="{% static "js/smiles-drawer.js" %}"></script>
+</head>
+{% endblock %}
+<body>
+
+{% block nav %}
+<!-- Barre de navigation header contenant formulaire et titre pour retour sur la page d'accueil -->
+<nav class="border border-secondary border-right-0 border-left-0 navbar navbar-togleable-md navbar-expand-sm navbar-dark sticky-top">
+  <a id="title" class="navbar-brand" href="/QuChemPedIA/">
+    <!-- potention logo -->
+    <img class="img-responsive" src="{% static "" %}" alt="" style="width:150px;">
+    QuChemPedIA
+  </a>
+  <!-- formulaire de recherche -->
+  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    <form class="form-inline" action="{% url 'query' %}" method="GET">
+      {% csrf_token %}
+      {{ query_form.as_table }}
+      <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
+    </form>
+  </div>
+
+</nav>
+    <div id="div-buttons" class="row pull-right">
+        <div class="col">
+          <div  id="sign" class="row float-right">
+                <!-- Bouton login-->
+                  {% if not user.is_authenticated %}
+                    <div id="sign" class="col col-perso" align=right>
+                        <form method="get" action="{% url 'auth' %}">
+                          <button id="button-login" type="submit" class="btn btn-info default-primary-color">
+                            Sign In&nbsp;/&nbsp;Sign Up
+                          </button>
+                        </form>
+                    </div>
+                  {% else %}
+                      <!-- Bouton Request calcul-->
+                          <button id="button-calcul" class="btn btn-info default-primary-color" >
+                            Calcul request
+                          </button>
+
+                        <form method="POST" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                          <button id="button-dashboard" type="submit" class="btn btn-info default-primary-color">
+                            Dashboard
+                          </button>
+                        </form>
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                      <button id="" type="submit" class="btn btn-info default-primary-color">
+                        Sign out
+                      </button>
+                    </form>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+    <div class="container">
+      <div class="row">
+        <nav class="col-md-2 sidebar">
+          <div class="sidebar-sticky">
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Menu</span>
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'dasboard/account' %}">
+                    <svg class="feather feather-user sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
+                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1261">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Account
+                </a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard/change_password' %}">
+                   <svg class="feather feather-lock sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="711">
+                       <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                       <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                   </svg>
+                  Password
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <svg class="feather feather-upload sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                         width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1236">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Import
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <svg class="feather feather-folder sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                         width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="566">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                  History
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+{# block used for footer #}
+{% block footer%}
+        <footer>
+
+        </footer>
+    </body>
+</html>
+{%  endblock %}

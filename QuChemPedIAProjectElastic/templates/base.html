@@ -40,8 +40,6 @@
   </div>
 
 </nav>
-    <div id="div-buttons" class="row pull-right">
-        <div class="col">
           <div  id="sign" class="row float-right">
                 <!-- Bouton login-->
                   {% if not user.is_authenticated %}
@@ -72,8 +70,6 @@
                     </form>
                   {% endif %}
                 </div>
-              </div>
-            </div>
 {% endblock %}
 
 {% block content %}

@@ -77,7 +77,7 @@ def query(request):
 
     # if we have only one result we display the details of the molecule
     if results is None:
-        results = '{}'
+        results = '{"nbresult":0}'
     test_result = json.loads(results)
     if test_result['nbresult'] == 0 or len(test_result) == 1:
         results = '{}'

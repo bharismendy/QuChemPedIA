@@ -87,6 +87,7 @@ def search_inchi(inchi_value, page, nbrpp):
           should=[Q('match', data__molecule__inchi=inchi_value)],
           )
     s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
+
     return _search_to_json(search=s.execute(), nbresult=s.count())
 
 

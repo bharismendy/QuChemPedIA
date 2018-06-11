@@ -2,42 +2,41 @@
 
 {# block used as header #}
 {% block header %}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <!-- Chargement du CSS, bootstrap4, javascript et jQuery-->
-  {% load bootstrap4 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript jquery='full' %}
-  {% bootstrap_messages %}
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+      <!-- Chargement du CSS, bootstrap4, javascript et jQuery-->
+      {% load bootstrap4 %}
+      {% bootstrap_css %}
+      {% bootstrap_javascript jquery='full' %}
+      {% bootstrap_messages %}
 
-  <title>QuChemPedIA</title>
-  <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
-  <script src="{% static "js/dropzone.js" %}"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
-  <script>
-  /* Options perso de dropzone voir dropzone.js
-   *
-  */
-    Dropzone.options.myDropzone = {
-      url: 'file:///home/etudiant/projet-chimie/Origin/QuChemPedIA/QuChemPedIAProjectElastic/QuChemPedIA/static/',
-      autoProcessQueue: true,
-      dictDefaultMessage: "Drop your log files here or click to upload",
-      acceptedFiles: '.log',
-      dictInvalidFileType: "You can't upload files of this type. Please upload a file with '.log' extension",
-      addRemoveLinks: true,
-    };
-  </script>
-</head>
+      <title>QuChemPedIA</title>
+      <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
+      <script src="{% static "js/dropzone.js" %}"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+      <script>
+      /* Options perso de dropzone voir dropzone.js
+       *
+      */
+        Dropzone.options.myDropzone = {
+          url: 'file:///home/etudiant/projet-chimie/Origin/QuChemPedIA/QuChemPedIAProjectElastic/QuChemPedIA/static/',
+          autoProcessQueue: true,
+          dictDefaultMessage: "Drop your log files here or click to upload",
+          acceptedFiles: '',
+          dictInvalidFileType: "You can't upload files of this type. Please upload a file with '.log' extension",
+          addRemoveLinks: true,
+        };
+      </script>
+    </head>
 {% endblock %}
 {% block nav %}
       <div id="div-buttons" class="row pull-right">
-        <div class="col">
           <div  id="sign" class="row float-right">
                 <!-- Bouton login-->
                   {% if not user.is_authenticated %}
-                    <div id="sign" class="col col-perso" align=right>
+                    <div id="sign" align=right>
                         <form method="get" action="{% url 'auth' %}">
                           <button id="button-login" type="submit" class="btn btn-info default-primary-color">
                             Sign In&nbsp;/&nbsp;Sign Up
@@ -45,28 +44,28 @@
                         </form>
                     </div>
                   {% else %}
-                      <!-- Bouton Request calcul-->
-                          <button id="button-calcul" class="btn btn-info default-primary-color" >
-                            Calcul request
-                          </button>
+                        <!-- Bouton Request calcul-->
+                        <button id="button-calcul" class="btn btn-info default-primary-color" >
+                        Calcul request
+                        </button>
 
+                        <form method="POST" action="{% url 'dashboard' %}">
+                            {% csrf_token %}
+                            <button id="button-dashboard" type="submit" class="btn btn-info default-primary-color">
+                            {{ user }}
+                            </button>
+                        </form>
                         <form method="POST" action="{% url 'logout' %}">
                             {% csrf_token %}
-                          <button id="button-dashboard" type="submit" class="btn btn-info default-primary-color">
-                            Dashboard
-                          </button>
+                            <button id="" type="submit" class="btn btn-info default-primary-color">
+                            Sign out
+                            </button>
                         </form>
-                    <form method="POST" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                      <button id="" type="submit" class="btn btn-info default-primary-color">
-                        Sign out
-                      </button>
-                    </form>
                   {% endif %}
                 </div>
-              </div>
             </div>
 {% endblock %}
+
 {% block content %}
 <div class="container" >
   <div class="Absolute-Center is-Responsive ">
