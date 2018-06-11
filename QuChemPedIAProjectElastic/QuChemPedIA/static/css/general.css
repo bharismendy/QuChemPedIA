@@ -355,10 +355,12 @@ strong {
 }
 
 #button-login {
-  background-color: var(--default-primary-color);
-  border-color: var(--default-primary-color);
-  margin-bottom: 100px;
-  color: white;
+    position: absolute;
+    right: 1%;
+    background-color: var(--default-primary-color);
+    border-color: var(--default-primary-color);
+    margin-bottom: 100px;
+    color: white;
 }
 
 #button-login:hover {
@@ -600,4 +602,18 @@ strong {
 
 #edit_profil{
     padding-top: 2%;
+}
+#research_entry{
+  width:40%;
+  margin-left: auto;
+  display: block;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }

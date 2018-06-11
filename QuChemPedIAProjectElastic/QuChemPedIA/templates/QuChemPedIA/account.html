@@ -5,13 +5,15 @@
             {%  csrf_token %}
              {% for field in form_edit_utilisateur.visible_fields %}
                 <div class="row form-group">
+                    <div class="col-lg-12 text-danger">
+                      {{ field.errors | safe }}
+                    </div>
                     <div class="col-lg-3">
                         {{ field.label_tag }}
                     </div>
                     <div class="col-lg-7">
-                      {{ field.errors }}
                       {{ field }}
-                      {{ field.help_text }}
+                      {{ field.help_text | safe}}
                     </div>
                 </div>
             {% endfor %}

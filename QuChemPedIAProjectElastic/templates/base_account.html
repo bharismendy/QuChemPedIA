@@ -41,13 +41,12 @@
 
 </nav>
     <div id="div-buttons" class="row pull-right">
-        <div class="col">
           <div  id="sign" class="row float-right">
                 <!-- Bouton login-->
                   {% if not user.is_authenticated %}
-                    <div id="sign" class="col col-perso" align=right>
+                    <div id="sign" class="col col-perso">
                         <form method="get" action="{% url 'auth' %}">
-                          <button id="button-login" type="submit" class="btn btn-info default-primary-color">
+                          <button id="button-login" type="submit" class="btn btn-info default-primary-color ">
                             Sign In&nbsp;/&nbsp;Sign Up
                           </button>
                         </form>
@@ -61,7 +60,7 @@
                         <form method="POST" action="{% url 'dashboard' %}">
                             {% csrf_token %}
                           <button id="button-dashboard" type="submit" class="btn btn-info default-primary-color">
-                            Dashboard
+                            {{ user }}
                           </button>
                         </form>
                     <form method="POST" action="{% url 'logout' %}">
@@ -73,7 +72,6 @@
                   {% endif %}
                 </div>
               </div>
-            </div>
     <div class="container">
       <div class="row">
         <nav class="col-md-2 sidebar">
