@@ -7,6 +7,12 @@ from django.contrib.auth import authenticate, login
 
 
 def auth(request):
+    """
+    controler that allow the user to login or register on the web site
+    :param request: request variable
+    :return: a view with both form (login and register)
+    """
+
     query_form = QueryForm(request.GET or None)
     error_login = False
     error_register = False
@@ -30,13 +36,15 @@ def auth(request):
         register_form = SignUpForm(request.POST)
         if register_form.is_valid():
             user = register_form.save()
-            email = register_form.cleaned_data.get('email')
-            raw_password = register_form.cleaned_data.get('password1')
             login(request, user)
             return HttpResponseRedirect('accueil')
 
     else:
         register_form = SignUpForm()
 
-    return render(request, 'QuChemPedIA/auth.html', locals())
+    return render(request, 'QuChemPedIA/auth.html', {'query_form': query_form,
+                                                     'register_form': register_form,
+                                                     'login_form': login_form,
+                                                     'error_login': error_login,
+                                                     'error_register': error_register})
 

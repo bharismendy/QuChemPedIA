@@ -7,3 +7,4 @@ from .AuthView import auth
 from .DashboardView import dashboard
 from .AccountView import account
 from .ChangePasswordView import password
+from .importView import import_view

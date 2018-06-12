@@ -1,6 +1,6 @@
 {% extends "base_account.html" %}
 {% block content %}
-        <main role="main" class="col-md-9" id="edit_profil">
+        <main role="main" class="col-md-9 mt-4" id="edit_profil">
             <form method="post" action="{% url 'dasboard/account' %}">
             {%  csrf_token %}
              {% for field in form_edit_utilisateur.visible_fields %}

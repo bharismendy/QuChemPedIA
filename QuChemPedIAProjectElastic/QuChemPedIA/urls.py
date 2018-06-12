@@ -14,5 +14,6 @@ urlpatterns = [
     path('rapport/<str:id>', views.rapport, name='rapport'),
     path('dashboard', login_required(views.dashboard), name='dashboard'),
     path('dashboard/account', login_required(views.account), name='dasboard/account'),
-    path('dashboard/password', login_required(views.password), name='dashboard/change_password')
+    path('dashboard/password', login_required(views.password), name='dashboard/change_password'),
+    path('dashboard/import', views.import_view, name='dashboard/import'),
 ]

@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 def password(request):
     """
-    controler of the template account that allow to edit the user profile
+    controler of the template account that allow to edit the user password
     :param request: variable wich contains the value of the page
     :return: template html
     """
@@ -24,4 +24,5 @@ def password(request):
     if query_form.is_valid():
         return HttpResponseRedirect('query')
 
-    return render(request, 'QuChemPedIA/password.html', locals())
+    return render(request, 'QuChemPedIA/password.html', {'form_edit_password': form_edit_password,
+                                                         'query_form': query_form})

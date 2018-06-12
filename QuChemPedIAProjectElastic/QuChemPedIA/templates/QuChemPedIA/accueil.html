@@ -16,19 +16,6 @@
       <script src="{% static "js/dropzone.js" %}"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
-      <script>
-      /* Options perso de dropzone voir dropzone.js
-       *
-      */
-        Dropzone.options.myDropzone = {
-          url: 'file:///home/etudiant/projet-chimie/Origin/QuChemPedIA/QuChemPedIAProjectElastic/QuChemPedIA/static/',
-          autoProcessQueue: true,
-          dictDefaultMessage: "Drop your log files here or click to upload",
-          acceptedFiles: '',
-          dictInvalidFileType: "You can't upload files of this type. Please upload a file with '.log' extension",
-          addRemoveLinks: true,
-        };
-      </script>
     </head>
 {% endblock %}
 {% block nav %}
@@ -56,7 +43,7 @@
                         </form>
                     <form method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}
-                      <button id="" type="submit" class="btn btn-info default-primary-color">
+                      <button type="submit" class="btn btn-info default-primary-color">
                         Sign out
                       </button>
                     </form>
@@ -78,14 +65,40 @@
           <button id="button-search" class="btn btn-info default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
       </form>
     </div>
-    <div id="div-dropzone">
-      <!-- Génération de la dropzone -->
-      <form id="myDropzone" action="/upload" class="dropzone text-center">
-        <div class="fallback">
-          <input name="file" type="file" multiple />
-        </div>
-      </form>
-    </div>
+    {% if user.is_authenticated %}
+            <div id="div-dropzone">
+              <!-- Génération de la dropzone -->
+              <form id="myDropzone" action="{% url 'dashboard/import' %}" method="post" class="dropzone text-center">
+                <div class="fallback">
+                   <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}" />
+                  <input name="file" type="file"  />
+                </div>
+              </form>
+            </div>
+            {% if user.affiliation.strip|length <= 0  %}
+                <div class="text-center text-danger">
+                    <div class="col-lg-12">
+                        <p>
+                        <svg class="feather feather-alert-triangle sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                             width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="56">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                            </path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12" y2="17"></line>
+                        </svg>
+                    Warning ! if you upload a calculation without setting your affiliation<br/>
+                        your calculation would never be related to your laboratory !</p>
+                </div>
+            </div>
+            {% endif %}
+            {% else %}
+                <div class="form-row text-center">
+                    <div class="col-lg-12 mt-4">
+                        <form action="{% url 'dashboard/import' %}">
+                            <button type="submit" class="btn btn-info default-primary-color">&nbsp;Upload my calculations anonymously&nbsp;</button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
 <footer>
   <!-- Génération de la navbar pour footer -->
   <nav class="navbar navbar-expand-sm fixed-bottom">
@@ -103,4 +116,38 @@
       $("#id_typeQuery").css("width","15%");
   });
 </script>
+    <script>
+    Dropzone.autoDiscover = false;
+   // using jQuery
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+       $("#myDropzone").dropzone({
+        url:"{% url 'dashboard/import' %}",
+        addRemoveLinks : true,
+        maxFilesize: 5000,
+        dictDefaultMessage: "Drop your log files here or click to upload",
+        dictResponseError: 'Error uploading file!',
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        success: function (file, response) {
+           this.removeFile(file); //todo discuter de quoi faire
+        }
+        });
+    </script>
+
 {% endblock %}

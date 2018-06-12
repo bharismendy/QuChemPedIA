@@ -3,13 +3,16 @@ from QuChemPedIA.models import Utilisateur
 
 
 class SignUpForm(forms.ModelForm):
-    password1 = forms.CharField(label='password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
+
+    email = forms.CharField(label='email * ', required=False)
+    password1 = forms.CharField(label='password * ', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirm password * ', widget=forms.PasswordInput)
     affiliation = forms.CharField(label='affiliation', required=False)
 
+    field_order = ['email', 'password1', 'password2', 'affiliation', ]
     class Meta:
         model = Utilisateur
-        fields = ('email','affiliation',)
+        fields = ('email', 'affiliation',)
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
