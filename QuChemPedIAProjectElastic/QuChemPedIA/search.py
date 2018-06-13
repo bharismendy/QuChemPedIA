@@ -2,18 +2,32 @@ from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, Q
 import json
 
-def _get_job_type(json):
+
+def find(key, dictionary):
+    for k, v in dictionary.items():
+        if k == key:
+            yield v
+        elif isinstance(v, dict):
+            for result in find(key, v):
+                yield result
+        elif isinstance(v, list):
+            for d in v:
+                if isinstance(d, dict):
+                    for result in find(key, d):
+                        yield result
+
+
+def _get_job_type(file_to_analyze):
     """
     function that return a list of job_type from a document
     :param json: json to analyze
     :return: array of job_type
     """
-    job_type = ["OPT", "FREQ"]
+    file_to_analyze = file_to_analyze.to_dict()
+    return list(find('job_type', file_to_analyze))
 
-    return job_type
 
-
-def _search_to_json(search,nbresult):
+def _search_to_json(search, nbresult):
     """
     function that take a search as parameter and return a json table
     :param search: result of search in elastic search
@@ -25,7 +39,7 @@ def _search_to_json(search,nbresult):
     for hit in search:
         try:
             iupac = hit.data.molecule.iupac
-        except Exception as error:
+        except:
             iupac = "Null"
 
         try:

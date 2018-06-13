@@ -1,29 +1,25 @@
-[2018-06-08T11:18:17,074][INFO ][o.e.n.Node               ] [] initializing ...
-[2018-06-08T11:18:17,147][INFO ][o.e.e.NodeEnvironment    ] [H05_qDk] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [106gb], net total_space [133.8gb], spins? [no], types [ext4]
-[2018-06-08T11:18:17,148][INFO ][o.e.e.NodeEnvironment    ] [H05_qDk] heap size [1.9gb], compressed ordinary object pointers [true]
-[2018-06-08T11:18:17,156][INFO ][o.e.n.Node               ] node name [H05_qDk] derived from node ID [H05_qDkqRiaMkpVrOTSfKw]; set [node.name] to override
-[2018-06-08T11:18:17,158][INFO ][o.e.n.Node               ] version[5.1.1], pid[7182], build[5395e21/2016-12-06T12:36:15.409Z], OS[Linux/4.13.0-43-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/1.8.0_171/25.171-b11]
-[2018-06-08T11:18:17,973][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [aggs-matrix-stats]
-[2018-06-08T11:18:17,973][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [ingest-common]
-[2018-06-08T11:18:17,973][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-expression]
-[2018-06-08T11:18:17,973][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-groovy]
-[2018-06-08T11:18:17,973][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-mustache]
-[2018-06-08T11:18:17,973][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-painless]
-[2018-06-08T11:18:17,973][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [percolator]
-[2018-06-08T11:18:17,973][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [reindex]
-[2018-06-08T11:18:17,974][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [transport-netty3]
-[2018-06-08T11:18:17,974][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [transport-netty4]
-[2018-06-08T11:18:17,974][INFO ][o.e.p.PluginsService     ] [H05_qDk] no plugins loaded
-[2018-06-08T11:18:20,015][INFO ][o.e.n.Node               ] initialized
-[2018-06-08T11:18:20,015][INFO ][o.e.n.Node               ] [H05_qDk] starting ...
-[2018-06-08T11:18:20,171][INFO ][o.e.t.TransportService   ] [H05_qDk] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
-[2018-06-08T11:18:20,176][WARN ][o.e.b.BootstrapCheck     ] [H05_qDk] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
-[2018-06-08T11:18:23,282][INFO ][o.e.c.s.ClusterService   ] [H05_qDk] new_master {H05_qDk}{H05_qDkqRiaMkpVrOTSfKw}{kQqjmAI5TfqAJxXI2LGqcQ}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
-[2018-06-08T11:18:23,323][INFO ][o.e.h.HttpServer         ] [H05_qDk] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
-[2018-06-08T11:18:23,323][INFO ][o.e.n.Node               ] [H05_qDk] started
-[2018-06-08T11:18:23,555][INFO ][o.e.g.GatewayService     ] [H05_qDk] recovered [1] indices into cluster_state
-[2018-06-08T11:18:24,065][INFO ][o.e.c.r.a.AllocationService] [H05_qDk] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][0]] ...]).
-[2018-06-08T16:38:47,736][INFO ][o.e.n.Node               ] [H05_qDk] stopping ...
-[2018-06-08T16:38:47,979][INFO ][o.e.n.Node               ] [H05_qDk] stopped
-[2018-06-08T16:38:47,980][INFO ][o.e.n.Node               ] [H05_qDk] closing ...
-[2018-06-08T16:38:47,997][INFO ][o.e.n.Node               ] [H05_qDk] closed
+[2018-06-13T15:17:02,199][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-06-13T15:17:02,269][INFO ][o.e.e.NodeEnvironment    ] [H05_qDk] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [105.3gb], net total_space [133.8gb], spins? [no], types [ext4]
+[2018-06-13T15:17:02,270][INFO ][o.e.e.NodeEnvironment    ] [H05_qDk] heap size [1.9gb], compressed ordinary object pointers [true]
+[2018-06-13T15:17:02,279][INFO ][o.e.n.Node               ] node name [H05_qDk] derived from node ID [H05_qDkqRiaMkpVrOTSfKw]; set [node.name] to override
+[2018-06-13T15:17:02,282][INFO ][o.e.n.Node               ] version[5.1.1], pid[13916], build[5395e21/2016-12-06T12:36:15.409Z], OS[Linux/4.13.0-43-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/1.8.0_171/25.171-b11]
+[2018-06-13T15:17:03,058][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [aggs-matrix-stats]
+[2018-06-13T15:17:03,059][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [ingest-common]
+[2018-06-13T15:17:03,059][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-expression]
+[2018-06-13T15:17:03,059][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-groovy]
+[2018-06-13T15:17:03,059][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-mustache]
+[2018-06-13T15:17:03,059][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [lang-painless]
+[2018-06-13T15:17:03,059][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [percolator]
+[2018-06-13T15:17:03,059][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [reindex]
+[2018-06-13T15:17:03,059][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [transport-netty3]
+[2018-06-13T15:17:03,059][INFO ][o.e.p.PluginsService     ] [H05_qDk] loaded module [transport-netty4]
+[2018-06-13T15:17:03,060][INFO ][o.e.p.PluginsService     ] [H05_qDk] no plugins loaded
+[2018-06-13T15:17:05,056][INFO ][o.e.n.Node               ] initialized
+[2018-06-13T15:17:05,056][INFO ][o.e.n.Node               ] [H05_qDk] starting ...
+[2018-06-13T15:17:05,351][INFO ][o.e.t.TransportService   ] [H05_qDk] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2018-06-13T15:17:05,359][WARN ][o.e.b.BootstrapCheck     ] [H05_qDk] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+[2018-06-13T15:17:08,468][INFO ][o.e.c.s.ClusterService   ] [H05_qDk] new_master {H05_qDk}{H05_qDkqRiaMkpVrOTSfKw}{RKWTXa9NRTujr8Nsb2Nv2g}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2018-06-13T15:17:08,523][INFO ][o.e.h.HttpServer         ] [H05_qDk] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2018-06-13T15:17:08,524][INFO ][o.e.n.Node               ] [H05_qDk] started
+[2018-06-13T15:17:08,788][INFO ][o.e.g.GatewayService     ] [H05_qDk] recovered [1] indices into cluster_state
+[2018-06-13T15:17:09,399][INFO ][o.e.c.r.a.AllocationService] [H05_qDk] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][0]] ...]).
