@@ -8,3 +8,4 @@ from .DashboardView import dashboard
 from .AccountView import account
 from .ChangePasswordView import password
 from .importView import import_view
+from .UserHistoryImportView import user_history_import

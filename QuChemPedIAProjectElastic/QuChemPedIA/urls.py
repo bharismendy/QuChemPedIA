@@ -16,4 +16,5 @@ urlpatterns = [
     path('dashboard/account', login_required(views.account), name='dasboard/account'),
     path('dashboard/password', login_required(views.password), name='dashboard/change_password'),
     path('dashboard/import', views.import_view, name='dashboard/import'),
+    path('dashboard/history', login_required(views.user_history_import), name='dashboard/history'),
 ]

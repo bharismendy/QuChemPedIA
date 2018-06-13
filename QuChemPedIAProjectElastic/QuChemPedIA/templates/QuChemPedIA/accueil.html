@@ -90,6 +90,23 @@
                 </div>
             </div>
             {% endif %}
+            {% if user.number_of_upload_this_day >= 10  %}
+                <div class="text-center text-info">
+                    <div class="col-lg-12">
+                        <p>
+                            <svg class="feather feather-info sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="656">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12" y2="8"></line>
+                            </svg>
+                            Did you know that if you want to import a lot of calcuation you could contact us ?<br/>
+                            we will doing it for free by using our script that are muck quicker.
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
             {% else %}
                 <div class="form-row text-center">
                     <div class="col-lg-12 mt-4">
@@ -145,7 +162,8 @@
             'X-CSRFToken': csrftoken
         },
         success: function (file, response) {
-           this.removeFile(file); //todo discuter de quoi faire
+            location.reload();
+            this.removeFile(file); //todo discuter de quoi faire
         }
         });
     </script>

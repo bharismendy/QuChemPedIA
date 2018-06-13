@@ -25,8 +25,8 @@ def store_in_temp(id_calcul,file):
 
         try:
             os.makedirs(destination_dir + path_in_file_system)
-            path = default_storage.save(destination_dir+path_in_file_system+"/"+file.name, ContentFile(file.read()))
+            default_storage.save(destination_dir+path_in_file_system+"/"+file.name, ContentFile(file.read()))
         except Exception as error:
             print(error)
 
-        return destination_dir + path_in_file_system + file.name
+        return destination_dir+path_in_file_system+"/"+file.name
