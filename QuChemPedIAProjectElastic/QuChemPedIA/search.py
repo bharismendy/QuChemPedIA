@@ -100,7 +100,7 @@ def search_inchi(inchi_value, page, nbrpp):
     q = Q('bool',
           should=[Q('match', data__molecule__inchi=inchi_value)],
           )
-    s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
+    s = Search().using(es).query(q)[nbrpp*page-nbrpp:(nbrpp*page)-1]
 
     return _search_to_json(search=s.execute(), nbresult=s.count())
 
@@ -119,7 +119,7 @@ def search_cid(cid_value, page, nbrpp):
     q = Q('bool',
           should=[Q('match', data__molecule__cid=cid_value)],
           )
-    s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
+    s = Search().using(es).query(q)[nbrpp*page-nbrpp:(nbrpp*page)-1]
     return _search_to_json(search=s.execute(), nbresult=s.count())
 
 
@@ -137,7 +137,7 @@ def search_iupac(iupac_value, page, nbrpp):
     q = Q('bool',
           should=[Q('match', data__molecule__iupac=iupac_value)],
           )
-    s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
+    s = Search().using(es).query(q)[nbrpp*page-nbrpp:(nbrpp*page)-1]
     return _search_to_json(search=s.execute(), nbresult=s.count())
 
 
@@ -155,7 +155,7 @@ def search_formula(formula_value, page, nbrpp):
     q = Q('bool',
           should=[Q('match', data__molecule__formula=formula_value)],
           )
-    s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
+    s = Search().using(es).query(q)[nbrpp*page-nbrpp:(nbrpp*page)-1]
     return _search_to_json(search=s.execute(), nbresult=s.count())
 
 
@@ -173,7 +173,7 @@ def search_smiles(smiles_value, page, nbrpp):
     q = Q('bool',
           should=[Q('match', data__molecule__smi=smiles_value)],
           )
-    s = Search().using(es).query(q)[nbrpp*page:(nbrpp*page)+nbrpp]
+    s = Search().using(es).query(q)[nbrpp*page-nbrpp:(nbrpp*page)-1]
     return _search_to_json(search=s.execute(), nbresult=s.count())
 
 

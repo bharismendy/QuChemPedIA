@@ -1,11 +1,9 @@
-from xml.dom.minidom import _clear_id_cache
 from django.shortcuts import render
 from QuChemPedIA.forms.QueryForm import QueryForm
 from QuChemPedIA.search import *
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 import urllib.parse
-import math
 
 
 def build_url(*args, **kwargs):
@@ -28,10 +26,10 @@ def query(request):
         page = int(request.GET.get('page'))
     except Exception as error:
         print(error)
-        page = 0
+        page = 1
 
     try:
-        nbrpp = 10  # nombre de résultat par page
+        nbrpp = int(request.GET.get('nbrpp'))  # nombre de résultat par page
     except Exception as error:
         print(error)
         nbrpp = 10
@@ -82,8 +80,6 @@ def query(request):
     if test_result['nbresult'] == 0 or len(test_result) == 1:
         results = '{}'
         test_result = json.loads(results)
-
-    print(len(test_result))
     if len(test_result) == 2 and request.GET.get('page') == 1:
         # if we have only one result we forward it to the detail page
         url = reverse('details', args={'id': int(test_result["0"][0]["id_log"])})

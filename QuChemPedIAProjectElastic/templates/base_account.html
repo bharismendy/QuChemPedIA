@@ -41,13 +41,12 @@
   </div>
 
 </nav>
-    <div id="div-buttons" class="row pull-right">
-          <div  id="sign" class="row float-right">
+   <div  id="sign" class="row float-right">
                 <!-- Bouton login-->
                   {% if not user.is_authenticated %}
-                    <div id="sign">
+                    <div id="sign" class="col col-perso" align=right>
                         <form method="get" action="{% url 'auth' %}">
-                          <button id="button-login" type="submit" class="btn btn-info default-primary-color ">
+                          <button id="button-login" type="submit" class="btn btn-info default-primary-color pull-right">
                             Sign In&nbsp;/&nbsp;Sign Up
                           </button>
                         </form>
@@ -61,18 +60,17 @@
                         <form method="POST" action="{% url 'dashboard' %}">
                             {% csrf_token %}
                           <button id="button-dashboard" type="submit" class="btn btn-info default-primary-color">
-                            {{ user }}
+                            My profile
                           </button>
                         </form>
                     <form method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}
-                      <button type="submit" class="btn btn-info default-primary-color">
+                      <button id="" type="submit" class="btn btn-info default-primary-color">
                         Sign out
                       </button>
                     </form>
                   {% endif %}
                 </div>
-              </div>
     <div class="container">
       <div class="row">
        {% if user.is_authenticated %}

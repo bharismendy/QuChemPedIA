@@ -20,12 +20,16 @@
       </div>
       <div class="col text-right">
         <div class="dropdown">
-          <span>Results per page : 10</span>
+        {% if request.GET.nbrpp %}
+            <span>Results per page : {{ request.GET.nbrpp }}</span>
+        {% else %}
+            <span>Results per page : 10</span>
+        {% endif %}
           <i class="fa fa-angle-down" data-toggle="dropdown" style="font-size:24px"></i>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="">50</a>
-            <a class="dropdown-item" href="">20</a>
-            <a class="dropdown-item" href="">10</a>
+            <a class="dropdown-item" href="{% if not request.get.nbrpp %}{% url 'query' %}?{{ request.GET.urlencode }}&nbrpp=10" {%else%}{{ request.get.nbrpp }} = {{ 10 }}{% endif %}>10</a>
+            <a class="dropdown-item" href="{% if not request.get.nbrpp %}{% url 'query' %}?{{ request.GET.urlencode }}&nbrpp=20" {%else%}{{ request.get.nbrpp }} = {{ 20 }}{% endif %}>20</a>
+            <a class="dropdown-item" href="{% if not request.get.nbrpp %}{% url 'query' %}?{{ request.GET.urlencode }}&nbrpp=50" {%else%}{{ request.get.nbrpp }} = {{ 50 }}{% endif %}>50</a>
           </div>
         </div>
       </div>
@@ -277,12 +281,9 @@
 
     /* Fonction qui test la disponibilité d'une page */
     // On Initialize la page à 0 quand on arrive sur la page
-    if(actualPage == null){
-      actualPage = 0;
-    };
     $(".content_btn_page").text("Page : "+actualPage+" / "+nbrpages);
     // On test si la page actuelle est inférieur à la page max
-    if ( actualPage < nbrpages - 1){
+    if ( actualPage < nbrpages){
       $(".btn-next").removeClass('fa-disabled');
       $(".btn-next").click(function(){
         actualPage++;
@@ -294,7 +295,7 @@
       $('.btn-next').addClass('fa-disabled');
     }
     // On test si la page actuelle est suppérieur à 0
-    if( actualPage > 0 ) {
+    if( actualPage > 1 ) {
       $('.btn-previous').removeClass('fa-disabled');
       $(".btn-previous").click(function(){
         actualPage--;
