@@ -363,6 +363,10 @@ strong {
     color: white;
 }
 
+#button-admin{
+    margin-left: 10px;
+}
+
 #button-login:hover {
   background: #1d87da;
 }
@@ -616,4 +620,7 @@ strong {
   border: 1px solid #ced4da;
   border-radius: .25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.error_fields ul {
+  list-style: none;
 }

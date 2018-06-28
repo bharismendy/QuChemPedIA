@@ -17,4 +17,7 @@ urlpatterns = [
     path('dashboard/password', login_required(views.password), name='dashboard/change_password'),
     path('dashboard/import', views.import_view, name='dashboard/import'),
     path('dashboard/history', login_required(views.user_history_import), name='dashboard/history'),
+    path('admin', login_required(views.admin), name='admin'),
+    path('admin/user_list', login_required(views.list_of_all_user), name='admin/user_list'),
+    path('admin/edit_user/<int:id>', login_required(views.admin_edit_user), name='admin/edit_user'),
 ]

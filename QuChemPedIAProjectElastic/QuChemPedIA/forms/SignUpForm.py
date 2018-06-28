@@ -1,15 +1,22 @@
 from django import forms
 from QuChemPedIA.models import Utilisateur
+from django.core.validators import RegexValidator
 
 
 class SignUpForm(forms.ModelForm):
-
+    my_validator = RegexValidator(r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$",
+                                  ["Your password should contains :",
+                                   "- 1 special character",
+                                   "- 1 lower caser",
+                                   "- 1 upper case",
+                                   "- 1 numeric"])
     email = forms.CharField(label='email * ', required=False)
-    password1 = forms.CharField(label='password * ', widget=forms.PasswordInput)
+    password1 = forms.CharField(label='password * ', widget=forms.PasswordInput, validators=[my_validator])
     password2 = forms.CharField(label='Confirm password * ', widget=forms.PasswordInput)
     affiliation = forms.CharField(label='affiliation', required=False)
 
     field_order = ['email', 'password1', 'password2', 'affiliation', ]
+
     class Meta:
         model = Utilisateur
         fields = ('email', 'affiliation',)

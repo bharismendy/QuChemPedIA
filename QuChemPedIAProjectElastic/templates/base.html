@@ -42,34 +42,41 @@
 </nav>
           <div  id="sign" class="row float-right">
                 <!-- Bouton login-->
-                  {% if not user.is_authenticated %}
-                    <div id="sign" class="col col-perso" align=right>
-                        <form method="get" action="{% url 'auth' %}">
-                          <button id="button-login" type="submit" class="btn btn-info default-primary-color pull-right">
-                            Sign In&nbsp;/&nbsp;Sign Up
-                          </button>
-                        </form>
-                    </div>
-                  {% else %}
-                      <!-- Bouton Request calcul-->
-                          <button id="button-calcul" class="btn btn-info default-primary-color" >
-                            Calcul request
-                          </button>
-
-                        <form method="POST" action="{% url 'dashboard' %}">
-                            {% csrf_token %}
-                          <button id="button-dashboard" type="submit" class="btn btn-info default-primary-color">
-                            My profile
-                          </button>
-                        </form>
-                    <form method="POST" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                      <button id="" type="submit" class="btn btn-info default-primary-color">
-                        Sign out
+                {% if not user.is_authenticated %}
+                <div id="sign" class="col col-perso" align=right>
+                    <form method="get" action="{% url 'auth' %}">
+                      <button id="button-login" type="submit" class="btn btn-info default-primary-color pull-right">
+                        Sign In&nbsp;/&nbsp;Sign Up
                       </button>
                     </form>
-                  {% endif %}
                 </div>
+                {% else %}
+                  <!-- Bouton Request calcul-->
+                      <button id="button-calcul" class="btn btn-info default-primary-color" >
+                        Calcul request
+                      </button>
+                    {%  if user.is_admin %}
+                            <form method="POST" action="{% url 'admin' %}">
+                             {% csrf_token %}
+                              <button id="button-admin" type="submit" class="btn btn-info default-primary-color ">
+                                admin
+                              </button>
+                            </form>
+                    {% endif %}
+                    <form method="POST" action="{% url 'dashboard' %}">
+                        {% csrf_token %}
+                      <button id="button-dashboard" type="submit" class="btn btn-info default-primary-color">
+                        My profile
+                      </button>
+                    </form>
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                  <button id="" type="submit" class="btn btn-info default-primary-color">
+                    Sign out
+                  </button>
+                </form>
+                {% endif %}
+            </div>
 {% endblock %}
 
 {% block content %}

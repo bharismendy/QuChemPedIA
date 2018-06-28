@@ -16,7 +16,7 @@
                 </div>
             </div>
         {% endif %}
-        {% if user.affiliation.strip|length <= 0  %}
+        {% if user.affiliation.strip|length <= 0 or user.affiliation == 'None' %}
             <div class="text-center text-danger">
                 <div class="col-lg-12">
                     <p>
@@ -44,7 +44,7 @@
                         <line x1="12" y1="8" x2="12" y2="8"></line>
                     </svg>
                         Did you know that if you want to import a lot of calcuation you could contact us ?<br/>
-                        we will doing it for free by using our script that are muck quicker.
+                        we will doing it for free by using our script that are much quicker.
                     </p>
                 </div>
             </div>

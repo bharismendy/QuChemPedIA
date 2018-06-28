@@ -1,6 +1,4 @@
 from builtins import print
-
-from django.contrib.admin.templatetags.admin_list import results
 from django.core.management.base import BaseCommand
 import os
 import json

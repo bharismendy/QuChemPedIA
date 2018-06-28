@@ -88,46 +88,38 @@
             </h6>
             <ul class="nav flex-column mb-2">
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'dasboard/account' %}">
-                    <svg class="feather feather-user sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
+                <a class="nav-link" href="{% url 'admin/user_list' %}">
+                    <svg class="feather feather-users sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
                          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1261">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1266">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
-                    Account
+                    List of all users
                 </a>
               </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'dashboard/change_password' %}">
-                   <svg class="feather feather-lock sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
+                <a class="nav-link" href="{% url 'admin' %}">
+                   <svg class="feather feather-upload sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="711">
-                       <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                       <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1236">
+                       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                       <polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
                    </svg>
-                  Password
+                  List of import
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'dashboard/import' %}">
-                    <svg class="feather feather-upload sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
-                         width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1236">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
+                <a class="nav-link" href="{% url 'admin' %}">
+                    <svg class="feather feather-settings sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
+                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1016">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                     </svg>
-                    Import
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'dashboard/history' %}">
-                    <svg class="feather feather-folder sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
-                         width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="566">
-                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                  History
+                    Manage your import
                 </a>
               </li>
             </ul>
