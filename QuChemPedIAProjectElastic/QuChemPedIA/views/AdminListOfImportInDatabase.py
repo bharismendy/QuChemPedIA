@@ -1,17 +1,16 @@
 from QuChemPedIA.forms.QueryForm import QueryForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.core.paginator import Paginator
-from QuChemPedIA.models import Utilisateur
+from QuChemPedIA.models import ImportFile
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-
-def list_of_all_user(request):
+def list_of_import_in_database(request):
     """
-    controler of the template admin which list all registred
+    controler of the template account that allow the user to see which calculation he contribute
     :param request: variable wich contains the value of the page
     :return: template html
     """
+
     if not request.user.is_admin:  # security to redirect user that aren't admin
         return HttpResponseRedirect('/QuChemPedIA/accueil')
 
@@ -19,18 +18,18 @@ def list_of_all_user(request):
     page = request.GET.get('page', 1)
 
     try:  # get all imported  file
-        list_imported_file = Utilisateur.objects.all()
-        paginator = Paginator(list_imported_file, 10)
+        list_imported_file = ImportFile.objects.all()
+        paginator = Paginator(list_imported_file.order_by("id_file"), 10)
     except Exception as error:
         print(error)
     try:
-        users = paginator.page(page)
+        history = paginator.page(page)
     except PageNotAnInteger:
-        users = paginator.page(1)
+        history = paginator.page(1)
     except EmptyPage:
-        users = paginator.page(paginator.num_pages)
+        history = paginator.page(paginator.num_pages)
     if request.GET and 'button-search' in request.GET:
         if query_form.is_valid():
             return HttpResponseRedirect('query')
 
-    return render(request, 'QuChemPedIA/user_list.html', {'query_form': query_form, 'users': users})
+    return render(request, 'QuChemPedIA/admin_list_on_import_in_database.html', {'query_form': query_form, "history": history})

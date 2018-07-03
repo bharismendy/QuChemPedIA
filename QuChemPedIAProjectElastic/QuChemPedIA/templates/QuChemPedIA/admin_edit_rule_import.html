@@ -1,0 +1,98 @@
+{% extends "base_admin.html" %}
+{% block content %}
+        <main role="main" class="col-md-9" id="dashboard_main">
+        {% if rules|length > 0 %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Rule ID</th>
+                        <th scope="col">Software</th>
+                        <th scope="col">Version</th>
+                        <th scope="col">Processing</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for rule in rules %}
+                     <tr>
+                        <th scope="row">{{ rule.id_rule }}</th>
+                        <td>{{ rule.id_software.name }}</td>
+                        <td>{{ rule.id_version.version_number }}</td>
+                        <td>
+                            <form class="form" method="post" action="{% url 'admin/switch_rule' rule.id_rule rules.number %}">
+                                {% csrf_token %}
+                                <div class="btn-group btn-toggle" id="{{ rule.id_rule }}">
+                                    {% if rule.rule == "manual" %}
+                                        <button class="btn btn-xs btn-primary active" name="options" value="manual" >manual</button>
+                                    {% else %}
+                                        <button class="btn btn-xs btn-default" name="options" value="manual" >manual</button>
+                                    {% endif %}
+                                    {% if rule.rule == "automatic" %}
+                                        <button class="btn btn-xs btn-primary active" name="options" value="automatic" >automatic</button>
+                                    {% else %}
+                                        <button class="btn btn-xs btn-default" name="options" value="automatic" >automatic</button>
+                                    {% endif %}
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if rules.has_other_pages %}
+                <ul class="pagination">
+                {% if rules.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ rules.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+                {% for i in rules.paginator.page_range %}
+                    {% if rules.number == i %}
+                        <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if rules.has_next %}
+                    <li class="page-item"><a class="page-link" href="{% url 'admin/list_of_rule' %}?page={{ rules.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+                </ul>
+            {% endif %}
+        {% else %}
+             <div class="text-center text-danger">
+                <div class="col-lg-12">
+                    <p>
+                        <svg class="feather feather-alert-triangle sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                             width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="56">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                            </path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12" y2="17"></line>
+                        </svg>
+                        there is no record in database
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+        </main>
+    <script>
+    $('.btn-toggle').click(function() {
+    if ($(this).find('.btn-primary').length>0) {
+    	$(this).find('.btn').toggleClass('btn-primary');
+    }
+    if ($(this).find('.btn-danger').length>0) {
+    	$(this).find('.btn').toggleClass('btn-danger');
+    }
+    if ($(this).find('.btn-success').length>0) {
+    	$(this).find('.btn').toggleClass('btn-success');
+    }
+    if ($(this).find('.btn-info').length>0) {
+    	$(this).find('.btn').toggleClass('btn-info');
+    }
+
+    $(this).find('.btn').toggleClass('btn-default');
+
+    });
+
+    </script>
+{% endblock %}

@@ -6,11 +6,6 @@ from django.http import HttpResponseRedirect
 from QuChemPedIA.models import Utilisateur
 
 
-def could_use_it(request):
-    if not request.user.is_admin:  # security to redirect user that aren't admin
-        return HttpResponseRedirect('/QuChemPedIA/accueil')
-
-
 def admin_edit_user(request, id):
     """
     controler to edit all user profile
@@ -18,7 +13,9 @@ def admin_edit_user(request, id):
     :param id: id of the user
     :return: http response
     """
-    could_use_it(request=request)
+    if not request.user.is_admin:  # security to redirect user that aren't admin
+        return HttpResponseRedirect('/QuChemPedIA/accueil')
+
     current_user = Utilisateur.objects.get(id=id)
     if request.method == 'POST':
         if 'btn-admin-update-profil' in request.POST:
@@ -36,7 +33,7 @@ def admin_edit_user(request, id):
     if query_form.is_valid():
         return HttpResponseRedirect('query')
 
-    return render(request, 'QuChemPedIA/AdminEditUserProfile.html', {'query_form': query_form,
+    return render(request, 'QuChemPedIA/admin_edit_user_profile.html', {'query_form': query_form,
                                                                      'form_edit_utilisateur': form_edit_utilisateur,
                                                                      'form_change_password': form_change_password,
                                                                      'id_user': id})

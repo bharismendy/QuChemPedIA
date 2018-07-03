@@ -515,7 +515,7 @@ class Command(BaseCommand):
                 print("cant load "+ path)
                 os.remove(path)
 
-    def import_file(self, path, destination_dir):
+    def import_file(self, path):
         # absolute path to the source directory where are all the data
         source_dir = path
 
