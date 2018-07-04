@@ -15,3 +15,5 @@ from .AdminEditUserView import admin_edit_user
 from .AdminListOfImportInDatabase import list_of_import_in_database
 from .AdminEditRules import edit_rule_admin
 from .AdminEditRules import switch_rule
+from .importView import launch_import
+

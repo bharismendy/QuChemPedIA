@@ -18,19 +18,22 @@
                         <td>{{ imported_file.status }}</td>
                         <td><a href="{% url 'admin/edit_user' imported_file.id_user_id %}">{{ imported_file.id_user_id }}</a></td>
                         <td>
-                            <a href="{% url 'admin/edit_user' imported_file.id_user_id %}">
-                                 start the import
-                                <svg class="feather feather-arrow-right-circle sc-dnqmqq jxshSx"
-                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                     aria-hidden="true" data-reactid="126">
-                                    <circle cx="12" cy="12" r="10">
-                                    </circle>
-                                    <polyline points="12 16 16 12 12 8"></polyline>
-                                    <line x1="8" y1="12" x2="16" y2="12"></line>
-                                </svg>
-                            </a>
+                            <form class="form" method="post" action="{% url 'admin/launch_import' imported_file.id_file history.number %}">
+                                {% csrf_token %}
+                                <button class="btn btn-xs btn-primary active">start the import
+                                    <svg class="feather feather-arrow-right-circle sc-dnqmqq jxshSx"
+                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         aria-hidden="true" data-reactid="126">
+                                        <circle cx="12" cy="12" r="10">
+                                        </circle>
+                                        <polyline points="12 16 16 12 12 8"></polyline>
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                </button>
+                            </form>
+
                         </td>
                     </tr>
                 {% endfor %}

@@ -26,4 +26,7 @@ urlpatterns = [
          name='admin/list_of_rule'),
     path('admin/switch_rule/<int:id_of_rule>/<int:page>', login_required(views.switch_rule),
          name='admin/switch_rule'),
+    path('admin/launch_import/<str:id_file>/<int:page>', login_required(views.launch_import),
+         name='admin/launch_import'),
+
 ]
