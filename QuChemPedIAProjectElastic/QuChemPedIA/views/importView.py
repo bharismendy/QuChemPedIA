@@ -9,7 +9,6 @@ from QuChemPedIA.QuChemPedIA_lib.import_file_lib import import_file, get_path_to
 from QuChemPedIA.QuChemPedIA_lib import store_in_temp
 import datetime
 import json
-import os
 
 
 def register_soft_and_version(path_to_file_to_register):
@@ -67,6 +66,26 @@ def register_soft_and_version(path_to_file_to_register):
         return 2
 
 
+def update_status_in_db(result_of_import: int, import_object: ImportFile):
+    """
+    this function update the status of an import in database
+    :param result_of_import: an integer which contains the result of the import function
+    :param import_object : current object to update
+    :return: nothing
+    """
+    if result_of_import == 0:
+        import_object.status = "imported to database"
+    elif result_of_import == 1:
+        import_object.status = "calculation already in database"
+    elif result_of_import == 2:
+        import_object.status = "theory not supported yet"
+    elif result_of_import == 3:
+        import_object.status = "the opt is missing"
+    else:
+        import_object.status = "something goes wrong"
+    import_object.save()
+
+
 def import_view(request):
     """
     controler of the template account that allow the user to import file
@@ -96,16 +115,15 @@ def import_view(request):
             #   user == anonymous
             pass
         code_return_pol = register_soft_and_version(path_prefix+final_path)
-        print(code_return_pol)
         if code_return_pol == 0:
             temps.status = "error can't define policy"
+            temps.save()
         if code_return_pol == 2:
             #  automatic import
             try:
                 path = "media/" + temps.path_file
-                import_file(path=path, id_user=temps.id_user.id)
-                os.remove(path)
-                temps.delete()
+                update_status_in_db(result_of_import=import_file(path=path, id_user=temps.id_user.id),
+                                    import_object=temps)
             except Exception as error:
                 print(error)
                 temps.status = 'import failed'
@@ -113,11 +131,17 @@ def import_view(request):
     query_form = QueryForm(request.GET or None)
     if query_form.is_valid():
         return HttpResponseRedirect('query')
-
     return render(request, 'QuChemPedIA/import.html', {'query_form': query_form})
 
 
 def launch_import(request, id_file, page):
+    """
+    controler from admin view to launch manuallly an import
+    :param request: environment variable wich containt all value exchanged between client and server
+    :param id_file: id of the file in DB o import in ES
+    :param page: number of the page
+    :return: html template
+    """
     if not request.user.is_admin:  # security to redirect user that aren't admin
         return HttpResponseRedirect('/QuChemPedIA/accueil')
     file = ImportFile.objects.get(id_file=id_file)
@@ -125,7 +149,6 @@ def launch_import(request, id_file, page):
     id_user = file.id_user.id
     try:
         import_file(path=path, id_user=id_user)
-        os.remove(path)
         file.delete()
     except Exception as error:
         print(error)

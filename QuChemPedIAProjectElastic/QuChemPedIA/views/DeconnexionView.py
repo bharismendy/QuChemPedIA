@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 
 
 def deconnexion(request):
+    """view to disconnect the user"""
     try:
         logout(request)
     except Exception as error:

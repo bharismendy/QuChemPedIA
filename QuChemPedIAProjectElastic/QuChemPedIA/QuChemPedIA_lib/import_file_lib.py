@@ -9,10 +9,18 @@ import time
 
 
 def get_base_json():
+    """
+    function to get the first architecture
+    :return: basique json tree
+    """
     return '{"job_type": "OPT", "data": {}, "siblings": [],"md5_siblings":[],"contributor":[]}'
 
 
 def get_siblings_json():
+    """
+    use to get a sibling json
+    :return: json tree of a sibling
+    """
     return '{"job_type": "OPT", "data": {}, "siblings": []}'
 
 
@@ -60,12 +68,6 @@ def clean_file(list_dir, path):
     return list_dir
 
 
-def is_last(list_dir):
-    if len(list_dir) == 0:  # test si on est arrivé au dernier dossier
-        return True
-    return False
-
-
 def get_path_to_store(destination_dir, id_calcul, make_path=False, number_of_subdir=20, cut_number_by=1):
     """
     method to find the right directory to store data
@@ -76,7 +78,6 @@ def get_path_to_store(destination_dir, id_calcul, make_path=False, number_of_sub
     :param cut_number_by: the length of the name of each sub dir example 4 = "eeee"/"aaaa"
     :return: path to the destination
     """
-    path_in_file_system = ''
     if len(id_calcul) > number_of_subdir:
         print("error in the path for id " + id_calcul)
         exit()
@@ -89,6 +90,7 @@ def get_path_to_store(destination_dir, id_calcul, make_path=False, number_of_sub
             os.makedirs(destination_dir + path_in_file_system)
         except Exception as error:
             print(error)
+            return 4
 
     return path_in_file_system
 
@@ -100,22 +102,7 @@ def is_opt_exist(json_to_test, job_type):
     :param job_type:
     :return: -1 if it's a new entry else id in elastic search
     """
-    inchi = None
-    cansmiles = None
-    smiles = None
-    formula = None
-    software = None
-    theory = None
-    functionnal = None
-    basis_set_md5 = None
-    basis_set_size = None
-    charge = None
-    multipicity = None
     solvatation_method = None
-    solvent = None
-    ending_energy = None
-    ending_nuclear_repulsion_energy = None
-    starting_nuclear_repulsion_energy = None
     if "OPT" in job_type or "FREQ" in job_type or "TD" in job_type:
         # get value from json
         try:
@@ -137,6 +124,7 @@ def is_opt_exist(json_to_test, job_type):
 
         except Exception as error:
             print(error)
+            return 4
 
         try:
             ending_energy = json_to_test['results']['wavefunction']['total_molecular_energy']
@@ -144,6 +132,7 @@ def is_opt_exist(json_to_test, job_type):
                 json_to_test['results']['geometry']['nuclear_repulsion_energy_from_xyz']
         except Exception as error:
             print(error)
+            return 4
         try:
             # search a corresponding file in elastic search
             es_host = {"host": "localhost", "port": 9200}
@@ -194,6 +183,7 @@ def is_opt_exist(json_to_test, job_type):
             return s
         except Exception as error:
             print(error)
+            return 4
     if "SP" in job_type:
 
         # get value from json
@@ -212,11 +202,13 @@ def is_opt_exist(json_to_test, job_type):
             solvent = json_to_test['comp_details']['general']['solvent']
         except Exception as error:
             print(error)
+            return 4
 
         try:
             starting_nuclear_repulsion_energy = json_to_test['molecule']['starting_nuclear_repulsion']
         except Exception as error:
             print(error)
+            return 4
         try:
             # search a corresponding file in elastic search
             es_host = {"host": "localhost", "port": 9200}
@@ -261,6 +253,7 @@ def is_opt_exist(json_to_test, job_type):
             return s
         except Exception as error:
             print(error)
+            return 4
 
 
 def exist_freq(id_json_to_test, json_to_input, path_to_log_file, destination_dir, id_user):
@@ -305,10 +298,14 @@ def exist_freq(id_json_to_test, json_to_input, path_to_log_file, destination_dir
         try:
             es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_json_to_test)
             subprocess.Popen(["mv", path_to_log_file,
-                              destination_dir + path_in_file_sytem + "FREQ_" + str(
-                                  temp_md5) + ".json"])  # copie du JSON
+                              destination_dir + path_in_file_sytem + "/FREQ_" + str(temp_md5) + ".json"])
+                            # copie du JSON
+            return 0
         except Exception as error:
             print(error)
+            return 4
+    else:
+        return 1
 
 
 def exist_td(id_json_to_test, json_to_input, path_to_log_file, destination_dir, id_user):
@@ -358,10 +355,14 @@ def exist_td(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
                                                    id_calcul=id_json_to_test, make_path=False)
             es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_json_to_test)
             subprocess.Popen(["mv", path_to_log_file,
-                              destination_dir + path_in_file_sytem + "TD_" + str(
+                              destination_dir + path_in_file_sytem + "/TD_" + str(
                                   temp_md5) + ".json"])  # copie du JSON
+            return 0
         except Exception as error:
             print(error)
+            return 4
+    else:
+        return 1
 
 
 def exist_sp(id_json_to_test, json_to_input, path_to_log_file, destination_dir, id_user):
@@ -407,10 +408,14 @@ def exist_sp(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
             path_in_file_sytem = get_path_to_store(destination_dir=destination_dir,
                                                    id_calcul=id_json_to_test, make_path=False)
             subprocess.Popen(["mv", path_to_log_file,
-                              destination_dir + path_in_file_sytem + "SP_" + str(
+                              destination_dir + path_in_file_sytem + "/SP_" + str(
                                   temp_md5) + ".json"])  # copie du JSON
+            return 0
         except Exception as error:
             print(error)
+            return 4
+    else:
+        return 1
 
 
 def create_query(path, destination_dir, id_user):
@@ -436,12 +441,15 @@ def create_query(path, destination_dir, id_user):
             print(response)
         except Exception as error:
             print(error)
+            return 4
     jsonfile = open(path)
     if is_json(path=path):
         loaded_json = json.load(jsonfile)
         # set up all OPT
         s = is_opt_exist(json_to_test=loaded_json,
                          job_type=loaded_json['comp_details']['general']['job_type'])
+        if not s:
+            return 4
         if loaded_json['metadata']['archivable'] == "True" and \
                 loaded_json['metadata']['archivable_for_new_entry'] == "True" and \
                 "OPT" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
@@ -488,66 +496,78 @@ def create_query(path, destination_dir, id_user):
                 response = es.get(index="quchempedia_index", doc_type="log_file", id=id_file)
                 response['_source']['data']['metadata']['log_file'] = \
                     path_in_file_system + "OPT_" + str(int(round(time.time() * 1000))) + ".json"
-
                 if "FREQ" in loaded_json['comp_details']['general']['job_type']:
                     response['_source']['siblings'][0]['data']['metadata']['log_file'] = \
                         path_in_file_system + "FREQ_" + str(int(time.time())) + ".json"
-                subprocess.Popen(["mv", path, destination_dir + path_in_file_system + "OPT_" +
+                subprocess.Popen(["mv", path, destination_dir + path_in_file_system + "/OPT_" +
                                   str(int(round(time.time() * 1000))) + ".json"])  # copie du JSON
-
+                return 0
             except Exception as error:
                 print(error)
+                return 4
         elif loaded_json['metadata']['archivable'] == "True" and \
                 loaded_json['metadata']['archivable_for_new_entry'] == "True" and \
-                "OPT" in loaded_json['comp_details']['general']['job_type'] and s.count() > 1:
-                print("error file already exist")
-        if loaded_json['metadata']['archivable'] == "True":
+                "OPT" in loaded_json['comp_details']['general']['job_type'] and s.count() > 0:
+            return 1
+        elif loaded_json['metadata']['archivable'] == "True":
             if "FREQ" in loaded_json['comp_details']['general']['job_type'] and \
                     loaded_json['metadata']['archivable_for_new_entry'] == "False" and \
                     s.count() == 1:
                 for hit in s:
                     try:
-                        exist_freq(id_json_to_test=hit.meta.id,
-                                   json_to_input=loaded_json,
-                                   path_to_log_file=path,
-                                   destination_dir=destination_dir,
-                                   id_user=id_user)
+                        return exist_freq(id_json_to_test=hit.meta.id,
+                                          json_to_input=loaded_json,
+                                          path_to_log_file=path,
+                                          destination_dir=destination_dir,
+                                          id_user=id_user)
                     except Exception as error:
                         print(error)
-
+                        return 4
+            elif "FREQ" in loaded_json['comp_details']['general']['job_type'] and \
+                    loaded_json['metadata']['archivable_for_new_entry'] == "False" and \
+                    s.count() == 0:
+                return 3
             if "SP" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
                 for hit in s:
                     try:
-                        exist_sp(id_json_to_test=hit.meta.id,
-                                 json_to_input=loaded_json,
-                                 path_to_log_file=path,
-                                 destination_dir=destination_dir,
-                                 id_user=id_user)
+                        return exist_sp(id_json_to_test=hit.meta.id,
+                                        json_to_input=loaded_json,
+                                        path_to_log_file=path,
+                                        destination_dir=destination_dir,
+                                        id_user=id_user)
                     except Exception as error:
                         print(error)
-
+                        return 4
+            elif "SP" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
+                return 3
             if "TD" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
                 for hit in s:
                     try:
-                        exist_td(id_json_to_test=hit.meta.id,
-                                 json_to_input=loaded_json,
-                                 path_to_log_file=path,
-                                 destination_dir=destination_dir,
-                                 id_user=id_user)
+                        return exist_td(id_json_to_test=hit.meta.id,
+                                        json_to_input=loaded_json,
+                                        path_to_log_file=path,
+                                        destination_dir=destination_dir,
+                                        id_user=id_user)
 
                     except Exception as error:
                         print(error)
+                        return 4
+            elif "TD" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
+                return 3
 
-            """
             if "OPT_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
-                pass
+                return 2
+            elif "OPT_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
+                return 3
+
             if "FREQ_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
-                pass
-            """
+                return 2
+            elif "FREQ_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
+                return 3
 
         else:
             print("cant load " + path)
-            os.remove(path)
+            return 4
 
 
 def import_file(path, id_user):
@@ -555,9 +575,10 @@ def import_file(path, id_user):
     main function to import file
     :param path: pth to the file to import
     :param id_user: id to the user
-    :return: how it went
+    :return: 0 for all went ok, 1 for already in DB, 2 theory not supported yet,
+    3 doesn't have a grount state, 4 other error (see logs)
     """
     # absolute path to the destination directory where we are going to store all the data
     destination_dir = '/home/etudiant/Documents/stage/QuChemPedIAProjectElastic/data_dir/'
 
-    create_query(path=path, destination_dir=destination_dir, id_user=id_user)
+    return create_query(path=path, destination_dir=destination_dir, id_user=id_user)

@@ -53,5 +53,12 @@
                 </form>
             </div>
         </div>
+            <button id="connect-orcid-button" onclick="openORCID()"><img id="orcid-id-icon" src="https://orcid.org/sites/default/files/images/orcid_24x24.png" width="24" height="24" alt="ORCID iD icon"/>Register or Connect your ORCID iD</button>
     </div>
+<script type=text/javascript>
+    var oauthWindow;
+    function openORCID() {
+        var oauthWindow = window.open("https://sandbox.orcid.org/oauth/authorize?client_id=0000-0002-1223-3173&response_type=code&scope=/authenticate&show_login=false&redirect_uri=http://127.0.0.1:8000/QuChemPedIA/", "_blank", "toolbar=no, scrollbars=yes, width=500, height=600, top=500, left=500");
+    }
+</script>
 {% endblock %}

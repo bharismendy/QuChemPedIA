@@ -5,6 +5,7 @@ from QuChemPedIA.models.VersionModel import SoftwareVersion
 
 
 class ImportFile(models.Model):
+    """class that define an object for DB in django, here we define ImportFile table"""
     id_file =  models.BigAutoField(primary_key=True)
     id_user = models.ForeignKey(Utilisateur, null=True, default=None, on_delete=models.SET_NULL)  # si null -> anonymous
     path_file = models.FilePathField(default=None, null=False)  # must be fill

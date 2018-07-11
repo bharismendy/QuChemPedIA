@@ -3,11 +3,13 @@ from QuChemPedIA.models.UserModel import Utilisateur
 
 
 class EditUtilisateur(forms.ModelForm):
-    def __init__(self, user = None, *args, **kwargs):
+    """form to allow the user to edit himself is data"""
+    def __init__(self, user=None, *args, **kwargs):
         try:
             self.user = user
-        except:
+        except Exception as error:
             self.user=None
+            print(error)
         super(EditUtilisateur, self).__init__(*args, **kwargs)
         if not hasattr(self.user, 'first_name'):
             first_name = "My first name"

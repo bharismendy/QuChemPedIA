@@ -1,0 +1,665 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>QuChemPedIA.QuChemPedIA_lib.import_file_lib &#8212; QuChemPedIA 1.0 alpha documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for QuChemPedIA.QuChemPedIA_lib.import_file_lib</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">QuChemPedIA.models.UserModel</span> <span class="k">import</span> <span class="n">Utilisateur</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">elasticsearch</span> <span class="k">import</span> <span class="n">Elasticsearch</span>
+<span class="kn">from</span> <span class="nn">elasticsearch_dsl</span> <span class="k">import</span> <span class="n">Search</span><span class="p">,</span> <span class="n">Q</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<div class="viewcode-block" id="get_base_json"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_base_json">[docs]</a><span class="k">def</span> <span class="nf">get_base_json</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function to get the first architecture</span>
+<span class="sd">    :return: basique json tree</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s1">&#39;{&quot;job_type&quot;: &quot;OPT&quot;, &quot;data&quot;: </span><span class="si">{}</span><span class="s1">, &quot;siblings&quot;: [],&quot;md5_siblings&quot;:[],&quot;contributor&quot;:[]}&#39;</span></div>
+
+
+<div class="viewcode-block" id="get_siblings_json"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_siblings_json">[docs]</a><span class="k">def</span> <span class="nf">get_siblings_json</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    use to get a sibling json</span>
+<span class="sd">    :return: json tree of a sibling</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s1">&#39;{&quot;job_type&quot;: &quot;OPT&quot;, &quot;data&quot;: </span><span class="si">{}</span><span class="s1">, &quot;siblings&quot;: []}&#39;</span></div>
+
+
+<div class="viewcode-block" id="does_file_exist_in_dir"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.does_file_exist_in_dir">[docs]</a><span class="k">def</span> <span class="nf">does_file_exist_in_dir</span><span class="p">(</span><span class="n">dir_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    test if there is file in subdirectory of a folder</span>
+<span class="sd">    :param dir_path: path to the directory</span>
+<span class="sd">    :return: boolean answer True = there is file False = no more file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">dir_path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">files</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="is_json"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.is_json">[docs]</a><span class="k">def</span> <span class="nf">is_json</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function to test a file can be load as json</span>
+<span class="sd">    :param path: path to the file</span>
+<span class="sd">    :return: boolean answer True = it&#39;s a properly formated json, False it&#39;s not</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">jsonfile</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">jsonfile</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="get_affiliation"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_affiliation">[docs]</a><span class="k">def</span> <span class="nf">get_affiliation</span><span class="p">(</span><span class="n">id_user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function to get the affiliation of the user</span>
+<span class="sd">    :param id_user: id of the user</span>
+<span class="sd">    :return: string that contain the affiliation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">Utilisateur</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">id_user</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">user</span><span class="o">.</span><span class="n">affiliation</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="clean_file"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.clean_file">[docs]</a><span class="k">def</span> <span class="nf">clean_file</span><span class="p">(</span><span class="n">list_dir</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">list_dir</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">element</span><span class="p">):</span>
+            <span class="n">list_dir</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">list_dir</span></div>
+
+
+<div class="viewcode-block" id="get_path_to_store"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_path_to_store">[docs]</a><span class="k">def</span> <span class="nf">get_path_to_store</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">,</span> <span class="n">id_calcul</span><span class="p">,</span> <span class="n">make_path</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">number_of_subdir</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cut_number_by</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    method to find the right directory to store data</span>
+<span class="sd">    :param destination_dir: root directory</span>
+<span class="sd">    :param id_calcul: id of the calcul in database if none (=0) create a new directory</span>
+<span class="sd">    :param make_path: if set to true, create the directory in file system</span>
+<span class="sd">    :param number_of_subdir: number of subdirectory in the file system</span>
+<span class="sd">    :param cut_number_by: the length of the name of each sub dir example 4 = &quot;eeee&quot;/&quot;aaaa&quot;</span>
+<span class="sd">    :return: path to the destination</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">id_calcul</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">number_of_subdir</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error in the path for id &quot;</span> <span class="o">+</span> <span class="n">id_calcul</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">id_calcul</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">number_of_subdir</span><span class="p">:</span>  <span class="c1"># add the subdir</span>
+        <span class="n">id_calcul</span> <span class="o">=</span> <span class="n">id_calcul</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="n">number_of_subdir</span> <span class="o">*</span> <span class="n">cut_number_by</span><span class="p">)</span>
+
+    <span class="n">path_in_file_system</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">id_calcul</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">cut_number_by</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">id_calcul</span><span class="p">),</span> <span class="n">cut_number_by</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">make_path</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">destination_dir</span> <span class="o">+</span> <span class="n">path_in_file_system</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span>
+
+    <span class="k">return</span> <span class="n">path_in_file_system</span></div>
+
+
+<div class="viewcode-block" id="is_opt_exist"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.is_opt_exist">[docs]</a><span class="k">def</span> <span class="nf">is_opt_exist</span><span class="p">(</span><span class="n">json_to_test</span><span class="p">,</span> <span class="n">job_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    test if there is an opt of the molecule already registered</span>
+<span class="sd">    :param json_to_test: json of the .log</span>
+<span class="sd">    :param job_type:</span>
+<span class="sd">    :return: -1 if it&#39;s a new entry else id in elastic search</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">solvatation_method</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="s2">&quot;OPT&quot;</span> <span class="ow">in</span> <span class="n">job_type</span> <span class="ow">or</span> <span class="s2">&quot;FREQ&quot;</span> <span class="ow">in</span> <span class="n">job_type</span> <span class="ow">or</span> <span class="s2">&quot;TD&quot;</span> <span class="ow">in</span> <span class="n">job_type</span><span class="p">:</span>
+        <span class="c1"># get value from json</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">inchi</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">][</span><span class="s1">&#39;inchi&#39;</span><span class="p">]</span>
+            <span class="n">cansmiles</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">][</span><span class="s1">&#39;can&#39;</span><span class="p">]</span>
+            <span class="n">smiles</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">][</span><span class="s1">&#39;smi&#39;</span><span class="p">]</span>
+            <span class="n">formula</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">][</span><span class="s1">&#39;formula&#39;</span><span class="p">]</span>
+            <span class="n">software</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;package&#39;</span><span class="p">]</span>
+            <span class="n">theory</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;all_unique_theory&#39;</span><span class="p">]</span>
+            <span class="n">theory</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">theory</span><span class="p">))</span>
+            <span class="n">functionnal</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;functional&#39;</span><span class="p">]</span>
+            <span class="n">basis_set_md5</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;basis_set_md5&#39;</span><span class="p">]</span>
+            <span class="n">basis_set_size</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;basis_set_size&#39;</span><span class="p">]</span>
+            <span class="n">charge</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">][</span><span class="s1">&#39;charge&#39;</span><span class="p">]</span>
+            <span class="n">multipicity</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">][</span><span class="s1">&#39;multiplicity&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s1">&#39;solvent_reaction_field&#39;</span> <span class="ow">in</span> <span class="n">json_to_test</span><span class="p">:</span>
+                <span class="n">solvatation_method</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;solvent_reaction_field&#39;</span><span class="p">]</span>
+            <span class="n">solvent</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;solvent&#39;</span><span class="p">]</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ending_energy</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="s1">&#39;wavefunction&#39;</span><span class="p">][</span><span class="s1">&#39;total_molecular_energy&#39;</span><span class="p">]</span>
+            <span class="n">ending_nuclear_repulsion_energy</span> <span class="o">=</span> \
+                <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="s1">&#39;nuclear_repulsion_energy_from_xyz&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># search a corresponding file in elastic search</span>
+            <span class="n">es_host</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9200</span><span class="p">}</span>
+            <span class="n">es</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="p">[</span><span class="n">es_host</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">solvatation_method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">q</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+                      <span class="n">must</span><span class="o">=</span><span class="p">[</span><span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__inchi</span><span class="o">=</span><span class="n">inchi</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__can</span><span class="o">=</span><span class="n">cansmiles</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__smi</span><span class="o">=</span><span class="n">smiles</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__formula</span><span class="o">=</span><span class="n">formula</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__charge</span><span class="o">=</span><span class="n">charge</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__multiplicity</span><span class="o">=</span><span class="n">multipicity</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__functional</span><span class="o">=</span><span class="n">functionnal</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__package</span><span class="o">=</span><span class="n">software</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__all_unique_theory</span><span class="o">=</span><span class="n">theory</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__basis_set_size</span><span class="o">=</span><span class="n">basis_set_size</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__basis_set_md5__keyword</span><span class="o">=</span><span class="n">basis_set_md5</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__solvent</span><span class="o">=</span><span class="n">solvent</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__results__wavefunction__total_molecular_energy</span><span class="o">=</span><span class="n">ending_energy</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span>
+                              <span class="n">data__results__geometry__nuclear_repulsion_energy_from_xyz</span><span class="o">=</span><span class="n">ending_nuclear_repulsion_energy</span>
+                              <span class="p">)</span>
+                            <span class="p">],</span>
+                      <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">q</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+                      <span class="n">must</span><span class="o">=</span><span class="p">[</span><span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__inchi</span><span class="o">=</span><span class="n">inchi</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__can</span><span class="o">=</span><span class="n">cansmiles</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__smi</span><span class="o">=</span><span class="n">smiles</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__formula</span><span class="o">=</span><span class="n">formula</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__charge</span><span class="o">=</span><span class="n">charge</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__multiplicity</span><span class="o">=</span><span class="n">multipicity</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__functionnal</span><span class="o">=</span><span class="n">functionnal</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__package</span><span class="o">=</span><span class="n">software</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__theory</span><span class="o">=</span><span class="n">theory</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__basis_set_size</span><span class="o">=</span><span class="n">basis_set_size</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__basis_set_md5__keyword</span><span class="o">=</span><span class="n">basis_set_md5</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__solvent</span><span class="o">=</span><span class="n">solvent</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__results__wavefunction__total_molecular_energy</span><span class="o">=</span><span class="n">ending_energy</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span>
+                              <span class="n">data__results__geometry__nuclear_repulsion_energy_from_xyz</span><span class="o">=</span><span class="n">ending_nuclear_repulsion_energy</span>
+                              <span class="p">)</span>
+                            <span class="p">],</span>
+                      <span class="p">)</span>
+
+            <span class="n">s</span> <span class="o">=</span> <span class="n">Search</span><span class="p">()</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">es</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">s</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span>
+    <span class="k">if</span> <span class="s2">&quot;SP&quot;</span> <span class="ow">in</span> <span class="n">job_type</span><span class="p">:</span>
+
+        <span class="c1"># get value from json</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">inchi</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">][</span><span class="s1">&#39;inchi&#39;</span><span class="p">]</span>
+            <span class="n">cansmiles</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">][</span><span class="s1">&#39;can&#39;</span><span class="p">]</span>
+            <span class="n">smiles</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">][</span><span class="s1">&#39;smi&#39;</span><span class="p">]</span>
+            <span class="n">software</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;package&#39;</span><span class="p">]</span>
+            <span class="n">theory</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;all_unique_theory&#39;</span><span class="p">]</span>
+            <span class="n">theory</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">theory</span><span class="p">))</span>
+            <span class="n">functionnal</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;functional&#39;</span><span class="p">]</span>
+            <span class="n">basis_set_md5</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;basis_set_md5&#39;</span><span class="p">]</span>
+            <span class="n">basis_set_size</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;basis_set_size&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s1">&#39;solvent_reaction_field&#39;</span> <span class="ow">in</span> <span class="n">json_to_test</span><span class="p">:</span>
+                <span class="n">solvatation_method</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;solvent_reaction_field&#39;</span><span class="p">]</span>
+            <span class="n">solvent</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;solvent&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">starting_nuclear_repulsion_energy</span> <span class="o">=</span> <span class="n">json_to_test</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">][</span><span class="s1">&#39;starting_nuclear_repulsion&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># search a corresponding file in elastic search</span>
+            <span class="n">es_host</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9200</span><span class="p">}</span>
+            <span class="n">es</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="p">[</span><span class="n">es_host</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">solvatation_method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">q</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+                      <span class="n">must</span><span class="o">=</span><span class="p">[</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__inchi</span><span class="o">=</span><span class="n">inchi</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__can</span><span class="o">=</span><span class="n">cansmiles</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__smi</span><span class="o">=</span><span class="n">smiles</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__functional</span><span class="o">=</span><span class="n">functionnal</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__package</span><span class="o">=</span><span class="n">software</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__all_unique_theory</span><span class="o">=</span><span class="n">theory</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__basis_set_size</span><span class="o">=</span><span class="n">basis_set_size</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__basis_set_md5__keyword</span><span class="o">=</span><span class="n">basis_set_md5</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__solvent</span><span class="o">=</span><span class="n">solvent</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span>
+                            <span class="n">data__results__geometry__nuclear_repulsion_energy_from_xyz</span><span class="o">=</span><span class="n">starting_nuclear_repulsion_energy</span>
+                            <span class="p">)</span>
+                            <span class="p">],</span>
+                      <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">q</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+                      <span class="n">must</span><span class="o">=</span><span class="p">[</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__inchi</span><span class="o">=</span><span class="n">inchi</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__can</span><span class="o">=</span><span class="n">cansmiles</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__molecule__smi</span><span class="o">=</span><span class="n">smiles</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__functionnal</span><span class="o">=</span><span class="n">functionnal</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__package</span><span class="o">=</span><span class="n">software</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__theory</span><span class="o">=</span><span class="n">theory</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__basis_set_size</span><span class="o">=</span><span class="n">basis_set_size</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__basis_set_md5__keyword</span><span class="o">=</span><span class="n">basis_set_md5</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="n">data__comp_details__general__solvent</span><span class="o">=</span><span class="n">solvent</span><span class="p">)</span> <span class="o">&amp;</span>
+                          <span class="n">Q</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span>
+                            <span class="n">data__results__geometry__nuclear_repulsion_energy_from_xyz</span><span class="o">=</span><span class="n">starting_nuclear_repulsion_energy</span>
+                            <span class="p">)</span>
+                            <span class="p">],</span>
+                      <span class="p">)</span>
+
+            <span class="n">s</span> <span class="o">=</span> <span class="n">Search</span><span class="p">()</span><span class="o">.</span><span class="n">using</span><span class="p">(</span><span class="n">es</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">s</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="exist_freq"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.exist_freq">[docs]</a><span class="k">def</span> <span class="nf">exist_freq</span><span class="p">(</span><span class="n">id_json_to_test</span><span class="p">,</span> <span class="n">json_to_input</span><span class="p">,</span> <span class="n">path_to_log_file</span><span class="p">,</span> <span class="n">destination_dir</span><span class="p">,</span> <span class="n">id_user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    test if already exist a freq in a file and if not enter it</span>
+<span class="sd">    :param id_json_to_test: id of the json to load</span>
+<span class="sd">    :param json_to_input: json data to input in elastic search</span>
+<span class="sd">    :param path_to_log_file : path in file system to log file</span>
+<span class="sd">    :param destination_dir : directory where log are send</span>
+<span class="sd">    :param id_user: id of the contributor</span>
+<span class="sd">    :return: True if already entered False if not</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">index_name</span> <span class="o">=</span> <span class="s1">&#39;quchempedia_index&#39;</span>
+    <span class="n">base_json</span> <span class="o">=</span> <span class="n">get_siblings_json</span><span class="p">()</span>
+    <span class="n">es_host</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9200</span><span class="p">}</span>
+    <span class="n">es</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="p">[</span><span class="n">es_host</span><span class="p">])</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">es</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;quchempedia_index&quot;</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="s2">&quot;log_file&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">)</span>
+    <span class="n">path_in_file_sytem</span> <span class="o">=</span> <span class="n">get_path_to_store</span><span class="p">(</span><span class="n">destination_dir</span><span class="o">=</span><span class="n">destination_dir</span><span class="p">,</span>
+                                           <span class="n">id_calcul</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">,</span> <span class="n">make_path</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">temp_md5</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">base_json</span><span class="p">)</span>
+    <span class="n">temp_md5</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span>
+    <span class="n">temp_md5</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span>
+    <span class="n">temp_md5</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span>
+    <span class="n">temp_md5</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">temp_md5</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">temp_md5</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;md5_siblings&#39;</span><span class="p">]:</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">])</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">base_json</span><span class="p">))</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s2">&quot;id_user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_user</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s2">&quot;affiliation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_affiliation</span><span class="p">(</span>
+            <span class="n">id_user</span><span class="o">=</span><span class="n">id_user</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;log_file&#39;</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="n">path_in_file_sytem</span> <span class="o">+</span> <span class="s2">&quot;FREQ_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp_md5</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;FREQ&quot;</span>
+
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;md5_siblings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_md5</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;contributor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">id_user</span><span class="p">)</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">es</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="s2">&quot;log_file&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">],</span> <span class="nb">id</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s2">&quot;mv&quot;</span><span class="p">,</span> <span class="n">path_to_log_file</span><span class="p">,</span>
+                              <span class="n">destination_dir</span> <span class="o">+</span> <span class="n">path_in_file_sytem</span> <span class="o">+</span> <span class="s2">&quot;/FREQ_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp_md5</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span><span class="p">])</span>
+                            <span class="c1"># copie du JSON</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="exist_td"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.exist_td">[docs]</a><span class="k">def</span> <span class="nf">exist_td</span><span class="p">(</span><span class="n">id_json_to_test</span><span class="p">,</span> <span class="n">json_to_input</span><span class="p">,</span> <span class="n">path_to_log_file</span><span class="p">,</span> <span class="n">destination_dir</span><span class="p">,</span> <span class="n">id_user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    test if already exist a td in a file and if not enter it</span>
+<span class="sd">    :param id_json_to_test: id of the json to load</span>
+<span class="sd">    :param json_to_input: json data to input in elastic search</span>
+<span class="sd">    :param path_to_log_file : path in file system to log file</span>
+<span class="sd">    :param destination_dir : directory where log are send</span>
+<span class="sd">    :param id_user: id of the contributor</span>
+<span class="sd">    :return: True if already entered False if not</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">index_name</span> <span class="o">=</span> <span class="s1">&#39;quchempedia_index&#39;</span>
+    <span class="n">base_json</span> <span class="o">=</span> <span class="n">get_siblings_json</span><span class="p">()</span>
+    <span class="n">es_host</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9200</span><span class="p">}</span>
+    <span class="n">es</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="p">[</span><span class="n">es_host</span><span class="p">])</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">es</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;quchempedia_index&quot;</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="s2">&quot;log_file&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">)</span>
+    <span class="n">path_in_file_sytem</span> <span class="o">=</span> <span class="n">get_path_to_store</span><span class="p">(</span><span class="n">destination_dir</span><span class="o">=</span><span class="n">destination_dir</span><span class="p">,</span>
+                                           <span class="n">id_calcul</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">,</span> <span class="n">make_path</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">temp_md5</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">base_json</span><span class="p">)</span>
+    <span class="n">temp_md5</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span>
+    <span class="n">temp_md5</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span>
+    <span class="n">temp_md5</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span>
+    <span class="n">temp_md5</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">temp_md5</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">temp_md5</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;md5_siblings&#39;</span><span class="p">]:</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">])</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">base_json</span><span class="p">))</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s2">&quot;id_user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_user</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s2">&quot;affiliation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_affiliation</span><span class="p">(</span>
+            <span class="n">id_user</span><span class="o">=</span><span class="n">id_user</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;log_file&#39;</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="n">path_in_file_sytem</span> <span class="o">+</span> <span class="s2">&quot;TD_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp_md5</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;TD&quot;</span>
+
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;md5_siblings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_md5</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;contributor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">id_user</span><span class="p">)</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">es</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="s2">&quot;log_file&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">],</span> <span class="nb">id</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">)</span>
+            <span class="n">path_in_file_sytem</span> <span class="o">=</span> <span class="n">get_path_to_store</span><span class="p">(</span><span class="n">destination_dir</span><span class="o">=</span><span class="n">destination_dir</span><span class="p">,</span>
+                                                   <span class="n">id_calcul</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">,</span> <span class="n">make_path</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">es</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="s2">&quot;log_file&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">],</span> <span class="nb">id</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s2">&quot;mv&quot;</span><span class="p">,</span> <span class="n">path_to_log_file</span><span class="p">,</span>
+                              <span class="n">destination_dir</span> <span class="o">+</span> <span class="n">path_in_file_sytem</span> <span class="o">+</span> <span class="s2">&quot;/TD_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+                                  <span class="n">temp_md5</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span><span class="p">])</span>  <span class="c1"># copie du JSON</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="exist_sp"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.exist_sp">[docs]</a><span class="k">def</span> <span class="nf">exist_sp</span><span class="p">(</span><span class="n">id_json_to_test</span><span class="p">,</span> <span class="n">json_to_input</span><span class="p">,</span> <span class="n">path_to_log_file</span><span class="p">,</span> <span class="n">destination_dir</span><span class="p">,</span> <span class="n">id_user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    test if already exist a sp in a file and if not enter it</span>
+<span class="sd">    :param id_json_to_test: id of the json to load</span>
+<span class="sd">    :param json_to_input: json data to input in elastic search</span>
+<span class="sd">    :param path_to_log_file : path in file system to log file</span>
+<span class="sd">    :param destination_dir : directory where log are send</span>
+<span class="sd">    :param id_user: id of the contributor</span>
+<span class="sd">    :return: True if already entered False if not</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">index_name</span> <span class="o">=</span> <span class="s1">&#39;quchempedia_index&#39;</span>
+    <span class="n">base_json</span> <span class="o">=</span> <span class="n">get_siblings_json</span><span class="p">()</span>
+    <span class="n">es_host</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9200</span><span class="p">}</span>
+    <span class="n">es</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="p">[</span><span class="n">es_host</span><span class="p">])</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">es</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;quchempedia_index&quot;</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="s2">&quot;log_file&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">)</span>
+    <span class="n">path_in_file_sytem</span> <span class="o">=</span> <span class="n">get_path_to_store</span><span class="p">(</span><span class="n">destination_dir</span><span class="o">=</span><span class="n">destination_dir</span><span class="p">,</span>
+                                           <span class="n">id_calcul</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">,</span> <span class="n">make_path</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">temp_md5</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">base_json</span><span class="p">)</span>
+    <span class="n">temp_md5</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span>
+    <span class="n">temp_md5</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span>
+    <span class="n">temp_md5</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span>
+    <span class="n">temp_md5</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">temp_md5</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">temp_md5</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;md5_siblings&#39;</span><span class="p">]:</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">])</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">base_json</span><span class="p">))</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_to_input</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s2">&quot;id_user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_user</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s2">&quot;affiliation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_affiliation</span><span class="p">(</span><span class="n">id_user</span><span class="o">=</span><span class="n">id_user</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;log_file&#39;</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="n">path_in_file_sytem</span> <span class="o">+</span> <span class="s2">&quot;SP_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">temp_md5</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="n">size</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;SP&quot;</span>
+
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;md5_siblings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_md5</span><span class="p">)</span>
+        <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;contributor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">id_user</span><span class="p">)</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">es</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="s2">&quot;log_file&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">],</span> <span class="nb">id</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">)</span>
+            <span class="n">path_in_file_sytem</span> <span class="o">=</span> <span class="n">get_path_to_store</span><span class="p">(</span><span class="n">destination_dir</span><span class="o">=</span><span class="n">destination_dir</span><span class="p">,</span>
+                                                   <span class="n">id_calcul</span><span class="o">=</span><span class="n">id_json_to_test</span><span class="p">,</span> <span class="n">make_path</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s2">&quot;mv&quot;</span><span class="p">,</span> <span class="n">path_to_log_file</span><span class="p">,</span>
+                              <span class="n">destination_dir</span> <span class="o">+</span> <span class="n">path_in_file_sytem</span> <span class="o">+</span> <span class="s2">&quot;/SP_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+                                  <span class="n">temp_md5</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span><span class="p">])</span>  <span class="c1"># copie du JSON</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="create_query"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.create_query">[docs]</a><span class="k">def</span> <span class="nf">create_query</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">destination_dir</span><span class="p">,</span> <span class="n">id_user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this function get all file from the source directory to store them in the destination directory</span>
+<span class="sd">    we put the log in database and the json in elasticSearch</span>
+<span class="sd">    :param path: directory or file path that contains the new .log</span>
+<span class="sd">    :param destination_dir: the directory where we are going to store our .log</span>
+<span class="sd">    :param id_user: id of the contributor</span>
+<span class="sd">    :return: nothing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># iterate on all file</span>
+    <span class="c1"># setting conection to elastic search server</span>
+    <span class="n">es_host</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">9200</span><span class="p">}</span>
+    <span class="n">es</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">(</span><span class="n">hosts</span><span class="o">=</span><span class="p">[</span><span class="n">es_host</span><span class="p">])</span>
+    <span class="n">base_json</span> <span class="o">=</span> <span class="n">get_base_json</span><span class="p">()</span>
+    <span class="c1"># creating the index</span>
+    <span class="n">index_name</span> <span class="o">=</span> <span class="s1">&#39;quchempedia_index&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">es</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index_name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">es</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index_name</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span>
+    <span class="n">jsonfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">is_json</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">loaded_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">jsonfile</span><span class="p">)</span>
+        <span class="c1"># set up all OPT</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">is_opt_exist</span><span class="p">(</span><span class="n">json_to_test</span><span class="o">=</span><span class="n">loaded_json</span><span class="p">,</span>
+                         <span class="n">job_type</span><span class="o">=</span><span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">4</span>
+        <span class="k">if</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;archivable&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span> <span class="ow">and</span> \
+                <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;archivable_for_new_entry&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span> <span class="ow">and</span> \
+                <span class="s2">&quot;OPT&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;FREQ&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]:</span>
+                <span class="c1"># store data into the json</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">base_json</span><span class="p">)</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;log_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s2">&quot;id_user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_user</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s2">&quot;affiliation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_affiliation</span><span class="p">(</span>
+                    <span class="n">id_user</span><span class="o">=</span><span class="n">id_user</span><span class="p">)</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;OPT&quot;</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;siblings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">base_json</span><span class="p">))</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;FREQ&quot;</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;md5_siblings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">loaded_json</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">())</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;contributor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">id_user</span><span class="p">)</span>
+
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># store data into the json</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">base_json</span><span class="p">)</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;molecule&#39;</span><span class="p">]</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">]</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">]</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s2">&quot;id_user&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">id_user</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s2">&quot;affiliation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_affiliation</span><span class="p">(</span>
+                    <span class="n">id_user</span><span class="o">=</span><span class="n">id_user</span><span class="p">)</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;log_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;OPT&quot;</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;contributor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">id_user</span><span class="p">)</span>
+
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">es</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index_name</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="s2">&quot;log_file&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">temp</span><span class="p">)</span>
+                <span class="n">id_file</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span>
+                <span class="n">path_in_file_system</span> <span class="o">=</span> <span class="n">get_path_to_store</span><span class="p">(</span><span class="n">destination_dir</span><span class="o">=</span><span class="n">destination_dir</span><span class="p">,</span>
+                                                        <span class="n">id_calcul</span><span class="o">=</span><span class="n">id_file</span><span class="p">,</span> <span class="n">make_path</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="n">response</span> <span class="o">=</span> <span class="n">es</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;quchempedia_index&quot;</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="s2">&quot;log_file&quot;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">id_file</span><span class="p">)</span>
+                <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;log_file&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                    <span class="n">path_in_file_system</span> <span class="o">+</span> <span class="s2">&quot;OPT_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)))</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>
+                <span class="k">if</span> <span class="s2">&quot;FREQ&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]:</span>
+                    <span class="n">response</span><span class="p">[</span><span class="s1">&#39;_source&#39;</span><span class="p">][</span><span class="s1">&#39;siblings&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;log_file&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                        <span class="n">path_in_file_system</span> <span class="o">+</span> <span class="s2">&quot;FREQ_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>
+                <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s2">&quot;mv&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">destination_dir</span> <span class="o">+</span> <span class="n">path_in_file_system</span> <span class="o">+</span> <span class="s2">&quot;/OPT_&quot;</span> <span class="o">+</span>
+                                  <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)))</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span><span class="p">])</span>  <span class="c1"># copie du JSON</span>
+                <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                <span class="k">return</span> <span class="mi">4</span>
+        <span class="k">elif</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;archivable&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span> <span class="ow">and</span> \
+                <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;archivable_for_new_entry&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span> <span class="ow">and</span> \
+                <span class="s2">&quot;OPT&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;archivable&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;FREQ&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> \
+                    <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;archivable_for_new_entry&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;False&quot;</span> <span class="ow">and</span> \
+                    <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">exist_freq</span><span class="p">(</span><span class="n">id_json_to_test</span><span class="o">=</span><span class="n">hit</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                                          <span class="n">json_to_input</span><span class="o">=</span><span class="n">loaded_json</span><span class="p">,</span>
+                                          <span class="n">path_to_log_file</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                                          <span class="n">destination_dir</span><span class="o">=</span><span class="n">destination_dir</span><span class="p">,</span>
+                                          <span class="n">id_user</span><span class="o">=</span><span class="n">id_user</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="mi">4</span>
+            <span class="k">elif</span> <span class="s2">&quot;FREQ&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> \
+                    <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;archivable_for_new_entry&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;False&quot;</span> <span class="ow">and</span> \
+                    <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">3</span>
+            <span class="k">if</span> <span class="s2">&quot;SP&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">exist_sp</span><span class="p">(</span><span class="n">id_json_to_test</span><span class="o">=</span><span class="n">hit</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                                        <span class="n">json_to_input</span><span class="o">=</span><span class="n">loaded_json</span><span class="p">,</span>
+                                        <span class="n">path_to_log_file</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                                        <span class="n">destination_dir</span><span class="o">=</span><span class="n">destination_dir</span><span class="p">,</span>
+                                        <span class="n">id_user</span><span class="o">=</span><span class="n">id_user</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="mi">4</span>
+            <span class="k">elif</span> <span class="s2">&quot;SP&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">3</span>
+            <span class="k">if</span> <span class="s2">&quot;TD&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">exist_td</span><span class="p">(</span><span class="n">id_json_to_test</span><span class="o">=</span><span class="n">hit</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                                        <span class="n">json_to_input</span><span class="o">=</span><span class="n">loaded_json</span><span class="p">,</span>
+                                        <span class="n">path_to_log_file</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                                        <span class="n">destination_dir</span><span class="o">=</span><span class="n">destination_dir</span><span class="p">,</span>
+                                        <span class="n">id_user</span><span class="o">=</span><span class="n">id_user</span><span class="p">)</span>
+
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="mi">4</span>
+            <span class="k">elif</span> <span class="s2">&quot;TD&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">3</span>
+
+            <span class="k">if</span> <span class="s2">&quot;OPT_ES&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">2</span>
+            <span class="k">elif</span> <span class="s2">&quot;OPT_ES&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">3</span>
+
+            <span class="k">if</span> <span class="s2">&quot;FREQ_ES&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">2</span>
+            <span class="k">elif</span> <span class="s2">&quot;FREQ_ES&quot;</span> <span class="ow">in</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">3</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cant load &quot;</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="import_file"><a class="viewcode-back" href="../../../QuChemPedIA.QuChemPedIA_lib.html#QuChemPedIA.QuChemPedIA_lib.import_file_lib.import_file">[docs]</a><span class="k">def</span> <span class="nf">import_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">id_user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    main function to import file</span>
+<span class="sd">    :param path: pth to the file to import</span>
+<span class="sd">    :param id_user: id to the user</span>
+<span class="sd">    :return: 0 for all went ok, 1 for already in DB, 2 theory not supported yet,</span>
+<span class="sd">    3 doesn&#39;t have a grount state, 4 other error (see logs)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># absolute path to the destination directory where we are going to store all the data</span>
+    <span class="n">destination_dir</span> <span class="o">=</span> <span class="s1">&#39;/home/etudiant/Documents/stage/QuChemPedIAProjectElastic/data_dir/&#39;</span>
+
+    <span class="k">return</span> <span class="n">create_query</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">destination_dir</span><span class="o">=</span><span class="n">destination_dir</span><span class="p">,</span> <span class="n">id_user</span><span class="o">=</span><span class="n">id_user</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../QuChemPedIA.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Brice Harismendy, Thomas Catalayud, Alexis Leblond, Corentin Talarmain, Lakhdar Amroun.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

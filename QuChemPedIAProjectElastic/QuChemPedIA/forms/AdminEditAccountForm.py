@@ -3,7 +3,16 @@ from QuChemPedIA.models.UserModel import Utilisateur
 
 
 class AdminEditUtilisateur(forms.ModelForm):
+    """
+    form that allow edit all user so it must only by accessible by admin,
+    """
     def __init__(self, user=None, *args, **kwargs):
+        """
+        constructor of the form from the class AdminEditUtilisateur
+        :param user: user object retrieve from db
+        :param args: optionnal atguments
+        :param kwargs: optionnal argument
+        """
         try:
             self.user = user
         except:
@@ -63,8 +72,6 @@ class AdminEditUtilisateur(forms.ModelForm):
             affiliation = "the affiliation"
         else:
             affiliation = self.user.affiliation
-
-
 
         self.fields['first_name'] = forms.CharField(label="first name", required=False, widget=(forms.TextInput(
                                                     attrs={'value': first_name})))

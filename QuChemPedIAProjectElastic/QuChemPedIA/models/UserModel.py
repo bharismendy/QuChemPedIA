@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
 
 
 class UserManager(BaseUserManager):
+    """class of user manager"""
     def create_user(self, email, password=None):
         """
         Creates and saves a User with the given email and password.
@@ -49,6 +50,7 @@ class UserManager(BaseUserManager):
 
 
 class Utilisateur(AbstractBaseUser):
+        """define the user in the database"""
         objects = UserManager()
         email = models.EmailField(
             verbose_name='email address',

@@ -4,6 +4,12 @@ import json
 
 
 def find(key, dictionary):
+    """
+    function to find a list of all value set for a key in a json
+    :param key: key where value are set
+    :param dictionary: json to explore
+    :return: a list of result
+    """
     for k, v in dictionary.items():
         if k == key:
             yield v
@@ -102,6 +108,24 @@ def search_inchi(inchi_value, page, nbrpp):
           )
     s = Search().using(es).query(q)[nbrpp*page-nbrpp:(nbrpp*page)-1]
 
+    return _search_to_json(search=s.execute(), nbresult=s.count())
+
+
+def search_id_user(id_user, page, nbrpp):
+    """
+     this function get all the file were the user contribute
+     :param id_user: integer, identifier of the user
+     :param page: number of displayed page of result
+     :param nbrpp: number of result in a page
+     :return: a list of json file
+     """
+    #  connect to elastic search
+    es_host = {"host": "localhost", "port": 9200}
+    es = Elasticsearch(hosts=[es_host])
+    q = Q('bool',
+          should=[Q('match', contributor=id_user)],
+          )
+    s = Search().using(es).query(q)[nbrpp * page - nbrpp:(nbrpp * page) - 1]
     return _search_to_json(search=s.execute(), nbresult=s.count())
 
 

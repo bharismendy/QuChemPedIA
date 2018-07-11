@@ -1,0 +1,356 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>QuChemPedIA.views package &#8212; QuChemPedIA 1.0 alpha documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="QuChemPedIA.models package" href="QuChemPedIA.models.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="quchempedia-views-package">
+<h1>QuChemPedIA.views package<a class="headerlink" href="#quchempedia-views-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-QuChemPedIA.views.AccountView">
+<span id="quchempedia-views-accountview-module"></span><h2>QuChemPedIA.views.AccountView module<a class="headerlink" href="#module-QuChemPedIA.views.AccountView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.AccountView.account">
+<code class="descclassname">QuChemPedIA.views.AccountView.</code><code class="descname">account</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/AccountView.html#account"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.AccountView.account" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler of the template account that allow to edit the user profile
+:param request: variable wich contains the value of the page
+:return: template html</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.AccueilView">
+<span id="quchempedia-views-accueilview-module"></span><h2>QuChemPedIA.views.AccueilView module<a class="headerlink" href="#module-QuChemPedIA.views.AccueilView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.AccueilView.accueil">
+<code class="descclassname">QuChemPedIA.views.AccueilView.</code><code class="descname">accueil</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/AccueilView.html#accueil"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.AccueilView.accueil" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler of the template accueil.html
+:param request: variable wich contains the value of the page
+:return: template html</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.AdminEditRules">
+<span id="quchempedia-views-admineditrules-module"></span><h2>QuChemPedIA.views.AdminEditRules module<a class="headerlink" href="#module-QuChemPedIA.views.AdminEditRules" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.AdminEditRules.edit_rule_admin">
+<code class="descclassname">QuChemPedIA.views.AdminEditRules.</code><code class="descname">edit_rule_admin</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/AdminEditRules.html#edit_rule_admin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.AdminEditRules.edit_rule_admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler of the template account that allow the to edit import rule
+:param request: variable wich contains the value of the page
+:return: template html</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.views.AdminEditRules.switch_rule">
+<code class="descclassname">QuChemPedIA.views.AdminEditRules.</code><code class="descname">switch_rule</code><span class="sig-paren">(</span><em>request</em>, <em>id_of_rule</em>, <em>page</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/AdminEditRules.html#switch_rule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.AdminEditRules.switch_rule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.AdminEditUserView">
+<span id="quchempedia-views-adminedituserview-module"></span><h2>QuChemPedIA.views.AdminEditUserView module<a class="headerlink" href="#module-QuChemPedIA.views.AdminEditUserView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.AdminEditUserView.admin_edit_user">
+<code class="descclassname">QuChemPedIA.views.AdminEditUserView.</code><code class="descname">admin_edit_user</code><span class="sig-paren">(</span><em>request</em>, <em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/AdminEditUserView.html#admin_edit_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.AdminEditUserView.admin_edit_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler to edit all user profile
+:param request: environement variable of http request
+:param id: id of the user
+:return: http response</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.AdminListOfImportInDatabase">
+<span id="quchempedia-views-adminlistofimportindatabase-module"></span><h2>QuChemPedIA.views.AdminListOfImportInDatabase module<a class="headerlink" href="#module-QuChemPedIA.views.AdminListOfImportInDatabase" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.AdminListOfImportInDatabase.list_of_import_in_database">
+<code class="descclassname">QuChemPedIA.views.AdminListOfImportInDatabase.</code><code class="descname">list_of_import_in_database</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/AdminListOfImportInDatabase.html#list_of_import_in_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.AdminListOfImportInDatabase.list_of_import_in_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler of the template account that allow the user to see which calculation he contribute
+:param request: variable wich contains the value of the page
+:return: template html</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.AdminListUserView">
+<span id="quchempedia-views-adminlistuserview-module"></span><h2>QuChemPedIA.views.AdminListUserView module<a class="headerlink" href="#module-QuChemPedIA.views.AdminListUserView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.AdminListUserView.list_of_all_user">
+<code class="descclassname">QuChemPedIA.views.AdminListUserView.</code><code class="descname">list_of_all_user</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/AdminListUserView.html#list_of_all_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.AdminListUserView.list_of_all_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler of the template admin which list all registred
+:param request: variable wich contains the value of the page
+:return: template html</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.AdminView">
+<span id="quchempedia-views-adminview-module"></span><h2>QuChemPedIA.views.AdminView module<a class="headerlink" href="#module-QuChemPedIA.views.AdminView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.AdminView.admin">
+<code class="descclassname">QuChemPedIA.views.AdminView.</code><code class="descname">admin</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/AdminView.html#admin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.AdminView.admin" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler of the template dashboard that by default redirect to the admin page
+:param request: variable wich contains the value of the page
+:return: template html</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.AuthView">
+<span id="quchempedia-views-authview-module"></span><h2>QuChemPedIA.views.AuthView module<a class="headerlink" href="#module-QuChemPedIA.views.AuthView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.AuthView.auth">
+<code class="descclassname">QuChemPedIA.views.AuthView.</code><code class="descname">auth</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/AuthView.html#auth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.AuthView.auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler that allow the user to login or register on the web site
+:param request: request variable
+:return: a view with both form (login and register)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.ChangePasswordView">
+<span id="quchempedia-views-changepasswordview-module"></span><h2>QuChemPedIA.views.ChangePasswordView module<a class="headerlink" href="#module-QuChemPedIA.views.ChangePasswordView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.ChangePasswordView.password">
+<code class="descclassname">QuChemPedIA.views.ChangePasswordView.</code><code class="descname">password</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/ChangePasswordView.html#password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.ChangePasswordView.password" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler of the template account that allow to edit the user password
+:param request: variable wich contains the value of the page
+:return: template html</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.DashboardView">
+<span id="quchempedia-views-dashboardview-module"></span><h2>QuChemPedIA.views.DashboardView module<a class="headerlink" href="#module-QuChemPedIA.views.DashboardView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.DashboardView.dashboard">
+<code class="descclassname">QuChemPedIA.views.DashboardView.</code><code class="descname">dashboard</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/DashboardView.html#dashboard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.DashboardView.dashboard" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler of the template dashboard that by default redirect to account page
+:param request: variable wich contains the value of the page
+:return: template html</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.DeconnexionView">
+<span id="quchempedia-views-deconnexionview-module"></span><h2>QuChemPedIA.views.DeconnexionView module<a class="headerlink" href="#module-QuChemPedIA.views.DeconnexionView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.DeconnexionView.deconnexion">
+<code class="descclassname">QuChemPedIA.views.DeconnexionView.</code><code class="descname">deconnexion</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/DeconnexionView.html#deconnexion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.DeconnexionView.deconnexion" title="Permalink to this definition">¶</a></dt>
+<dd><p>view to disconnect the user</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.DetailsView">
+<span id="quchempedia-views-detailsview-module"></span><h2>QuChemPedIA.views.DetailsView module<a class="headerlink" href="#module-QuChemPedIA.views.DetailsView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.DetailsView.details">
+<code class="descclassname">QuChemPedIA.views.DetailsView.</code><code class="descname">details</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/DetailsView.html#details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.DetailsView.details" title="Permalink to this definition">¶</a></dt>
+<dd><p>function that return the json of a molecule
+:param request: request environment variable
+:param id: id of the json that we want to show
+:return: html template</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.views.DetailsView.details_image">
+<code class="descclassname">QuChemPedIA.views.DetailsView.</code><code class="descname">details_image</code><span class="sig-paren">(</span><em>request</em>, <em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/DetailsView.html#details_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.DetailsView.details_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>function that return a png of a molecule to an ajax/post request
+:param request: request environment variable
+:param id: id of the molecule that we want to show
+:return: png file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.views.DetailsView.details_json">
+<code class="descclassname">QuChemPedIA.views.DetailsView.</code><code class="descname">details_json</code><span class="sig-paren">(</span><em>request</em>, <em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/DetailsView.html#details_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.DetailsView.details_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>function that return the json of a molecule to an ajax request
+:param request: request environment variable
+:param id: id of the json that we want to show
+:return: json file</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.QueryView">
+<span id="quchempedia-views-queryview-module"></span><h2>QuChemPedIA.views.QueryView module<a class="headerlink" href="#module-QuChemPedIA.views.QueryView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.QueryView.build_url">
+<code class="descclassname">QuChemPedIA.views.QueryView.</code><code class="descname">build_url</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/QueryView.html#build_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.QueryView.build_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.views.QueryView.query">
+<code class="descclassname">QuChemPedIA.views.QueryView.</code><code class="descname">query</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/QueryView.html#query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.QueryView.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler that make research on different condition
+:param request: environment variable that contains arguement of the research
+:return: template html with dictionnary of value to display</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.RapportView">
+<span id="quchempedia-views-rapportview-module"></span><h2>QuChemPedIA.views.RapportView module<a class="headerlink" href="#module-QuChemPedIA.views.RapportView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.RapportView.rapport">
+<code class="descclassname">QuChemPedIA.views.RapportView.</code><code class="descname">rapport</code><span class="sig-paren">(</span><em>request</em>, <em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/RapportView.html#rapport"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.RapportView.rapport" title="Permalink to this definition">¶</a></dt>
+<dd><p>the goal of this function is to be a controler that show a pdf file to the user
+:param request: environment variable
+:param id: id of the molecule
+:return: pdf file to display</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.UserHistoryImportView">
+<span id="quchempedia-views-userhistoryimportview-module"></span><h2>QuChemPedIA.views.UserHistoryImportView module<a class="headerlink" href="#module-QuChemPedIA.views.UserHistoryImportView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.UserHistoryImportView.user_history_import">
+<code class="descclassname">QuChemPedIA.views.UserHistoryImportView.</code><code class="descname">user_history_import</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/UserHistoryImportView.html#user_history_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.UserHistoryImportView.user_history_import" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler of the template account that allow the user to see which calculation he contribute
+:param request: variable wich contains the value of the page
+:return: template html</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views.importView">
+<span id="quchempedia-views-importview-module"></span><h2>QuChemPedIA.views.importView module<a class="headerlink" href="#module-QuChemPedIA.views.importView" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.views.importView.import_view">
+<code class="descclassname">QuChemPedIA.views.importView.</code><code class="descname">import_view</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/importView.html#import_view"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.importView.import_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler of the template account that allow the user to import file
+:param request: variable wich contains the value of the page
+:return: template html</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.views.importView.launch_import">
+<code class="descclassname">QuChemPedIA.views.importView.</code><code class="descname">launch_import</code><span class="sig-paren">(</span><em>request</em>, <em>id_file</em>, <em>page</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/importView.html#launch_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.importView.launch_import" title="Permalink to this definition">¶</a></dt>
+<dd><p>controler from admin view to launch manuallly an import
+:param request: environment variable wich containt all value exchanged between client and server
+:param id_file: id of the file in DB o import in ES
+:param page: number of the page
+:return: html template</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.views.importView.register_soft_and_version">
+<code class="descclassname">QuChemPedIA.views.importView.</code><code class="descname">register_soft_and_version</code><span class="sig-paren">(</span><em>path_to_file_to_register</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/importView.html#register_soft_and_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.importView.register_soft_and_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>this method try to know what to do with a json file
+:param path_to_file_to_register: path to the json that could be processed
+:return: 0 for error, 1 for manual, 2 for automatic</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.views.importView.update_status_in_db">
+<code class="descclassname">QuChemPedIA.views.importView.</code><code class="descname">update_status_in_db</code><span class="sig-paren">(</span><em>result_of_import: int</em>, <em>import_object: QuChemPedIA.models.ImportFileModels.ImportFile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/importView.html#update_status_in_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.importView.update_status_in_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>this function update the status of an import in database
+:param result_of_import: an integer which contains the result of the import function
+:param import_object : current object to update
+:return: nothing</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.views">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-QuChemPedIA.views" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="QuChemPedIA.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">QuChemPedIA.views package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.AccountView">QuChemPedIA.views.AccountView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.AccueilView">QuChemPedIA.views.AccueilView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.AdminEditRules">QuChemPedIA.views.AdminEditRules module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.AdminEditUserView">QuChemPedIA.views.AdminEditUserView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.AdminListOfImportInDatabase">QuChemPedIA.views.AdminListOfImportInDatabase module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.AdminListUserView">QuChemPedIA.views.AdminListUserView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.AdminView">QuChemPedIA.views.AdminView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.AuthView">QuChemPedIA.views.AuthView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.ChangePasswordView">QuChemPedIA.views.ChangePasswordView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.DashboardView">QuChemPedIA.views.DashboardView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.DeconnexionView">QuChemPedIA.views.DeconnexionView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.DetailsView">QuChemPedIA.views.DetailsView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.QueryView">QuChemPedIA.views.QueryView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.RapportView">QuChemPedIA.views.RapportView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.UserHistoryImportView">QuChemPedIA.views.UserHistoryImportView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views.importView">QuChemPedIA.views.importView module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.views">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="QuChemPedIA.html">Documentation overview</a><ul>
+      <li>Previous: <a href="QuChemPedIA.models.html" title="previous chapter">QuChemPedIA.models package</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/QuChemPedIA.views.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Brice Harismendy, Thomas Catalayud, Alexis Leblond, Corentin Talarmain, Lakhdar Amroun.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/QuChemPedIA.views.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

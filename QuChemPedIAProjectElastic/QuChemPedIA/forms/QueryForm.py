@@ -22,10 +22,3 @@ class QueryForm(forms.Form):
     typeQuery = forms.CharField(widget=forms.Select(choices=CHOICES, attrs={'class': 'custom-select'}), label="",
                                 required=False,)
 
-    """def clean_query(self):
-        #use to reject some key words
-        message = self.cleaned_data['query']
-        if "pizza" in message:
-            raise forms.ValidationError("On ne veut pas entendre parler de pizza !")
-
-        return message  #Ne pas oublier de renvoyer le contenu du champ traité"""

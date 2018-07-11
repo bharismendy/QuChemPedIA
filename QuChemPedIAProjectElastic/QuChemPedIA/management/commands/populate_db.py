@@ -8,8 +8,8 @@ class Command(BaseCommand):
 
     def _create_query(self, source_dir, id_user):
         """
-        this function get all file from the source directory to store them in the destination directory
-        we put the log in database and the json in elasticSearch
+        this function get all file from the source directory and send them to a function to import them in an
+        ElasticSearch
         :param source_dir: directory or file path that contains the new .log
         :param id_user: id of the contributor
         :return: nothing

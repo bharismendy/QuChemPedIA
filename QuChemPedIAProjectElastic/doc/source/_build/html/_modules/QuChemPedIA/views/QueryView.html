@@ -1,0 +1,169 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>QuChemPedIA.views.QueryView &#8212; QuChemPedIA 1.0 alpha documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for QuChemPedIA.views.QueryView</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="k">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">QuChemPedIA.forms.QueryForm</span> <span class="k">import</span> <span class="n">QueryForm</span>
+<span class="kn">from</span> <span class="nn">QuChemPedIA.search</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">django.http.response</span> <span class="k">import</span> <span class="n">HttpResponseRedirect</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
+<span class="kn">import</span> <span class="nn">urllib.parse</span>
+
+
+<div class="viewcode-block" id="build_url"><a class="viewcode-back" href="../../../QuChemPedIA.views.html#QuChemPedIA.views.QueryView.build_url">[docs]</a><span class="k">def</span> <span class="nf">build_url</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">get</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">get</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">+=</span> <span class="s1">&#39;?&#39;</span> <span class="o">+</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">get</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">url</span></div>
+
+
+<div class="viewcode-block" id="query"><a class="viewcode-back" href="../../../QuChemPedIA.views.html#QuChemPedIA.views.QueryView.query">[docs]</a><span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    controler that make research on different condition</span>
+<span class="sd">    :param request: environment variable that contains arguement of the research</span>
+<span class="sd">    :return: template html with dictionnary of value to display</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">query_form</span> <span class="o">=</span> <span class="n">QueryForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">nbrpp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nbrpp&#39;</span><span class="p">))</span>  <span class="c1"># nombre de résultat par page</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="n">nbrpp</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># switch on what we are looking for</span>
+        <span class="k">if</span> <span class="s1">&#39;CID&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">search_cid</span><span class="p">(</span><span class="n">cid_value</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">),</span> <span class="n">nbrpp</span><span class="o">=</span><span class="n">nbrpp</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;IUPAC&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">search_iupac</span><span class="p">(</span><span class="n">iupac_value</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">),</span> <span class="n">nbrpp</span><span class="o">=</span><span class="n">nbrpp</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;InChi&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="c1"># here we looking for inchi wich contain a part of what we looking for</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">search_inchi</span><span class="p">(</span><span class="n">inchi_value</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">),</span> <span class="n">nbrpp</span><span class="o">=</span><span class="n">nbrpp</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;Formula&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">search_formula</span><span class="p">(</span><span class="n">formula_value</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">),</span> <span class="n">nbrpp</span><span class="o">=</span><span class="n">nbrpp</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;SMILES&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">search_smiles</span><span class="p">(</span><span class="n">smiles_value</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">),</span> <span class="n">nbrpp</span><span class="o">=</span><span class="n">nbrpp</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;id_log&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="c1"># if we want to access to an id we forward it to the details page as a parameter</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">build_url</span><span class="p">(</span><span class="s1">&#39;details&#39;</span><span class="p">,</span> <span class="n">get</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">)})</span>
+            <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        if &#39;homo_alpha_energy&#39; in request.GET.get(&#39;typeQuery&#39;):</span>
+<span class="sd">            results = list(Query.objects.filter(homo_alpha_energy=request.GET.get(&#39;search&#39;)))</span>
+
+<span class="sd">        if &#39;homo_beta_energy&#39; in request.GET.get(&#39;typeQuery&#39;):</span>
+<span class="sd">            results = list(Query.objects.filter(homo_beta_energy=request.GET.get(&#39;search&#39;)))</span>
+
+<span class="sd">        if &#39;lumo_alpha_energy&#39; in request.GET.get(&#39;typeQuery&#39;):</span>
+<span class="sd">            results = list(Query.objects.filter(lumo_alpha_energy=request.GET.get(&#39;search&#39;)))</span>
+
+<span class="sd">        if &#39;lumo_beta_energy&#39; in request.GET.get(&#39;typeQuery&#39;):</span>
+<span class="sd">            results = list(Query.objects.filter(lumo_beta_energy=request.GET.get(&#39;search&#39;)))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error :&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+    <span class="c1"># if we have only one result we display the details of the molecule</span>
+    <span class="k">if</span> <span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="s1">&#39;{&quot;nbresult&quot;:0}&#39;</span>
+    <span class="n">test_result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">test_result</span><span class="p">[</span><span class="s1">&#39;nbresult&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span>
+        <span class="n">test_result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># if we have only one result we forward it to the detail page</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;details&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">test_result</span><span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;id_log&quot;</span><span class="p">])})</span>
+        <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;QuChemPedIA/query.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;results&#39;</span><span class="p">:</span> <span class="n">test_result</span><span class="p">,</span> <span class="s1">&#39;query_form&#39;</span><span class="p">:</span> <span class="n">query_form</span><span class="p">})</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../QuChemPedIA.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Brice Harismendy, Thomas Catalayud, Alexis Leblond, Corentin Talarmain, Lakhdar Amroun.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,248 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>QuChemPedIA.QuChemPedIA_lib package &#8212; QuChemPedIA 1.0 alpha documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="QuChemPedIA.management package" href="QuChemPedIA.management.html" />
+    <link rel="prev" title="QuChemPedIA package" href="QuChemPedIA.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="quchempedia-quchempedia-lib-package">
+<h1>QuChemPedIA.QuChemPedIA_lib package<a class="headerlink" href="#quchempedia-quchempedia-lib-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-QuChemPedIA.QuChemPedIA_lib.import_file_lib">
+<span id="quchempedia-quchempedia-lib-import-file-lib-module"></span><h2>QuChemPedIA.QuChemPedIA_lib.import_file_lib module<a class="headerlink" href="#module-QuChemPedIA.QuChemPedIA_lib.import_file_lib" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.clean_file">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">clean_file</code><span class="sig-paren">(</span><em>list_dir</em>, <em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#clean_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.clean_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.create_query">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">create_query</code><span class="sig-paren">(</span><em>path</em>, <em>destination_dir</em>, <em>id_user</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#create_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.create_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>this function get all file from the source directory to store them in the destination directory
+we put the log in database and the json in elasticSearch
+:param path: directory or file path that contains the new .log
+:param destination_dir: the directory where we are going to store our .log
+:param id_user: id of the contributor
+:return: nothing</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.does_file_exist_in_dir">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">does_file_exist_in_dir</code><span class="sig-paren">(</span><em>dir_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#does_file_exist_in_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.does_file_exist_in_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>test if there is file in subdirectory of a folder
+:param dir_path: path to the directory
+:return: boolean answer True = there is file False = no more file</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.exist_freq">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">exist_freq</code><span class="sig-paren">(</span><em>id_json_to_test</em>, <em>json_to_input</em>, <em>path_to_log_file</em>, <em>destination_dir</em>, <em>id_user</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#exist_freq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.exist_freq" title="Permalink to this definition">¶</a></dt>
+<dd><p>test if already exist a freq in a file and if not enter it
+:param id_json_to_test: id of the json to load
+:param json_to_input: json data to input in elastic search
+:param path_to_log_file : path in file system to log file
+:param destination_dir : directory where log are send
+:param id_user: id of the contributor
+:return: True if already entered False if not</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.exist_sp">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">exist_sp</code><span class="sig-paren">(</span><em>id_json_to_test</em>, <em>json_to_input</em>, <em>path_to_log_file</em>, <em>destination_dir</em>, <em>id_user</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#exist_sp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.exist_sp" title="Permalink to this definition">¶</a></dt>
+<dd><p>test if already exist a sp in a file and if not enter it
+:param id_json_to_test: id of the json to load
+:param json_to_input: json data to input in elastic search
+:param path_to_log_file : path in file system to log file
+:param destination_dir : directory where log are send
+:param id_user: id of the contributor
+:return: True if already entered False if not</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.exist_td">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">exist_td</code><span class="sig-paren">(</span><em>id_json_to_test</em>, <em>json_to_input</em>, <em>path_to_log_file</em>, <em>destination_dir</em>, <em>id_user</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#exist_td"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.exist_td" title="Permalink to this definition">¶</a></dt>
+<dd><p>test if already exist a td in a file and if not enter it
+:param id_json_to_test: id of the json to load
+:param json_to_input: json data to input in elastic search
+:param path_to_log_file : path in file system to log file
+:param destination_dir : directory where log are send
+:param id_user: id of the contributor
+:return: True if already entered False if not</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_affiliation">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">get_affiliation</code><span class="sig-paren">(</span><em>id_user</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#get_affiliation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_affiliation" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to get the affiliation of the user
+:param id_user: id of the user
+:return: string that contain the affiliation</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_base_json">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">get_base_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#get_base_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_base_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to get the first architecture
+:return: basique json tree</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_path_to_store">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">get_path_to_store</code><span class="sig-paren">(</span><em>destination_dir</em>, <em>id_calcul</em>, <em>make_path=False</em>, <em>number_of_subdir=20</em>, <em>cut_number_by=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#get_path_to_store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_path_to_store" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to find the right directory to store data
+:param destination_dir: root directory
+:param id_calcul: id of the calcul in database if none (=0) create a new directory
+:param make_path: if set to true, create the directory in file system
+:param number_of_subdir: number of subdirectory in the file system
+:param cut_number_by: the length of the name of each sub dir example 4 = “eeee”/”aaaa”
+:return: path to the destination</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_siblings_json">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">get_siblings_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#get_siblings_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.get_siblings_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>use to get a sibling json
+:return: json tree of a sibling</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.import_file">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">import_file</code><span class="sig-paren">(</span><em>path</em>, <em>id_user</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#import_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.import_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>main function to import file
+:param path: pth to the file to import
+:param id_user: id to the user
+:return: 0 for all went ok, 1 for already in DB, 2 theory not supported yet,
+3 doesn’t have a grount state, 4 other error (see logs)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.is_json">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">is_json</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#is_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.is_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to test a file can be load as json
+:param path: path to the file
+:return: boolean answer True = it’s a properly formated json, False it’s not</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.import_file_lib.is_opt_exist">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.import_file_lib.</code><code class="descname">is_opt_exist</code><span class="sig-paren">(</span><em>json_to_test</em>, <em>job_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/import_file_lib.html#is_opt_exist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.import_file_lib.is_opt_exist" title="Permalink to this definition">¶</a></dt>
+<dd><p>test if there is an opt of the molecule already registered
+:param json_to_test: json of the .log
+:param job_type:
+:return: -1 if it’s a new entry else id in elastic search</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.QuChemPedIA_lib.store_in_temp">
+<span id="quchempedia-quchempedia-lib-store-in-temp-module"></span><h2>QuChemPedIA.QuChemPedIA_lib.store_in_temp module<a class="headerlink" href="#module-QuChemPedIA.QuChemPedIA_lib.store_in_temp" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="QuChemPedIA.QuChemPedIA_lib.store_in_temp.store_in_temp">
+<code class="descclassname">QuChemPedIA.QuChemPedIA_lib.store_in_temp.</code><code class="descname">store_in_temp</code><span class="sig-paren">(</span><em>id_calcul</em>, <em>file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/QuChemPedIA_lib/store_in_temp.html#store_in_temp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.QuChemPedIA_lib.store_in_temp.store_in_temp" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to find the right directory to store data wile it’s not processed
+:param id_calcul: id of the calcul in database if none (=0) create a new directory
+:param file: file to import
+:return:</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.QuChemPedIA_lib">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-QuChemPedIA.QuChemPedIA_lib" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="QuChemPedIA.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">QuChemPedIA.QuChemPedIA_lib package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.QuChemPedIA_lib.import_file_lib">QuChemPedIA.QuChemPedIA_lib.import_file_lib module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.QuChemPedIA_lib.store_in_temp">QuChemPedIA.QuChemPedIA_lib.store_in_temp module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.QuChemPedIA_lib">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="QuChemPedIA.html">Documentation overview</a><ul>
+      <li>Previous: <a href="QuChemPedIA.html" title="previous chapter">QuChemPedIA package</a></li>
+      <li>Next: <a href="QuChemPedIA.management.html" title="next chapter">QuChemPedIA.management package</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/QuChemPedIA.QuChemPedIA_lib.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Brice Harismendy, Thomas Catalayud, Alexis Leblond, Corentin Talarmain, Lakhdar Amroun.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/QuChemPedIA.QuChemPedIA_lib.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

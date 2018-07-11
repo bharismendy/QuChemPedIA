@@ -4,7 +4,7 @@ from django.core.validators import RegexValidator
 
 
 class ChangePassword(forms.ModelForm):
-
+    """form to change the password of an user"""
     def __init__(self, *args, **kwargs):
         my_validator = RegexValidator(r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$",
                                       ["Your password should contains :",
@@ -22,7 +22,8 @@ class ChangePassword(forms.ModelForm):
         fields = ('password',)
 
     def clean_password2(self):
-        # Check that the two password entries match
+        """Check that the two password entries match"""
+
         password1 = self.cleaned_data.get("password")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
@@ -30,7 +31,7 @@ class ChangePassword(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-        # Save the provided password in hashed format
+        """ Save the provided password in hashed format"""
         user = super(ChangePassword, self).save(commit=False)
         print(user)
         user.set_password(self.cleaned_data["password"])
