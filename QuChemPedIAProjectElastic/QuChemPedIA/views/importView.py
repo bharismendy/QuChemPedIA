@@ -2,6 +2,7 @@ from QuChemPedIA.forms.QueryForm import QueryForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from QuChemPedIA.models import ImportFile
+from QuChemPedIA.models import JobType
 from QuChemPedIA.models import Software
 from QuChemPedIA.models import SoftwareVersion
 from QuChemPedIA.models import ImportRule
@@ -9,9 +10,10 @@ from QuChemPedIA.QuChemPedIA_lib.import_file_lib import import_file, get_path_to
 from QuChemPedIA.QuChemPedIA_lib import store_in_temp
 import datetime
 import json
+import os
 
 
-def register_soft_and_version(path_to_file_to_register):
+def register_soft_job_type_and_version(path_to_file_to_register):
     """
     this method try to know what to do with a json file
     :param path_to_file_to_register: path to the json that could be processed
@@ -20,6 +22,8 @@ def register_soft_and_version(path_to_file_to_register):
     #  on récupère les information pour enregistrer la machine à état
     jsonfile = open(path_to_file_to_register)
     loaded_json = json.load(jsonfile)
+
+    # ######## software ######## #
     try:
         name_software = loaded_json['comp_details']['general']['package'].strip()
     except Exception as error:
@@ -35,6 +39,7 @@ def register_soft_and_version(path_to_file_to_register):
         print(error)
         return 0
 
+    # ######## version of the software ######## #
     try:
         version_software = loaded_json['comp_details']['general']['package_version'].strip()
     except Exception as error:
@@ -52,18 +57,46 @@ def register_soft_and_version(path_to_file_to_register):
         print(error)
         return 0
 
-    # try to register the new rules
+    # ######## job_type ######## #
     try:
-        # we check if it's already exist, if not we register it
-        rule, created = ImportRule.objects.get_or_create(id_version=soft_vers, id_software=soft)
+        job_type = loaded_json['comp_details']['general']['job_type']
     except Exception as error:
-        print("error for registering the new rule : ")
+        print("error for getting the version of the software : ")
         print(error)
         return 0
-    if rule.rule == "manual":
-        return 1
-    elif rule.rule == "automatic":
-        return 2
+
+    # try to register the job_type
+    for job in job_type:
+        inserted_jt = []
+        try:
+            # we check if it's already exist, if not we register it
+                job_type_ins, created = JobType.objects.get_or_create(name=job)
+                inserted_jt.append(job_type_ins)
+        except Exception as error:
+            print("error for registering the version of the software : ")
+            print(error)
+            return 0
+
+    # ######## rule ######## #
+    # try to register the new rules
+    for job in inserted_jt:
+        result = []
+        try:
+            # we check if it's already exist, if not we register it
+            rule, created = ImportRule.objects.get_or_create(id_version=soft_vers,
+                                                             id_software=soft,
+                                                             id_job_type=job)
+        except Exception as error:
+            print("error for registering the new rule : ")
+            print(error)
+            return 0
+        if rule.rule == "manual":
+            result.append(1)
+        elif rule.rule == "automatic":
+            result.append(2)
+        elif rule.rule == "delete":
+            result.append(3)
+    return result
 
 
 def update_status_in_db(result_of_import: int, import_object: ImportFile):
@@ -93,6 +126,10 @@ def import_view(request):
     :return: template html
     """
     path_prefix = 'media/'
+    number_of_stand_by_import = 0
+    if request.user.is_authenticated:
+        number_of_stand_by_import = len(list(ImportFile.objects.filter(id_user=request.user.id).filter(status="stand-by")))
+
     if request.method == 'POST':
         myfile = request.FILES['file']
         #todo add json transform
@@ -114,24 +151,33 @@ def import_view(request):
         else:
             #   user == anonymous
             pass
-        code_return_pol = register_soft_and_version(path_prefix+final_path)
+        code_return_pol = register_soft_job_type_and_version(path_prefix+final_path)
         if code_return_pol == 0:
             temps.status = "error can't define policy"
             temps.save()
-        if code_return_pol == 2:
+        # we do nothing in case of 1 because it's define by default
+        elif 3 in code_return_pol:
+            os.remove(temps.path_file)
+            temps.status = "import not supported yet"
+            temps.save()
+
+        elif 2 in code_return_pol:
             #  automatic import
             try:
                 path = "media/" + temps.path_file
                 update_status_in_db(result_of_import=import_file(path=path, id_user=temps.id_user.id),
                                     import_object=temps)
+
             except Exception as error:
                 print(error)
                 temps.status = 'import failed'
                 temps.save()
+
     query_form = QueryForm(request.GET or None)
     if query_form.is_valid():
         return HttpResponseRedirect('query')
-    return render(request, 'QuChemPedIA/import.html', {'query_form': query_form})
+    return render(request, 'QuChemPedIA/user_import.html', {'query_form': query_form,
+                                                            'number_of_stand_by_import': number_of_stand_by_import})
 
 
 def launch_import(request, id_file, page):
@@ -154,4 +200,23 @@ def launch_import(request, id_file, page):
         print(error)
         file.status = 'import failed'
         file.save()
+    return HttpResponseRedirect('/QuChemPedIA/admin/list_of_import_in_database?page=' + str(page))
+
+
+def delete_import(request, id_file, page):
+    """
+    controler from admin view to delete manuallly an import
+    :param request: environment variable wich containt all value exchanged between client and server
+    :param id_file: id of the file in DB o import in ES
+    :param page: number of the page
+    :return: html template
+    """
+    if not request.user.is_admin:  # security to redirect user that aren't admin
+        return HttpResponseRedirect('/QuChemPedIA/accueil')
+    file = ImportFile.objects.get(id_file=id_file)
+    path = "media/"+file.path_file
+    if os.path.isfile(path=path):
+        print("test"+path)
+        os.remove(path=path)
+    file.delete()
     return HttpResponseRedirect('/QuChemPedIA/admin/list_of_import_in_database?page=' + str(page))

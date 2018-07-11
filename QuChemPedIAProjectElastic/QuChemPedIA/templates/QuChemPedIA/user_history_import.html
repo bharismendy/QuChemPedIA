@@ -54,5 +54,11 @@
                 </div>
             </div>
         {% endif %}
+        <form method="get" action="{% url 'query' %}">
+            {% csrf_token %}
+            <input name="typeQuery" value="id_user" type="hidden"/>
+            <input name="search" value="{{ user.id }}" type="hidden"/>
+            <button class="btn btn-primary" type="submit">Search my accepted import</button>
+        </form>
         </main>
 {% endblock %}

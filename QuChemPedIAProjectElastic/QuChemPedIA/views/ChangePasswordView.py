@@ -24,5 +24,5 @@ def password(request):
     if query_form.is_valid():
         return HttpResponseRedirect('query')
 
-    return render(request, 'QuChemPedIA/password.html', {'form_edit_password': form_edit_password,
+    return render(request, 'QuChemPedIA/user_password.html', {'form_edit_password': form_edit_password,
                                                          'query_form': query_form})

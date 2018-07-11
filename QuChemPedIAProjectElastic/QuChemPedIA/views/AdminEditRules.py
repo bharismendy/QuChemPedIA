@@ -40,10 +40,7 @@ def switch_rule(request, id_of_rule, page):
     if not request.user.is_admin:  # security to redirect user that aren't admin
         return HttpResponseRedirect('/QuChemPedIA/accueil')
     rule_to_switch = ImportRule.objects.get(id_rule=id_of_rule)
-    if rule_to_switch.rule == "manual":
-        rule_to_switch.rule = "automatic"
-        rule_to_switch.save()
-    else:
-        rule_to_switch.rule = "manual"
+    if request.POST:
+        rule_to_switch.rule = request.POST.get('options')
         rule_to_switch.save()
     return HttpResponseRedirect('/QuChemPedIA/admin/list_of_rule?page='+str(page))

@@ -28,5 +28,7 @@ urlpatterns = [
          name='admin/switch_rule'),
     path('admin/launch_import/<str:id_file>/<int:page>', login_required(views.launch_import),
          name='admin/launch_import'),
+    path('admin/delete_import/<str:id_file>/<int:page>', login_required(views.delete_import),
+         name='admin/delete_import'),
 
 ]

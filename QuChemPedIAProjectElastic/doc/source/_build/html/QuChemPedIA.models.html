@@ -66,6 +66,26 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="QuChemPedIA.models.ImportFileModels.ImportFile.id_job_type">
+<code class="descname">id_job_type</code><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.id_job_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.ImportFileModels.ImportFile.id_job_type_id">
+<code class="descname">id_job_type_id</code><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.id_job_type_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="QuChemPedIA.models.ImportFileModels.ImportFile.id_software">
 <code class="descname">id_software</code><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.id_software" title="Permalink to this definition">¶</a></dt>
 <dd><p>Accessor to the related object on the forward side of a many-to-one or
@@ -125,17 +145,6 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
-<dl class="class">
-<dt id="QuChemPedIA.models.ImportFileModels.ImportFile.meta">
-<em class="property">class </em><code class="descname">meta</code><a class="reference internal" href="_modules/QuChemPedIA/models/ImportFileModels.html#ImportFile.meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.meta" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="QuChemPedIA.models.ImportFileModels.ImportFile.meta.verbose_name">
-<code class="descname">verbose_name</code><em class="property"> = 'imported file'</em><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.meta.verbose_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 <dl class="attribute">
 <dt id="QuChemPedIA.models.ImportFileModels.ImportFile.objects">
 <code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.objects" title="Permalink to this definition">¶</a></dt>
@@ -175,6 +184,26 @@ object the first time, the query is executed.</p>
 <dt id="QuChemPedIA.models.ImportRuleModel.ImportRule.MultipleObjectsReturned">
 <em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#QuChemPedIA.models.ImportRuleModel.ImportRule.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.ImportRuleModel.ImportRule.id_job_type">
+<code class="descname">id_job_type</code><a class="headerlink" href="#QuChemPedIA.models.ImportRuleModel.ImportRule.id_job_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.ImportRuleModel.ImportRule.id_job_type_id">
+<code class="descname">id_job_type_id</code><a class="headerlink" href="#QuChemPedIA.models.ImportRuleModel.ImportRule.id_job_type_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -233,6 +262,88 @@ object the first time, the query is executed.</p>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-QuChemPedIA.models.JobTypeModel">
+<span id="quchempedia-models-jobtypemodel-module"></span><h2>QuChemPedIA.models.JobTypeModel module<a class="headerlink" href="#module-QuChemPedIA.models.JobTypeModel" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="QuChemPedIA.models.JobTypeModel.JobType">
+<em class="property">class </em><code class="descclassname">QuChemPedIA.models.JobTypeModel.</code><code class="descname">JobType</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/models/JobTypeModel.html#JobType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.models.JobTypeModel.JobType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>this class define the table where the name of job_type are stored</p>
+<dl class="exception">
+<dt id="QuChemPedIA.models.JobTypeModel.JobType.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#QuChemPedIA.models.JobTypeModel.JobType.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="QuChemPedIA.models.JobTypeModel.JobType.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#QuChemPedIA.models.JobTypeModel.JobType.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.JobTypeModel.JobType.id_job_type">
+<code class="descname">id_job_type</code><a class="headerlink" href="#QuChemPedIA.models.JobTypeModel.JobType.id_job_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.JobTypeModel.JobType.importfile_set">
+<code class="descname">importfile_set</code><a class="headerlink" href="#QuChemPedIA.models.JobTypeModel.JobType.importfile_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.JobTypeModel.JobType.importrule_set">
+<code class="descname">importrule_set</code><a class="headerlink" href="#QuChemPedIA.models.JobTypeModel.JobType.importrule_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="QuChemPedIA.models.JobTypeModel.JobType.meta">
+<em class="property">class </em><code class="descname">meta</code><a class="reference internal" href="_modules/QuChemPedIA/models/JobTypeModel.html#JobType.meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.models.JobTypeModel.JobType.meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="QuChemPedIA.models.JobTypeModel.JobType.meta.verbose_name">
+<code class="descname">verbose_name</code><em class="property"> = 'Software'</em><a class="headerlink" href="#QuChemPedIA.models.JobTypeModel.JobType.meta.verbose_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.JobTypeModel.JobType.name">
+<code class="descname">name</code><a class="headerlink" href="#QuChemPedIA.models.JobTypeModel.JobType.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.JobTypeModel.JobType.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#QuChemPedIA.models.JobTypeModel.JobType.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -652,6 +763,7 @@ object the first time, the query is executed.</p>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-QuChemPedIA.models.ImportFileModels">QuChemPedIA.models.ImportFileModels module</a></li>
 <li><a class="reference internal" href="#module-QuChemPedIA.models.ImportRuleModel">QuChemPedIA.models.ImportRuleModel module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.models.JobTypeModel">QuChemPedIA.models.JobTypeModel module</a></li>
 <li><a class="reference internal" href="#module-QuChemPedIA.models.SoftwareModel">QuChemPedIA.models.SoftwareModel module</a></li>
 <li><a class="reference internal" href="#module-QuChemPedIA.models.UserModel">QuChemPedIA.models.UserModel module</a></li>
 <li><a class="reference internal" href="#module-QuChemPedIA.models.VersionModel">QuChemPedIA.models.VersionModel module</a></li>

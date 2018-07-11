@@ -38,11 +38,12 @@
 <span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="k">import</span> <span class="n">render</span>
 <span class="kn">from</span> <span class="nn">QuChemPedIA.models</span> <span class="k">import</span> <span class="n">Utilisateur</span>
 <span class="kn">from</span> <span class="nn">django.core.paginator</span> <span class="k">import</span> <span class="n">Paginator</span><span class="p">,</span> <span class="n">EmptyPage</span><span class="p">,</span> <span class="n">PageNotAnInteger</span>
+<span class="kn">from</span> <span class="nn">QuChemPedIA.forms.AdminSearchUserForm</span> <span class="k">import</span> <span class="n">SearchUserForm</span>
 
 
 <div class="viewcode-block" id="list_of_all_user"><a class="viewcode-back" href="../../../QuChemPedIA.views.html#QuChemPedIA.views.AdminListUserView.list_of_all_user">[docs]</a><span class="k">def</span> <span class="nf">list_of_all_user</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    controler of the template admin which list all registred</span>
+<span class="sd">    controler of the template admin which list all registred user and allow to find one</span>
 <span class="sd">    :param request: variable wich contains the value of the page</span>
 <span class="sd">    :return: template html</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -51,12 +52,34 @@
 
     <span class="n">query_form</span> <span class="o">=</span> <span class="n">QueryForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">page</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">search_user_form</span> <span class="o">=</span> <span class="n">SearchUserForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
 
-    <span class="k">try</span><span class="p">:</span>  <span class="c1"># get all imported  file</span>
-        <span class="n">list_of_user</span> <span class="o">=</span> <span class="n">Utilisateur</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># switch on what we are looking for</span>
+        <span class="k">if</span> <span class="s1">&#39;ID&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="n">list_of_user</span> <span class="o">=</span> <span class="n">Utilisateur</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">)))</span>
+
+        <span class="k">elif</span> <span class="s1">&#39;first_name&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="n">list_of_user</span> <span class="o">=</span> <span class="n">Utilisateur</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">first_name__icontains</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="s1">&#39;last_name&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="c1"># here we looking for inchi wich contain a part of what we looking for</span>
+            <span class="n">list_of_user</span> <span class="o">=</span> <span class="n">Utilisateur</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">last_name__icontains</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="s1">&#39;affiliation&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="n">list_of_user</span> <span class="o">=</span> <span class="n">Utilisateur</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">affiliation__icontains</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="s1">&#39;mail&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="n">list_of_user</span> <span class="o">=</span> <span class="n">Utilisateur</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">email__icontains</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">list_of_user</span> <span class="o">=</span> <span class="n">Utilisateur</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
         <span class="n">paginator</span> <span class="o">=</span> <span class="n">Paginator</span><span class="p">(</span><span class="n">list_of_user</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error in database&quot;</span><span class="p">)</span>
+        <span class="n">list_of_user</span> <span class="o">=</span> <span class="n">Utilisateur</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="n">paginator</span> <span class="o">=</span> <span class="n">Paginator</span><span class="p">(</span><span class="n">list_of_user</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
+
     <span class="k">try</span><span class="p">:</span>
         <span class="n">users</span> <span class="o">=</span> <span class="n">paginator</span><span class="o">.</span><span class="n">page</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">PageNotAnInteger</span><span class="p">:</span>
@@ -67,7 +90,9 @@
         <span class="k">if</span> <span class="n">query_form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;QuChemPedIA/user_list.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;query_form&#39;</span><span class="p">:</span> <span class="n">query_form</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="n">users</span><span class="p">})</span></div>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;QuChemPedIA/admin_list_user.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;query_form&#39;</span><span class="p">:</span> <span class="n">query_form</span><span class="p">,</span>
+                                                                <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="n">users</span><span class="p">,</span>
+                                                                <span class="s1">&#39;search_user_form&#39;</span><span class="p">:</span> <span class="n">search_user_form</span><span class="p">})</span></div>
 </pre></div>
 
           </div>

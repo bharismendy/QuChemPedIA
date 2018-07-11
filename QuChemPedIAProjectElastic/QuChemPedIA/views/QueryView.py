@@ -56,10 +56,12 @@ def query(request):
             # if we want to access to an id we forward it to the details page as a parameter
             url = build_url('details', get={'id': request.GET.get('search')})
             return HttpResponseRedirect(url)
+        if 'id_user' in request.GET.get('typeQuery'):
+            results = search_id_user(id_user=request.GET.get('search'), nbrpp=nbrpp, page=page)
         """
         if 'homo_alpha_energy' in request.GET.get('typeQuery'):
             results = list(Query.objects.filter(homo_alpha_energy=request.GET.get('search')))
-
+    
         if 'homo_beta_energy' in request.GET.get('typeQuery'):
             results = list(Query.objects.filter(homo_beta_energy=request.GET.get('search')))
 

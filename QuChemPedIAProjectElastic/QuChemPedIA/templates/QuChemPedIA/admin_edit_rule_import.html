@@ -31,6 +31,11 @@
                                     {% else %}
                                         <button class="btn btn-xs btn-default" name="options" value="automatic" >automatic</button>
                                     {% endif %}
+                                    {% if rule.rule == "delete" %}
+                                        <button class="btn btn-xs btn-danger active" name="options" value="delete" >delete</button>
+                                    {% else %}
+                                        <button class="btn btn-xs btn-default" name="options" value="delete" >delete</button>
+                                    {% endif %}
                                 </div>
                             </form>
                         </td>

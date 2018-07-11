@@ -312,7 +312,7 @@ Bases: \sphinxcode{\sphinxupquote{django.db.migrations.migration.Migration}}
 \index{operations (QuChemPedIA.migrations.0001\_initial.Migration attribute)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0001_initial.Migration.operations}}\pysigline{\sphinxbfcode{\sphinxupquote{operations}}\sphinxbfcode{\sphinxupquote{ = {[}\textless{}CreateModel  name='ImportFile', fields={[}('id\_file', \textless{}django.db.models.fields.BigAutoField\textgreater{}), ('path\_file', \textless{}django.db.models.fields.FilePathField\textgreater{}), ('status', \textless{}django.db.models.fields.CharField\textgreater{}){]}\textgreater{}, \textless{}CreateModel  options=\{'abstract': False\}, fields={[}('id', \textless{}django.db.models.fields.AutoField\textgreater{}), ('password', \textless{}django.db.models.fields.CharField\textgreater{}), ('last\_login', \textless{}django.db.models.fields.DateTimeField\textgreater{}), ('email', \textless{}django.db.models.fields.EmailField\textgreater{}), ('group', \textless{}django.db.models.fields.CharField\textgreater{}), ('last\_name', \textless{}django.db.models.fields.CharField\textgreater{}), ('first\_name', \textless{}django.db.models.fields.CharField\textgreater{}), ('affiliation', \textless{}django.db.models.fields.TextField\textgreater{}), ('orcid', \textless{}django.db.models.fields.CharField\textgreater{}), ('last\_date\_upload', \textless{}django.db.models.fields.DateField\textgreater{}), ('number\_of\_upload\_this\_day', \textless{}django.db.models.fields.IntegerField\textgreater{}), ('active', \textless{}django.db.models.fields.BooleanField\textgreater{}), ('staff', \textless{}django.db.models.fields.BooleanField\textgreater{}), ('admin', \textless{}django.db.models.fields.BooleanField\textgreater{}){]}, name='Utilisateur'\textgreater{}, \textless{}AddField  name='id\_user', model\_name='importfile', field=\textless{}django.db.models.fields.related.ForeignKey\textgreater{}\textgreater{}{]}}}}
+\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0001_initial.Migration.operations}}\pysigline{\sphinxbfcode{\sphinxupquote{operations}}\sphinxbfcode{\sphinxupquote{ = {[}\textless{}CreateModel  name='ImportFile', options=\{'verbose\_name': 'imported file'\}, fields={[}('id\_file', \textless{}django.db.models.fields.BigAutoField\textgreater{}), ('path\_file', \textless{}django.db.models.fields.FilePathField\textgreater{}), ('status', \textless{}django.db.models.fields.CharField\textgreater{}){]}\textgreater{}, \textless{}CreateModel  name='ImportRule', options=\{'verbose\_name': 'rule of import'\}, fields={[}('id\_rule', \textless{}django.db.models.fields.BigAutoField\textgreater{}), ('rule', \textless{}django.db.models.fields.CharField\textgreater{}){]}\textgreater{}, \textless{}CreateModel  name='JobType', fields={[}('id\_job\_type', \textless{}django.db.models.fields.BigAutoField\textgreater{}), ('name', \textless{}django.db.models.fields.CharField\textgreater{}){]}\textgreater{}, \textless{}CreateModel  name='Software', fields={[}('id\_software', \textless{}django.db.models.fields.BigAutoField\textgreater{}), ('name', \textless{}django.db.models.fields.CharField\textgreater{}){]}\textgreater{}, \textless{}CreateModel  name='SoftwareVersion', options=\{'verbose\_name': 'software version'\}, fields={[}('id\_version', \textless{}django.db.models.fields.BigAutoField\textgreater{}), ('version\_number', \textless{}django.db.models.fields.CharField\textgreater{}), ('id\_software', \textless{}django.db.models.fields.related.OneToOneField\textgreater{}){]}\textgreater{}, \textless{}CreateModel  name='Utilisateur', options=\{'abstract': False\}, fields={[}('id', \textless{}django.db.models.fields.AutoField\textgreater{}), ('password', \textless{}django.db.models.fields.CharField\textgreater{}), ('last\_login', \textless{}django.db.models.fields.DateTimeField\textgreater{}), ('email', \textless{}django.db.models.fields.EmailField\textgreater{}), ('group', \textless{}django.db.models.fields.CharField\textgreater{}), ('last\_name', \textless{}django.db.models.fields.CharField\textgreater{}), ('first\_name', \textless{}django.db.models.fields.CharField\textgreater{}), ('affiliation', \textless{}django.db.models.fields.TextField\textgreater{}), ('orcid', \textless{}django.db.models.fields.CharField\textgreater{}), ('last\_date\_upload', \textless{}django.db.models.fields.DateField\textgreater{}), ('number\_of\_upload\_this\_day', \textless{}django.db.models.fields.IntegerField\textgreater{}), ('active', \textless{}django.db.models.fields.BooleanField\textgreater{}), ('staff', \textless{}django.db.models.fields.BooleanField\textgreater{}), ('admin', \textless{}django.db.models.fields.BooleanField\textgreater{}){]}\textgreater{}, \textless{}AddField  name='id\_job\_type', field=\textless{}django.db.models.fields.related.ForeignKey\textgreater{}, model\_name='importrule'\textgreater{}, \textless{}AddField  name='id\_software', field=\textless{}django.db.models.fields.related.OneToOneField\textgreater{}, model\_name='importrule'\textgreater{}, \textless{}AddField  name='id\_version', field=\textless{}django.db.models.fields.related.OneToOneField\textgreater{}, model\_name='importrule'\textgreater{}, \textless{}AddField  name='id\_job\_type', field=\textless{}django.db.models.fields.related.ForeignKey\textgreater{}, model\_name='importfile'\textgreater{}, \textless{}AddField  name='id\_software', field=\textless{}django.db.models.fields.related.ForeignKey\textgreater{}, model\_name='importfile'\textgreater{}, \textless{}AddField  name='id\_user', field=\textless{}django.db.models.fields.related.ForeignKey\textgreater{}, model\_name='importfile'\textgreater{}, \textless{}AddField  name='id\_version', field=\textless{}django.db.models.fields.related.ForeignKey\textgreater{}, model\_name='importfile'\textgreater{}{]}}}}
 \end{fulllineitems}
 
 
@@ -320,68 +320,22 @@ Bases: \sphinxcode{\sphinxupquote{django.db.migrations.migration.Migration}}
 
 
 
-\subsection{QuChemPedIA.migrations.0002\_auto\_20180629\_0758 module}
-\label{\detokenize{QuChemPedIA.migrations:module-QuChemPedIA.migrations.0002_auto_20180629_0758}}\label{\detokenize{QuChemPedIA.migrations:quchempedia-migrations-0002-auto-20180629-0758-module}}\index{QuChemPedIA.migrations.0002\_auto\_20180629\_0758 (module)}\index{Migration (class in QuChemPedIA.migrations.0002\_auto\_20180629\_0758)}
+\subsection{QuChemPedIA.migrations.0002\_auto\_20180711\_1418 module}
+\label{\detokenize{QuChemPedIA.migrations:module-QuChemPedIA.migrations.0002_auto_20180711_1418}}\label{\detokenize{QuChemPedIA.migrations:quchempedia-migrations-0002-auto-20180711-1418-module}}\index{QuChemPedIA.migrations.0002\_auto\_20180711\_1418 (module)}\index{Migration (class in QuChemPedIA.migrations.0002\_auto\_20180711\_1418)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0002_auto_20180629_0758.Migration}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{QuChemPedIA.migrations.0002\_auto\_20180629\_0758.}}\sphinxbfcode{\sphinxupquote{Migration}}}{\emph{name}, \emph{app\_label}}{}
+\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0002_auto_20180711_1418.Migration}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{QuChemPedIA.migrations.0002\_auto\_20180711\_1418.}}\sphinxbfcode{\sphinxupquote{Migration}}}{\emph{name}, \emph{app\_label}}{}
 Bases: \sphinxcode{\sphinxupquote{django.db.migrations.migration.Migration}}
-\index{dependencies (QuChemPedIA.migrations.0002\_auto\_20180629\_0758.Migration attribute)}
+\index{dependencies (QuChemPedIA.migrations.0002\_auto\_20180711\_1418.Migration attribute)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0002_auto_20180629_0758.Migration.dependencies}}\pysigline{\sphinxbfcode{\sphinxupquote{dependencies}}\sphinxbfcode{\sphinxupquote{ = {[}('QuChemPedIA', '0001\_initial'){]}}}}
+\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0002_auto_20180711_1418.Migration.dependencies}}\pysigline{\sphinxbfcode{\sphinxupquote{dependencies}}\sphinxbfcode{\sphinxupquote{ = {[}('QuChemPedIA', '0001\_initial'){]}}}}
 \end{fulllineitems}
 
-\index{operations (QuChemPedIA.migrations.0002\_auto\_20180629\_0758.Migration attribute)}
+\index{operations (QuChemPedIA.migrations.0002\_auto\_20180711\_1418.Migration attribute)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0002_auto_20180629_0758.Migration.operations}}\pysigline{\sphinxbfcode{\sphinxupquote{operations}}\sphinxbfcode{\sphinxupquote{ = {[}\textless{}AlterField  name='status', model\_name='importfile', field=\textless{}django.db.models.fields.CharField\textgreater{}\textgreater{}{]}}}}
-\end{fulllineitems}
-
-
-\end{fulllineitems}
-
-
-
-\subsection{QuChemPedIA.migrations.0003\_auto\_20180629\_1030 module}
-\label{\detokenize{QuChemPedIA.migrations:module-QuChemPedIA.migrations.0003_auto_20180629_1030}}\label{\detokenize{QuChemPedIA.migrations:quchempedia-migrations-0003-auto-20180629-1030-module}}\index{QuChemPedIA.migrations.0003\_auto\_20180629\_1030 (module)}\index{Migration (class in QuChemPedIA.migrations.0003\_auto\_20180629\_1030)}
-
-\begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0003_auto_20180629_1030.Migration}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{QuChemPedIA.migrations.0003\_auto\_20180629\_1030.}}\sphinxbfcode{\sphinxupquote{Migration}}}{\emph{name}, \emph{app\_label}}{}
-Bases: \sphinxcode{\sphinxupquote{django.db.migrations.migration.Migration}}
-\index{dependencies (QuChemPedIA.migrations.0003\_auto\_20180629\_1030.Migration attribute)}
-
-\begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0003_auto_20180629_1030.Migration.dependencies}}\pysigline{\sphinxbfcode{\sphinxupquote{dependencies}}\sphinxbfcode{\sphinxupquote{ = {[}('QuChemPedIA', '0002\_auto\_20180629\_0758'){]}}}}
-\end{fulllineitems}
-
-\index{operations (QuChemPedIA.migrations.0003\_auto\_20180629\_1030.Migration attribute)}
-
-\begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0003_auto_20180629_1030.Migration.operations}}\pysigline{\sphinxbfcode{\sphinxupquote{operations}}\sphinxbfcode{\sphinxupquote{ = {[}\textless{}CreateModel  options=\{'verbose\_name': 'rule of import'\}, fields={[}('id\_rule', \textless{}django.db.models.fields.BigAutoField\textgreater{}), ('rule', \textless{}django.db.models.fields.CharField\textgreater{}){]}, name='ImportRule'\textgreater{}, \textless{}CreateModel  name='Software', fields={[}('id\_software', \textless{}django.db.models.fields.BigAutoField\textgreater{}), ('name', \textless{}django.db.models.fields.CharField\textgreater{}){]}\textgreater{}, \textless{}CreateModel  options=\{'verbose\_name': 'software version'\}, fields={[}('id\_version', \textless{}django.db.models.fields.BigAutoField\textgreater{}), ('version\_number', \textless{}django.db.models.fields.CharField\textgreater{}), ('id\_software', \textless{}django.db.models.fields.related.OneToOneField\textgreater{}){]}, name='SoftwareVersion'\textgreater{}, \textless{}AddField  name='id\_software', model\_name='importrule', field=\textless{}django.db.models.fields.related.OneToOneField\textgreater{}\textgreater{}, \textless{}AddField  name='id\_version', model\_name='importrule', field=\textless{}django.db.models.fields.related.OneToOneField\textgreater{}\textgreater{}, \textless{}AddField  name='id\_software', model\_name='importfile', field=\textless{}django.db.models.fields.related.ForeignKey\textgreater{}\textgreater{}, \textless{}AddField  name='id\_version', model\_name='importfile', field=\textless{}django.db.models.fields.related.ForeignKey\textgreater{}\textgreater{}{]}}}}
-\end{fulllineitems}
-
-
-\end{fulllineitems}
-
-
-
-\subsection{QuChemPedIA.migrations.0004\_auto\_20180702\_1515 module}
-\label{\detokenize{QuChemPedIA.migrations:module-QuChemPedIA.migrations.0004_auto_20180702_1515}}\label{\detokenize{QuChemPedIA.migrations:quchempedia-migrations-0004-auto-20180702-1515-module}}\index{QuChemPedIA.migrations.0004\_auto\_20180702\_1515 (module)}\index{Migration (class in QuChemPedIA.migrations.0004\_auto\_20180702\_1515)}
-
-\begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0004_auto_20180702_1515.Migration}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{QuChemPedIA.migrations.0004\_auto\_20180702\_1515.}}\sphinxbfcode{\sphinxupquote{Migration}}}{\emph{name}, \emph{app\_label}}{}
-Bases: \sphinxcode{\sphinxupquote{django.db.migrations.migration.Migration}}
-\index{dependencies (QuChemPedIA.migrations.0004\_auto\_20180702\_1515.Migration attribute)}
-
-\begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0004_auto_20180702_1515.Migration.dependencies}}\pysigline{\sphinxbfcode{\sphinxupquote{dependencies}}\sphinxbfcode{\sphinxupquote{ = {[}('QuChemPedIA', '0003\_auto\_20180629\_1030'){]}}}}
-\end{fulllineitems}
-
-\index{operations (QuChemPedIA.migrations.0004\_auto\_20180702\_1515.Migration attribute)}
-
-\begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0004_auto_20180702_1515.Migration.operations}}\pysigline{\sphinxbfcode{\sphinxupquote{operations}}\sphinxbfcode{\sphinxupquote{ = {[}\textless{}AlterField  name='rule', model\_name='importrule', field=\textless{}django.db.models.fields.CharField\textgreater{}\textgreater{}{]}}}}
+\phantomsection\label{\detokenize{QuChemPedIA.migrations:QuChemPedIA.migrations.0002_auto_20180711_1418.Migration.operations}}\pysigline{\sphinxbfcode{\sphinxupquote{operations}}\sphinxbfcode{\sphinxupquote{ = {[}\textless{}AlterField  name='id\_job\_type', field=\textless{}django.db.models.fields.related.ForeignKey\textgreater{}, model\_name='importfile'\textgreater{}, \textless{}AlterField  name='id\_software', field=\textless{}django.db.models.fields.related.ForeignKey\textgreater{}, model\_name='importfile'\textgreater{}, \textless{}AlterField  name='id\_version', field=\textless{}django.db.models.fields.related.ForeignKey\textgreater{}, model\_name='importfile'\textgreater{}{]}}}}
 \end{fulllineitems}
 
 
@@ -426,6 +380,34 @@ Bases: \sphinxcode{\sphinxupquote{django.core.exceptions.MultipleObjectsReturned
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.ImportFileModels.ImportFile.id_file}}\pysigline{\sphinxbfcode{\sphinxupquote{id\_file}}}
+A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.
+
+\end{fulllineitems}
+
+\index{id\_job\_type (QuChemPedIA.models.ImportFileModels.ImportFile attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.ImportFileModels.ImportFile.id_job_type}}\pysigline{\sphinxbfcode{\sphinxupquote{id\_job\_type}}}
+Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.
+
+In the example:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{Child}\PYG{p}{(}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{parent} \PYG{o}{=} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{n}{Parent}\PYG{p}{,} \PYG{n}{related\PYGZus{}name}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{children}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\sphinxcode{\sphinxupquote{Child.parent}} is a \sphinxcode{\sphinxupquote{ForwardManyToOneDescriptor}} instance.
+
+\end{fulllineitems}
+
+\index{id\_job\_type\_id (QuChemPedIA.models.ImportFileModels.ImportFile attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.ImportFileModels.ImportFile.id_job_type_id}}\pysigline{\sphinxbfcode{\sphinxupquote{id\_job\_type\_id}}}
 A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.
 
@@ -515,20 +497,6 @@ object the first time, the query is executed.
 
 \end{fulllineitems}
 
-\index{ImportFile.meta (class in QuChemPedIA.models.ImportFileModels)}
-
-\begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.ImportFileModels.ImportFile.meta}}\pysigline{\sphinxbfcode{\sphinxupquote{class }}\sphinxbfcode{\sphinxupquote{meta}}}
-Bases: \sphinxcode{\sphinxupquote{object}}
-\index{verbose\_name (QuChemPedIA.models.ImportFileModels.ImportFile.meta attribute)}
-
-\begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.ImportFileModels.ImportFile.meta.verbose_name}}\pysigline{\sphinxbfcode{\sphinxupquote{verbose\_name}}\sphinxbfcode{\sphinxupquote{ = 'imported file'}}}
-\end{fulllineitems}
-
-
-\end{fulllineitems}
-
 \index{objects (QuChemPedIA.models.ImportFileModels.ImportFile attribute)}
 
 \begin{fulllineitems}
@@ -579,6 +547,34 @@ Bases: \sphinxcode{\sphinxupquote{django.core.exceptions.ObjectDoesNotExist}}
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.ImportRuleModel.ImportRule.MultipleObjectsReturned}}\pysigline{\sphinxbfcode{\sphinxupquote{exception }}\sphinxbfcode{\sphinxupquote{MultipleObjectsReturned}}}
 Bases: \sphinxcode{\sphinxupquote{django.core.exceptions.MultipleObjectsReturned}}
+
+\end{fulllineitems}
+
+\index{id\_job\_type (QuChemPedIA.models.ImportRuleModel.ImportRule attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.ImportRuleModel.ImportRule.id_job_type}}\pysigline{\sphinxbfcode{\sphinxupquote{id\_job\_type}}}
+Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.
+
+In the example:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{Child}\PYG{p}{(}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{parent} \PYG{o}{=} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{n}{Parent}\PYG{p}{,} \PYG{n}{related\PYGZus{}name}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{children}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\sphinxcode{\sphinxupquote{Child.parent}} is a \sphinxcode{\sphinxupquote{ForwardManyToOneDescriptor}} instance.
+
+\end{fulllineitems}
+
+\index{id\_job\_type\_id (QuChemPedIA.models.ImportRuleModel.ImportRule attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.ImportRuleModel.ImportRule.id_job_type_id}}\pysigline{\sphinxbfcode{\sphinxupquote{id\_job\_type\_id}}}
+A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.
 
 \end{fulllineitems}
 
@@ -658,6 +654,117 @@ object the first time, the query is executed.
 A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.
 
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+
+\subsection{QuChemPedIA.models.JobTypeModel module}
+\label{\detokenize{QuChemPedIA.models:module-QuChemPedIA.models.JobTypeModel}}\label{\detokenize{QuChemPedIA.models:quchempedia-models-jobtypemodel-module}}\index{QuChemPedIA.models.JobTypeModel (module)}\index{JobType (class in QuChemPedIA.models.JobTypeModel)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.JobTypeModel.JobType}}\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class }}\sphinxcode{\sphinxupquote{QuChemPedIA.models.JobTypeModel.}}\sphinxbfcode{\sphinxupquote{JobType}}}{\emph{*args}, \emph{**kwargs}}{}
+Bases: \sphinxcode{\sphinxupquote{django.db.models.base.Model}}
+
+this class define the table where the name of job\_type are stored
+\index{JobType.DoesNotExist}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.JobTypeModel.JobType.DoesNotExist}}\pysigline{\sphinxbfcode{\sphinxupquote{exception }}\sphinxbfcode{\sphinxupquote{DoesNotExist}}}
+Bases: \sphinxcode{\sphinxupquote{django.core.exceptions.ObjectDoesNotExist}}
+
+\end{fulllineitems}
+
+\index{JobType.MultipleObjectsReturned}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.JobTypeModel.JobType.MultipleObjectsReturned}}\pysigline{\sphinxbfcode{\sphinxupquote{exception }}\sphinxbfcode{\sphinxupquote{MultipleObjectsReturned}}}
+Bases: \sphinxcode{\sphinxupquote{django.core.exceptions.MultipleObjectsReturned}}
+
+\end{fulllineitems}
+
+\index{id\_job\_type (QuChemPedIA.models.JobTypeModel.JobType attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.JobTypeModel.JobType.id_job_type}}\pysigline{\sphinxbfcode{\sphinxupquote{id\_job\_type}}}
+A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.
+
+\end{fulllineitems}
+
+\index{importfile\_set (QuChemPedIA.models.JobTypeModel.JobType attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.JobTypeModel.JobType.importfile_set}}\pysigline{\sphinxbfcode{\sphinxupquote{importfile\_set}}}
+Accessor to the related objects manager on the reverse side of a
+many-to-one relation.
+
+In the example:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{Child}\PYG{p}{(}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{parent} \PYG{o}{=} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{n}{Parent}\PYG{p}{,} \PYG{n}{related\PYGZus{}name}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{children}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\sphinxcode{\sphinxupquote{Parent.children}} is a \sphinxcode{\sphinxupquote{ReverseManyToOneDescriptor}} instance.
+
+Most of the implementation is delegated to a dynamically defined manager
+class built by \sphinxcode{\sphinxupquote{create\_forward\_many\_to\_many\_manager()}} defined below.
+
+\end{fulllineitems}
+
+\index{importrule\_set (QuChemPedIA.models.JobTypeModel.JobType attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.JobTypeModel.JobType.importrule_set}}\pysigline{\sphinxbfcode{\sphinxupquote{importrule\_set}}}
+Accessor to the related objects manager on the reverse side of a
+many-to-one relation.
+
+In the example:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{Child}\PYG{p}{(}\PYG{n}{Model}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{parent} \PYG{o}{=} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{n}{Parent}\PYG{p}{,} \PYG{n}{related\PYGZus{}name}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{children}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\sphinxcode{\sphinxupquote{Parent.children}} is a \sphinxcode{\sphinxupquote{ReverseManyToOneDescriptor}} instance.
+
+Most of the implementation is delegated to a dynamically defined manager
+class built by \sphinxcode{\sphinxupquote{create\_forward\_many\_to\_many\_manager()}} defined below.
+
+\end{fulllineitems}
+
+\index{JobType.meta (class in QuChemPedIA.models.JobTypeModel)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.JobTypeModel.JobType.meta}}\pysigline{\sphinxbfcode{\sphinxupquote{class }}\sphinxbfcode{\sphinxupquote{meta}}}
+Bases: \sphinxcode{\sphinxupquote{object}}
+\index{verbose\_name (QuChemPedIA.models.JobTypeModel.JobType.meta attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.JobTypeModel.JobType.meta.verbose_name}}\pysigline{\sphinxbfcode{\sphinxupquote{verbose\_name}}\sphinxbfcode{\sphinxupquote{ = 'Software'}}}
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{name (QuChemPedIA.models.JobTypeModel.JobType attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.JobTypeModel.JobType.name}}\pysigline{\sphinxbfcode{\sphinxupquote{name}}}
+A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.
+
+\end{fulllineitems}
+
+\index{objects (QuChemPedIA.models.JobTypeModel.JobType attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.models:QuChemPedIA.models.JobTypeModel.JobType.objects}}\pysigline{\sphinxbfcode{\sphinxupquote{objects}}\sphinxbfcode{\sphinxupquote{ = \textless{}django.db.models.manager.Manager object\textgreater{}}}}
 \end{fulllineitems}
 
 
@@ -1284,7 +1391,7 @@ controler of the template account that allow the user to see which calculation h
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{QuChemPedIA.views:QuChemPedIA.views.AdminListUserView.list_of_all_user}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{QuChemPedIA.views.AdminListUserView.}}\sphinxbfcode{\sphinxupquote{list\_of\_all\_user}}}{\emph{request}}{}
-controler of the template admin which list all registred
+controler of the template admin which list all registred user and allow to find one
 :param request: variable wich contains the value of the page
 :return: template html
 
@@ -1438,7 +1545,19 @@ controler of the template account that allow the user to see which calculation h
 
 
 \subsection{QuChemPedIA.views.importView module}
-\label{\detokenize{QuChemPedIA.views:module-QuChemPedIA.views.importView}}\label{\detokenize{QuChemPedIA.views:quchempedia-views-importview-module}}\index{QuChemPedIA.views.importView (module)}\index{import\_view() (in module QuChemPedIA.views.importView)}
+\label{\detokenize{QuChemPedIA.views:module-QuChemPedIA.views.importView}}\label{\detokenize{QuChemPedIA.views:quchempedia-views-importview-module}}\index{QuChemPedIA.views.importView (module)}\index{delete\_import() (in module QuChemPedIA.views.importView)}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{QuChemPedIA.views:QuChemPedIA.views.importView.delete_import}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{QuChemPedIA.views.importView.}}\sphinxbfcode{\sphinxupquote{delete\_import}}}{\emph{request}, \emph{id\_file}, \emph{page}}{}
+controler from admin view to delete manuallly an import
+:param request: environment variable wich containt all value exchanged between client and server
+:param id\_file: id of the file in DB o import in ES
+:param page: number of the page
+:return: html template
+
+\end{fulllineitems}
+
+\index{import\_view() (in module QuChemPedIA.views.importView)}
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{QuChemPedIA.views:QuChemPedIA.views.importView.import_view}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{QuChemPedIA.views.importView.}}\sphinxbfcode{\sphinxupquote{import\_view}}}{\emph{request}}{}
@@ -1460,10 +1579,10 @@ controler from admin view to launch manuallly an import
 
 \end{fulllineitems}
 
-\index{register\_soft\_and\_version() (in module QuChemPedIA.views.importView)}
+\index{register\_soft\_job\_type\_and\_version() (in module QuChemPedIA.views.importView)}
 
 \begin{fulllineitems}
-\phantomsection\label{\detokenize{QuChemPedIA.views:QuChemPedIA.views.importView.register_soft_and_version}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{QuChemPedIA.views.importView.}}\sphinxbfcode{\sphinxupquote{register\_soft\_and\_version}}}{\emph{path\_to\_file\_to\_register}}{}
+\phantomsection\label{\detokenize{QuChemPedIA.views:QuChemPedIA.views.importView.register_soft_job_type_and_version}}\pysiglinewithargsret{\sphinxcode{\sphinxupquote{QuChemPedIA.views.importView.}}\sphinxbfcode{\sphinxupquote{register\_soft\_job\_type\_and\_version}}}{\emph{path\_to\_file\_to\_register}}{}
 this method try to know what to do with a json file
 :param path\_to\_file\_to\_register: path to the json that could be processed
 :return: 0 for error, 1 for manual, 2 for automatic
@@ -1626,12 +1745,11 @@ get all compound similar to a smiles
 \item {\sphinxstyleindexentry{QuChemPedIA.management.commands.populate\_db}}\sphinxstyleindexpageref{QuChemPedIA.management.commands:\detokenize{module-QuChemPedIA.management.commands.populate_db}}
 \item {\sphinxstyleindexentry{QuChemPedIA.migrations}}\sphinxstyleindexpageref{QuChemPedIA.migrations:\detokenize{module-QuChemPedIA.migrations}}
 \item {\sphinxstyleindexentry{QuChemPedIA.migrations.0001\_initial}}\sphinxstyleindexpageref{QuChemPedIA.migrations:\detokenize{module-QuChemPedIA.migrations.0001_initial}}
-\item {\sphinxstyleindexentry{QuChemPedIA.migrations.0002\_auto\_20180629\_0758}}\sphinxstyleindexpageref{QuChemPedIA.migrations:\detokenize{module-QuChemPedIA.migrations.0002_auto_20180629_0758}}
-\item {\sphinxstyleindexentry{QuChemPedIA.migrations.0003\_auto\_20180629\_1030}}\sphinxstyleindexpageref{QuChemPedIA.migrations:\detokenize{module-QuChemPedIA.migrations.0003_auto_20180629_1030}}
-\item {\sphinxstyleindexentry{QuChemPedIA.migrations.0004\_auto\_20180702\_1515}}\sphinxstyleindexpageref{QuChemPedIA.migrations:\detokenize{module-QuChemPedIA.migrations.0004_auto_20180702_1515}}
+\item {\sphinxstyleindexentry{QuChemPedIA.migrations.0002\_auto\_20180711\_1418}}\sphinxstyleindexpageref{QuChemPedIA.migrations:\detokenize{module-QuChemPedIA.migrations.0002_auto_20180711_1418}}
 \item {\sphinxstyleindexentry{QuChemPedIA.models}}\sphinxstyleindexpageref{QuChemPedIA.models:\detokenize{module-QuChemPedIA.models}}
 \item {\sphinxstyleindexentry{QuChemPedIA.models.ImportFileModels}}\sphinxstyleindexpageref{QuChemPedIA.models:\detokenize{module-QuChemPedIA.models.ImportFileModels}}
 \item {\sphinxstyleindexentry{QuChemPedIA.models.ImportRuleModel}}\sphinxstyleindexpageref{QuChemPedIA.models:\detokenize{module-QuChemPedIA.models.ImportRuleModel}}
+\item {\sphinxstyleindexentry{QuChemPedIA.models.JobTypeModel}}\sphinxstyleindexpageref{QuChemPedIA.models:\detokenize{module-QuChemPedIA.models.JobTypeModel}}
 \item {\sphinxstyleindexentry{QuChemPedIA.models.SoftwareModel}}\sphinxstyleindexpageref{QuChemPedIA.models:\detokenize{module-QuChemPedIA.models.SoftwareModel}}
 \item {\sphinxstyleindexentry{QuChemPedIA.models.UserModel}}\sphinxstyleindexpageref{QuChemPedIA.models:\detokenize{module-QuChemPedIA.models.UserModel}}
 \item {\sphinxstyleindexentry{QuChemPedIA.models.VersionModel}}\sphinxstyleindexpageref{QuChemPedIA.models:\detokenize{module-QuChemPedIA.models.VersionModel}}

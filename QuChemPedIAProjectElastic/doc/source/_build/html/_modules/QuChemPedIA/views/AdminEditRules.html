@@ -75,11 +75,8 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_admin</span><span class="p">:</span>  <span class="c1"># security to redirect user that aren&#39;t admin</span>
         <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s1">&#39;/QuChemPedIA/accueil&#39;</span><span class="p">)</span>
     <span class="n">rule_to_switch</span> <span class="o">=</span> <span class="n">ImportRule</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_rule</span><span class="o">=</span><span class="n">id_of_rule</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">rule_to_switch</span><span class="o">.</span><span class="n">rule</span> <span class="o">==</span> <span class="s2">&quot;manual&quot;</span><span class="p">:</span>
-        <span class="n">rule_to_switch</span><span class="o">.</span><span class="n">rule</span> <span class="o">=</span> <span class="s2">&quot;automatic&quot;</span>
-        <span class="n">rule_to_switch</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">rule_to_switch</span><span class="o">.</span><span class="n">rule</span> <span class="o">=</span> <span class="s2">&quot;manual&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">:</span>
+        <span class="n">rule_to_switch</span><span class="o">.</span><span class="n">rule</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;options&#39;</span><span class="p">)</span>
         <span class="n">rule_to_switch</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s1">&#39;/QuChemPedIA/admin/list_of_rule?page=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">))</span></div>
 </pre></div>

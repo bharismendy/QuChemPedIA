@@ -57,64 +57,26 @@
 
 <dl class="attribute">
 <dt id="QuChemPedIA.migrations.0001_initial.Migration.operations">
-<code class="descname">operations</code><em class="property"> = [&lt;CreateModel  name='ImportFile', fields=[('id_file', &lt;django.db.models.fields.BigAutoField&gt;), ('path_file', &lt;django.db.models.fields.FilePathField&gt;), ('status', &lt;django.db.models.fields.CharField&gt;)]&gt;, &lt;CreateModel  options={'abstract': False}, name='Utilisateur', fields=[('id', &lt;django.db.models.fields.AutoField&gt;), ('password', &lt;django.db.models.fields.CharField&gt;), ('last_login', &lt;django.db.models.fields.DateTimeField&gt;), ('email', &lt;django.db.models.fields.EmailField&gt;), ('group', &lt;django.db.models.fields.CharField&gt;), ('last_name', &lt;django.db.models.fields.CharField&gt;), ('first_name', &lt;django.db.models.fields.CharField&gt;), ('affiliation', &lt;django.db.models.fields.TextField&gt;), ('orcid', &lt;django.db.models.fields.CharField&gt;), ('last_date_upload', &lt;django.db.models.fields.DateField&gt;), ('number_of_upload_this_day', &lt;django.db.models.fields.IntegerField&gt;), ('active', &lt;django.db.models.fields.BooleanField&gt;), ('staff', &lt;django.db.models.fields.BooleanField&gt;), ('admin', &lt;django.db.models.fields.BooleanField&gt;)]&gt;, &lt;AddField  name='id_user', model_name='importfile', field=&lt;django.db.models.fields.related.ForeignKey&gt;&gt;]</em><a class="headerlink" href="#QuChemPedIA.migrations.0001_initial.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<code class="descname">operations</code><em class="property"> = [&lt;CreateModel  options={'verbose_name': 'imported file'}, name='ImportFile', fields=[('id_file', &lt;django.db.models.fields.BigAutoField&gt;), ('path_file', &lt;django.db.models.fields.FilePathField&gt;), ('status', &lt;django.db.models.fields.CharField&gt;)]&gt;, &lt;CreateModel  options={'verbose_name': 'rule of import'}, name='ImportRule', fields=[('id_rule', &lt;django.db.models.fields.BigAutoField&gt;), ('rule', &lt;django.db.models.fields.CharField&gt;)]&gt;, &lt;CreateModel  name='JobType', fields=[('id_job_type', &lt;django.db.models.fields.BigAutoField&gt;), ('name', &lt;django.db.models.fields.CharField&gt;)]&gt;, &lt;CreateModel  name='Software', fields=[('id_software', &lt;django.db.models.fields.BigAutoField&gt;), ('name', &lt;django.db.models.fields.CharField&gt;)]&gt;, &lt;CreateModel  options={'verbose_name': 'software version'}, name='SoftwareVersion', fields=[('id_version', &lt;django.db.models.fields.BigAutoField&gt;), ('version_number', &lt;django.db.models.fields.CharField&gt;), ('id_software', &lt;django.db.models.fields.related.OneToOneField&gt;)]&gt;, &lt;CreateModel  options={'abstract': False}, name='Utilisateur', fields=[('id', &lt;django.db.models.fields.AutoField&gt;), ('password', &lt;django.db.models.fields.CharField&gt;), ('last_login', &lt;django.db.models.fields.DateTimeField&gt;), ('email', &lt;django.db.models.fields.EmailField&gt;), ('group', &lt;django.db.models.fields.CharField&gt;), ('last_name', &lt;django.db.models.fields.CharField&gt;), ('first_name', &lt;django.db.models.fields.CharField&gt;), ('affiliation', &lt;django.db.models.fields.TextField&gt;), ('orcid', &lt;django.db.models.fields.CharField&gt;), ('last_date_upload', &lt;django.db.models.fields.DateField&gt;), ('number_of_upload_this_day', &lt;django.db.models.fields.IntegerField&gt;), ('active', &lt;django.db.models.fields.BooleanField&gt;), ('staff', &lt;django.db.models.fields.BooleanField&gt;), ('admin', &lt;django.db.models.fields.BooleanField&gt;)]&gt;, &lt;AddField  name='id_job_type', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importrule'&gt;, &lt;AddField  name='id_software', field=&lt;django.db.models.fields.related.OneToOneField&gt;, model_name='importrule'&gt;, &lt;AddField  name='id_version', field=&lt;django.db.models.fields.related.OneToOneField&gt;, model_name='importrule'&gt;, &lt;AddField  name='id_job_type', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AddField  name='id_software', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AddField  name='id_user', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AddField  name='id_version', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;]</em><a class="headerlink" href="#QuChemPedIA.migrations.0001_initial.Migration.operations" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </div>
-<div class="section" id="module-QuChemPedIA.migrations.0002_auto_20180629_0758">
-<span id="quchempedia-migrations-0002-auto-20180629-0758-module"></span><h2>QuChemPedIA.migrations.0002_auto_20180629_0758 module<a class="headerlink" href="#module-QuChemPedIA.migrations.0002_auto_20180629_0758" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-QuChemPedIA.migrations.0002_auto_20180711_1418">
+<span id="quchempedia-migrations-0002-auto-20180711-1418-module"></span><h2>QuChemPedIA.migrations.0002_auto_20180711_1418 module<a class="headerlink" href="#module-QuChemPedIA.migrations.0002_auto_20180711_1418" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="QuChemPedIA.migrations.0002_auto_20180629_0758.Migration">
-<em class="property">class </em><code class="descclassname">QuChemPedIA.migrations.0002_auto_20180629_0758.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/migrations/0002_auto_20180629_0758.html#Migration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.migrations.0002_auto_20180629_0758.Migration" title="Permalink to this definition">¶</a></dt>
+<dt id="QuChemPedIA.migrations.0002_auto_20180711_1418.Migration">
+<em class="property">class </em><code class="descclassname">QuChemPedIA.migrations.0002_auto_20180711_1418.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/migrations/0002_auto_20180711_1418.html#Migration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.migrations.0002_auto_20180711_1418.Migration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
 <dl class="attribute">
-<dt id="QuChemPedIA.migrations.0002_auto_20180629_0758.Migration.dependencies">
-<code class="descname">dependencies</code><em class="property"> = [('QuChemPedIA', '0001_initial')]</em><a class="headerlink" href="#QuChemPedIA.migrations.0002_auto_20180629_0758.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dt id="QuChemPedIA.migrations.0002_auto_20180711_1418.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [('QuChemPedIA', '0001_initial')]</em><a class="headerlink" href="#QuChemPedIA.migrations.0002_auto_20180711_1418.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="QuChemPedIA.migrations.0002_auto_20180629_0758.Migration.operations">
-<code class="descname">operations</code><em class="property"> = [&lt;AlterField  name='status', model_name='importfile', field=&lt;django.db.models.fields.CharField&gt;&gt;]</em><a class="headerlink" href="#QuChemPedIA.migrations.0002_auto_20180629_0758.Migration.operations" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-QuChemPedIA.migrations.0003_auto_20180629_1030">
-<span id="quchempedia-migrations-0003-auto-20180629-1030-module"></span><h2>QuChemPedIA.migrations.0003_auto_20180629_1030 module<a class="headerlink" href="#module-QuChemPedIA.migrations.0003_auto_20180629_1030" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="QuChemPedIA.migrations.0003_auto_20180629_1030.Migration">
-<em class="property">class </em><code class="descclassname">QuChemPedIA.migrations.0003_auto_20180629_1030.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/migrations/0003_auto_20180629_1030.html#Migration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.migrations.0003_auto_20180629_1030.Migration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
-<dl class="attribute">
-<dt id="QuChemPedIA.migrations.0003_auto_20180629_1030.Migration.dependencies">
-<code class="descname">dependencies</code><em class="property"> = [('QuChemPedIA', '0002_auto_20180629_0758')]</em><a class="headerlink" href="#QuChemPedIA.migrations.0003_auto_20180629_1030.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="QuChemPedIA.migrations.0003_auto_20180629_1030.Migration.operations">
-<code class="descname">operations</code><em class="property"> = [&lt;CreateModel  options={'verbose_name': 'rule of import'}, name='ImportRule', fields=[('id_rule', &lt;django.db.models.fields.BigAutoField&gt;), ('rule', &lt;django.db.models.fields.CharField&gt;)]&gt;, &lt;CreateModel  name='Software', fields=[('id_software', &lt;django.db.models.fields.BigAutoField&gt;), ('name', &lt;django.db.models.fields.CharField&gt;)]&gt;, &lt;CreateModel  options={'verbose_name': 'software version'}, name='SoftwareVersion', fields=[('id_version', &lt;django.db.models.fields.BigAutoField&gt;), ('version_number', &lt;django.db.models.fields.CharField&gt;), ('id_software', &lt;django.db.models.fields.related.OneToOneField&gt;)]&gt;, &lt;AddField  name='id_software', model_name='importrule', field=&lt;django.db.models.fields.related.OneToOneField&gt;&gt;, &lt;AddField  name='id_version', model_name='importrule', field=&lt;django.db.models.fields.related.OneToOneField&gt;&gt;, &lt;AddField  name='id_software', model_name='importfile', field=&lt;django.db.models.fields.related.ForeignKey&gt;&gt;, &lt;AddField  name='id_version', model_name='importfile', field=&lt;django.db.models.fields.related.ForeignKey&gt;&gt;]</em><a class="headerlink" href="#QuChemPedIA.migrations.0003_auto_20180629_1030.Migration.operations" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-QuChemPedIA.migrations.0004_auto_20180702_1515">
-<span id="quchempedia-migrations-0004-auto-20180702-1515-module"></span><h2>QuChemPedIA.migrations.0004_auto_20180702_1515 module<a class="headerlink" href="#module-QuChemPedIA.migrations.0004_auto_20180702_1515" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="QuChemPedIA.migrations.0004_auto_20180702_1515.Migration">
-<em class="property">class </em><code class="descclassname">QuChemPedIA.migrations.0004_auto_20180702_1515.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/migrations/0004_auto_20180702_1515.html#Migration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.migrations.0004_auto_20180702_1515.Migration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
-<dl class="attribute">
-<dt id="QuChemPedIA.migrations.0004_auto_20180702_1515.Migration.dependencies">
-<code class="descname">dependencies</code><em class="property"> = [('QuChemPedIA', '0003_auto_20180629_1030')]</em><a class="headerlink" href="#QuChemPedIA.migrations.0004_auto_20180702_1515.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="QuChemPedIA.migrations.0004_auto_20180702_1515.Migration.operations">
-<code class="descname">operations</code><em class="property"> = [&lt;AlterField  name='rule', model_name='importrule', field=&lt;django.db.models.fields.CharField&gt;&gt;]</em><a class="headerlink" href="#QuChemPedIA.migrations.0004_auto_20180702_1515.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dt id="QuChemPedIA.migrations.0002_auto_20180711_1418.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;AlterField  name='id_job_type', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AlterField  name='id_software', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AlterField  name='id_version', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;]</em><a class="headerlink" href="#QuChemPedIA.migrations.0002_auto_20180711_1418.Migration.operations" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -137,9 +99,7 @@
 <li><a class="reference internal" href="#">QuChemPedIA.migrations package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-QuChemPedIA.migrations.0001_initial">QuChemPedIA.migrations.0001_initial module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.migrations.0002_auto_20180629_0758">QuChemPedIA.migrations.0002_auto_20180629_0758 module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.migrations.0003_auto_20180629_1030">QuChemPedIA.migrations.0003_auto_20180629_1030 module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.migrations.0004_auto_20180702_1515">QuChemPedIA.migrations.0004_auto_20180702_1515 module</a></li>
+<li><a class="reference internal" href="#module-QuChemPedIA.migrations.0002_auto_20180711_1418">QuChemPedIA.migrations.0002_auto_20180711_1418 module</a></li>
 <li><a class="reference internal" href="#module-QuChemPedIA.migrations">Module contents</a></li>
 </ul>
 </li>

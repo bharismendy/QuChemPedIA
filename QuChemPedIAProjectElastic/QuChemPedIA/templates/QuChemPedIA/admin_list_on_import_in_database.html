@@ -9,6 +9,7 @@
                         <th scope="col">Status</th>
                         <th scope="col">user ID</th>
                         <th scope="col">launch the import</th>
+                        <th scope="col">delete the import</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +34,21 @@
                                     </svg>
                                 </button>
                             </form>
-
+                        </td>
+                         <td>
+                            <form class="form" method="post" action="{% url 'admin/delete_import' imported_file.id_file history.number %}">
+                                {% csrf_token %}
+                                <button class="btn btn-xs btn-danger active">delete the import
+                                    <svg class="feather feather-delete sc-dnqmqq jxshSx"
+                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         aria-hidden="true" data-reactid="446">
+                                        <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+                                        <line x1="18" y1="9" x2="12" y2="15"></line>
+                                        <line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 {% endfor %}

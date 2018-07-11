@@ -20,6 +20,14 @@ QuChemPedIA.models.ImportRuleModel module
     :undoc-members:
     :show-inheritance:
 
+QuChemPedIA.models.JobTypeModel module
+--------------------------------------
+
+.. automodule:: QuChemPedIA.models.JobTypeModel
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 QuChemPedIA.models.SoftwareModel module
 ---------------------------------------
 

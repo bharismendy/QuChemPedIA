@@ -37,6 +37,7 @@
 <span class="kn">from</span> <span class="nn">django.http</span> <span class="k">import</span> <span class="n">HttpResponseRedirect</span>
 <span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="k">import</span> <span class="n">render</span>
 <span class="kn">from</span> <span class="nn">QuChemPedIA.models</span> <span class="k">import</span> <span class="n">ImportFile</span>
+<span class="kn">from</span> <span class="nn">QuChemPedIA.models</span> <span class="k">import</span> <span class="n">JobType</span>
 <span class="kn">from</span> <span class="nn">QuChemPedIA.models</span> <span class="k">import</span> <span class="n">Software</span>
 <span class="kn">from</span> <span class="nn">QuChemPedIA.models</span> <span class="k">import</span> <span class="n">SoftwareVersion</span>
 <span class="kn">from</span> <span class="nn">QuChemPedIA.models</span> <span class="k">import</span> <span class="n">ImportRule</span>
@@ -44,9 +45,10 @@
 <span class="kn">from</span> <span class="nn">QuChemPedIA.QuChemPedIA_lib</span> <span class="k">import</span> <span class="n">store_in_temp</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 
-<div class="viewcode-block" id="register_soft_and_version"><a class="viewcode-back" href="../../../QuChemPedIA.views.html#QuChemPedIA.views.importView.register_soft_and_version">[docs]</a><span class="k">def</span> <span class="nf">register_soft_and_version</span><span class="p">(</span><span class="n">path_to_file_to_register</span><span class="p">):</span>
+<div class="viewcode-block" id="register_soft_job_type_and_version"><a class="viewcode-back" href="../../../QuChemPedIA.views.html#QuChemPedIA.views.importView.register_soft_job_type_and_version">[docs]</a><span class="k">def</span> <span class="nf">register_soft_job_type_and_version</span><span class="p">(</span><span class="n">path_to_file_to_register</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    this method try to know what to do with a json file</span>
 <span class="sd">    :param path_to_file_to_register: path to the json that could be processed</span>
@@ -55,6 +57,8 @@
     <span class="c1">#  on récupère les information pour enregistrer la machine à état</span>
     <span class="n">jsonfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_file_to_register</span><span class="p">)</span>
     <span class="n">loaded_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">jsonfile</span><span class="p">)</span>
+
+    <span class="c1"># ######## software ######## #</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">name_software</span> <span class="o">=</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;package&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
@@ -70,6 +74,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="mi">0</span>
 
+    <span class="c1"># ######## version of the software ######## #</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">version_software</span> <span class="o">=</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;package_version&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
@@ -87,18 +92,46 @@
         <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="mi">0</span>
 
-    <span class="c1"># try to register the new rules</span>
+    <span class="c1"># ######## job_type ######## #</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="c1"># we check if it&#39;s already exist, if not we register it</span>
-        <span class="n">rule</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="n">ImportRule</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">id_version</span><span class="o">=</span><span class="n">soft_vers</span><span class="p">,</span> <span class="n">id_software</span><span class="o">=</span><span class="n">soft</span><span class="p">)</span>
+        <span class="n">job_type</span> <span class="o">=</span> <span class="n">loaded_json</span><span class="p">[</span><span class="s1">&#39;comp_details&#39;</span><span class="p">][</span><span class="s1">&#39;general&#39;</span><span class="p">][</span><span class="s1">&#39;job_type&#39;</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error for registering the new rule : &quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error for getting the version of the software : &quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="mi">0</span>
-    <span class="k">if</span> <span class="n">rule</span><span class="o">.</span><span class="n">rule</span> <span class="o">==</span> <span class="s2">&quot;manual&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-    <span class="k">elif</span> <span class="n">rule</span><span class="o">.</span><span class="n">rule</span> <span class="o">==</span> <span class="s2">&quot;automatic&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">2</span></div>
+
+    <span class="c1"># try to register the job_type</span>
+    <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">job_type</span><span class="p">:</span>
+        <span class="n">inserted_jt</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># we check if it&#39;s already exist, if not we register it</span>
+                <span class="n">job_type_ins</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="n">JobType</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">job</span><span class="p">)</span>
+                <span class="n">inserted_jt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">job_type_ins</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error for registering the version of the software : &quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="c1"># ######## rule ######## #</span>
+    <span class="c1"># try to register the new rules</span>
+    <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">inserted_jt</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># we check if it&#39;s already exist, if not we register it</span>
+            <span class="n">rule</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="n">ImportRule</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">id_version</span><span class="o">=</span><span class="n">soft_vers</span><span class="p">,</span>
+                                                             <span class="n">id_software</span><span class="o">=</span><span class="n">soft</span><span class="p">,</span>
+                                                             <span class="n">id_job_type</span><span class="o">=</span><span class="n">job</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error for registering the new rule : &quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">rule</span><span class="o">.</span><span class="n">rule</span> <span class="o">==</span> <span class="s2">&quot;manual&quot;</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">rule</span><span class="o">.</span><span class="n">rule</span> <span class="o">==</span> <span class="s2">&quot;automatic&quot;</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">rule</span><span class="o">.</span><span class="n">rule</span> <span class="o">==</span> <span class="s2">&quot;delete&quot;</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
 
 
 <div class="viewcode-block" id="update_status_in_db"><a class="viewcode-back" href="../../../QuChemPedIA.views.html#QuChemPedIA.views.importView.update_status_in_db">[docs]</a><span class="k">def</span> <span class="nf">update_status_in_db</span><span class="p">(</span><span class="n">result_of_import</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">import_object</span><span class="p">:</span> <span class="n">ImportFile</span><span class="p">):</span>
@@ -128,6 +161,10 @@
 <span class="sd">    :return: template html</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">path_prefix</span> <span class="o">=</span> <span class="s1">&#39;media/&#39;</span>
+    <span class="n">number_of_stand_by_import</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
+        <span class="n">number_of_stand_by_import</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">ImportFile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">id_user</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s2">&quot;stand-by&quot;</span><span class="p">)))</span>
+
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
         <span class="n">myfile</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span>
         <span class="c1">#todo add json transform</span>
@@ -149,24 +186,33 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1">#   user == anonymous</span>
             <span class="k">pass</span>
-        <span class="n">code_return_pol</span> <span class="o">=</span> <span class="n">register_soft_and_version</span><span class="p">(</span><span class="n">path_prefix</span><span class="o">+</span><span class="n">final_path</span><span class="p">)</span>
+        <span class="n">code_return_pol</span> <span class="o">=</span> <span class="n">register_soft_job_type_and_version</span><span class="p">(</span><span class="n">path_prefix</span><span class="o">+</span><span class="n">final_path</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">code_return_pol</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">temps</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;error can&#39;t define policy&quot;</span>
             <span class="n">temps</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">code_return_pol</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># we do nothing in case of 1 because it&#39;s define by default</span>
+        <span class="k">elif</span> <span class="mi">3</span> <span class="ow">in</span> <span class="n">code_return_pol</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temps</span><span class="o">.</span><span class="n">path_file</span><span class="p">)</span>
+            <span class="n">temps</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;import not supported yet&quot;</span>
+            <span class="n">temps</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="mi">2</span> <span class="ow">in</span> <span class="n">code_return_pol</span><span class="p">:</span>
             <span class="c1">#  automatic import</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;media/&quot;</span> <span class="o">+</span> <span class="n">temps</span><span class="o">.</span><span class="n">path_file</span>
                 <span class="n">update_status_in_db</span><span class="p">(</span><span class="n">result_of_import</span><span class="o">=</span><span class="n">import_file</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">id_user</span><span class="o">=</span><span class="n">temps</span><span class="o">.</span><span class="n">id_user</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
                                     <span class="n">import_object</span><span class="o">=</span><span class="n">temps</span><span class="p">)</span>
+
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
                 <span class="n">temps</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;import failed&#39;</span>
                 <span class="n">temps</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
     <span class="n">query_form</span> <span class="o">=</span> <span class="n">QueryForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">query_form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;QuChemPedIA/import.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;query_form&#39;</span><span class="p">:</span> <span class="n">query_form</span><span class="p">})</span></div>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;QuChemPedIA/user_import.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;query_form&#39;</span><span class="p">:</span> <span class="n">query_form</span><span class="p">,</span>
+                                                            <span class="s1">&#39;number_of_stand_by_import&#39;</span><span class="p">:</span> <span class="n">number_of_stand_by_import</span><span class="p">})</span></div>
 
 
 <div class="viewcode-block" id="launch_import"><a class="viewcode-back" href="../../../QuChemPedIA.views.html#QuChemPedIA.views.importView.launch_import">[docs]</a><span class="k">def</span> <span class="nf">launch_import</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">id_file</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
@@ -189,6 +235,25 @@
         <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="n">file</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;import failed&#39;</span>
         <span class="n">file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s1">&#39;/QuChemPedIA/admin/list_of_import_in_database?page=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="delete_import"><a class="viewcode-back" href="../../../QuChemPedIA.views.html#QuChemPedIA.views.importView.delete_import">[docs]</a><span class="k">def</span> <span class="nf">delete_import</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">id_file</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    controler from admin view to delete manuallly an import</span>
+<span class="sd">    :param request: environment variable wich containt all value exchanged between client and server</span>
+<span class="sd">    :param id_file: id of the file in DB o import in ES</span>
+<span class="sd">    :param page: number of the page</span>
+<span class="sd">    :return: html template</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_admin</span><span class="p">:</span>  <span class="c1"># security to redirect user that aren&#39;t admin</span>
+        <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s1">&#39;/QuChemPedIA/accueil&#39;</span><span class="p">)</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">ImportFile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_file</span><span class="o">=</span><span class="n">id_file</span><span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;media/&quot;</span><span class="o">+</span><span class="n">file</span><span class="o">.</span><span class="n">path_file</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="o">+</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s1">&#39;/QuChemPedIA/admin/list_of_import_in_database?page=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">))</span></div>
 </pre></div>
 

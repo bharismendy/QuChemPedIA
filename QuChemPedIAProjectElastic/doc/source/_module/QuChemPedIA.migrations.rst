@@ -12,26 +12,10 @@ QuChemPedIA.migrations.0001\_initial module
     :undoc-members:
     :show-inheritance:
 
-QuChemPedIA.migrations.0002\_auto\_20180629\_0758 module
+QuChemPedIA.migrations.0002\_auto\_20180711\_1418 module
 --------------------------------------------------------
 
-.. automodule:: QuChemPedIA.migrations.0002_auto_20180629_0758
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-QuChemPedIA.migrations.0003\_auto\_20180629\_1030 module
---------------------------------------------------------
-
-.. automodule:: QuChemPedIA.migrations.0003_auto_20180629_1030
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-QuChemPedIA.migrations.0004\_auto\_20180702\_1515 module
---------------------------------------------------------
-
-.. automodule:: QuChemPedIA.migrations.0004_auto_20180702_1515
+.. automodule:: QuChemPedIA.migrations.0002_auto_20180711_1418
     :members:
     :undoc-members:
     :show-inheritance:

@@ -33,7 +33,7 @@ def admin_edit_user(request, id):
     if query_form.is_valid():
         return HttpResponseRedirect('query')
 
-    return render(request, 'QuChemPedIA/admin_edit_user_profile.html', {'query_form': query_form,
-                                                                     'form_edit_utilisateur': form_edit_utilisateur,
-                                                                     'form_change_password': form_change_password,
-                                                                     'id_user': id})
+    return render(request, 'QuChemPedIA/admin_edit_user_profile.html',  {'query_form': query_form,
+                                                                         'form_edit_utilisateur': form_edit_utilisateur,
+                                                                         'form_change_password': form_change_password,
+                                                                         'id_user': id})

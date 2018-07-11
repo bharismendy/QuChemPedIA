@@ -91,10 +91,12 @@
             <span class="c1"># if we want to access to an id we forward it to the details page as a parameter</span>
             <span class="n">url</span> <span class="o">=</span> <span class="n">build_url</span><span class="p">(</span><span class="s1">&#39;details&#39;</span><span class="p">,</span> <span class="n">get</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">)})</span>
             <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;id_user&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;typeQuery&#39;</span><span class="p">):</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">search_id_user</span><span class="p">(</span><span class="n">id_user</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">),</span> <span class="n">nbrpp</span><span class="o">=</span><span class="n">nbrpp</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        if &#39;homo_alpha_energy&#39; in request.GET.get(&#39;typeQuery&#39;):</span>
 <span class="sd">            results = list(Query.objects.filter(homo_alpha_energy=request.GET.get(&#39;search&#39;)))</span>
-
+<span class="sd">    </span>
 <span class="sd">        if &#39;homo_beta_energy&#39; in request.GET.get(&#39;typeQuery&#39;):</span>
 <span class="sd">            results = list(Query.objects.filter(homo_beta_energy=request.GET.get(&#39;search&#39;)))</span>
 
