@@ -63,6 +63,8 @@ class Utilisateur(AbstractBaseUser):
         last_name = models.CharField(max_length=150, null=True, default=None)
         first_name = models.CharField(max_length=200, null=True, default=None)
         affiliation = models.TextField(default=None, null=True,)
+        city = models.TextField(default=None, null=True,)
+        country = models.TextField(default=None, null=True,)
         orcid = models.CharField(max_length=19, default=None, null=True)
         last_date_upload = models.DateField(default=None,null=True)
         number_of_upload_this_day = models.IntegerField(default=0)

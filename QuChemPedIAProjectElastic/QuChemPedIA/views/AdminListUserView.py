@@ -4,7 +4,7 @@ from django.shortcuts import render
 from QuChemPedIA.models import Utilisateur
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from QuChemPedIA.forms.AdminSearchUserForm import SearchUserForm
-
+from django.conf import settings
 
 def list_of_all_user(request):
     """
@@ -18,6 +18,7 @@ def list_of_all_user(request):
     query_form = QueryForm(request.GET or None)
     page = request.GET.get('page', 1)
     search_user_form = SearchUserForm(request.GET or None)
+    media = settings.MEDIA_URL
 
     try:
         # switch on what we are looking for
@@ -54,7 +55,7 @@ def list_of_all_user(request):
     if request.GET and 'button-search' in request.GET:
         if query_form.is_valid():
             return HttpResponseRedirect('query')
-
     return render(request, 'QuChemPedIA/admin_list_user.html', {'query_form': query_form,
                                                                 'users': users,
-                                                                'search_user_form': search_user_form})
+                                                                'search_user_form': search_user_form,
+                                                                'media': media})

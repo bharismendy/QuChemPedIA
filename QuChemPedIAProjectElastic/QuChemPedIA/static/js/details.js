@@ -1,3 +1,20 @@
+function get_author_name(id_author){
+   $.ajax({
+        //connection au serveur
+       type: 'GET',
+       url: 'http://127.0.0.1:8000/QuChemPedIA/details_author?id_author='+id_author,
+       processData: true,
+       dataType: 'json',
+        success: function(results) {//ce que l'on fait si on a le json
+           if (typeof results.name !== 'undefined') {
+               return results.name.toString();
+           }
+           else{
+               return "N/A";
+           }
+           }
+        })
+}
 $(document).ready(function() {
 
 		$.urlParam = function(name){//fonction qui permet de récupérer l'url
@@ -18,16 +35,19 @@ $(document).ready(function() {
         $.ajax({
 			//connection au serveur
 		   type: 'GET',
-		   url: 'http://127.0.0.1:8000/QuChemPedIA/details_json/'+$.urlParam('id'),
+		   url: 'http://127.0.0.1:8000/QuChemPedIA/details_json?id_file='+$.urlParam('id'),
 		   processData: true,
 		   dataType: 'json',
-		   success: function(recivedData) {//ce que l'on fait si on a le json
-				$("#loadingImage").hide();				
-				//console.log("Success");
+			success: function(recivedData) {//ce que l'on fait si on a le json
+				$("#loadingImage").hide();
 				var results;
 				var ancienneCouleure;
-				results = recivedData.data;
-					//console.log(results);
+				if (typeof recivedData.data !== 'undefined') {
+                    results = recivedData.data;
+                }else{
+				    results = recivedData;
+                }
+					console.log(results);
 				if (!results){
 					var html = "<div class='container' style='margin-top:50px;'>";
 					html += '<div class="row row404">'
@@ -320,8 +340,9 @@ $(document).ready(function() {
 				
 			
 			},
-			error: function() {
+			error: function(xhr) {
 				$("#loadingImage").hide();
+				alert(xhr.responseText);
 				console.log("ERROR");
 			},
 
@@ -538,7 +559,7 @@ $(document).ready(function() {
 						}// else if "un autre logiciel"
 
 
-						html +="<div id=\"emplacementDesImages\" classe=\"container\"></div>";
+						html +="<div id=\"emplacementDesImages\" class=\"container\"></div>";
 			// dessin du tableau Cartesian atomic coordinates
 						if(results.results.geometry.elements_3D_coords_converged){ 
 							var elements_3D_coords_converged = results.results.geometry.elements_3D_coords_converged;
@@ -571,7 +592,7 @@ $(document).ready(function() {
 						for(var j=0; j<nbIms;j++){
 							$.ajax({
 								type: 'GET',
-								url : "http://127.0.0.1:8000/QuChemPedIA/details_image/"+j,
+								url : "http://127.0.0.1:8000/QuChemPedIA/details_image?id_image="+j,
 								processData: true,
 								success: function(recivedData) {
 									var imageDescription="Atom numbering scheme.";
@@ -596,7 +617,7 @@ $(document).ready(function() {
 						for(var j=0; j<nbIms1;j++){
 							$.ajax({
 								type: 'GET',
-								url : "http://127.0.0.1:8000/QuChemPedIA/details_image/"+j,
+								url : "http://127.0.0.1:8000/QuChemPedIA/details_image?id_image="+j,
 								processData: true,
 								success: function(recivedData) {
 									var imageDescription="Atom numbering scheme.";
@@ -620,7 +641,7 @@ $(document).ready(function() {
 						for(var j=0; j<nbIms2;j++){
 							$.ajax({
 								type: 'GET',
-								url : "http://127.0.0.1:8000/QuChemPedIA/details_image/"+j,
+								url : "http://127.0.0.1:8000/QuChemPedIA/details_image?id_image="+j,
 								processData: true,
 								success: function(recivedData) {
 									var imageDescription="Atom numbering scheme.";
@@ -682,7 +703,7 @@ $(document).ready(function() {
 						// à décomenter pour le fonctionnement final
 						/*$.ajax({
 							type: 'GET',
-							url : "http://127.0.0.1:8000/QuChemPedIA/details_image/"+j,
+							url : "http://127.0.0.1:8000/QuChemPedIA/details_image?id_image="+j,
 							processData: true,
 							success: function(recivedData) {
 								var imageDescription="Atom numbering scheme.";
@@ -740,7 +761,7 @@ $(document).ready(function() {
 						$("#reultsSubList").append(html);
 						$.ajax({
 							type: 'GET',
-							url : "http://127.0.0.1:8000/QuChemPedIA/details_image/"+j,
+							url : "http://127.0.0.1:8000/QuChemPedIA/details_image?id_image="+j,
 							processData: true,
 							success: function(recivedData) {
 								var imageDescription="Atom numbering scheme.";

@@ -9,8 +9,8 @@ urlpatterns = [
     path('auth', views.auth, name='auth'),
     path('logout', views.deconnexion, name='logout'),
     path('details', views.details, name='details'),
-    path('details_json/<str:id>', views.details_json, name='details_json'),
-    path('details_image/<str:id>', views.details_image, name='details_image'),
+    path('details_json', views.details_json, name='details_json'),
+    path('details_image', views.details_image, name='details_image'),
     path('rapport/<str:id>', views.rapport, name='rapport'),
     path('dashboard', login_required(views.dashboard), name='dashboard'),
     path('dashboard/account', login_required(views.account), name='dasboard/account'),
@@ -30,5 +30,4 @@ urlpatterns = [
          name='admin/launch_import'),
     path('admin/delete_import/<str:id_file>/<int:page>', login_required(views.delete_import),
          name='admin/delete_import'),
-
 ]

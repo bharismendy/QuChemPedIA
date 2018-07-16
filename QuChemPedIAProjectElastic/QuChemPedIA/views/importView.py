@@ -216,7 +216,14 @@ def delete_import(request, id_file, page):
     file = ImportFile.objects.get(id_file=id_file)
     path = "media/"+file.path_file
     if os.path.isfile(path=path):
-        print("test"+path)
-        os.remove(path=path)
-    file.delete()
+        try:
+            os.remove(path=path)
+        except Exception as error:
+            print(error)
+            file.status("couldn't delete the import")
+    try:
+        file.delete()
+    except Exception as error:
+        print(error)
+        file.status("can't delete the object in database")
     return HttpResponseRedirect('/QuChemPedIA/admin/list_of_import_in_database?page=' + str(page))

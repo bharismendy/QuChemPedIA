@@ -73,6 +73,7 @@
       </form>
     </div>
     {% if user.is_authenticated %}
+        {% if number_of_stand_by_import <= 20 %}
             <div id="div-dropzone">
               <!-- Génération de la dropzone -->
               <form id="myDropzone" action="{% url 'dashboard/import' %}" method="post" class="dropzone text-center">
@@ -82,6 +83,22 @@
                 </div>
               </form>
             </div>
+        {% else %}
+            <div class="text-center text-info">
+                <div class="col-lg-12">
+                    <p>
+                    <svg class="feather feather-info sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                         width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="656">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12" y2="8"></line>
+                    </svg>
+                       You have imported to much files in stand-by, wait until they have been processed
+                    </p>
+                </div>
+            </div>
+        {% endif %}
             {% if user.affiliation.strip|length <= 0 or user.affiliation == 'None' %}
                 <div class="text-center text-danger">
                     <div class="col-lg-12">
@@ -92,8 +109,9 @@
                             <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
                             </path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12" y2="17"></line>
                         </svg>
-                    Warning ! if you upload a calculation without setting your affiliation<br/>
-                        your calculation would never be related to your laboratory !</p>
+                            Warning! You are uploading a file but your affiliation is unknown.
+                            This database entry won't be related to your laboratory!
+                        </p>
                 </div>
             </div>
             {% endif %}
@@ -108,8 +126,8 @@
                                 <line x1="12" y1="16" x2="12" y2="12"></line>
                                 <line x1="12" y1="8" x2="12" y2="8"></line>
                             </svg>
-                            Did you know that if you want to import a lot of calcuation you could contact us ?<br/>
-                            we will doing it for free by using our script that are much quicker.
+                            If you want to import a large set of calculations results, you could contact us!
+                            An <i>ad hoc</i> import script could be set. That will be quicker.
                         </p>
                     </div>
                 </div>

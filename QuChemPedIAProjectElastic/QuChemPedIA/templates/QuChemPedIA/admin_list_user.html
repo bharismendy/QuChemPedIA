@@ -1,13 +1,13 @@
 {% extends "base_admin.html" %}
 {% block content %}
-        <main role="main" class="col-md-9" id="dashboard_main">
+        <main role="main" class="col-md-12" id="dashboard_main">
         <form class="form-inline mb-5" action="{% url 'admin/user_list' %}" method="GET">
             {% csrf_token %}
             {{ search_user_form.as_table }}
             <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
         </form>
         {% if users|length > 0 %}
-            <table class="table">
+            <table class="table" id="table_of_user">
                 <thead>
                     <tr>
                         <th scope="col">User ID</th>
@@ -16,6 +16,7 @@
                         <th scope="col">E-mail</th>
                         <th scope="col">Affiliation</th>
                         <th scope="col">is admin</th>
+                        <th scope="col">Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +28,21 @@
                         <td>{{ user_element.email }}</td>
                         <td>{{ user_element.affiliation }}</td>
                         <td>{{ user_element.is_admin }}</td>
+                        <td>
+                            <form class="form" method="post" action="{% url 'admin/edit_user' user_element.id %}">
+                                {% csrf_token %}
+                                <button class="btn btn-xs btn-info active">
+                                    <svg class="feather feather-edit sc-dnqmqq jxshSx"
+                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                                         data-reactid="486">
+                                        <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34">
+                                        </path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
+                                    Edit
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -67,5 +83,14 @@
                 </div>
             </div>
         {% endif %}
+        <script type="text/javascript">
+            $(document).ready( function () {
+                $('#table_of_user').DataTable({
+                    "paging":   false,
+                    "searching": false,
+                    "info":     false
+                } );
+            } );
+        </script>
         </main>
 {% endblock %}

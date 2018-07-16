@@ -11,42 +11,49 @@ class EditUtilisateur(forms.ModelForm):
             self.user=None
             print(error)
         super(EditUtilisateur, self).__init__(*args, **kwargs)
-        if not hasattr(self.user, 'first_name'):
-            first_name = "My first name"
-        else:
+        first_name = None
+        last_name = None
+        orcid = None
+        email = None
+        affiliation = None
+        city = None
+        country = None
+        if hasattr(self.user, 'first_name'):
             first_name = self.user.first_name
 
-        if not hasattr(self.user, 'last_name'):
-            last_name = "My last name"
-        else:
+        if hasattr(self.user, 'last_name'):
             last_name = self.user.last_name
 
-        if not hasattr(self.user, 'orcid'):
-            orcid = "My last name"
-        else:
+        if hasattr(self.user, 'orcid'):
             orcid = self.user.orcid
 
-        if not hasattr(self.user, 'email'):
-            email = "My email"
-        else:
+        if hasattr(self.user, 'email'):
             email = self.user.email
 
-        if not hasattr(self.user, 'affiliation'):
-            affiliation = "My affiliation"
-        else:
+        if hasattr(self.user, 'affiliation'):
             affiliation = self.user.affiliation
 
+        if hasattr(self.user, 'city'):
+            city = self.user.city
+
+        if hasattr(self.user, 'country'):
+            country = self.user.country
+
         self.fields['first_name'] = forms.CharField(label="first name", required=False, widget=(forms.TextInput(
-                                                    attrs={'value': first_name})))
+                                                    attrs={'value': first_name or None})))
         self.fields['last_name'] = forms.CharField(label="last name", required=False, widget=(forms.TextInput(
-                                                   attrs={'value': last_name})))
+                                                   attrs={'value': last_name or None})))
         self.fields['email'] = forms.CharField(label="email", required=False, widget=(forms.TextInput(
                                                attrs={'value': email or None})))
         self.fields['orcid'] = forms.CharField(label="orcid", required=False, widget=(forms.TextInput(
                                                attrs={'value': orcid or None})))
-        self.fields['affiliation'] = forms.CharField(label="affiliation", required=False, widget=(forms.TextInput(
+        self.fields['affiliation'] = forms.CharField(label="current affiliation", required=False, widget=(forms.TextInput(
                                                      attrs={'value': affiliation or None})))
+        self.fields['city'] = forms.CharField(label="city", required=False, widget=(forms.TextInput(
+                                                     attrs={'value': city or None})))
+        self.fields['country'] = forms.CharField(label="country", required=False, widget=(forms.TextInput(
+                                                     attrs={'value': country or None})))
 
     class Meta:
         model = Utilisateur
-        fields = ('first_name', 'last_name', 'email', 'orcid', 'affiliation',)
+        fields = ('first_name', 'last_name', 'email', 'orcid', 'affiliation', 'city',)

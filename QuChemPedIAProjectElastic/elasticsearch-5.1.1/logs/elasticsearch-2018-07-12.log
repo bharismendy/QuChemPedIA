@@ -1,0 +1,25 @@
+[2018-07-12T10:08:36,026][INFO ][o.e.n.Node               ] [] initializing ...
+[2018-07-12T10:08:36,108][INFO ][o.e.e.NodeEnvironment    ] [RKdkcE1] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [105.2gb], net total_space [133.8gb], spins? [no], types [ext4]
+[2018-07-12T10:08:36,108][INFO ][o.e.e.NodeEnvironment    ] [RKdkcE1] heap size [1.9gb], compressed ordinary object pointers [true]
+[2018-07-12T10:08:36,118][INFO ][o.e.n.Node               ] node name [RKdkcE1] derived from node ID [RKdkcE1RTianRa-jFDDyAA]; set [node.name] to override
+[2018-07-12T10:08:36,121][INFO ][o.e.n.Node               ] version[5.1.1], pid[2863], build[5395e21/2016-12-06T12:36:15.409Z], OS[Linux/4.13.0-45-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/1.8.0_171/25.171-b11]
+[2018-07-12T10:08:36,940][INFO ][o.e.p.PluginsService     ] [RKdkcE1] loaded module [aggs-matrix-stats]
+[2018-07-12T10:08:36,940][INFO ][o.e.p.PluginsService     ] [RKdkcE1] loaded module [ingest-common]
+[2018-07-12T10:08:36,941][INFO ][o.e.p.PluginsService     ] [RKdkcE1] loaded module [lang-expression]
+[2018-07-12T10:08:36,941][INFO ][o.e.p.PluginsService     ] [RKdkcE1] loaded module [lang-groovy]
+[2018-07-12T10:08:36,941][INFO ][o.e.p.PluginsService     ] [RKdkcE1] loaded module [lang-mustache]
+[2018-07-12T10:08:36,941][INFO ][o.e.p.PluginsService     ] [RKdkcE1] loaded module [lang-painless]
+[2018-07-12T10:08:36,941][INFO ][o.e.p.PluginsService     ] [RKdkcE1] loaded module [percolator]
+[2018-07-12T10:08:36,941][INFO ][o.e.p.PluginsService     ] [RKdkcE1] loaded module [reindex]
+[2018-07-12T10:08:36,941][INFO ][o.e.p.PluginsService     ] [RKdkcE1] loaded module [transport-netty3]
+[2018-07-12T10:08:36,941][INFO ][o.e.p.PluginsService     ] [RKdkcE1] loaded module [transport-netty4]
+[2018-07-12T10:08:36,942][INFO ][o.e.p.PluginsService     ] [RKdkcE1] no plugins loaded
+[2018-07-12T10:08:39,678][INFO ][o.e.n.Node               ] initialized
+[2018-07-12T10:08:39,678][INFO ][o.e.n.Node               ] [RKdkcE1] starting ...
+[2018-07-12T10:08:40,019][INFO ][o.e.t.TransportService   ] [RKdkcE1] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2018-07-12T10:08:40,024][WARN ][o.e.b.BootstrapCheck     ] [RKdkcE1] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+[2018-07-12T10:08:43,122][INFO ][o.e.c.s.ClusterService   ] [RKdkcE1] new_master {RKdkcE1}{RKdkcE1RTianRa-jFDDyAA}{UifPP5B8QbSbIheYglIOwA}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2018-07-12T10:08:43,160][INFO ][o.e.h.HttpServer         ] [RKdkcE1] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2018-07-12T10:08:43,160][INFO ][o.e.n.Node               ] [RKdkcE1] started
+[2018-07-12T10:08:43,331][INFO ][o.e.g.GatewayService     ] [RKdkcE1] recovered [1] indices into cluster_state
+[2018-07-12T10:08:43,601][INFO ][o.e.c.r.a.AllocationService] [RKdkcE1] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][2]] ...]).

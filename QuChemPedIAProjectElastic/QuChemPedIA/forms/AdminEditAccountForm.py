@@ -15,69 +15,72 @@ class AdminEditUtilisateur(forms.ModelForm):
         """
         try:
             self.user = user
-        except:
+        except Exception as error:
+            print (error)
             self.user = None
         super(AdminEditUtilisateur, self).__init__(*args, **kwargs)
-        if not hasattr(self.user, 'first_name'):
-            first_name = "the first name"
-        else:
+
+        first_name = None
+        last_name = None
+        orcid = None
+        email = None
+        group = None
+        last_date_upload = None
+        number_of_upload_this_day = None
+        affiliation = None
+        city = None
+        country = None
+
+        if hasattr(self.user, 'first_name'):
             first_name = self.user.first_name
 
-        if not hasattr(self.user, 'last_name'):
-            last_name = "the last name"
-        else:
+        if hasattr(self.user, 'last_name'):
             last_name = self.user.last_name
 
-        if not hasattr(self.user, 'orcid'):
-            orcid = "the last name"
-        else:
+        if hasattr(self.user, 'orcid'):
             orcid = self.user.orcid
 
-        if not hasattr(self.user, 'email'):
-            email = "the email"
-        else:
+        if hasattr(self.user, 'email'):
             email = self.user.email
 
-        if not hasattr(self.user, 'affiliation'):
+        if not hasattr(self.user, 'admin'):
             admin = False
         else:
             admin = self.user.admin
 
-        if not hasattr(self.user, 'affiliation'):
+        if not hasattr(self.user, 'staff'):
             staff = False
         else:
             staff = self.user.staff
 
-        if not hasattr(self.user, 'affiliation'):
-            active = False
+        if not hasattr(self.user, 'active'):
+            staff = False
         else:
             active = self.user.active
 
-        if not hasattr(self.user, 'group'):
-            group = "the group"
-        else:
+        if hasattr(self.user, 'group'):
             group = self.user.group
 
-        if not hasattr(self.user, 'last_date_upload'):
-            last_date_upload = None
-        else:
+        if hasattr(self.user, 'last_date_upload'):
             last_date_upload = self.user.last_date_upload
 
-        if not hasattr(self.user, 'number_of_upload_this_day'):
-            number_of_upload_this_day = 0
-        else:
+        if hasattr(self.user, 'number_of_upload_this_day'):
             number_of_upload_this_day = self.user.number_of_upload_this_day
 
-        if not hasattr(self.user, 'affiliation'):
-            affiliation = "the affiliation"
-        else:
+        if hasattr(self.user, 'affiliation'):
             affiliation = self.user.affiliation
 
+        if hasattr(self.user, 'city'):
+            city = self.user.city
+
+        if hasattr(self.user, 'country'):
+            country = self.user.country
+
         self.fields['first_name'] = forms.CharField(label="first name", required=False, widget=(forms.TextInput(
-                                                    attrs={'value': first_name})))
+                                                    attrs={'value': first_name or None})))
 
         self.fields['last_name'] = forms.CharField(label="last name", required=False, widget=(forms.TextInput(
-                                                   attrs={'value': last_name})))
+                                                   attrs={'value': last_name or None})))
 
         self.fields['email'] = forms.CharField(label="email", required=False, widget=(forms.TextInput(
                                                attrs={'value': email or None})))
@@ -91,13 +94,19 @@ class AdminEditUtilisateur(forms.ModelForm):
         self.fields['last_date_upload'] = forms.CharField(label="last_date_upload", required=False, widget=(forms.TextInput(
                                                      attrs={'value': last_date_upload or None})))
 
-        self.fields['affiliation'] = forms.CharField(label="affiliation", required=False, widget=(forms.TextInput(
+        self.fields['affiliation'] = forms.CharField(label="current affiliation", required=False, widget=(forms.TextInput(
                                                      attrs={'value': affiliation or None})))
 
         self.fields['number_of_upload_this_day'] = forms.CharField(label="number of upload today", required=False,
                                                                    widget=(forms.TextInput(
                                                                     attrs={'value': number_of_upload_this_day or None}))
                                                                    )
+        self.fields['city'] = forms.CharField(label="city", required=False, widget=(forms.TextInput(
+                                                     attrs={'value': city or None})))
+
+        self.fields['country'] = forms.CharField(label="country", required=False, widget=(forms.TextInput(
+                                                     attrs={'value': country or None})))
+
         if active :
             self.fields['active'] = forms.BooleanField(label="active member", required=False,  widget=
                                                       (forms.CheckboxInput(attrs={'checked': "checked"})))
@@ -128,4 +137,4 @@ class AdminEditUtilisateur(forms.ModelForm):
                   'active',
                   'group',
                   'last_date_upload',
-                  'number_of_upload_this_day')
+                  'number_of_upload_this_day',)
