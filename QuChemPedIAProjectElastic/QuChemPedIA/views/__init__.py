@@ -1,6 +1,6 @@
 from .AccueilView import accueil
 from .QueryView import query
-from .DetailsView import details, details_json, details_image
+from .DetailsView import details, details_json, details_image, details_author
 from .RapportView import rapport
 from .DeconnexionView import deconnexion
 from .AuthView import auth

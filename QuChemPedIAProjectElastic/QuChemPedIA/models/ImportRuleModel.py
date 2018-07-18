@@ -7,8 +7,8 @@ from QuChemPedIA.models.JobTypeModel import JobType
 class ImportRule(models.Model):
     """defining the table of how to import files"""
     id_rule = models.BigAutoField(primary_key=True)
-    id_software = models.OneToOneField(Software, null=False, unique=False, default=None, on_delete=models.SET_DEFAULT)
-    id_version = models.OneToOneField(SoftwareVersion,
+    id_software = models.ForeignKey(Software, null=False, unique=False, default=None, on_delete=models.SET_DEFAULT)
+    id_version = models.ForeignKey(SoftwareVersion,
                                       null=False,
                                       unique=False,
                                       default=None,

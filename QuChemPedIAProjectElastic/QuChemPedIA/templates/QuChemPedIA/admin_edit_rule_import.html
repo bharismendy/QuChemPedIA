@@ -8,6 +8,7 @@
                         <th scope="col">Rule ID</th>
                         <th scope="col">Software</th>
                         <th scope="col">Version</th>
+                        <th scope="col">Job type</th>
                         <th scope="col">Processing</th>
                     </tr>
                 </thead>
@@ -17,6 +18,7 @@
                         <th scope="row">{{ rule.id_rule }}</th>
                         <td>{{ rule.id_software.name }}</td>
                         <td>{{ rule.id_version.version_number }}</td>
+                        <td>{{ rule.id_job_type.name }}</td>
                         <td>
                             <form class="form" method="post" action="{% url 'admin/switch_rule' rule.id_rule rules.number %}">
                                 {% csrf_token %}

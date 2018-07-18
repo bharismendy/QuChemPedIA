@@ -71,7 +71,7 @@ def details_author(request):
     if request.is_ajax():
         try:
             user = Utilisateur.objects.get(id=id_author)
-            results = {'name':user.first_name+' '+user.last_name}
+            results = {'name': user.first_name+' '+user.last_name}
         except Exception as error:
             print(error)
             results = None

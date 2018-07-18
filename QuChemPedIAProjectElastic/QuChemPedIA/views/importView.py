@@ -152,6 +152,7 @@ def import_view(request):
             #   user == anonymous
             pass
         code_return_pol = register_soft_job_type_and_version(path_prefix+final_path)
+        print(code_return_pol)
         if code_return_pol == 0:
             temps.status = "error can't define policy"
             temps.save()

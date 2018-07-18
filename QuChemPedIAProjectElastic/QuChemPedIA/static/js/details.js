@@ -1,19 +1,37 @@
-function get_author_name(id_author){
-   $.ajax({
-        //connection au serveur
-       type: 'GET',
-       url: 'http://127.0.0.1:8000/QuChemPedIA/details_author?id_author='+id_author,
-       processData: true,
-       dataType: 'json',
-        success: function(results) {//ce que l'on fait si on a le json
-           if (typeof results.name !== 'undefined') {
-               return results.name.toString();
-           }
-           else{
-               return "N/A";
-           }
-           }
-        })
+/*old version
+function get_author_name(id_author,callback){
+	$.ajax({
+		//connection au serveur
+		type: 'GET',
+		url: 'http://127.0.0.1:8000/QuChemPedIA/details_author?id_author='+id_author,
+		processData: true,
+		dataType: 'json',
+		success: function(json){
+				callback(json.name);
+			},
+		});
+}*/
+function get_author_name(id_author,callback){
+	var resp = $.ajax({
+		//connection au serveur
+		type: 'GET',
+		url: 'http://127.0.0.1:8000/QuChemPedIA/details_author?id_author='+id_author,
+		processData: true,
+		dataType: 'json',
+		async: false,
+		success: function(results){
+				if (results !== undefined){
+					return results.name
+				}
+				else{
+					return "N/A"
+				}
+			},
+		error:function(){
+				return "N/A";
+			}
+		});
+	return resp.responseJSON.name;
 }
 $(document).ready(function() {
 
@@ -39,16 +57,22 @@ $(document).ready(function() {
 		   processData: true,
 		   dataType: 'json',
 			success: function(recivedData) {//ce que l'on fait si on a le json
+
+			console.log(get_author_name(1));
 				$("#loadingImage").hide();
 				var results;
 				var ancienneCouleure;
-				if (typeof recivedData.data !== 'undefined') {
-                    results = recivedData.data;
-                }else{
-				    results = recivedData;
+				try {
+					if (typeof recivedData.data !== 'undefined') {
+						results = recivedData.data;
+					}else{
+						results = recivedData;
+					}
                 }
-					console.log(results);
-				if (!results){
+                catch (e) {
+					console.log(e);
+                }
+				if (results === undefined || results === null){
 					var html = "<div class='container' style='margin-top:50px;'>";
 					html += '<div class="row row404">'
 					html += "<h1>404 - We can't find the molecule you're looking for.</h1>";
@@ -132,12 +156,12 @@ $(document).ready(function() {
 													+"<div class=\"container\">";
 
 						html1 += "<div class=\"row\"><div class=\"col\"><b>Job type</b></div><div class=\"col\"><b>Author</b></div><div class=\"col\"><b>Description</b></div><div class=\"col\"></div></div>";
-						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+recivedData.job_type+"</div><div class=\"col my-auto\">"+(results.metadata.primary_author?results.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id=\"opt\" class=\"btn btn-primary-outline\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
+						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+recivedData.job_type+"</div><div class=\"col my-auto\">"+get_author_name(results.metadata.id_user)+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id=\"opt\" class=\"btn btn-primary-outline\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 						$.each(recivedData.siblings, function(key,val) {
-							html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+val.job_type+"</div><div class=\"col my-auto\">"+(val.data.metadata.primary_author?val.data.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
+							html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+val.job_type+"</div><div class=\"col my-auto\">"+get_author_name(val.data.metadata.id_user)+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 							if(val.job_type=="TD") {
 								$.each(val.siblings, function(key2,val2) {
-									html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">&nbsp;&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.job_type+"</div><div class=\"col my-auto\">"+(val2.data.metadata.primary_author?val2.data.metadata.primary_author:"N/A")+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+"_"+key2+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
+									html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">&nbsp;&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i> "+val2.job_type+"</div><div class=\"col my-auto\">"+get_author_name(val2.data.metadata.id_user)+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+"_"+key2+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 								});
 							}
 						});
@@ -344,6 +368,16 @@ $(document).ready(function() {
 				$("#loadingImage").hide();
 				alert(xhr.responseText);
 				console.log("ERROR");
+				var html = "<div class='container' style='margin-top:50px;'>";
+					html += '<div class="row row404">'
+					html += "<h1>404 - We can't find the molecule you're looking for.</h1>";
+					html += '</div>'
+					html += '<div class="row row404">'
+    			html += '<div class="col-xs-4 "><img src='+scientist+'/ style="height:300px;"></div>'
+    			html += '<div class="col-xs-4"><img src='+molecule+'/ style="height:300px;"></div>'
+					html += '</div>'
+					html += '</div>'
+					$("#404error").append(html);
 			},
 
 		});
@@ -365,8 +399,16 @@ $(document).ready(function() {
 												+"</div>"
 												+"<div class=\"container\">";
 						if(results.metadata.log_file) html += "<div class=\"row\"><div class=\"col\"><b>Original log file</b></div><div class=\"col\">"+results.metadata.log_file+"</div></div>";
-						if(results.metadata.primary_author) html += "<div class=\"row\"><div class=\"col\"><b>Primary author</b></div><div class=\"col\">"+results.metadata.primary_author+"</div></div>";
-						if(results.metadata.primary_author_affiliation) html += "<div class=\"row\"><div class=\"col\"><b>Affiliation</b></div><div class=\"col\">"+results.metadata.primary_author_affiliation+"</div></div>";
+						if(results.metadata.id_user) {
+							/* old version
+							get_author_name(results.metadata.id_user,function(name) {
+                                html += "<div class=\"row\"><div class=\"col\"><b>Primary author</b></div><div class=\"col\">" +
+                                    name + "</div></div>";
+                            });*/
+							html += "<div class=\"row\"><div class=\"col\"><b>Primary author</b></div><div class=\"col\">" +
+                                    get_author_name(results.metadata.id_user) + "</div></div>";
+                        }
+						if(results.metadata.affiliation) html += "<div class=\"row\"><div class=\"col\"><b>Affiliation</b></div><div class=\"col\">"+results.metadata.affiliation+"</div></div>";
 						html += "</div></div>";
 						htm += html;
 					}
