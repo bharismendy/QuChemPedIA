@@ -67,8 +67,7 @@ def details_author(request):
     :return: png file
     """
     id_author = request.GET.get(key='id_author')
-    results = None
-    if request.is_ajax():
+    if request.is_ajax() and id_author:
         try:
             user = Utilisateur.objects.get(id=id_author)
             results = {'name': user.first_name+' '+user.last_name}

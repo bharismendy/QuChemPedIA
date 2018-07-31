@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',  # to use the rest framework
     'QuChemPedIA.apps.QuchempediaConfig',
     'bootstrap4'
 ]
@@ -129,3 +128,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+SITE_URL = 'http://quchempedia.univ-angers.fr'
+SITE_PORT = '80'
+
+ELASTICSEARCH = {"host": "localhost", "port": 9200}

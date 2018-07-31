@@ -146,6 +146,48 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="QuChemPedIA.models.ImportFileModels.ImportFile.is_freq">
+<code class="descname">is_freq</code><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.is_freq" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.ImportFileModels.ImportFile.is_freq_es_et">
+<code class="descname">is_freq_es_et</code><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.is_freq_es_et" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.ImportFileModels.ImportFile.is_opt">
+<code class="descname">is_opt</code><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.is_opt" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.ImportFileModels.ImportFile.is_opt_es_et">
+<code class="descname">is_opt_es_et</code><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.is_opt_es_et" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.ImportFileModels.ImportFile.is_sp">
+<code class="descname">is_sp</code><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.is_sp" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.ImportFileModels.ImportFile.is_td">
+<code class="descname">is_td</code><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.is_td" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="QuChemPedIA.models.ImportFileModels.ImportFile.objects">
 <code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#QuChemPedIA.models.ImportFileModels.ImportFile.objects" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -216,13 +258,14 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="QuChemPedIA.models.ImportRuleModel.ImportRule.id_software">
 <code class="descname">id_software</code><a class="headerlink" href="#QuChemPedIA.models.ImportRuleModel.ImportRule.id_software" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">Restaurant.place</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardOneToOneDescriptor</span></code> instance.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -235,13 +278,14 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="QuChemPedIA.models.ImportRuleModel.ImportRule.id_version">
 <code class="descname">id_version</code><a class="headerlink" href="#QuChemPedIA.models.ImportRuleModel.ImportRule.id_version" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">Restaurant.place</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardOneToOneDescriptor</span></code> instance.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -390,16 +434,18 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 </dd></dl>
 
 <dl class="attribute">
-<dt id="QuChemPedIA.models.SoftwareModel.Software.importrule">
-<code class="descname">importrule</code><a class="headerlink" href="#QuChemPedIA.models.SoftwareModel.Software.importrule" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the reverse side of a one-to-one
-relation.</p>
+<dt id="QuChemPedIA.models.SoftwareModel.Software.importrule_set">
+<code class="descname">importrule_set</code><a class="headerlink" href="#QuChemPedIA.models.SoftwareModel.Software.importrule_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
 <p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">Place.restaurant</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseOneToOneDescriptor</span></code> instance.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
 </dd></dl>
 
 <dl class="class">
@@ -512,6 +558,20 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="QuChemPedIA.models.UserModel.Utilisateur.affiliation">
 <code class="descname">affiliation</code><a class="headerlink" href="#QuChemPedIA.models.UserModel.Utilisateur.affiliation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.UserModel.Utilisateur.city">
+<code class="descname">city</code><a class="headerlink" href="#QuChemPedIA.models.UserModel.Utilisateur.city" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="QuChemPedIA.models.UserModel.Utilisateur.country">
+<code class="descname">country</code><a class="headerlink" href="#QuChemPedIA.models.UserModel.Utilisateur.country" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
@@ -718,16 +778,18 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 </dd></dl>
 
 <dl class="attribute">
-<dt id="QuChemPedIA.models.VersionModel.SoftwareVersion.importrule">
-<code class="descname">importrule</code><a class="headerlink" href="#QuChemPedIA.models.VersionModel.SoftwareVersion.importrule" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the reverse side of a one-to-one
-relation.</p>
+<dt id="QuChemPedIA.models.VersionModel.SoftwareVersion.importrule_set">
+<code class="descname">importrule_set</code><a class="headerlink" href="#QuChemPedIA.models.VersionModel.SoftwareVersion.importrule_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
 <p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">Place.restaurant</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseOneToOneDescriptor</span></code> instance.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -757,20 +819,34 @@ object the first time, the query is executed.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="QuChemPedIA.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">QuChemPedIA.models package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.models.ImportFileModels">QuChemPedIA.models.ImportFileModels module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.models.ImportRuleModel">QuChemPedIA.models.ImportRuleModel module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.models.JobTypeModel">QuChemPedIA.models.JobTypeModel module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.models.SoftwareModel">QuChemPedIA.models.SoftwareModel module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.models.UserModel">QuChemPedIA.models.UserModel module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.models.VersionModel">QuChemPedIA.models.VersionModel module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.models">Module contents</a></li>
+<h1 class="logo"><a href="QuChemPedIA.html">QuChemPedIA</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.QuChemPedIA_lib.html">QuChemPedIA.QuChemPedIA_lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.management.html">QuChemPedIA.management package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.migrations.html">QuChemPedIA.migrations package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">QuChemPedIA.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.models.ImportFileModels">QuChemPedIA.models.ImportFileModels module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.models.ImportRuleModel">QuChemPedIA.models.ImportRuleModel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.models.JobTypeModel">QuChemPedIA.models.JobTypeModel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.models.SoftwareModel">QuChemPedIA.models.SoftwareModel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.models.UserModel">QuChemPedIA.models.UserModel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.models.VersionModel">QuChemPedIA.models.VersionModel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.models">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.views.html">QuChemPedIA.views package</a></li>
 </ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -780,13 +856,6 @@ object the first time, the query is executed.</p>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/QuChemPedIA.models.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -807,7 +876,7 @@ object the first time, the query is executed.</p>
       &copy;2018, Brice Harismendy, Thomas Catalayud, Alexis Leblond, Corentin Talarmain, Lakhdar Amroun.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |

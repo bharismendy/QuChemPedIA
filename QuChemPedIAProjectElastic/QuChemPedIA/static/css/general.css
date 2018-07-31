@@ -625,32 +625,24 @@ strong {
   list-style: none;
 }
 
-/*
-    ORCID button
- */
-
-#connect-orcid-button{
-	border: 1px solid #D3D3D3;
-	padding: .3em;
-	background-color: #fff;
-	border-radius: 8px;
-	box-shadow: 1px 1px 3px #999;
-	cursor: pointer;
-	color: #212529;
-	font-weight: bold;
-	font-size: .8em;
-	line-height: 24px;
-	vertical-align: middle;
+/**utility**/
+.hide{
+    display: none;
 }
-
-#connect-orcid-button:hover{
-	border: 1px solid #338caf;
-	color: #338caf;
-}
-
-#orcid-id-icon{
-	display: block;
-	margin: 0 .5em 0 0;
-	padding: 0;
-	float: left;
+/**drag and drop zone**/
+#drop_zone{
+      background: white;
+    border-radius: 5px;
+    border: 2px dashed #2196F3;
+    border-image: none;
+    max-width: 500px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-left: auto;
+    padding-right: auto;
+    padding-bottom: 20px;
+    color: #495057;
 }

@@ -57,30 +57,14 @@
 
 <dl class="attribute">
 <dt id="QuChemPedIA.migrations.0001_initial.Migration.operations">
-<code class="descname">operations</code><em class="property"> = [&lt;CreateModel  options={'verbose_name': 'imported file'}, name='ImportFile', fields=[('id_file', &lt;django.db.models.fields.BigAutoField&gt;), ('path_file', &lt;django.db.models.fields.FilePathField&gt;), ('status', &lt;django.db.models.fields.CharField&gt;)]&gt;, &lt;CreateModel  options={'verbose_name': 'rule of import'}, name='ImportRule', fields=[('id_rule', &lt;django.db.models.fields.BigAutoField&gt;), ('rule', &lt;django.db.models.fields.CharField&gt;)]&gt;, &lt;CreateModel  name='JobType', fields=[('id_job_type', &lt;django.db.models.fields.BigAutoField&gt;), ('name', &lt;django.db.models.fields.CharField&gt;)]&gt;, &lt;CreateModel  name='Software', fields=[('id_software', &lt;django.db.models.fields.BigAutoField&gt;), ('name', &lt;django.db.models.fields.CharField&gt;)]&gt;, &lt;CreateModel  options={'verbose_name': 'software version'}, name='SoftwareVersion', fields=[('id_version', &lt;django.db.models.fields.BigAutoField&gt;), ('version_number', &lt;django.db.models.fields.CharField&gt;), ('id_software', &lt;django.db.models.fields.related.OneToOneField&gt;)]&gt;, &lt;CreateModel  options={'abstract': False}, name='Utilisateur', fields=[('id', &lt;django.db.models.fields.AutoField&gt;), ('password', &lt;django.db.models.fields.CharField&gt;), ('last_login', &lt;django.db.models.fields.DateTimeField&gt;), ('email', &lt;django.db.models.fields.EmailField&gt;), ('group', &lt;django.db.models.fields.CharField&gt;), ('last_name', &lt;django.db.models.fields.CharField&gt;), ('first_name', &lt;django.db.models.fields.CharField&gt;), ('affiliation', &lt;django.db.models.fields.TextField&gt;), ('orcid', &lt;django.db.models.fields.CharField&gt;), ('last_date_upload', &lt;django.db.models.fields.DateField&gt;), ('number_of_upload_this_day', &lt;django.db.models.fields.IntegerField&gt;), ('active', &lt;django.db.models.fields.BooleanField&gt;), ('staff', &lt;django.db.models.fields.BooleanField&gt;), ('admin', &lt;django.db.models.fields.BooleanField&gt;)]&gt;, &lt;AddField  name='id_job_type', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importrule'&gt;, &lt;AddField  name='id_software', field=&lt;django.db.models.fields.related.OneToOneField&gt;, model_name='importrule'&gt;, &lt;AddField  name='id_version', field=&lt;django.db.models.fields.related.OneToOneField&gt;, model_name='importrule'&gt;, &lt;AddField  name='id_job_type', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AddField  name='id_software', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AddField  name='id_user', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AddField  name='id_version', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;]</em><a class="headerlink" href="#QuChemPedIA.migrations.0001_initial.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<code class="descname">operations</code><em class="property"> = [&lt;CreateModel  options={'verbose_name': 'imported file'}, fields=[('id_file', &lt;django.db.models.fields.BigAutoField&gt;), ('path_file', &lt;django.db.models.fields.FilePathField&gt;), ('status', &lt;django.db.models.fields.CharField&gt;), ('is_opt', &lt;django.db.models.fields.BooleanField&gt;), ('is_opt_es_et', &lt;django.db.models.fields.BooleanField&gt;), ('is_freq', &lt;django.db.models.fields.BooleanField&gt;), ('is_freq_es_et', &lt;django.db.models.fields.BooleanField&gt;), ('is_sp', &lt;django.db.models.fields.BooleanField&gt;), ('is_td', &lt;django.db.models.fields.BooleanField&gt;)], name='ImportFile'&gt;, &lt;CreateModel  options={'verbose_name': 'rule of import'}, fields=[('id_rule', &lt;django.db.models.fields.BigAutoField&gt;), ('rule', &lt;django.db.models.fields.CharField&gt;)], name='ImportRule'&gt;, &lt;CreateModel  fields=[('id_job_type', &lt;django.db.models.fields.BigAutoField&gt;), ('name', &lt;django.db.models.fields.CharField&gt;)], name='JobType'&gt;, &lt;CreateModel  fields=[('id_software', &lt;django.db.models.fields.BigAutoField&gt;), ('name', &lt;django.db.models.fields.CharField&gt;)], name='Software'&gt;, &lt;CreateModel  options={'verbose_name': 'software version'}, fields=[('id_version', &lt;django.db.models.fields.BigAutoField&gt;), ('version_number', &lt;django.db.models.fields.CharField&gt;), ('id_software', &lt;django.db.models.fields.related.OneToOneField&gt;)], name='SoftwareVersion'&gt;, &lt;CreateModel  options={'abstract': False}, fields=[('id', &lt;django.db.models.fields.AutoField&gt;), ('password', &lt;django.db.models.fields.CharField&gt;), ('last_login', &lt;django.db.models.fields.DateTimeField&gt;), ('email', &lt;django.db.models.fields.EmailField&gt;), ('group', &lt;django.db.models.fields.CharField&gt;), ('last_name', &lt;django.db.models.fields.CharField&gt;), ('first_name', &lt;django.db.models.fields.CharField&gt;), ('affiliation', &lt;django.db.models.fields.TextField&gt;), ('city', &lt;django.db.models.fields.TextField&gt;), ('country', &lt;django.db.models.fields.TextField&gt;), ('orcid', &lt;django.db.models.fields.CharField&gt;), ('last_date_upload', &lt;django.db.models.fields.DateField&gt;), ('number_of_upload_this_day', &lt;django.db.models.fields.IntegerField&gt;), ('active', &lt;django.db.models.fields.BooleanField&gt;), ('staff', &lt;django.db.models.fields.BooleanField&gt;), ('admin', &lt;django.db.models.fields.BooleanField&gt;)], name='Utilisateur'&gt;, &lt;AddField  name='id_job_type', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importrule'&gt;, &lt;AddField  name='id_software', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importrule'&gt;, &lt;AddField  name='id_version', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importrule'&gt;, &lt;AddField  name='id_job_type', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AddField  name='id_software', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AddField  name='id_user', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AddField  name='id_version', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;]</em><a class="headerlink" href="#QuChemPedIA.migrations.0001_initial.Migration.operations" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </div>
-<div class="section" id="module-QuChemPedIA.migrations.0002_auto_20180711_1418">
-<span id="quchempedia-migrations-0002-auto-20180711-1418-module"></span><h2>QuChemPedIA.migrations.0002_auto_20180711_1418 module<a class="headerlink" href="#module-QuChemPedIA.migrations.0002_auto_20180711_1418" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="QuChemPedIA.migrations.0002_auto_20180711_1418.Migration">
-<em class="property">class </em><code class="descclassname">QuChemPedIA.migrations.0002_auto_20180711_1418.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/migrations/0002_auto_20180711_1418.html#Migration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.migrations.0002_auto_20180711_1418.Migration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
-<dl class="attribute">
-<dt id="QuChemPedIA.migrations.0002_auto_20180711_1418.Migration.dependencies">
-<code class="descname">dependencies</code><em class="property"> = [('QuChemPedIA', '0001_initial')]</em><a class="headerlink" href="#QuChemPedIA.migrations.0002_auto_20180711_1418.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="QuChemPedIA.migrations.0002_auto_20180711_1418.Migration.operations">
-<code class="descname">operations</code><em class="property"> = [&lt;AlterField  name='id_job_type', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AlterField  name='id_software', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;, &lt;AlterField  name='id_version', field=&lt;django.db.models.fields.related.ForeignKey&gt;, model_name='importfile'&gt;]</em><a class="headerlink" href="#QuChemPedIA.migrations.0002_auto_20180711_1418.Migration.operations" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="quchempedia-migrations-0002-auto-20180711-1418-module">
+<h2>QuChemPedIA.migrations.0002_auto_20180711_1418 module<a class="headerlink" href="#quchempedia-migrations-0002-auto-20180711-1418-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-QuChemPedIA.migrations">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-QuChemPedIA.migrations" title="Permalink to this headline">¶</a></h2>
@@ -94,16 +78,30 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="QuChemPedIA.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">QuChemPedIA.migrations package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.migrations.0001_initial">QuChemPedIA.migrations.0001_initial module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.migrations.0002_auto_20180711_1418">QuChemPedIA.migrations.0002_auto_20180711_1418 module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.migrations">Module contents</a></li>
+<h1 class="logo"><a href="QuChemPedIA.html">QuChemPedIA</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.QuChemPedIA_lib.html">QuChemPedIA.QuChemPedIA_lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.management.html">QuChemPedIA.management package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">QuChemPedIA.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.migrations.0001_initial">QuChemPedIA.migrations.0001_initial module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quchempedia-migrations-0002-auto-20180711-1418-module">QuChemPedIA.migrations.0002_auto_20180711_1418 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.migrations">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.models.html">QuChemPedIA.models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.views.html">QuChemPedIA.views package</a></li>
 </ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -113,13 +111,6 @@
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/QuChemPedIA.migrations.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -140,7 +131,7 @@
       &copy;2018, Brice Harismendy, Thomas Catalayud, Alexis Leblond, Corentin Talarmain, Lakhdar Amroun.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |

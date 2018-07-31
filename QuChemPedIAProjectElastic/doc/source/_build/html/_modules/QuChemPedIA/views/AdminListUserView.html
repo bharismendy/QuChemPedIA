@@ -39,7 +39,7 @@
 <span class="kn">from</span> <span class="nn">QuChemPedIA.models</span> <span class="k">import</span> <span class="n">Utilisateur</span>
 <span class="kn">from</span> <span class="nn">django.core.paginator</span> <span class="k">import</span> <span class="n">Paginator</span><span class="p">,</span> <span class="n">EmptyPage</span><span class="p">,</span> <span class="n">PageNotAnInteger</span>
 <span class="kn">from</span> <span class="nn">QuChemPedIA.forms.AdminSearchUserForm</span> <span class="k">import</span> <span class="n">SearchUserForm</span>
-
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
 
 <div class="viewcode-block" id="list_of_all_user"><a class="viewcode-back" href="../../../QuChemPedIA.views.html#QuChemPedIA.views.AdminListUserView.list_of_all_user">[docs]</a><span class="k">def</span> <span class="nf">list_of_all_user</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -53,6 +53,7 @@
     <span class="n">query_form</span> <span class="o">=</span> <span class="n">QueryForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">page</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">search_user_form</span> <span class="o">=</span> <span class="n">SearchUserForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">media</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_URL</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># switch on what we are looking for</span>
@@ -89,10 +90,10 @@
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="ow">and</span> <span class="s1">&#39;button-search&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">query_form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
             <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
-
     <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;QuChemPedIA/admin_list_user.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;query_form&#39;</span><span class="p">:</span> <span class="n">query_form</span><span class="p">,</span>
                                                                 <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="n">users</span><span class="p">,</span>
-                                                                <span class="s1">&#39;search_user_form&#39;</span><span class="p">:</span> <span class="n">search_user_form</span><span class="p">})</span></div>
+                                                                <span class="s1">&#39;search_user_form&#39;</span><span class="p">:</span> <span class="n">search_user_form</span><span class="p">,</span>
+                                                                <span class="s1">&#39;media&#39;</span><span class="p">:</span> <span class="n">media</span><span class="p">})</span></div>
 </pre></div>
 
           </div>
@@ -100,7 +101,26 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../QuChemPedIA.html">QuChemPedIA</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../QuChemPedIA.QuChemPedIA_lib.html">QuChemPedIA.QuChemPedIA_lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../QuChemPedIA.management.html">QuChemPedIA.management package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../QuChemPedIA.migrations.html">QuChemPedIA.migrations package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../QuChemPedIA.models.html">QuChemPedIA.models package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../QuChemPedIA.views.html">QuChemPedIA.views package</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../../QuChemPedIA.html">Documentation overview</a><ul>
@@ -129,7 +149,7 @@
       &copy;2018, Brice Harismendy, Thomas Catalayud, Alexis Leblond, Corentin Talarmain, Lakhdar Amroun.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>

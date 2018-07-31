@@ -242,7 +242,7 @@ var Dropzone = function (_Emitter) {
         /**
          * In MB. When the filename exceeds this limit, the thumbnail will not be generated.
          */
-        maxThumbnailFilesize: 10,
+        maxThumbnailFilesize: 10000,
 
         /**
          * If `null`, the ratio of the image will be used to calculate it.

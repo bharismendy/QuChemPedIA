@@ -11,27 +11,33 @@ function get_author_name(id_author,callback){
 			},
 		});
 }*/
+var url_website = 'http://127.0.0.1:8000/';
 function get_author_name(id_author,callback){
 	var resp = $.ajax({
 		//connection au serveur
 		type: 'GET',
-		url: 'http://127.0.0.1:8000/QuChemPedIA/details_author?id_author='+id_author,
+		url: url_website+'/details_author?id_author='+id_author,
 		processData: true,
 		dataType: 'json',
 		async: false,
 		success: function(results){
-				if (results !== undefined){
+				if (results !== undefined && results !== null){
 					return results.name
 				}
 				else{
-					return "N/A"
+					return "N/A";
 				}
 			},
 		error:function(){
 				return "N/A";
 			}
 		});
-	return resp.responseJSON.name;
+	if (resp.responseJSON == null){
+			return  "N/A"
+	}
+	else{
+		return resp.responseJSON.name;
+	}
 }
 $(document).ready(function() {
 
@@ -53,12 +59,10 @@ $(document).ready(function() {
         $.ajax({
 			//connection au serveur
 		   type: 'GET',
-		   url: 'http://127.0.0.1:8000/QuChemPedIA/details_json?id_file='+$.urlParam('id'),
+		   url: url_website+'details_json?id_file='+$.urlParam('id'),
 		   processData: true,
 		   dataType: 'json',
 			success: function(recivedData) {//ce que l'on fait si on a le json
-
-			console.log(get_author_name(1));
 				$("#loadingImage").hide();
 				var results;
 				var ancienneCouleure;
@@ -156,7 +160,7 @@ $(document).ready(function() {
 													+"<div class=\"container\">";
 
 						html1 += "<div class=\"row\"><div class=\"col\"><b>Job type</b></div><div class=\"col\"><b>Author</b></div><div class=\"col\"><b>Description</b></div><div class=\"col\"></div></div>";
-						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+recivedData.job_type+"</div><div class=\"col my-auto\">"+get_author_name(results.metadata.id_user)+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id=\"opt\" class=\"btn btn-primary-outline\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
+						html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+(recivedData.job_type?recivedData.job_type:recivedData.comp_details.general.job_type[0])+"</div><div class=\"col my-auto\">"+get_author_name(results.metadata.id_user)+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id=\"opt\" class=\"btn btn-primary-outline\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 						$.each(recivedData.siblings, function(key,val) {
 							html1 += "<div class=\"row mySiblingsRow\"><div class=\"col my-auto\">"+val.job_type+"</div><div class=\"col my-auto\">"+get_author_name(val.data.metadata.id_user)+"</div><div class=\"col my-auto\">N/A</div><div class=\"col my-auto\"><button type=\"button\" style=\"background-color:transparent\" id="+key+" class=\"btn btn-primary-outline myButton\"><span class=\"fa fa-file-text\" aria-hidden=\"true\"></span></button></div></div>";
 							if(val.job_type=="TD") {
@@ -399,15 +403,8 @@ $(document).ready(function() {
 												+"</div>"
 												+"<div class=\"container\">";
 						if(results.metadata.log_file) html += "<div class=\"row\"><div class=\"col\"><b>Original log file</b></div><div class=\"col\">"+results.metadata.log_file+"</div></div>";
-						if(results.metadata.id_user) {
-							/* old version
-							get_author_name(results.metadata.id_user,function(name) {
-                                html += "<div class=\"row\"><div class=\"col\"><b>Primary author</b></div><div class=\"col\">" +
-                                    name + "</div></div>";
-                            });*/
 							html += "<div class=\"row\"><div class=\"col\"><b>Primary author</b></div><div class=\"col\">" +
                                     get_author_name(results.metadata.id_user) + "</div></div>";
-                        }
 						if(results.metadata.affiliation) html += "<div class=\"row\"><div class=\"col\"><b>Affiliation</b></div><div class=\"col\">"+results.metadata.affiliation+"</div></div>";
 						html += "</div></div>";
 						htm += html;
@@ -634,7 +631,7 @@ $(document).ready(function() {
 						for(var j=0; j<nbIms;j++){
 							$.ajax({
 								type: 'GET',
-								url : "http://127.0.0.1:8000/QuChemPedIA/details_image?id_image="+j,
+								url : url_website+'/details_image?id_image='+j,
 								processData: true,
 								success: function(recivedData) {
 									var imageDescription="Atom numbering scheme.";
@@ -659,7 +656,7 @@ $(document).ready(function() {
 						for(var j=0; j<nbIms1;j++){
 							$.ajax({
 								type: 'GET',
-								url : "http://127.0.0.1:8000/QuChemPedIA/details_image?id_image="+j,
+								url : url_website+"/QuChemPedIA/details_image?id_image="+j,
 								processData: true,
 								success: function(recivedData) {
 									var imageDescription="Atom numbering scheme.";
@@ -683,7 +680,7 @@ $(document).ready(function() {
 						for(var j=0; j<nbIms2;j++){
 							$.ajax({
 								type: 'GET',
-								url : "http://127.0.0.1:8000/QuChemPedIA/details_image?id_image="+j,
+								url : url_website+"/details_image?id_image="+j,
 								processData: true,
 								success: function(recivedData) {
 									var imageDescription="Atom numbering scheme.";
@@ -803,7 +800,7 @@ $(document).ready(function() {
 						$("#reultsSubList").append(html);
 						$.ajax({
 							type: 'GET',
-							url : "http://127.0.0.1:8000/QuChemPedIA/details_image?id_image="+j,
+							url : url_website+"/details_image?id_image="+j,
 							processData: true,
 							success: function(recivedData) {
 								var imageDescription="Atom numbering scheme.";

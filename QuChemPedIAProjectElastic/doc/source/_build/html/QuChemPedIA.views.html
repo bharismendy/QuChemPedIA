@@ -175,8 +175,17 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="QuChemPedIA.views.DetailsView.details_author">
+<code class="descclassname">QuChemPedIA.views.DetailsView.</code><code class="descname">details_author</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/DetailsView.html#details_author"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.DetailsView.details_author" title="Permalink to this definition">¶</a></dt>
+<dd><p>function that return the name of the author
+:param request: request environment variable
+:param id: id of the user
+:return: png file</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="QuChemPedIA.views.DetailsView.details_image">
-<code class="descclassname">QuChemPedIA.views.DetailsView.</code><code class="descname">details_image</code><span class="sig-paren">(</span><em>request</em>, <em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/DetailsView.html#details_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.DetailsView.details_image" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">QuChemPedIA.views.DetailsView.</code><code class="descname">details_image</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/DetailsView.html#details_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.DetailsView.details_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>function that return a png of a molecule to an ajax/post request
 :param request: request environment variable
 :param id: id of the molecule that we want to show
@@ -185,10 +194,10 @@
 
 <dl class="function">
 <dt id="QuChemPedIA.views.DetailsView.details_json">
-<code class="descclassname">QuChemPedIA.views.DetailsView.</code><code class="descname">details_json</code><span class="sig-paren">(</span><em>request</em>, <em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/DetailsView.html#details_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.DetailsView.details_json" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">QuChemPedIA.views.DetailsView.</code><code class="descname">details_json</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/QuChemPedIA/views/DetailsView.html#details_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#QuChemPedIA.views.DetailsView.details_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>function that return the json of a molecule to an ajax request
 :param request: request environment variable
-:param id: id of the json that we want to show
+:param id: id of the json that we want to show but could be a file
 :return: json file</p>
 </dd></dl>
 
@@ -292,30 +301,44 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="QuChemPedIA.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">QuChemPedIA.views package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.AccountView">QuChemPedIA.views.AccountView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.AccueilView">QuChemPedIA.views.AccueilView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.AdminEditRules">QuChemPedIA.views.AdminEditRules module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.AdminEditUserView">QuChemPedIA.views.AdminEditUserView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.AdminListOfImportInDatabase">QuChemPedIA.views.AdminListOfImportInDatabase module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.AdminListUserView">QuChemPedIA.views.AdminListUserView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.AdminView">QuChemPedIA.views.AdminView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.AuthView">QuChemPedIA.views.AuthView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.ChangePasswordView">QuChemPedIA.views.ChangePasswordView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.DashboardView">QuChemPedIA.views.DashboardView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.DeconnexionView">QuChemPedIA.views.DeconnexionView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.DetailsView">QuChemPedIA.views.DetailsView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.QueryView">QuChemPedIA.views.QueryView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.RapportView">QuChemPedIA.views.RapportView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.UserHistoryImportView">QuChemPedIA.views.UserHistoryImportView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views.importView">QuChemPedIA.views.importView module</a></li>
-<li><a class="reference internal" href="#module-QuChemPedIA.views">Module contents</a></li>
+<h1 class="logo"><a href="QuChemPedIA.html">QuChemPedIA</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.QuChemPedIA_lib.html">QuChemPedIA.QuChemPedIA_lib package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.management.html">QuChemPedIA.management package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.migrations.html">QuChemPedIA.migrations package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QuChemPedIA.models.html">QuChemPedIA.models package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">QuChemPedIA.views package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.AccountView">QuChemPedIA.views.AccountView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.AccueilView">QuChemPedIA.views.AccueilView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.AdminEditRules">QuChemPedIA.views.AdminEditRules module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.AdminEditUserView">QuChemPedIA.views.AdminEditUserView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.AdminListOfImportInDatabase">QuChemPedIA.views.AdminListOfImportInDatabase module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.AdminListUserView">QuChemPedIA.views.AdminListUserView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.AdminView">QuChemPedIA.views.AdminView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.AuthView">QuChemPedIA.views.AuthView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.ChangePasswordView">QuChemPedIA.views.ChangePasswordView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.DashboardView">QuChemPedIA.views.DashboardView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.DeconnexionView">QuChemPedIA.views.DeconnexionView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.DetailsView">QuChemPedIA.views.DetailsView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.QueryView">QuChemPedIA.views.QueryView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.RapportView">QuChemPedIA.views.RapportView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.UserHistoryImportView">QuChemPedIA.views.UserHistoryImportView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views.importView">QuChemPedIA.views.importView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-QuChemPedIA.views">Module contents</a></li>
 </ul>
 </li>
 </ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -324,13 +347,6 @@
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/QuChemPedIA.views.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -351,7 +367,7 @@
       &copy;2018, Brice Harismendy, Thomas Catalayud, Alexis Leblond, Corentin Talarmain, Lakhdar Amroun.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |

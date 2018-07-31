@@ -1,6 +1,7 @@
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, Q
 import json
+from django.conf import settings
 
 
 def find(key, dictionary):
@@ -101,7 +102,7 @@ def search_inchi(inchi_value, page, nbrpp):
     :return: json list of result
     """
     #  connect to elastic search
-    es_host = {"host": "localhost", "port": 9200}
+    es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
           should=[Q('match', data__molecule__inchi=inchi_value)],
@@ -120,7 +121,7 @@ def search_id_user(id_user, page, nbrpp):
      :return: a list of json file
      """
     #  connect to elastic search
-    es_host = {"host": "localhost", "port": 9200}
+    es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
           should=[Q('match', contributor=id_user)],
@@ -138,7 +139,7 @@ def search_cid(cid_value, page, nbrpp):
     :return: a list of json file
     """
     #  connect to elastic search
-    es_host = {"host": "localhost", "port": 9200}
+    es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
           should=[Q('match', data__molecule__cid=cid_value)],
@@ -156,7 +157,7 @@ def search_iupac(iupac_value, page, nbrpp):
     :return: json of result to let the user decide of wich one he want to see
     """
     #  connect to elastic search
-    es_host = {"host": "localhost", "port": 9200}
+    es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
           should=[Q('match', data__molecule__iupac=iupac_value)],
@@ -174,7 +175,7 @@ def search_formula(formula_value, page, nbrpp):
     :return: json list of result
     """
     #  connect to elastic search
-    es_host = {"host": "localhost", "port": 9200}
+    es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
           should=[Q('match', data__molecule__formula=formula_value)],
@@ -192,7 +193,7 @@ def search_smiles(smiles_value, page, nbrpp):
     :return: json list of result
     """
     #  connect to elastic search
-    es_host = {"host": "localhost", "port": 9200}
+    es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
           should=[Q('match', data__molecule__smi=smiles_value)],
@@ -207,7 +208,7 @@ def search_id(id_value):
     :param id_value: string that correspond to the id in elasticsearch file system
     :return: the content of the json stored in elastic search
     """
-    es_host = {"host": "localhost", "port": 9200}
+    es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     response = es.get(index="quchempedia_index", doc_type="log_file", id=id_value)
     result = response['_source']

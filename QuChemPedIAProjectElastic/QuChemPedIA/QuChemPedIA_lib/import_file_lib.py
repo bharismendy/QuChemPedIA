@@ -1,6 +1,7 @@
 from QuChemPedIA.models.UserModel import Utilisateur
 import os
 import json
+from django.conf import settings
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, Q
 import hashlib
@@ -135,7 +136,7 @@ def is_opt_exist(json_to_test, job_type):
             return 4
         try:
             # search a corresponding file in elastic search
-            es_host = {"host": "localhost", "port": 9200}
+            es_host = settings.ELASTICSEARCH
             es = Elasticsearch(hosts=[es_host])
             if solvatation_method is None:
                 q = Q('bool',
@@ -211,7 +212,7 @@ def is_opt_exist(json_to_test, job_type):
             return 4
         try:
             # search a corresponding file in elastic search
-            es_host = {"host": "localhost", "port": 9200}
+            es_host = settings.ELASTICSEARCH
             es = Elasticsearch(hosts=[es_host])
             if solvatation_method is None:
                 q = Q('bool',
@@ -268,7 +269,7 @@ def exist_freq(id_json_to_test, json_to_input, path_to_log_file, destination_dir
     """
     index_name = 'quchempedia_index'
     base_json = get_siblings_json()
-    es_host = {"host": "localhost", "port": 9200}
+    es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     response = es.get(index="quchempedia_index", doc_type="log_file", id=id_json_to_test)
     path_in_file_sytem = get_path_to_store(destination_dir=destination_dir,
@@ -320,7 +321,7 @@ def exist_td(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
     """
     index_name = 'quchempedia_index'
     base_json = get_siblings_json()
-    es_host = {"host": "localhost", "port": 9200}
+    es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     response = es.get(index="quchempedia_index", doc_type="log_file", id=id_json_to_test)
     path_in_file_sytem = get_path_to_store(destination_dir=destination_dir,
@@ -377,7 +378,7 @@ def exist_sp(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
     """
     index_name = 'quchempedia_index'
     base_json = get_siblings_json()
-    es_host = {"host": "localhost", "port": 9200}
+    es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     response = es.get(index="quchempedia_index", doc_type="log_file", id=id_json_to_test)
     path_in_file_sytem = get_path_to_store(destination_dir=destination_dir,
@@ -430,7 +431,7 @@ def create_query(path, destination_dir, id_user):
 
     # iterate on all file
     # setting conection to elastic search server
-    es_host = {"host": "localhost", "port": 9200}
+    es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     base_json = get_base_json()
     # creating the index

@@ -51,15 +51,33 @@
             </div>
         {% endif %}
         {% if number_of_stand_by_import <= 20 %}
+
+            <form id="drag_and_drop_form" action="{% url 'dashboard/import' %}" method="POST" enctype="multipart/form-data" class="text-center">
+                <div id="form_import_div">
+
+                </div>
+                  <div id="drop_zone">
+                      Drop files here
+                  </div>
+             <input type="file" id="fileInput" name="file" multiple="false" onchange="ask_job_type();"/>
+            </form>
+            <script type="text/javascript">
+                // Setup the dnd listeners.
+                var dropZone = document.getElementById('drop_zone');
+                dropZone.addEventListener('dragover', handleDragOver, false);
+                dropZone.addEventListener('drop', handleFileSelect, false);
+            </script>
+            {% comment %} version with dropzone.js uncomment to
             <div id="div-dropzone">
               <!-- Génération de la dropzone -->
-              <form id="myDropzone" action="{% url 'dashboard/import' %}" method="post" class="dropzone text-center">
+              <form id="myDropzone" action="{% url 'dashboard/import' %}" method="POST" onsubmit="return submitForm();" class="dropzone text-center">
+                 <div id="form_import_div">
+                 </div>
                 <div class="fallback">
-                   <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}" />
-                  <input name="file" type="file"  />
                 </div>
               </form>
             </div>
+            {% endcomment %}
         {% else %}
             <div class="text-center text-info">
                 <div class="col-lg-12">
@@ -77,37 +95,28 @@
             </div>
         {% endif %}
         </main>
-        <script>
+        <script type="text/javascript">/** version of the dropzone with dropzone.js
            // using jQuery
-                function getCookie(name) {
-                    var cookieValue = null;
-                    if (document.cookie && document.cookie !== '') {
-                        var cookies = document.cookie.split(';');
-                        for (var i = 0; i < cookies.length; i++) {
-                            var cookie = jQuery.trim(cookies[i]);
-                            // Does this cookie string begin with the name we want?
-                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                break;
-                            }
-                        }
+                var dropzone=null;
+
+                Dropzone.autoDiscover = false;
+                dropzone = $("#myDropzone").dropzone({
+                    url:"{% url 'dashboard/import' %}",
+                    maxFilesize: 5000,
+                    addRemoveLinks : true,
+                    dictDefaultMessage: "Drop your log files here or click to upload",
+                    dictResponseError: 'Error uploading file!',
+                    autoQueue:false,
+                    autoProcessQueue:false,
+                    maxFiles: 1,
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    },
+                    success: function (file, response) {
+                        location.reload();
+                        this.removeFile(file); //todo discuter de quoi faire
                     }
-                    return cookieValue;
-                }
-                var csrftoken = getCookie('csrftoken');
-               $("#myDropzone").dropzone({
-                url:"{% url 'dashboard/import' %}",
-                maxFilesize: 5000,
-                addRemoveLinks : true,
-                dictDefaultMessage: "Drop your log files here or click to upload",
-                dictResponseError: 'Error uploading file!',
-                headers: {
-                    'X-CSRFToken': csrftoken
-                },
-               success: function (file, response) {
-                    location.reload();
-                    this.removeFile(file); //todo discuter de quoi faire
-                }
-            });
+
+                });**/
     </script>
 {% endblock %}

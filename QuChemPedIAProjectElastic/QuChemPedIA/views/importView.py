@@ -6,7 +6,7 @@ from QuChemPedIA.models import JobType
 from QuChemPedIA.models import Software
 from QuChemPedIA.models import SoftwareVersion
 from QuChemPedIA.models import ImportRule
-from QuChemPedIA.QuChemPedIA_lib.import_file_lib import import_file, get_path_to_store
+from QuChemPedIA.QuChemPedIA_lib.import_file_lib import import_file
 from QuChemPedIA.QuChemPedIA_lib import store_in_temp
 import datetime
 import json
@@ -65,9 +65,9 @@ def register_soft_job_type_and_version(path_to_file_to_register):
         print(error)
         return 0
 
+    inserted_jt = []
     # try to register the job_type
     for job in job_type:
-        inserted_jt = []
         try:
             # we check if it's already exist, if not we register it
                 job_type_ins, created = JobType.objects.get_or_create(name=job)
@@ -96,7 +96,7 @@ def register_soft_job_type_and_version(path_to_file_to_register):
             result.append(2)
         elif rule.rule == "delete":
             result.append(3)
-    return result
+        return result
 
 
 def update_status_in_db(result_of_import: int, import_object: ImportFile):
@@ -127,15 +127,43 @@ def import_view(request):
     """
     path_prefix = 'media/'
     number_of_stand_by_import = 0
-    if request.user.is_authenticated:
-        number_of_stand_by_import = len(list(ImportFile.objects.filter(id_user=request.user.id).filter(status="stand-by")))
+    query_form = QueryForm(request.GET or None)
+    if query_form.is_valid():
+        return HttpResponseRedirect('query')
 
-    if request.method == 'POST':
-        myfile = request.FILES['file']
-        #todo add json transform
+    if request.user.is_authenticated:
+        number_of_stand_by_import = len(list(ImportFile.objects.filter(id_user=request.user.id).filter(
+            status="stand-by")))
+
+    if request.method == 'POST' and 'btn_upload' in request.POST:
+        if not request.FILES['file']:
+            myfile = request.POST.get('file')
+        else:
+            myfile = request.FILES['file']  # work for dropzone only
+        # todo add json transform
         temps = ImportFile.objects.create(path_file=path_prefix, id_user=request.user)  # register in database
         final_path = store_in_temp(id_calcul=str(temps.id_file), file=myfile)
         temps.path_file = final_path
+
+        # record what user think of is file
+        if request.POST.get('job_type_opt'):
+            temps.is_opt = True
+
+        if request.POST.get('job_type_opt_es_et'):
+            temps.is_opt_es_et = True
+
+        if request.POST.get('job_type_freq'):
+            temps.is_freq = True
+
+        if request.POST.get('job_type_freq_es_et'):
+            temps.is_freq_es_et = True
+
+        if request.POST.get('job_type_sp'):
+            temps.is_sp = True
+
+        if request.POST.get('job_type_td'):
+            temps.is_td = True
+
         temps.save()
         # adding an import  for this day to the user*
         if request.user.is_authenticated:
@@ -152,7 +180,6 @@ def import_view(request):
             #   user == anonymous
             pass
         code_return_pol = register_soft_job_type_and_version(path_prefix+final_path)
-        print(code_return_pol)
         if code_return_pol == 0:
             temps.status = "error can't define policy"
             temps.save()
@@ -174,9 +201,6 @@ def import_view(request):
                 temps.status = 'import failed'
                 temps.save()
 
-    query_form = QueryForm(request.GET or None)
-    if query_form.is_valid():
-        return HttpResponseRedirect('query')
     return render(request, 'QuChemPedIA/user_import.html', {'query_form': query_form,
                                                             'number_of_stand_by_import': number_of_stand_by_import})
 

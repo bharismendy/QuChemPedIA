@@ -14,6 +14,12 @@ class ImportFile(models.Model):
     id_software = models.ForeignKey(Software, null=True, default=None, on_delete=models.SET_NULL)
     id_version = models.ForeignKey(SoftwareVersion, null=True, default=None, on_delete=models.SET_NULL)
     id_job_type = models.ForeignKey(JobType, null=True, default=None, on_delete=models.SET_NULL)
+    is_opt = models.BooleanField(null=False, default=False)
+    is_opt_es_et = models.BooleanField(null=False, default=False)
+    is_freq = models.BooleanField(null=False, default=False)
+    is_freq_es_et = models.BooleanField(null=False, default=False)
+    is_sp = models.BooleanField(null=False, default=False)
+    is_td = models.BooleanField(null=False, default=False)
 
     class Meta:
         verbose_name = "imported file"
