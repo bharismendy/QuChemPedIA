@@ -21,7 +21,7 @@
                         <td>{{ imported_file.status }}</td>
                         <td><a href="{% url 'admin/edit_user' imported_file.id_user_id %}">{{ imported_file.id_user_id }}</a></td>
                         <td>
-                            <form class="form" action="{{ MEDIA_URL }}{{ imported_file.path_file }}">
+                            <form class="form" action="{{ imported_file.path_file }}">
                                 {% csrf_token %}
                                 <button class="btn btn-xs btn-primary active">download
                                     <svg class="feather feather-download-cloud sc-dnqmqq jxshSx"

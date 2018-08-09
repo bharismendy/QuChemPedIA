@@ -8,6 +8,7 @@ from QuChemPedIA.models import SoftwareVersion
 from QuChemPedIA.models import ImportRule
 from QuChemPedIA.QuChemPedIA_lib.import_file_lib import import_file
 from QuChemPedIA.QuChemPedIA_lib import store_in_temp
+from django.conf import settings
 import datetime
 import json
 import os
@@ -179,7 +180,7 @@ def import_view(request):
         else:
             #   user == anonymous
             pass
-        code_return_pol = register_soft_job_type_and_version(path_prefix+final_path)
+        code_return_pol = register_soft_job_type_and_version(settings.BASE_DIR+final_path)
         if code_return_pol == 0:
             temps.status = "error can't define policy"
             temps.save()

@@ -128,7 +128,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-SITE_URL = 'http://quchempedia.univ-angers.fr'
-SITE_PORT = '80'
+SITE_URL = 'http://127.0.0.1'
+SITE_PORT = '8000'
 
 ELASTICSEARCH = {"host": "localhost", "port": 9200}

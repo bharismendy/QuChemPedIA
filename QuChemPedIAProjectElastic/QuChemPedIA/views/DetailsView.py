@@ -17,8 +17,11 @@ def details(request):
     :return: html template
     """
     query_form = QueryForm(request.GET or None)
-
-    return render(request, 'QuChemPedIA/details.html', {'query_form': query_form})
+    site_url = settings.SITE_URL
+    port_number = settings.SITE_PORT
+    return render(request, 'QuChemPedIA/details.html', {'query_form': query_form,
+                                                        'site_url': site_url,
+                                                        'port_number': port_number})
 
 
 def details_json(request):
