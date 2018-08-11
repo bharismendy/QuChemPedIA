@@ -13,7 +13,7 @@ def list_of_all_user(request):
     :return: template html
     """
     if not request.user.is_admin:  # security to redirect user that aren't admin
-        return HttpResponseRedirect('/QuChemPedIA/accueil')
+        return HttpResponseRedirect('/accueil')
 
     query_form = QueryForm(request.GET or None)
     page = request.GET.get('page', 1)

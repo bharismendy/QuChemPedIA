@@ -215,7 +215,7 @@ def launch_import(request, id_file, page):
     :return: html template
     """
     if not request.user.is_admin:  # security to redirect user that aren't admin
-        return HttpResponseRedirect('/QuChemPedIA/accueil')
+        return HttpResponseRedirect('/accueil')
     file = ImportFile.objects.get(id_file=id_file)
     path = "media/"+file.path_file
     id_user = file.id_user.id
@@ -226,7 +226,7 @@ def launch_import(request, id_file, page):
         print(error)
         file.status = 'import failed'
         file.save()
-    return HttpResponseRedirect('/QuChemPedIA/admin/list_of_import_in_database?page=' + str(page))
+    return HttpResponseRedirect('/admin/list_of_import_in_database?page=' + str(page))
 
 
 def delete_import(request, id_file, page):
@@ -238,7 +238,7 @@ def delete_import(request, id_file, page):
     :return: html template
     """
     if not request.user.is_admin:  # security to redirect user that aren't admin
-        return HttpResponseRedirect('/QuChemPedIA/accueil')
+        return HttpResponseRedirect('/accueil')
     file = ImportFile.objects.get(id_file=id_file)
     path = "media/"+file.path_file
     if os.path.isfile(path=path):
@@ -252,4 +252,4 @@ def delete_import(request, id_file, page):
     except Exception as error:
         print(error)
         file.status("can't delete the object in database")
-    return HttpResponseRedirect('/QuChemPedIA/admin/list_of_import_in_database?page=' + str(page))
+    return HttpResponseRedirect('/admin/list_of_import_in_database?page=' + str(page))
