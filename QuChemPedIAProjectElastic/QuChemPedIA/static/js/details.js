@@ -481,7 +481,11 @@ $(document).ready(function() {
 							html += "<tr class=\"ligneSoulignee\"><td>HOMO-1</td><td>HOMO</td><td>LUMO</td><td>LUMO+1</td><td></td></tr>";
 							//html += "<div class=\"ligneDiv\"></div>";
 							for(var j=0;j<homo_indexes.length;j++){
-								html += "<tr><td>"+MO_energies[j][homo_indexes[j]-1].toFixed(2)+"</td><td>"+MO_energies[j][homo_indexes[j]].toFixed(2)+"</td><td>"+MO_energies[j][homo_indexes[j]+1].toFixed(2)+"</td><td>"+MO_energies[j][homo_indexes[j]+2].toFixed(2)+"</td></tr>";
+								if (homo_indexes[j] > 0) {
+									html += "<tr><td>N/A</td><td>"+MO_energies[j][homo_indexes[j]].toFixed(2)+"</td><td>"+MO_energies[j][homo_indexes[j]+1].toFixed(2)+"</td><td>N/A</td></tr>";
+								} else {
+                                    html += "<tr><td>" + MO_energies[j][homo_indexes[j] - 1].toFixed(2) + "</td><td>" + MO_energies[j][homo_indexes[j]].toFixed(2) + "</td><td>" + MO_energies[j][homo_indexes[j] + 1].toFixed(2) + "</td><td>" + MO_energies[j][homo_indexes[j] + 2].toFixed(2) + "</td></tr>";
+                                }
 							}
 							html += "</table></div>";
 						}
