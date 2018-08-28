@@ -1,16 +1,4 @@
-/*old version
-function get_author_name(id_author,callback){
-	$.ajax({
-		//connection au serveur
-		type: 'GET',
-		url: 'http://127.0.0.1:8000/QuChemPedIA/details_author?id_author='+id_author,
-		processData: true,
-		dataType: 'json',
-		success: function(json){
-				callback(json.name);
-			},
-		});
-}*/
+
 var url_website = url_web_site+':'+port_web_site+'/';
 function get_author_name(id_author,callback){
 	var resp = $.ajax({

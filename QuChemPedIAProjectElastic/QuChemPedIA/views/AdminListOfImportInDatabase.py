@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from QuChemPedIA.models import ImportFile
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.conf import settings
 
 
 def list_of_import_in_database(request):
@@ -17,7 +18,6 @@ def list_of_import_in_database(request):
 
     query_form = QueryForm(request.GET or None)
     page = request.GET.get('page', 1)
-
     try:  # get all imported  file
         list_imported_file = ImportFile.objects.all()
         paginator = Paginator(list_imported_file.order_by("id_file"), 10)
@@ -33,4 +33,6 @@ def list_of_import_in_database(request):
         if query_form.is_valid():
             return HttpResponseRedirect('query')
 
-    return render(request, 'QuChemPedIA/admin_list_on_import_in_database.html', {'query_form': query_form, "history": history})
+    return render(request, 'QuChemPedIA/admin_list_on_import_in_database.html', {'query_form': query_form,
+                                                                                 "history": history,
+                                                                                 "media": media})
