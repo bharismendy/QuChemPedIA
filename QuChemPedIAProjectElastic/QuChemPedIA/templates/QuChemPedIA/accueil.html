@@ -23,37 +23,55 @@
                 <!-- Bouton login-->
                   {% if not user.is_authenticated %}
                     <div id="sign" class="col col-perso" align=right>
-                        <form method="get" action="{% url 'auth' %}">
-                          <button id="button-login" type="submit" class="btn btn-info default-primary-color">
-                            Sign In&nbsp;/&nbsp;Sign Up
-                          </button>
-                        </form>
+                        <a  class="nav-link btn btn-info default-primary-color button-nav" title="Sign up/Sign in" href="{% url 'auth' %}">
+                            <svg class="feather feather-log-in sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
+                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="716">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                <polyline points="10 17 15 12 10 7"></polyline>
+                                <line x1="15" y1="12" x2="3" y2="12"></line>
+                            </svg>
+                        </a>
                     </div>
                   {% else %}
                       <!-- Bouton Request calcul-->
-                          <button id="button-calcul" class="btn btn-info default-primary-color" >
-                            Calcul request
-                          </button>
+                      <a class="nav-link btn btn-info default-primary-color button-nav" title="import a file" href="{% url 'dashboard/import' %}">
+                            <svg class="feather feather-upload sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1236">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                      </a>
+
                       {%  if user.is_admin %}
-                            <form method="POST" action="{% url 'admin' %}">
-                             {% csrf_token %}
-                              <button id="button-admin" type="submit" class="btn btn-info default-primary-color ">
-                                admin
-                              </button>
-                            </form>
+                          <a class="nav-link btn btn-info default-primary-color button-admin" title="Admin panel" href="{% url 'admin' %}">
+                            <svg class="feather feather-settings sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
+                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1016">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                        </a>
                     {% endif %}
-                        <form method="POST" action="{% url 'dashboard' %}">
-                            {% csrf_token %}
-                          <button id="button-dashboard" type="submit" class="btn btn-info default-primary-color">
-                            My profile
-                          </button>
-                        </form>
-                    <form method="POST" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                      <button type="submit" class="btn btn-info default-primary-color">
-                        Sign out
-                      </button>
-                    </form>
+                        <a class="nav-link btn btn-info default-primary-color button-nav" title="My profile" href="{% url 'dasboard/account' %}">
+                            <svg class="feather feather-user sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
+                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1261">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </a>
+                        <a class="nav-link btn btn-info default-primary-color button-nav" title="Log-out" href="{% url 'logout' %}">
+                            <svg class="feather feather-log-out sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                               width="24" height="24" viewBox="0 0 24 24" fill="none"
+                               stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                               stroke-linejoin="round" aria-hidden="true" data-reactid="721">
+                              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                              <polyline points="16 17 21 12 16 7"></polyline>
+                              <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                        </a>
                   {% endif %}
                 </div>
 {% endblock %}
@@ -72,75 +90,9 @@
           <button id="button-search" class="btn btn-info default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
       </form>
     </div>
-    {% if user.is_authenticated %}
-        {% if number_of_stand_by_import <= 20 %}
-            <div id="div-dropzone">
-              <!-- Génération de la dropzone -->
-              <form id="myDropzone" action="{% url 'dashboard/import' %}" method="post" class="dropzone text-center">
-                <div class="fallback">
-                   <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}" />
-                  <input name="file" type="file"  />
-                </div>
-              </form>
-            </div>
-        {% else %}
-            <div class="text-center text-info">
-                <div class="col-lg-12">
-                    <p>
-                    <svg class="feather feather-info sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
-                         width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="656">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <line x1="12" y1="8" x2="12" y2="8"></line>
-                    </svg>
-                       You have imported to much files in stand-by, wait until they have been processed
-                    </p>
-                </div>
-            </div>
-        {% endif %}
-            {% if user.affiliation.strip|length <= 0 or user.affiliation == 'None' %}
-                <div class="text-center text-danger">
-                    <div class="col-lg-12">
-                        <p>
-                        <svg class="feather feather-alert-triangle sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
-                             width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="56">
-                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
-                            </path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12" y2="17"></line>
-                        </svg>
-                            Warning! You are uploading a file but your affiliation is unknown.
-                            This database entry won't be related to your laboratory!
-                        </p>
-                </div>
-            </div>
-            {% endif %}
-            {% if user.number_of_upload_this_day >= 10  %}
-                <div class="text-center text-info">
-                    <div class="col-lg-12">
-                        <p>
-                            <svg class="feather feather-info sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
-                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="656">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12" y2="8"></line>
-                            </svg>
-                            If you want to import a large set of calculations results, you could contact us!
-                            An <i>ad hoc</i> import script could be set. That will be quicker.
-                        </p>
-                    </div>
-                </div>
-            {% endif %}
-            {% else %}
-                <div class="form-row text-center">
-                    <div class="col-lg-12 mt-4">
-                        <form action="{% url 'dashboard/import' %}">
-                            <button type="submit" class="btn btn-info default-primary-color">&nbsp;Upload my calculations anonymously&nbsp;</button>
-                        </form>
-                    </div>
-                </div>
-            {% endif %}
+  </div>
+</div>
+
 <footer>
   <!-- Génération de la navbar pour footer -->
   <nav class="navbar navbar-expand-sm fixed-bottom">

@@ -27,4 +27,4 @@ def store_in_temp(id_calcul, file):
         except Exception as error:
             print(error)
 
-        return settings.MEDIA_URL+"to_import/"+path_in_file_system+"/"+file.name
+        return "to_import/"+path_in_file_system+"/"+file.name

@@ -43,4 +43,4 @@ def switch_rule(request, id_of_rule, page):
     if request.POST:
         rule_to_switch.rule = request.POST.get('options')
         rule_to_switch.save()
-    return HttpResponseRedirect('/QuChemPedIA/admin/list_of_rule?page='+str(page))
+    return HttpResponseRedirect('/admin/list_of_rule?page='+str(page))

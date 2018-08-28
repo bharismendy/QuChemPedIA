@@ -26,7 +26,7 @@ def auth(request):
             user = authenticate(email=email, password=password)  # Nous vérifions si les données sont correctes
             if user:  # Si l'objet renvoyé n'est pas None
                 login(request, user)  # nous connectons l'utilisateur
-                return HttpResponseRedirect('accueil')
+                return HttpResponseRedirect('dashboard/history')
             else:  # sinon une erreur sera affichée
                 error_login = True
     else:

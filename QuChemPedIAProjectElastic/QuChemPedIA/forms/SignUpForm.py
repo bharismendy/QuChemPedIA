@@ -1,18 +1,12 @@
 from django import forms
 from QuChemPedIA.models import Utilisateur
-from django.core.validators import RegexValidator
 
 
 class SignUpForm(forms.ModelForm):
     """form to register a new user"""
-    my_validator = RegexValidator(r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$",
-                                  ["Your password should contains :",
-                                   "- 1 special character",
-                                   "- 1 lower caser",
-                                   "- 1 upper case",
-                                   "- 1 numeric"])
+
     email = forms.CharField(label='email * ', required=False)
-    password1 = forms.CharField(label='password * ', widget=forms.PasswordInput, validators=[my_validator])
+    password1 = forms.CharField(label='password * ', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm password * ', widget=forms.PasswordInput)
     affiliation = forms.CharField(label='affiliation', required=False)
 
@@ -28,6 +22,13 @@ class SignUpForm(forms.ModelForm):
         if qs.exists():
             raise forms.ValidationError("email is taken")
         return email
+
+    def clean_password1(self):
+        """check if the password is valid"""
+        password1 = self.cleaned_data.get("password1")
+        if len(password1) < 8:
+            raise forms.ValidationError("The password should contains at least 8 characters")
+        return password1
 
     def clean_password2(self):
         """Check that the two password entries match"""

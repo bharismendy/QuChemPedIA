@@ -25,4 +25,4 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('QuChemPedIA.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+static(settings.DATA_DIR_URL, document_root=settings.DATA_DIR_ROOT)

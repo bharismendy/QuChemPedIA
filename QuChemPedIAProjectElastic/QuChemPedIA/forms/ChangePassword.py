@@ -1,25 +1,24 @@
 from django import forms
 from QuChemPedIA.models.UserModel import Utilisateur
-from django.core.validators import RegexValidator
 
 
 class ChangePassword(forms.ModelForm):
     """form to change the password of an user"""
     def __init__(self, *args, **kwargs):
-        my_validator = RegexValidator(r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$",
-                                      ["Your password should contains :",
-                                       "- 1 special character",
-                                       "- 1 lower caser",
-                                       "- 1 upper case",
-                                       "- 1 numeric"])
         super(ChangePassword, self).__init__(*args, **kwargs)
-        self.fields['password'] = forms.CharField(label='password * ', required=False, widget=forms.PasswordInput,
-                                                  validators=[my_validator])
+        self.fields['password'] = forms.CharField(label='password * ', required=False, widget=forms.PasswordInput)
         self.fields['password2'] = forms.CharField(label='Confirm password * ', required=False, widget=forms.PasswordInput)
 
     class Meta:
         model = Utilisateur
         fields = ('password',)
+
+    def clean_password1(self):
+        """check if the password is valid"""
+        password1 = self.cleaned_data.get("password1")
+        if len(password1) < 8:
+            raise forms.ValidationError("The password should contains at least 8 characters")
+        return password1
 
     def clean_password2(self):
         """Check that the two password entries match"""

@@ -34,6 +34,7 @@ def details_json(request):
     id_file = request.GET.get(key='id_file')
     results = None
     path = os.curdir+settings.MEDIA_URL + id_file
+    print(path)
     if request.is_ajax():
         if os.path.isfile(path):
             try:
@@ -73,7 +74,7 @@ def details_author(request):
     if request.is_ajax() and id_author:
         try:
             user = Utilisateur.objects.get(id=id_author)
-            results = {'name': user.first_name+' '+user.last_name}
+            results = {'name': str(user.first_name)+' '+str(user.last_name)}
         except Exception as error:
             print(error)
             results = None

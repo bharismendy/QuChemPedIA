@@ -354,51 +354,26 @@ strong {
   width: 25%;
 }
 
-#button-login {
-    position: absolute;
-    right: 1%;
-    background-color: var(--default-primary-color);
+
+.button-nav {
+  background-color: var(--default-primary-color);
+  border-color: var(--default-primary-color);
+  margin-bottom: 100px;
+  margin-right: 10px;
+  color: white;
+}
+.button-admin{
     border-color: var(--default-primary-color);
     margin-bottom: 100px;
+    margin-right: 10px;
     color: white;
+    background-color: #800020;
 }
-
-#button-admin{
-    margin-left: 10px;
+.button-admin:hover{
+    background-color: #b3002d;
+    border-color: #800020;
 }
-
-#button-login:hover {
-  background: #1d87da;
-}
-
-#button-signin {
-  background-color: var(--default-primary-color);
-  border-color: var(--default-primary-color);
-  margin-bottom: 100px;
-  color: white;
-}
-
-#button-signin:hover {
-  background: #1d87da;
-}
-
-#button-calcul {
-  background-color: var(--default-primary-color);
-  border-color: var(--default-primary-color);
-  margin-bottom: 100px;
-  color: white;
-}
-
-#button-calcul:hover {
-  background: #1d87da;
-}
-
-#button-submit {
-  background-color: var(--default-primary-color);
-  border-color: var(--default-primary-color);
-}
-
-#button-submit:hover {
+.button-nav:hover {
   background: #1d87da;
 }
 
@@ -509,7 +484,7 @@ strong {
 }
 #sign{
     margin-top: 0.5%;
-    margin-right: 1.5%;
+    margin-right: 0.05%;
 }
 #form_sign_in{
     border-right: 1px solid black;

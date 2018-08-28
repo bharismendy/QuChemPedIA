@@ -495,13 +495,21 @@ def create_query(path, destination_dir, id_user):
                                                         id_calcul=id_file, make_path=True)
 
                 response = es.get(index="quchempedia_index", doc_type="log_file", id=id_file)
-                response['_source']['data']['metadata']['log_file'] = \
-                    path_in_file_system + "OPT_" + str(int(round(time.time() * 1000))) + ".json"
+                location_opt = path_in_file_system + "/OPT_" + str(int(round(time.time() * 1000))) + ".json"
+                response['_source']['data']['metadata']['log_file'] = location_opt
+                print(response['_source']['data']['metadata']['log_file'])
                 if "FREQ" in loaded_json['comp_details']['general']['job_type']:
-                    response['_source']['siblings'][0]['data']['metadata']['log_file'] = \
-                        path_in_file_system + "FREQ_" + str(int(time.time())) + ".json"
-                subprocess.Popen(["mv", path, destination_dir + path_in_file_system + "/OPT_" +
+                    location_freq = path_in_file_system + "FREQ_" + str(int(time.time())) + ".json"
+                    response['_source']['siblings'][0]['data']['metadata']['log_file'] = location_freq
+
+                if location_opt:
+                    subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
                                   str(int(round(time.time() * 1000))) + ".json"])  # copie du JSON
+                elif location_freq:
+                    subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
+                                      str(int(round(time.time() * 1000))) + ".json"])  # copie du JSON
+                subprocess.Popen(["rm", path])
+                es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_file)
                 return 0
             except Exception as error:
                 print(error)

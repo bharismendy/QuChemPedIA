@@ -180,7 +180,7 @@ def import_view(request):
         else:
             #   user == anonymous
             pass
-        code_return_pol = register_soft_job_type_and_version(settings.BASE_DIR+final_path)
+        code_return_pol = register_soft_job_type_and_version(settings.BASE_DIR+settings.MEDIA_URL+final_path)
         if code_return_pol == 0:
             temps.status = "error can't define policy"
             temps.save()
@@ -217,7 +217,7 @@ def launch_import(request, id_file, page):
     if not request.user.is_admin:  # security to redirect user that aren't admin
         return HttpResponseRedirect('/accueil')
     file = ImportFile.objects.get(id_file=id_file)
-    path = "media/"+file.path_file
+    path = settings.BASE_DIR+settings.MEDIA_URL+file.path_file
     id_user = file.id_user.id
     try:
         import_file(path=path, id_user=id_user)

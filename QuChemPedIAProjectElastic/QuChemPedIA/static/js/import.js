@@ -26,6 +26,7 @@ function ask_job_type(csrftoken) {
 
     var job_type_opt_label = document.createElement("LABEL");
     job_type_opt_label.setAttribute('class','form-check-label');
+    job_type_opt_label.setAttribute('title','Ground state geometry optimization');
     job_type_opt_label.innerHTML +="&nbsp;OPT&nbsp;";
 
     var job_type_opt_input = document.createElement("INPUT");
@@ -46,6 +47,7 @@ function ask_job_type(csrftoken) {
 
     var job_type_freq_label = document.createElement("LABEL");
     job_type_freq_label.setAttribute('class','form-check-label');
+    job_type_freq_label.setAttribute('title','Normal modes');
     job_type_freq_label.innerHTML +="&nbsp;FREQ&nbsp;";
 
     var job_type_freq_input = document.createElement("INPUT");
@@ -66,6 +68,7 @@ function ask_job_type(csrftoken) {
 
     var job_type_sp_label = document.createElement("LABEL");
     job_type_sp_label.setAttribute('class','form-check-label');
+    job_type_sp_label.setAttribute('title','Single point energy');
     job_type_sp_label.innerHTML +="&nbsp;SP-/+&nbsp;";
 
     var job_type_sp_input = document.createElement("INPUT");
@@ -86,6 +89,7 @@ function ask_job_type(csrftoken) {
 
     var job_type_td_label = document.createElement("LABEL");
     job_type_td_label.setAttribute('class','form-check-label');
+    job_type_td_label.setAttribute('title','Excited states energies');
     job_type_td_label.innerHTML +="&nbsp;TD&nbsp;";
 
     var job_type_td_input = document.createElement("INPUT");
@@ -106,6 +110,7 @@ function ask_job_type(csrftoken) {
 
     var job_type_opt_es_et_label = document.createElement("LABEL");
     job_type_opt_es_et_label.setAttribute('class','form-check-label');
+    job_type_opt_es_et_label.setAttribute('title','Excited state geometry optimization');
     job_type_opt_es_et_label.innerHTML +="&nbsp;OPT_ES/ET&nbsp;";
 
     var job_type_opt_es_et_input = document.createElement("INPUT");
@@ -146,7 +151,7 @@ function ask_job_type(csrftoken) {
 
     var job_type_none_label = document.createElement("LABEL");
     job_type_none_label.setAttribute('class','form-check-label');
-    job_type_none_label.innerHTML +="&nbsp;I don't know&nbsp;";
+    job_type_none_label.innerHTML +="&nbsp;I don't know&nbsp;/&nbsp;Other&nbsp;";
 
     var job_type_none_input = document.createElement("INPUT");
     job_type_none_input.setAttribute('type','checkbox');
@@ -185,7 +190,11 @@ function handleFileSelect(evt) {
     var files = evt.dataTransfer.files;
     // files is a FileList of File objects. List some properties.
     document.getElementById('fileInput').files = evt.dataTransfer.files;
-    ask_job_type();
+    var test_job_ask_exist = document.getElementById("btn_upload");
+    if (test_job_ask_exist === null)
+    {
+        ask_job_type();
+    }
     evt.preventDefault();
 }
 

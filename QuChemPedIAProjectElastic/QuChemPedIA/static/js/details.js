@@ -16,7 +16,7 @@ function get_author_name(id_author,callback){
 	var resp = $.ajax({
 		//connection au serveur
 		type: 'GET',
-		url: url_website+'/details_author?id_author='+id_author,
+		url: url_website+'details_author?id_author='+id_author,
 		processData: true,
 		dataType: 'json',
 		async: false,
@@ -402,7 +402,7 @@ $(document).ready(function() {
 													+"<h5>Authorship</h5>"
 												+"</div>"
 												+"<div class=\"container\">";
-						if(results.metadata.log_file) html += "<div class=\"row\"><div class=\"col\"><b>Original log file</b></div><div class=\"col\">"+results.metadata.log_file+"</div></div>";
+						if(results.metadata.log_file) html += "<div class=\"row\"><div class=\"col\"><b>Original log file</b></div><div class=\"col\"><a href="+"data_dir/"+results.metadata.log_file+"><span class=\"fa fa-download\">Download</span></a></div></div>";
 							html += "<div class=\"row\"><div class=\"col\"><b>Primary author</b></div><div class=\"col\">" +
                                     get_author_name(results.metadata.id_user) + "</div></div>";
 						if(results.metadata.affiliation) html += "<div class=\"row\"><div class=\"col\"><b>Affiliation</b></div><div class=\"col\">"+results.metadata.affiliation+"</div></div>";
@@ -631,7 +631,7 @@ $(document).ready(function() {
 						for(var j=0; j<nbIms;j++){
 							$.ajax({
 								type: 'GET',
-								url : url_website+'/details_image?id_image='+j,
+								url : url_website+'details_image?id_image='+j,
 								processData: true,
 								success: function(recivedData) {
 									var imageDescription="Atom numbering scheme.";
@@ -656,7 +656,7 @@ $(document).ready(function() {
 						for(var j=0; j<nbIms1;j++){
 							$.ajax({
 								type: 'GET',
-								url : url_website+"/QuChemPedIA/details_image?id_image="+j,
+								url : url_website+"details_image?id_image="+j,
 								processData: true,
 								success: function(recivedData) {
 									var imageDescription="Atom numbering scheme.";
@@ -680,7 +680,7 @@ $(document).ready(function() {
 						for(var j=0; j<nbIms2;j++){
 							$.ajax({
 								type: 'GET',
-								url : url_website+"/details_image?id_image="+j,
+								url : url_website+"details_image?id_image="+j,
 								processData: true,
 								success: function(recivedData) {
 									var imageDescription="Atom numbering scheme.";
@@ -800,7 +800,7 @@ $(document).ready(function() {
 						$("#reultsSubList").append(html);
 						$.ajax({
 							type: 'GET',
-							url : url_website+"/details_image?id_image="+j,
+							url : url_website+"details_image?id_image="+j,
 							processData: true,
 							success: function(recivedData) {
 								var imageDescription="Atom numbering scheme.";

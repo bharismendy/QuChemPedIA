@@ -45,7 +45,7 @@ class EditUtilisateur(forms.ModelForm):
                                                    attrs={'value': last_name or None})))
         self.fields['email'] = forms.CharField(label="email", required=False, widget=(forms.TextInput(
                                                attrs={'value': email or None})))
-        self.fields['orcid'] = forms.CharField(label="orcid", required=False, widget=(forms.TextInput(
+        self.fields['orcid'] = forms.CharField(label="orcid number", required=False, widget=(forms.TextInput(
                                                attrs={'value': orcid or None})))
         self.fields['affiliation'] = forms.CharField(label="current affiliation", required=False, widget=(forms.TextInput(
                                                      attrs={'value': affiliation or None})))

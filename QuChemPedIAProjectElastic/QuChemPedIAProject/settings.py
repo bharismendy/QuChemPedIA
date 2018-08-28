@@ -128,6 +128,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DATA_DIR_URL = '/data_dir/'
+DATA_DIR_ROOT = os.path.join(BASE_DIR, 'data_dir')
 SITE_URL = 'http://127.0.0.1'
 SITE_PORT = '8000'
 
