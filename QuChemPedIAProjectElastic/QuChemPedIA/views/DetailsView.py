@@ -33,8 +33,7 @@ def details_json(request):
     """
     id_file = request.GET.get(key='id_file')
     results = None
-    path = os.curdir+settings.MEDIA_URL + id_file
-    print(path)
+    path = settings.MEDIA_ROOT+'/'+ id_file
     if request.is_ajax():
         if os.path.isfile(path):
             try:
