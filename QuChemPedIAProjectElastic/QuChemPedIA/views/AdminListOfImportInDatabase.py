@@ -34,5 +34,4 @@ def list_of_import_in_database(request):
             return HttpResponseRedirect('query')
 
     return render(request, 'QuChemPedIA/admin_list_on_import_in_database.html', {'query_form': query_form,
-                                                                                 "history": history,
-                                                                                 "media": media})
+                                                                                 "history": history})
