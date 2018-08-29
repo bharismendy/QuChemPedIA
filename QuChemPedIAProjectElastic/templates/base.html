@@ -16,6 +16,10 @@
   <title>QuChemPedIA</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
+    <script src="{% static "js/jsPDF/jspdf.js" %}"></script>
+    <script src="{% static "js/jsPDF/dist/jspdf.min.js" %}"></script>
+    <script src="{% static "js/jsPDF/dist/jspdf.debug.js" %}"></script>
+    <script src="{% static "js/divers.js" %}"></script>
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
   <script src="{% static "js/smiles-drawer.js" %}"></script>
 </head>
@@ -41,9 +45,16 @@
 
 </nav>
       <div  id="sign" class="row float-right">
-                <!-- Bouton login-->
+               <!-- Bouton login-->
+                <a class="nav-link btn btn-info default-primary-color button-nav" title="import a file" href="{% url 'dashboard/import' %}">
+                            <svg class="feather feather-upload sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1236">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                      </a>
                   {% if not user.is_authenticated %}
-                    <div id="sign" class="col col-perso" align=right>
                         <a  class="nav-link btn btn-info default-primary-color button-nav" title="Sign up/Sign in" href="{% url 'auth' %}">
                             <svg class="feather feather-log-in sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
                                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -53,18 +64,7 @@
                                 <line x1="15" y1="12" x2="3" y2="12"></line>
                             </svg>
                         </a>
-                    </div>
                   {% else %}
-                      <!-- Bouton Request calcul-->
-                      <a class="nav-link btn btn-info default-primary-color button-nav" title="import a file" href="{% url 'dashboard/import' %}">
-                            <svg class="feather feather-upload sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
-                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1236">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                <polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
-                            </svg>
-                      </a>
-
                       {%  if user.is_admin %}
                           <a class="nav-link btn btn-info default-primary-color button-admin" title="Admin panel" href="{% url 'admin' %}">
                             <svg class="feather feather-settings sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"

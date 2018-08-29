@@ -362,6 +362,15 @@ strong {
   margin-right: 10px;
   color: white;
 }
+
+.button_download {
+  background-color: var(--default-primary-color);
+  border-color: var(--default-primary-color);
+  margin-bottom: 100px;
+  margin-right: 25px;
+  color: white;
+}
+
 .button-admin{
     border-color: var(--default-primary-color);
     margin-bottom: 100px;
@@ -374,6 +383,10 @@ strong {
     border-color: #800020;
 }
 .button-nav:hover {
+  background: #1d87da;
+}
+
+.button_download:hover {
   background: #1d87da;
 }
 
@@ -485,6 +498,11 @@ strong {
 #sign{
     margin-top: 0.5%;
     margin-right: 0.05%;
+}
+#download_div{
+    margin-top: 0.5%;
+    margin-right: 0.05%;
+    color: white;
 }
 #form_sign_in{
     border-right: 1px solid black;
