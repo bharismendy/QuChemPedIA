@@ -9,10 +9,15 @@ from QuChemPedIA.models import ImportRule
 from QuChemPedIA.QuChemPedIA_lib.import_file_lib import import_file
 from QuChemPedIA.QuChemPedIA_lib import store_in_temp
 from django.conf import settings
-from scanlog import process_logfile
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from scanlog.scanlog import process_logfile
 import datetime
 import json
+import tempfile
+import shutil
 import os
+
 
 def register_soft_job_type_and_version(path_to_file_to_register):
     """
@@ -142,11 +147,13 @@ def import_view(request):
         else:
             myfile = request.FILES['file']  # work for dropzone only
         # todo add json transform
-        temps = ImportFile.objects.create(path_file=path_prefix, id_user=request.user)  # register in database
-        final_path = store_in_temp(id_calcul=str(temps.id_file), file=myfile)
-        temps.path_file = final_path
-        file_list,json_list=process_logfile(final_path, log_storage_path=os.path.dirname(final_path))
+        dirpath = tempfile.mkdtemp()
+        default_storage.save( dirpath+"file.log", ContentFile(myfile.read()))
+        file_list,json_list=process_logfile(dirpath, log_storage_path=os.path.dirname(dirpath))
         for i, json_file in enumerate(json_list):
+            temps = ImportFile.objects.create(path_file=path_prefix, id_user=request.user)  # register in database
+            final_path = store_in_temp(id_calcul=str(temps.id_file), file=json_file)
+            temps.path_file = final_path
             # record what user think of is file
             if request.POST.get('job_type_opt'):
                 temps.is_opt = True
@@ -195,7 +202,7 @@ def import_view(request):
                 #  automatic import
                 try:
                     path = "media/" + temps.path_file
-                    update_status_in_db(result_of_import=import_file(path=file_list[i], json_file= json_file, id_user=temps.id_user.id),
+                    update_status_in_db(result_of_import=import_file(path=file_list[i], json_file=json_file, id_user=temps.id_user.id),
                                         import_object=temps)
 
                 except Exception as error:
@@ -203,6 +210,7 @@ def import_view(request):
                     temps.status = 'import failed'
                     temps.save()
 
+        shutil.rmtree(dirpath)
     return render(request, 'QuChemPedIA/user_import.html', {'query_form': query_form,
                                                             'number_of_stand_by_import': number_of_stand_by_import})
 

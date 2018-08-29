@@ -2,6 +2,8 @@ import os
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
+import json
+
 
 def store_in_temp(id_calcul, file):
         """
@@ -23,7 +25,8 @@ def store_in_temp(id_calcul, file):
 
         try:
             os.makedirs(destination_dir + path_in_file_system)
-            default_storage.save(destination_dir+path_in_file_system+"/"+file.name, ContentFile(file.read()))
+            with open(destination_dir+path_in_file_system+"/"+'data.json', 'w') as outfile:
+                json.dump(file, outfile)
         except Exception as error:
             print(error)
 
