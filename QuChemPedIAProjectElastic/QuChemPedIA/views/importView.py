@@ -9,10 +9,10 @@ from QuChemPedIA.models import ImportRule
 from QuChemPedIA.QuChemPedIA_lib.import_file_lib import import_file
 from QuChemPedIA.QuChemPedIA_lib import store_in_temp
 from django.conf import settings
+from scanlog import process_logfile
 import datetime
 import json
 import os
-
 
 def register_soft_job_type_and_version(path_to_file_to_register):
     """
@@ -145,62 +145,63 @@ def import_view(request):
         temps = ImportFile.objects.create(path_file=path_prefix, id_user=request.user)  # register in database
         final_path = store_in_temp(id_calcul=str(temps.id_file), file=myfile)
         temps.path_file = final_path
+        file_list,json_list=process_logfile(final_path, log_storage_path=os.path.dirname(final_path))
+        for i, json_file in enumerate(json_list):
+            # record what user think of is file
+            if request.POST.get('job_type_opt'):
+                temps.is_opt = True
 
-        # record what user think of is file
-        if request.POST.get('job_type_opt'):
-            temps.is_opt = True
+            if request.POST.get('job_type_opt_es_et'):
+                temps.is_opt_es_et = True
 
-        if request.POST.get('job_type_opt_es_et'):
-            temps.is_opt_es_et = True
+            if request.POST.get('job_type_freq'):
+                temps.is_freq = True
 
-        if request.POST.get('job_type_freq'):
-            temps.is_freq = True
+            if request.POST.get('job_type_freq_es_et'):
+                temps.is_freq_es_et = True
 
-        if request.POST.get('job_type_freq_es_et'):
-            temps.is_freq_es_et = True
+            if request.POST.get('job_type_sp'):
+                temps.is_sp = True
 
-        if request.POST.get('job_type_sp'):
-            temps.is_sp = True
+            if request.POST.get('job_type_td'):
+                temps.is_td = True
 
-        if request.POST.get('job_type_td'):
-            temps.is_td = True
-
-        temps.save()
-        # adding an import  for this day to the user*
-        if request.user.is_authenticated:
-            if request.user.last_date_upload != datetime.datetime.today().date() \
-                    or request.user.last_date_upload is None:
-                request.user.last_date_upload = datetime.datetime.today()
-                request.user.number_of_upload_this_day = 1
-                request.user.save()
+            temps.save()
+            # adding an import  for this day to the user*
+            if request.user.is_authenticated:
+                if request.user.last_date_upload != datetime.datetime.today().date() \
+                        or request.user.last_date_upload is None:
+                    request.user.last_date_upload = datetime.datetime.today()
+                    request.user.number_of_upload_this_day = 1
+                    request.user.save()
+                else:
+                    request.user.number_of_upload_this_day += 1
+                    request.user.save()
+                request.user.refresh_from_db()
             else:
-                request.user.number_of_upload_this_day += 1
-                request.user.save()
-            request.user.refresh_from_db()
-        else:
-            #   user == anonymous
-            pass
-        code_return_pol = register_soft_job_type_and_version(settings.BASE_DIR+settings.MEDIA_URL+final_path)
-        if code_return_pol == 0:
-            temps.status = "error can't define policy"
-            temps.save()
-        # we do nothing in case of 1 because it's define by default
-        elif 3 in code_return_pol:
-            os.remove(temps.path_file)
-            temps.status = "import not supported yet"
-            temps.save()
-
-        elif 2 in code_return_pol:
-            #  automatic import
-            try:
-                path = "media/" + temps.path_file
-                update_status_in_db(result_of_import=import_file(path=path, id_user=temps.id_user.id),
-                                    import_object=temps)
-
-            except Exception as error:
-                print(error)
-                temps.status = 'import failed'
+                #   user == anonymous
+                pass
+            code_return_pol = register_soft_job_type_and_version(settings.BASE_DIR+settings.MEDIA_URL+final_path)
+            if code_return_pol == 0:
+                temps.status = "error can't define policy"
                 temps.save()
+            # we do nothing in case of 1 because it's define by default
+            elif 3 in code_return_pol:
+                os.remove(temps.path_file)
+                temps.status = "import not supported yet"
+                temps.save()
+
+            elif 2 in code_return_pol:
+                #  automatic import
+                try:
+                    path = "media/" + temps.path_file
+                    update_status_in_db(result_of_import=import_file(path=file_list[i], json_file= json_file, id_user=temps.id_user.id),
+                                        import_object=temps)
+
+                except Exception as error:
+                    print(error)
+                    temps.status = 'import failed'
+                    temps.save()
 
     return render(request, 'QuChemPedIA/user_import.html', {'query_form': query_form,
                                                             'number_of_stand_by_import': number_of_stand_by_import})

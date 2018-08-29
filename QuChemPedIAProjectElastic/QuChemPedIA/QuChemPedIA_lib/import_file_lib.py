@@ -290,7 +290,7 @@ def exist_freq(id_json_to_test, json_to_input, path_to_log_file, destination_dir
         response['_source']['siblings'][size]['data']['metadata']["affiliation"] = get_affiliation(
             id_user=id_user)
         response['_source']['siblings'][size]['data']['metadata']['log_file'] = \
-            path_in_file_sytem + "FREQ_" + str(temp_md5) + ".json"
+            path_in_file_sytem + "FREQ_" + str(temp_md5) + ".log"
         response['_source']['siblings'][size]['job_type'] = "FREQ"
 
         response['_source']['md5_siblings'].append(temp_md5)
@@ -299,7 +299,7 @@ def exist_freq(id_json_to_test, json_to_input, path_to_log_file, destination_dir
         try:
             es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_json_to_test)
             subprocess.Popen(["mv", path_to_log_file,
-                              destination_dir + path_in_file_sytem + "/FREQ_" + str(temp_md5) + ".json"])
+                              destination_dir + path_in_file_sytem + "/FREQ_" + str(temp_md5) + ".log"])
                             # copie du JSON
             return 0
         except Exception as error:
@@ -344,7 +344,7 @@ def exist_td(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
         response['_source']['siblings'][size]['data']['metadata']["affiliation"] = get_affiliation(
             id_user=id_user)
         response['_source']['siblings'][size]['data']['metadata']['log_file'] = \
-            path_in_file_sytem + "TD_" + str(temp_md5) + ".json"
+            path_in_file_sytem + "TD_" + str(temp_md5) + ".log"
         response['_source']['siblings'][size]['job_type'] = "TD"
 
         response['_source']['md5_siblings'].append(temp_md5)
@@ -357,7 +357,7 @@ def exist_td(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
             es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_json_to_test)
             subprocess.Popen(["mv", path_to_log_file,
                               destination_dir + path_in_file_sytem + "/TD_" + str(
-                                  temp_md5) + ".json"])  # copie du JSON
+                                  temp_md5) + ".log"])  # copie du JSON
             return 0
         except Exception as error:
             print(error)
@@ -398,7 +398,7 @@ def exist_sp(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
         response['_source']['siblings'][size]['data']['metadata']["id_user"] = id_user
         response['_source']['siblings'][size]['data']['metadata']["affiliation"] = get_affiliation(id_user=id_user)
         response['_source']['siblings'][size]['data']['metadata']['log_file'] = \
-            path_in_file_sytem + "SP_" + str(temp_md5) + ".json"
+            path_in_file_sytem + "SP_" + str(temp_md5) + ".log"
         response['_source']['siblings'][size]['job_type'] = "SP"
 
         response['_source']['md5_siblings'].append(temp_md5)
@@ -410,7 +410,7 @@ def exist_sp(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
                                                    id_calcul=id_json_to_test, make_path=False)
             subprocess.Popen(["mv", path_to_log_file,
                               destination_dir + path_in_file_sytem + "/SP_" + str(
-                                  temp_md5) + ".json"])  # copie du JSON
+                                  temp_md5) + ".log"])  # copie du JSON
             return 0
         except Exception as error:
             print(error)
@@ -419,7 +419,7 @@ def exist_sp(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
         return 1
 
 
-def create_query(path, destination_dir, id_user):
+def create_query(path, json_file, destination_dir, id_user):
     """
     this function get all file from the source directory to store them in the destination directory
     we put the log in database and the json in elasticSearch
@@ -443,143 +443,137 @@ def create_query(path, destination_dir, id_user):
         except Exception as error:
             print(error)
             return 4
-    jsonfile = open(path)
-    if is_json(path=path):
-        loaded_json = json.load(jsonfile)
-        # set up all OPT
-        s = is_opt_exist(json_to_test=loaded_json,
-                         job_type=loaded_json['comp_details']['general']['job_type'])
-        if not s:
-            return 4
-        if loaded_json['metadata']['archivable'] == "True" and \
-                loaded_json['metadata']['archivable_for_new_entry'] == "True" and \
-                "OPT" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
-            if "FREQ" in loaded_json['comp_details']['general']['job_type']:
-                # store data into the json
-                temp = json.loads(base_json)
-                temp['data']['molecule'] = loaded_json['molecule']
-                temp['data']['results'] = loaded_json['results']
-                temp['data']['comp_details'] = loaded_json['comp_details']
-                temp['data']['metadata'] = loaded_json['metadata']
-                temp['data']['metadata']['log_file'] = path
-                temp['data']['metadata']["id_user"] = id_user
-                temp['data']['metadata']['metadata']["affiliation"] = get_affiliation(
-                    id_user=id_user)
-                temp['job_type'] = "OPT"
-                temp['siblings'].append(json.loads(base_json))
-                temp['siblings'][0]['job_type'] = "FREQ"
-                temp['md5_siblings'].append(
-                    hashlib.md5(str(loaded_json).encode('utf-8')).hexdigest())
-                temp['contributor'].append(id_user)
+    loaded_json = json_file
+    # set up all OPT
+    s = is_opt_exist(json_to_test=loaded_json,
+                     job_type=loaded_json['comp_details']['general']['job_type'])
+    if not s:
+        return 4
+    if loaded_json['metadata']['archivable'] == "True" and \
+        loaded_json['metadata']['archivable_for_new_entry'] == "True" and \
+            "OPT" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
+        if "FREQ" in loaded_json['comp_details']['general']['job_type']:
+            # store data into the json
+            temp = json.loads(base_json)
+            temp['data']['molecule'] = loaded_json['molecule']
+            temp['data']['results'] = loaded_json['results']
+            temp['data']['comp_details'] = loaded_json['comp_details']
+            temp['data']['metadata'] = loaded_json['metadata']
+            temp['data']['metadata']['log_file'] = path
+            temp['data']['metadata']["id_user"] = id_user
+            temp['data']['metadata']['metadata']["affiliation"] = get_affiliation(
+                id_user=id_user)
+            temp['job_type'] = "OPT"
+            temp['siblings'].append(json.loads(base_json))
+            temp['siblings'][0]['job_type'] = "FREQ"
+            temp['md5_siblings'].append(
+                hashlib.md5(str(loaded_json).encode('utf-8')).hexdigest())
+            temp['contributor'].append(id_user)
 
-                temp = json.dumps(temp, indent=4)
-            else:
-                # store data into the json
-                temp = json.loads(base_json)
-                temp['data']['molecule'] = loaded_json['molecule']
-                temp['data']['results'] = loaded_json['results']
-                temp['data']['comp_details'] = loaded_json['comp_details']
-                temp['data']['metadata'] = loaded_json['metadata']
-                temp['data']['metadata']["id_user"] = id_user
-                temp['data']['metadata']["affiliation"] = get_affiliation(
-                    id_user=id_user)
-                temp['data']['metadata']['log_file'] = path
-                temp['job_type'] = "OPT"
-                temp['contributor'].append(id_user)
-
-                temp = json.dumps(temp, indent=4)
-            try:
-                response = es.index(index=index_name, doc_type="log_file", body=temp)
-                id_file = response['_id']
-                path_in_file_system = get_path_to_store(destination_dir=destination_dir,
-                                                        id_calcul=id_file, make_path=True)
-
-                response = es.get(index="quchempedia_index", doc_type="log_file", id=id_file)
-                location_opt = path_in_file_system + "/OPT_" + str(int(round(time.time() * 1000))) + ".json"
-                response['_source']['data']['metadata']['log_file'] = location_opt
-                print(response['_source']['data']['metadata']['log_file'])
-                if "FREQ" in loaded_json['comp_details']['general']['job_type']:
-                    location_freq = path_in_file_system + "FREQ_" + str(int(time.time())) + ".json"
-                    response['_source']['siblings'][0]['data']['metadata']['log_file'] = location_freq
-
-                if location_opt:
-                    subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
-                                  str(int(round(time.time() * 1000))) + ".json"])  # copie du JSON
-                elif location_freq:
-                    subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
-                                      str(int(round(time.time() * 1000))) + ".json"])  # copie du JSON
-                subprocess.Popen(["rm", path])
-                es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_file)
-                return 0
-            except Exception as error:
-                print(error)
-                return 4
-        elif loaded_json['metadata']['archivable'] == "True" and \
-                loaded_json['metadata']['archivable_for_new_entry'] == "True" and \
-                "OPT" in loaded_json['comp_details']['general']['job_type'] and s.count() > 0:
-            return 1
-        elif loaded_json['metadata']['archivable'] == "True":
-            if "FREQ" in loaded_json['comp_details']['general']['job_type'] and \
-                    loaded_json['metadata']['archivable_for_new_entry'] == "False" and \
-                    s.count() == 1:
-                for hit in s:
-                    try:
-                        return exist_freq(id_json_to_test=hit.meta.id,
-                                          json_to_input=loaded_json,
-                                          path_to_log_file=path,
-                                          destination_dir=destination_dir,
-                                          id_user=id_user)
-                    except Exception as error:
-                        print(error)
-                        return 4
-            elif "FREQ" in loaded_json['comp_details']['general']['job_type'] and \
-                    loaded_json['metadata']['archivable_for_new_entry'] == "False" and \
-                    s.count() == 0:
-                return 3
-            if "SP" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
-                for hit in s:
-                    try:
-                        return exist_sp(id_json_to_test=hit.meta.id,
-                                        json_to_input=loaded_json,
-                                        path_to_log_file=path,
-                                        destination_dir=destination_dir,
-                                        id_user=id_user)
-                    except Exception as error:
-                        print(error)
-                        return 4
-            elif "SP" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
-                return 3
-            if "TD" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
-                for hit in s:
-                    try:
-                        return exist_td(id_json_to_test=hit.meta.id,
-                                        json_to_input=loaded_json,
-                                        path_to_log_file=path,
-                                        destination_dir=destination_dir,
-                                        id_user=id_user)
-
-                    except Exception as error:
-                        print(error)
-                        return 4
-            elif "TD" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
-                return 3
-
-            if "OPT_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
-                return 2
-            elif "OPT_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
-                return 3
-
-            if "FREQ_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
-                return 2
-            elif "FREQ_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
-                return 3
-
+            temp = json.dumps(temp, indent=4)
         else:
-            print("cant load " + path)
+            # store data into the json
+            temp = json.loads(base_json)
+            temp['data']['molecule'] = loaded_json['molecule']
+            temp['data']['results'] = loaded_json['results']
+            temp['data']['comp_details'] = loaded_json['comp_details']
+            temp['data']['metadata'] = loaded_json['metadata']
+            temp['data']['metadata']["id_user"] = id_user
+            temp['data']['metadata']["affiliation"] = get_affiliation(
+                id_user=id_user)
+            temp['data']['metadata']['log_file'] = path
+            temp['job_type'] = "OPT"
+            temp['contributor'].append(id_user)
+
+            temp = json.dumps(temp, indent=4)
+        try:
+            response = es.index(index=index_name, doc_type="log_file", body=temp)
+            id_file = response['_id']
+            path_in_file_system = get_path_to_store(destination_dir=destination_dir,
+                                                    id_calcul=id_file, make_path=True)
+
+            response = es.get(index="quchempedia_index", doc_type="log_file", id=id_file)
+            location_opt = path_in_file_system + "/OPT_" + str(int(round(time.time() * 1000))) + ".log"
+            response['_source']['data']['metadata']['log_file'] = location_opt
+            print(response['_source']['data']['metadata']['log_file'])
+            if "FREQ" in loaded_json['comp_details']['general']['job_type']:
+                location_freq = path_in_file_system + "FREQ_" + str(int(time.time())) + ".log"
+                response['_source']['siblings'][0]['data']['metadata']['log_file'] = location_freq
+
+            if location_opt:
+                subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
+                                  str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
+            elif location_freq:
+                subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
+                                  str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
+            subprocess.Popen(["rm", path])
+            es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_file)
+            return 0
+        except Exception as error:
+            print(error)
             return 4
+    elif loaded_json['metadata']['archivable'] == "True" and \
+            loaded_json['metadata']['archivable_for_new_entry'] == "True" and \
+            "OPT" in loaded_json['comp_details']['general']['job_type'] and s.count() > 0:
+        return 1
+    elif loaded_json['metadata']['archivable'] == "True":
+        if "FREQ" in loaded_json['comp_details']['general']['job_type'] and \
+                loaded_json['metadata']['archivable_for_new_entry'] == "False" and \
+                s.count() == 1:
+            for hit in s:
+                try:
+                    return exist_freq(id_json_to_test=hit.meta.id,
+                                      json_to_input=loaded_json,
+                                      path_to_log_file=path,
+                                      destination_dir=destination_dir,
+                                      id_user=id_user)
+                except Exception as error:
+                    print(error)
+                    return 4
+        elif "FREQ" in loaded_json['comp_details']['general']['job_type'] and \
+                loaded_json['metadata']['archivable_for_new_entry'] == "False" and \
+                s.count() == 0:
+            return 3
+        if "SP" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
+            for hit in s:
+                try:
+                    return exist_sp(id_json_to_test=hit.meta.id,
+                                    json_to_input=loaded_json,
+                                    path_to_log_file=path,
+                                    destination_dir=destination_dir,
+                                    id_user=id_user)
+                except Exception as error:
+                    print(error)
+                    return 4
+        elif "SP" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
+            return 3
+        if "TD" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
+            for hit in s:
+                try:
+                    return exist_td(id_json_to_test=hit.meta.id,
+                                    json_to_input=loaded_json,
+                                    path_to_log_file=path,
+                                    destination_dir=destination_dir,
+                                    id_user=id_user)
+
+                except Exception as error:
+                    print(error)
+                    return 4
+        elif "TD" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
+            return 3
+
+        if "OPT_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
+            return 2
+        elif "OPT_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
+            return 3
+
+        if "FREQ_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
+            return 2
+        elif "FREQ_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
+            return 3
 
 
-def import_file(path, id_user):
+def import_file(path, json_file, id_user):
     """
     main function to import file
     :param path: pth to the file to import
@@ -590,4 +584,4 @@ def import_file(path, id_user):
     # absolute path to the destination directory where we are going to store all the data
     destination_dir = '/home/etudiant/Documents/stage/QuChemPedIAProjectElastic/data_dir/'
 
-    return create_query(path=path, destination_dir=destination_dir, id_user=id_user)
+    return create_query(path=path,json_file=json_file, destination_dir=destination_dir, id_user=id_user)
