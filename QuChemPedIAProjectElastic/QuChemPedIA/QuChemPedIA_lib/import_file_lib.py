@@ -9,6 +9,12 @@ import subprocess
 import time
 
 
+def create_jobs(json_loaded, job_type, elastic_id, md5_json = None):
+    if not md5_json :
+        md5_json = hashlib.md5(str(json_loaded).encode('utf-8')).hexdigest()
+    with open(os.path.join(settings.MEDIA_ROOT, "/jobs/", "img"+job_type, md5_json+'.json'), "w+") as file_to_write:
+        file_to_write.write("{\'elastic_id \': \'"+elastic_id+"\'")
+
 def get_base_json():
     """
     function to get the first architecture
@@ -300,8 +306,7 @@ def exist_freq(id_json_to_test, json_to_input, path_to_log_file, destination_dir
         try:
             es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_json_to_test)
             subprocess.Popen(["mv", path_to_log_file,
-                              destination_dir + path_in_file_sytem + "/FREQ_" + str(temp_md5) + ".log"])
-                            # copie du JSON
+                              destination_dir + path_in_file_sytem + "/FREQ_" + str(temp_md5) + ".log"])  # copie du JSON
             return 0
         except Exception as error:
             print(error)
@@ -504,9 +509,11 @@ def create_query(path, json_file, destination_dir, id_user):
             if location_opt:
                 subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
                                   str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
+                create_jobs(json_loaded=loaded_json,job_type="OPT",elastic_id=id_file)
             elif location_freq:
                 subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
                                   str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
+                create_jobs(json_loaded=loaded_json, job_type="FREQ", elastic_id=id_file)
             subprocess.Popen(["rm", path])
             es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_file)
             return 0
