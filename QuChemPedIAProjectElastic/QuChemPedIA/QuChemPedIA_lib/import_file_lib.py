@@ -504,7 +504,6 @@ def create_query(path, json_file, destination_dir, id_user):
             if location_opt:
                 subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
                                   str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
-                with open()
             elif location_freq:
                 subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
                                   str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
