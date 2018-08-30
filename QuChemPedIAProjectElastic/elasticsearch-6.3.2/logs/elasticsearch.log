@@ -46,3 +46,9 @@
 [2018-08-29T10:11:10,484][INFO ][o.e.l.LicenseService     ] [DcblvXR] license [fbb73695-1248-465c-96d2-fd35e96edce8] mode [basic] - valid
 [2018-08-29T10:11:10,506][INFO ][o.e.g.GatewayService     ] [DcblvXR] recovered [1] indices into cluster_state
 [2018-08-29T10:11:10,990][INFO ][o.e.c.r.a.AllocationService] [DcblvXR] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][3]] ...]).
+[2018-08-29T17:23:06,298][INFO ][o.e.x.m.j.p.NativeController] Native controller process has stopped - no new native processes can be started
+[2018-08-29T17:23:06,301][INFO ][o.e.n.Node               ] [DcblvXR] stopping ...
+[2018-08-29T17:23:06,401][INFO ][o.e.x.w.WatcherService   ] [DcblvXR] stopping watch service, reason [shutdown initiated]
+[2018-08-29T17:23:06,600][INFO ][o.e.n.Node               ] [DcblvXR] stopped
+[2018-08-29T17:23:06,601][INFO ][o.e.n.Node               ] [DcblvXR] closing ...
+[2018-08-29T17:23:06,631][INFO ][o.e.n.Node               ] [DcblvXR] closed

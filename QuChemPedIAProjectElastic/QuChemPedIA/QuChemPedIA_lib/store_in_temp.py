@@ -1,11 +1,9 @@
 import os
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 from django.conf import settings
 import json
 
 
-def store_in_temp(id_calcul, file):
+def store_in_temp(id_calcul, file, type):
         """
         method to find the right directory to store data wile it's not processed
         :param id_calcul: id of the calcul in database if none (=0) create a new directory
@@ -24,10 +22,18 @@ def store_in_temp(id_calcul, file):
         path_in_file_system = '/'.join(id_calcul[i:i+cut_number_by] for i in range(0, len(id_calcul), cut_number_by))
 
         try:
-            os.makedirs(destination_dir + path_in_file_system)
-            with open(destination_dir+path_in_file_system+"/"+'data.json', 'w') as outfile:
-                json.dump(file, outfile)
+            path = destination_dir + path_in_file_system
+            if not os.path.isdir(path):
+                os.makedirs(destination_dir + path_in_file_system)
+
+            if type == 'json':
+                with open(path+"/"+'data.'+type, 'w') as outfile:
+                    json.dump(file, outfile)
+            else:
+                with open(path+'/'+'data.'+type, 'w') as outfile:
+                    outfile.write(file)
+                    outfile.close()
         except Exception as error:
             print(error)
 
-        return "to_import/"+path_in_file_system+"/"+file.name
+        return "to_import/"+path_in_file_system+"/"+'data.'+type

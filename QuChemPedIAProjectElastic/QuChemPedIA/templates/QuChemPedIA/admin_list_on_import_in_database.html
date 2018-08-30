@@ -8,7 +8,8 @@
                         <th scope="col">File_ID</th>
                         <th scope="col">Status</th>
                         <th scope="col">User ID</th>
-                        <th scope="col">show the file</th>
+                        <th scope="col">show the json file</th>
+                        <th scope="col">show the log file</th>
                         <th scope="col">Preview</th>
                         <th scope="col">Launch the import</th>
                         <th scope="col">Delete the import</th>
@@ -22,6 +23,21 @@
                         <td><a href="{% url 'admin/edit_user' imported_file.id_user_id %}">{{ imported_file.id_user_id }}</a></td>
                         <td>
                             <form class="form" action="{{ MEDIA_URL }}{{ imported_file.path_file }}">
+                                {% csrf_token %}
+                                <button class="btn btn-xs btn-primary active">download
+                                    <svg class="feather feather-download-cloud sc-dnqmqq jxshSx"
+                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         aria-hidden="true" data-reactid="461"><polyline points="8 17 12 21 16 17">
+                                        </polyline><line x1="12" y1="12" x2="12" y2="21"></line>
+                                        <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form class="form" action="{{ MEDIA_URL }}{{ imported_file.log_path_file }}">
                                 {% csrf_token %}
                                 <button class="btn btn-xs btn-primary active">download
                                     <svg class="feather feather-download-cloud sc-dnqmqq jxshSx"

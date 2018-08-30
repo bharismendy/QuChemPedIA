@@ -147,13 +147,21 @@ def import_view(request):
         else:
             myfile = request.FILES['file']  # work for dropzone only
         # todo add json transform
-        dirpath = tempfile.mkdtemp()
-        default_storage.save( dirpath+"file.log", ContentFile(myfile.read()))
-        file_list,json_list=process_logfile(dirpath, log_storage_path=os.path.dirname(dirpath))
+        content = ContentFile(myfile.read())
+        dirpath = tempfile.mkdtemp(prefix="/var/www/html/media/to_import/tmp/")
+        filepath = os.path.join(dirpath,"file.log")
+        default_storage.save(filepath, content)
+        file_list,json_list=process_logfile(filepath, log_storage_path=os.path.dirname(dirpath))
+
         for i, json_file in enumerate(json_list):
-            temps = ImportFile.objects.create(path_file=path_prefix, id_user=request.user)  # register in database
-            final_path = store_in_temp(id_calcul=str(temps.id_file), file=json_file)
+            temps = ImportFile.objects.create(path_file=path_prefix, log_path_file= path_prefix, id_user=request.user)  # register in database
+            file_log = open(file_list[i], 'r')
+            file_log_content = file_log.read()
+            file_log.close()
+            log_final_path = store_in_temp(id_calcul=str(temps.id_file), file=file_log_content, type='log')
+            final_path = store_in_temp(id_calcul=str(temps.id_file), file=json_file, type="json")
             temps.path_file = final_path
+            temps.log_path_file = log_final_path
             # record what user think of is file
             if request.POST.get('job_type_opt'):
                 temps.is_opt = True
@@ -174,6 +182,7 @@ def import_view(request):
                 temps.is_td = True
 
             temps.save()
+
             # adding an import  for this day to the user*
             if request.user.is_authenticated:
                 if request.user.last_date_upload != datetime.datetime.today().date() \
