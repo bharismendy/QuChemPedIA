@@ -151,7 +151,7 @@ def import_view(request):
         dirpath = tempfile.mkdtemp(prefix="/var/www/html/media/to_import/tmp/")
         filepath = os.path.join(dirpath,"file.log")
         default_storage.save(filepath, content)
-        file_list,json_list=process_logfile(filepath, log_storage_path=os.path.dirname(dirpath))
+        file_list, json_list=process_logfile(filepath, log_storage_path=os.path.dirname(dirpath))
 
         for i, json_file in enumerate(json_list):
             temps = ImportFile.objects.create(path_file=path_prefix, log_path_file= path_prefix, id_user=request.user)  # register in database
@@ -235,10 +235,13 @@ def launch_import(request, id_file, page):
     if not request.user.is_admin:  # security to redirect user that aren't admin
         return HttpResponseRedirect('/accueil')
     file = ImportFile.objects.get(id_file=id_file)
-    path = settings.BASE_DIR+settings.MEDIA_URL+file.path_file
+    path_json = settings.BASE_DIR+settings.MEDIA_URL+file.path_file
+    with open(path_json, "r") as json_open:
+        json_file = json.load(json_open)
+    path_log = settings.BASE_DIR+settings.MEDIA_URL+file.path_file
     id_user = file.id_user.id
     try:
-        import_file(path=path, id_user=id_user)
+        import_file(path=path_log, json_file=json_file, id_user=id_user)
         file.delete()
     except Exception as error:
         print(error)

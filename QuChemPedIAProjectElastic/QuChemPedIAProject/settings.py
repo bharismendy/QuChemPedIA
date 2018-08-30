@@ -134,4 +134,5 @@ DATA_DIR_ROOT = os.path.join(BASE_DIR, 'data_dir')
 SITE_URL = 'http://127.0.0.1'
 SITE_PORT = '8000'
 
+
 ELASTICSEARCH = {"host": "localhost", "port": 9200}

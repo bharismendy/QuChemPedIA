@@ -113,7 +113,7 @@ def is_opt_exist(json_to_test, job_type):
             formula = json_to_test['molecule']['formula']
             software = json_to_test['comp_details']['general']['package']
             theory = json_to_test['comp_details']['general']['all_unique_theory']
-            theory = ''.join(map(str, theory))
+            theory = "[\""+'","'.join(map(str, theory))+"\"]"
             functionnal = json_to_test['comp_details']['general']['functional']
             basis_set_md5 = json_to_test['comp_details']['general']['basis_set_md5']
             basis_set_size = json_to_test['comp_details']['general']['basis_set_size']
@@ -194,8 +194,8 @@ def is_opt_exist(json_to_test, job_type):
             smiles = json_to_test['molecule']['smi']
             software = json_to_test['comp_details']['general']['package']
             theory = json_to_test['comp_details']['general']['all_unique_theory']
-            theory = ''.join(map(str, theory))
-            functionnal = json_to_test['comp_details']['general']['functional']
+            theory = "[\""+'","'.join(map(str, theory))+"\"]"
+            functional = json_to_test['comp_details']['general']['functional']
             basis_set_md5 = json_to_test['comp_details']['general']['basis_set_md5']
             basis_set_size = json_to_test['comp_details']['general']['basis_set_size']
             if 'solvent_reaction_field' in json_to_test:
@@ -220,7 +220,7 @@ def is_opt_exist(json_to_test, job_type):
                           Q('match', data__molecule__inchi=inchi) &
                           Q('match', data__molecule__can=cansmiles) &
                           Q('match', data__molecule__smi=smiles) &
-                          Q('match', data__comp_details__general__functional=functionnal) &
+                          Q('match', data__comp_details__general__functional=functional) &
                           Q('match', data__comp_details__general__package=software) &
                           Q('match', data__comp_details__general__all_unique_theory=theory) &
                           Q('match', data__comp_details__general__basis_set_size=basis_set_size) &
@@ -237,12 +237,13 @@ def is_opt_exist(json_to_test, job_type):
                           Q('match', data__molecule__inchi=inchi) &
                           Q('match', data__molecule__can=cansmiles) &
                           Q('match', data__molecule__smi=smiles) &
-                          Q('match', data__comp_details__general__functionnal=functionnal) &
+                          Q('match', data__comp_details__general__functionnal=functional) &
                           Q('match', data__comp_details__general__package=software) &
                           Q('match', data__comp_details__general__theory=theory) &
                           Q('match', data__comp_details__general__basis_set_size=basis_set_size) &
                           Q('match', data__comp_details__general__basis_set_md5__keyword=basis_set_md5) &
                           Q('match', data__comp_details__general__solvent=solvent) &
+                          Q('match', data__comp_details__general__solvent_reaction_field=solvatation_method) &
                           Q('match',
                             data__results__geometry__nuclear_repulsion_energy_from_xyz=starting_nuclear_repulsion_energy
                             )
@@ -447,6 +448,7 @@ def create_query(path, json_file, destination_dir, id_user):
     # set up all OPT
     s = is_opt_exist(json_to_test=loaded_json,
                      job_type=loaded_json['comp_details']['general']['job_type'])
+
     if not s:
         return 4
     if loaded_json['metadata']['archivable'] == "True" and \
@@ -495,7 +497,6 @@ def create_query(path, json_file, destination_dir, id_user):
             response = es.get(index="quchempedia_index", doc_type="log_file", id=id_file)
             location_opt = path_in_file_system + "/OPT_" + str(int(round(time.time() * 1000))) + ".log"
             response['_source']['data']['metadata']['log_file'] = location_opt
-            print(response['_source']['data']['metadata']['log_file'])
             if "FREQ" in loaded_json['comp_details']['general']['job_type']:
                 location_freq = path_in_file_system + "FREQ_" + str(int(time.time())) + ".log"
                 response['_source']['siblings'][0]['data']['metadata']['log_file'] = location_freq
@@ -503,6 +504,7 @@ def create_query(path, json_file, destination_dir, id_user):
             if location_opt:
                 subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
                                   str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
+                with open()
             elif location_freq:
                 subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
                                   str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
@@ -578,10 +580,10 @@ def import_file(path, json_file, id_user):
     main function to import file
     :param path: pth to the file to import
     :param id_user: id to the user
-    :return: 0 for all went ok, 1 for already in DB, 2 theory not supported yet,
+    :return: 0 for all went ok, 1 for already in DB, 2 calculatiion not supported yet,
     3 doesn't have a grount state, 4 other error (see logs)
     """
     # absolute path to the destination directory where we are going to store all the data
-    destination_dir = '/home/etudiant/Documents/stage/QuChemPedIAProjectElastic/data_dir/'
+    destination_dir = settings.DATA_DIR_ROOT
 
     return create_query(path=path,json_file=json_file, destination_dir=destination_dir, id_user=id_user)
