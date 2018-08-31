@@ -273,8 +273,14 @@ def delete_import(request, id_file, page):
         except Exception as error:
             print(error)
             file.status("couldn't delete the import")
-    if os.path.isdir(os.path.dirname(file.path_file)):
-        shutil.rmtree(os.path.dirname(file.path_file))
+
+    if os.path.isdir(os.path.dirname(os.path.join('/var/www/html/media/', file.log_path_file))):
+        try:
+            shutil.rmtree(os.path.dirname(os.path.join('/var/www/html/media/', file.log_path_file)))
+        except Exception as error:
+            print(error)
+            file.status("couldn't delete the import")
+
     try:
         file.delete()
     except Exception as error:

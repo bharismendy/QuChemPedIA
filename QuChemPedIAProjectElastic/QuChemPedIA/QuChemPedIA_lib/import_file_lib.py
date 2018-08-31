@@ -14,7 +14,7 @@ def create_jobs(json_loaded, job_type, elastic_id, md5_json=None):
         md5_json = hashlib.md5(str(json_loaded).encode('utf-8')).hexdigest()
     with open(os.path.join("/var/www/html/media/jobs/", "img"+job_type+"/todo", md5_json+'.json'), "w+") as file_to_write:
         file_to_write.write("{\"elastic_id\": \""+elastic_id+"\",")
-        file_to_write.write("{\"md5_file\": \""+md5_json + "\"}")
+        file_to_write.write("\"md5_file\": \""+md5_json + "\"}")
 
 
 def get_base_json():
