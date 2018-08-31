@@ -203,7 +203,13 @@ function handleDragOver(evt) {
     evt.preventDefault();
     evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 }
-
+function display_job_type() {
+    var test_job_ask_exist = document.getElementById("btn_upload");
+    if (test_job_ask_exist === null)
+    {
+        ask_job_type();
+    }
+}
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
