@@ -623,7 +623,7 @@ $(document).ready(function() {
 						for(var j=0; j<nbIms;j++){
 							$.ajax({
 								type: 'GET',
-								url : url_website+'details_image?id_image='+j,
+								url : url_website+"details_image?id_file="+idIms+"&name_img=img-MO-"+j+".png",
 								processData: true,
 								success: function(recivedData) {
 									var imageDescription="Atom numbering scheme.";
@@ -650,7 +650,7 @@ $(document).ready(function() {
 						for(var j=0; j<nbIms1;j++){
 							$.ajax({
 								type: 'GET',
-								url : url_website+"details_image?id_file="+j+"&name_img=img-TOPO.png",
+								url : url_website+"details_image?id_file="+idIms+"&name_img=img-TOPO.png",
 								processData: true,
 								success: function(recivedData) {
 									var imageDescription="Atom numbering scheme.";
