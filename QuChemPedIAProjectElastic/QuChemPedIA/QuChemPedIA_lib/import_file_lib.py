@@ -12,8 +12,9 @@ import time
 def create_jobs(json_loaded, job_type, elastic_id, md5_json = None):
     if not md5_json :
         md5_json = hashlib.md5(str(json_loaded).encode('utf-8')).hexdigest()
-    with open(os.path.join("/var/www/html/media/jobs/", "img"+job_type,"todo", md5_json+'.json'), "w+") as file_to_write:
-        file_to_write.write("{\"elastic_id\":\""+elastic_id+"\"}")
+    with open(os.path.join(settings.MEDIA_ROOT, "/jobs/", "img"+job_type, md5_json+'.json'), "w+") as file_to_write:
+        file_to_write.write("{\'elastic_id \': \'"+elastic_id+"\'")
+
 
 def get_base_json():
     """
@@ -297,7 +298,7 @@ def exist_freq(id_json_to_test, json_to_input, path_to_log_file, destination_dir
         response['_source']['siblings'][size]['data']['metadata']["affiliation"] = get_affiliation(
             id_user=id_user)
         response['_source']['siblings'][size]['data']['metadata']['log_file'] = \
-            path_in_file_sytem + "FREQ_" + str(temp_md5) + ".log"
+            path_in_file_sytem + "/FREQ_" + str(temp_md5) + ".log"
         response['_source']['siblings'][size]['job_type'] = "FREQ"
 
         response['_source']['md5_siblings'].append(temp_md5)
@@ -307,6 +308,8 @@ def exist_freq(id_json_to_test, json_to_input, path_to_log_file, destination_dir
             es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_json_to_test)
             subprocess.Popen(["mv", path_to_log_file,
                               destination_dir + path_in_file_sytem + "/FREQ_" + str(temp_md5) + ".log"])  # copie du JSON
+
+            create_jobs(json_loaded=json_to_input, job_type="FREQ", elastic_id=id_json_to_test, md5_json=temp_md5)
             return 0
         except Exception as error:
             print(error)
@@ -350,7 +353,7 @@ def exist_td(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
         response['_source']['siblings'][size]['data']['metadata']["affiliation"] = get_affiliation(
             id_user=id_user)
         response['_source']['siblings'][size]['data']['metadata']['log_file'] = \
-            path_in_file_sytem + "TD_" + str(temp_md5) + ".log"
+            path_in_file_sytem + "/TD_" + str(temp_md5) + ".log"
         response['_source']['siblings'][size]['job_type'] = "TD"
 
         response['_source']['md5_siblings'].append(temp_md5)
@@ -364,6 +367,8 @@ def exist_td(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
             subprocess.Popen(["mv", path_to_log_file,
                               destination_dir + path_in_file_sytem + "/TD_" + str(
                                   temp_md5) + ".log"])  # copie du JSON
+
+            create_jobs(json_loaded=json_to_input, job_type="TD", elastic_id=id_json_to_test, md5_json=temp_md5)
             return 0
         except Exception as error:
             print(error)
@@ -404,7 +409,7 @@ def exist_sp(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
         response['_source']['siblings'][size]['data']['metadata']["id_user"] = id_user
         response['_source']['siblings'][size]['data']['metadata']["affiliation"] = get_affiliation(id_user=id_user)
         response['_source']['siblings'][size]['data']['metadata']['log_file'] = \
-            path_in_file_sytem + "SP_" + str(temp_md5) + ".log"
+            path_in_file_sytem + "/SP_" + str(temp_md5) + ".log"
         response['_source']['siblings'][size]['job_type'] = "SP"
 
         response['_source']['md5_siblings'].append(temp_md5)
@@ -417,6 +422,7 @@ def exist_sp(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
             subprocess.Popen(["mv", path_to_log_file,
                               destination_dir + path_in_file_sytem + "/SP_" + str(
                                   temp_md5) + ".log"])  # copie du JSON
+            create_jobs(json_loaded=json_to_input, job_type="SP", elastic_id=id_json_to_test, md5_json=temp_md5)
             return 0
         except Exception as error:
             print(error)
@@ -509,7 +515,7 @@ def create_query(path, json_file, destination_dir, id_user):
             if location_opt:
                 subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
                                   str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
-                create_jobs(json_loaded=loaded_json,job_type="OPT",elastic_id=id_file)
+                create_jobs(json_loaded=loaded_json, job_type="OPT", elastic_id=id_file)
             elif location_freq:
                 subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
                                   str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
@@ -590,6 +596,6 @@ def import_file(path, json_file, id_user):
     3 doesn't have a grount state, 4 other error (see logs)
     """
     # absolute path to the destination directory where we are going to store all the data
-    destination_dir = settings.DATA_DIR_ROOT
+    destination_dir = settings.DATA_DIR_ROOT+'/'
 
     return create_query(path=path,json_file=json_file, destination_dir=destination_dir, id_user=id_user)

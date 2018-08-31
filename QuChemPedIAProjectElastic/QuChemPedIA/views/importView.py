@@ -213,7 +213,6 @@ def import_view(request):
                     path = "media/" + temps.path_file
                     update_status_in_db(result_of_import=import_file(path=file_list[i], json_file=json_file, id_user=temps.id_user.id),
                                         import_object=temps)
-
                 except Exception as error:
                     print(error)
                     temps.status = 'import failed'
@@ -238,16 +237,16 @@ def launch_import(request, id_file, page):
     path_json = settings.BASE_DIR+settings.MEDIA_URL+file.path_file
     with open(path_json, "r") as json_open:
         json_file = json.load(json_open)
-    path_log = settings.BASE_DIR+settings.MEDIA_URL+file.path_file
+    path_log = settings.BASE_DIR+settings.MEDIA_URL+file.log_path_file
     id_user = file.id_user.id
     try:
-        import_file(path=path_log, json_file=json_file, id_user=id_user)
-        file.delete()
+        update_status_in_db(result_of_import=import_file(path=path_log, json_file=json_file, id_user=id_user),
+                            import_object=file)
     except Exception as error:
         print(error)
         file.status = 'import failed'
         file.save()
-    return HttpResponseRedirect('/admin/list_of_import_in_database?page=' + str(page))
+        return HttpResponseRedirect('/admin/list_of_import_in_database?page=' + str(page))
 
 
 def delete_import(request, id_file, page):
