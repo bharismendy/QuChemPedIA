@@ -246,7 +246,7 @@ def launch_import(request, id_file, page):
         print(error)
         file.status = 'import failed'
         file.save()
-        return HttpResponseRedirect('/admin/list_of_import_in_database?page=' + str(page))
+    return HttpResponseRedirect('/admin/list_of_import_in_database?page=' + str(page))
 
 
 def delete_import(request, id_file, page):
@@ -260,10 +260,16 @@ def delete_import(request, id_file, page):
     if not request.user.is_admin:  # security to redirect user that aren't admin
         return HttpResponseRedirect('/accueil')
     file = ImportFile.objects.get(id_file=id_file)
-    path = "media/"+file.path_file
-    if os.path.isfile(path=path):
+
+    if os.path.isfile(path=os.path.join('/var/www/html/media/', file.path_file)):
         try:
-            os.remove(path=path)
+            os.remove(path=os.path.join('/var/www/html/media/', file.path_file))
+        except Exception as error:
+            print(error)
+            file.status("couldn't delete the import")
+    if os.path.isfile(path=os.path.join('/var/www/html/media/', file.log_path_file)):
+        try:
+            os.remove(path=os.path.join('/var/www/html/media/', file.log_path_file))
         except Exception as error:
             print(error)
             file.status("couldn't delete the import")

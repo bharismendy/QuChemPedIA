@@ -629,8 +629,10 @@ $(document).ready(function() {
 									var imageDescription="Atom numbering scheme.";
 									$("#imagesGeometry"+comptids+"_"+idIms).attr("src","data:image/png;base64, "+recivedData+"");
 									comptids++;
+									$("#loadingImage").hide();
 								},
 								error: function(recivedData) {
+									$("#loadingImage").hide();
 								   console.log("error");
 								}
 							});
@@ -654,8 +656,10 @@ $(document).ready(function() {
 									var imageDescription="Atom numbering scheme.";
 									$("#imagesGeometry1"+comptids1+"_"+idIms).attr("src","data:image/png;base64, "+recivedData+"");
 									comptids1++;
+									$("#loadingImage").hide();
 								},
 								error: function(recivedData) {
+									$("#loadingImage").hide();
 								   console.log("error");
 								}
 							});
@@ -678,8 +682,10 @@ $(document).ready(function() {
 									var imageDescription="Atom numbering scheme.";
 									$("#imagesGeometry2"+comptids2+"_"+idIms).attr("src","data:image/png;base64, "+recivedData+"");
 									comptids2++;
+									$("#loadingImage").hide();
 								},
 								error: function(recivedData) {
+									$("#loadingImage").hide();
 								   console.log("error");
 								}
 							});
@@ -798,8 +804,10 @@ $(document).ready(function() {
 								var imageDescription="Atom numbering scheme.";
 								$("#exitedStatesChart").attr("src","data:image/png;base64, "+recivedData+"");
 								comptids2++;
+								$("#loadingImage").hide();
 							},
 							error: function(recivedData) {
+								$("#loadingImage").hide();
 							   console.log("error");
 							}
 						});

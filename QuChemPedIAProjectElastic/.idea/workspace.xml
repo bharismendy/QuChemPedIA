@@ -38,11 +38,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="importView.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/QuChemPedIA/views/importView.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2934">
+              <caret line="271" column="64" selection-start-line="271" selection-start-column="64" selection-end-line="271" selection-end-column="64" />
+              <folding>
+                <element signature="e#0#49#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="import_file_lib.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/QuChemPedIA/QuChemPedIA_lib/import_file_lib.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="15" column="59" lean-forward="true" selection-start-line="15" selection-start-column="59" selection-end-line="15" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DetailsView.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/QuChemPedIA/views/DetailsView.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="585">
+              <caret line="60" column="92" lean-forward="true" selection-start-line="60" selection-start-column="20" selection-end-line="60" selection-end-column="93" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="details.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/QuChemPedIA/static/js/details.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="392" column="227" selection-start-line="392" selection-start-column="220" selection-end-line="392" selection-end-column="227" />
+            <state relative-caret-position="1919">
+              <caret line="809" column="58" selection-end-line="818" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
@@ -72,15 +105,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="import_file_lib.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/QuChemPedIA/QuChemPedIA_lib/import_file_lib.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -94,8 +118,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>127.0.0.1</find>
-      <find />
       <find>{{</find>
       <find>es_host</find>
       <find>ElasticSearch</find>
@@ -124,6 +146,8 @@
       <find>theor</find>
       <find>update_status_in_db</find>
       <find>downloa</find>
+      <find>error</find>
+      <find>image</find>
     </findStrings>
     <replaceStrings>
       <replace>None</replace>
@@ -173,7 +197,6 @@
         <option value="$PROJECT_DIR$/QuChemPedIA/views/AdminEditRules.py" />
         <option value="$PROJECT_DIR$/templates/base_admin.html" />
         <option value="$PROJECT_DIR$/QuChemPedIAProject/urls.py" />
-        <option value="$PROJECT_DIR$/QuChemPedIA/static/js/details.js" />
         <option value="$PROJECT_DIR$/QuChemPedIA/templates/QuChemPedIA/accueil.html" />
         <option value="$PROJECT_DIR$/QuChemPedIA/views/DetailsView.py" />
         <option value="$PROJECT_DIR$/templates/base_account.html" />
@@ -186,6 +209,7 @@
         <option value="$PROJECT_DIR$/QuChemPedIA/templates/QuChemPedIA/admin_list_on_import_in_database.html" />
         <option value="$PROJECT_DIR$/QuChemPedIA/QuChemPedIA_lib/store_in_temp.py" />
         <option value="$PROJECT_DIR$/QuChemPedIAProject/settings.py" />
+        <option value="$PROJECT_DIR$/QuChemPedIA/static/js/details.js" />
         <option value="$PROJECT_DIR$/QuChemPedIA/views/importView.py" />
         <option value="$PROJECT_DIR$/QuChemPedIA/QuChemPedIA_lib/import_file_lib.py" />
       </list>
@@ -824,15 +848,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/QuChemPedIA/views/DetailsView.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -864,16 +879,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/QuChemPedIA/views/importView.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="107" column="23" selection-start-line="107" selection-start-column="4" selection-end-line="107" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/QuChemPedIAProject/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="781">
@@ -898,10 +903,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/QuChemPedIA/views/DetailsView.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="60" column="92" lean-forward="true" selection-start-line="60" selection-start-column="20" selection-end-line="60" selection-end-column="93" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/QuChemPedIA/static/js/details.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="392" column="227" selection-start-line="392" selection-start-column="220" selection-end-line="392" selection-end-column="227" />
+        <state relative-caret-position="1919">
+          <caret line="809" column="58" selection-end-line="818" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
@@ -930,10 +945,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/QuChemPedIA/views/importView.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2934">
+          <caret line="271" column="64" selection-start-line="271" selection-start-column="64" selection-end-line="271" selection-end-column="64" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/QuChemPedIA/QuChemPedIA_lib/import_file_lib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        <state relative-caret-position="105">
+          <caret line="15" column="59" lean-forward="true" selection-start-line="15" selection-start-column="59" selection-end-line="15" selection-end-column="59" />
         </state>
       </provider>
     </entry>
