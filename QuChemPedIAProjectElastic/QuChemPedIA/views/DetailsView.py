@@ -58,7 +58,7 @@ def details_image(request):
     :return: png file
     """
     if request.is_ajax():
-        image_data = base64.b64encode(open("QuChemPedIA/static/image_test.png", "rb").read())
+        image_data = base64.b64encode(open("/var/www/html/QuChemPedIA/static/image_test.png", "rb").read())
         return HttpResponse(image_data, content_type="image/png")
 
 
