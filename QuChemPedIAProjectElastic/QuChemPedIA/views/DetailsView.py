@@ -57,8 +57,17 @@ def details_image(request):
     :param id: id of the molecule that we want to show
     :return: png file
     """
+    id_file = request.GET.get(key='id_file')
+    name_img = request.GET.get(key='name_img')
+    elastic_base_dir = settings.DATA_DIR_ROOT
+    for c in id_file:
+        elastic_base_dir = os.path.join(elastic_base_dir, c)
+    img_path = os.path.join(elastic_base_dir, name_img)
     if request.is_ajax():
-        image_data = base64.b64encode(open("/var/www/html/QuChemPedIA/static/image_test.png", "rb").read())
+        if os.path.isfile(img_path):
+            image_data = base64.b64encode(open(img_path, "rb").read())
+        else:
+            image_data = base64.b64encode(open("/var/www/html/QuChemPedIA/static/image_test.png", "rb").read())
         return HttpResponse(image_data, content_type="image/png")
 
 
