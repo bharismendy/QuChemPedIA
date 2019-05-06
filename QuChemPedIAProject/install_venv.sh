@@ -8,4 +8,6 @@ echo "installation des package python..."
 source venv/bin/activate
 venv/bin/pip3.5 install -r requirements.txt 
 deactivate
+echo "*" > venv/.gitignore
+echo "!.gitignore" >> venv/.gitignore
 echo "fin de l'installation de l'environement virtuel ..."
