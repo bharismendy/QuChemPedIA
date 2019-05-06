@@ -4,6 +4,7 @@ certifi==2018.4.16
 chardet==3.0.4
 Django==2.0.5
 django-bootstrap4==0.0.6
+django-webpack-loader==0.6.0
 docutils==0.14
 elasticsearch==6.2.0
 elasticsearch-dsl==6.1.0
@@ -16,6 +17,7 @@ numpy==1.15.1
 openbabel==2.4.1
 packaging==17.1
 Pillow==5.1.0
+pkg-resources==0.0.0
 psycopg2-binary==2.7.4
 Pygments==2.2.0
 pyparsing==2.2.0
