@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if results|length >= 1 %}
+  <!-- Page de résultat de recherche -->
+  <div class="container">
+    <!-- Affichage du nombre de résultat et valeur de la recherche - Test si le nombre est >1 pour accorder en nombre le texte -->
+    <div class="row">
+      <h2 id="result-title">{{ results.nbresult }} result{% if results.nbresult > 1 %}s{% endif %} for <strong>{{ query_form.search.value }}</strong>.</h2>
+    </div>
+    <div class="row">
+      <div class="col">
+      </div>
+      <!-- Pagination et gestion du nombre de page
+        ATTENTION LA GESION DU NOMBRE DE RESULTAT N'EST PAS ENCORE GEREE
+      -->
+      <div id="pagination-2" class="col">
+        <i id="" class="fa fa-angle-left btn-previous" style="font-size:24px"></i>
+               <span class="content_btn_page"></span>
+        <i id="" class="fa fa-angle-right btn-next" style="font-size:24px"></i>
+      </div>
+      <div class="col text-right">
+        <div class="dropdown">
+        {% if request.GET.nbrpp %}
+            <span>Results per page : {{ request.GET.nbrpp }}</span>
+        {% else %}
+            <span>Results per page : 10</span>
+        {% endif %}
+          <i class="fa fa-angle-down" data-toggle="dropdown" style="font-size:24px"></i>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% if not request.get.nbrpp %}{% url 'query' %}?{{ request.GET.urlencode }}&nbrpp=10" {%else%}{{ request.get.nbrpp }} = {{ 10 }}{% endif %}>10</a>
+            <a class="dropdown-item" href="{% if not request.get.nbrpp %}{% url 'query' %}?{{ request.GET.urlencode }}&nbrpp=20" {%else%}{{ request.get.nbrpp }} = {{ 20 }}{% endif %}>20</a>
+            <a class="dropdown-item" href="{% if not request.get.nbrpp %}{% url 'query' %}?{{ request.GET.urlencode }}&nbrpp=50" {%else%}{{ request.get.nbrpp }} = {{ 50 }}{% endif %}>50</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Partie d'affichage de tous les résultats de la recherche
+      On fait une boucle sur tous les résultats en associant leur valeur à une clé unique
+   -->
+      {% for key, value in results.items %}
+      {% if key != 'nbresult' %}
+      <div id="list-query-group" class="list-group">
+        <div>
+          <div>
+            <!-- Séparation de l'affichage d'un résultat en trois colonnes
+                AFFICHAGE DU SMILES | CALCUL ASSOCIES DISPONIBLE | DETAILS
+              -->
+            <div class="row">
+              <div class="col-lg-3">
+                <!-- smiles drawer -->
+                <a href="./details?id={{value.0.id_log}}" class="">
+                  <canvas id="{{ value.0.id_log }}">
+                    Sorry, your browser doesn't support the &lt;canvas&gt; element.
+                  </canvas>
+                  {% if value.0.cansmiles %}
+                    <script>
+                      $(document).ready(function() {
+                        var canvasH = $("#{{ value.0.id_log }}").height();
+                        var canvasW = $("#{{ value.0.id_log }}").width();
+                          let options = {width : canvasW,
+                                         height : canvasH,
+                          };
+
+                          // Initialize the drawer
+                          let smilesDrawer = new SmilesDrawer.Drawer(options);
+
+                          SmilesDrawer.parse("{{ value.0.cansmiles }}", function(tree) {
+                                // Draw to the canvas
+                          smilesDrawer.draw(tree, '{{ value.0.id_log }}', 'light', false);
+                          });
+                      });
+                    </script>
+                  {% endif %}
+                </a>
+              </div>
+              <div class ="col-lg-1">
+                <!-- Calculs associés -->
+                <div class="row">
+                  {% if 'OPT' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="OPT" class="form-check-label">&nbsp;OPT</label>
+                </div>
+                <div class="row">
+                  {% if 'FREQ' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="FREQ" class="form-check-label">&nbsp;FREQ</label>
+                </div>
+                <div class="row">
+                  {% if 'TD' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="TD" class="form-check-label">&nbsp;TD</label>
+                </div>
+                <div class="row">
+                  {% if 'SP' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="SP" class="form-check-label">&nbsp;SP</label>
+                </div>
+                <div class="row">
+                  {% if 'OPT_ES' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="OPT_ES" class="form-check-label">&nbsp;OPT_ES</label>
+                </div>
+                <div class="row">
+                  {% if 'FREQ_ES' in value.0.job_type %}
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  {% else%}
+                  <i class="fa fa-square-o" aria-hidden="true"></i>
+                  {% endif %}
+                  <label for="FREQ_ES" class="form-check-label">&nbsp;FREQ_ES</label>
+                </div>
+              </div>
+              <div class="col-lg-8">
+              <!-- Partie détails séparés en deux parties,
+                ATTENTION - POUR CHAQUES VALEURS ON TEST SI LA VALEUR EST NULL ALORS ON AFFICHE Unknown
+             -->
+                <div id="inchi_smiles_cid" class="row">
+                <!-- En fonction du critère de recherche rajouter InChi ou CID ou cansmiles -->
+                  <div class="container row">
+                    <div id="molecule_{{ value.0.id_log }}" class="col molecule_name">
+                      {% if query_form.typeQuery.value ==  "InChi" %}<div id="inchi_{{ value.0.id_log }}"><strong>InChi: </strong><span>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}Unknown{% endif %}</span></div>{% endif %}
+                      {% if query_form.typeQuery.value ==  "SMILES" %}<div><strong>Canonical smiles: </strong><span>{% if value.0.cansmiles != "Null" or value.0.cansmiles == 0 %}{{ value.0.cansmiles }}{% else %}Unknown{% endif %}</span></div>{% endif %}
+                      {% if query_form.typeQuery.value ==  "CID" %}<div><strong>CID: </strong><span>{% if value.0.cid != "Null" or value.0.cid == 0 %}{{ value.0.cid }}{% else %}Unknown{% endif %}</span></div>{% endif %}
+                    </div>
+                  </div>
+                </div>
+                <div id="query_details" class="row">
+                  <div class="container row">
+                    <div class="col-lg-4">
+                      <!-- Formule -->
+                      <a href="./details?id={{value.0.id_log}}" class="formula">
+                        <b>Formula : </b>{% if value.0.formula != "Null" %}<span id="formula_{{ value.0.id_log }}">{{value.0.formula}}</span>{% else%}Unknown{% endif %}
+                      </a>
+                    </div>
+                    <div class="col-lg-8">
+                      <!-- Iupac -->
+                      <a href="./details?id={{value.0.id_log}}" class="">
+                        <b>IUPAC : </b>{% if value.0.iupac != "Null" %}{{value.0.iupac}}{% else%}Unknown{% endif %}
+                      </a>
+                    </div>
+                  </div>
+                  <div class="container row">
+                    <div class="col-lg-4">
+                      <!-- Charge -->
+                      <strong>Charge : </strong>{% if value.0.charge != "Null" or value.0.charge == 0 %}{{ value.0.charge }}{% else %}Unknown{% endif %}
+                    </div>
+                    <div class="col-lg-8">
+                      <!-- Software - on affiche que le nom du software -->
+                      {% if value.0.software != "Null" or value.0.software == 0 %}{{ value.0.software }}{% else %}Unknown{% endif %}
+                    </div>
+                  </div>
+                  <div class="container row">
+                    <div class="col-lg-4">
+                      <!-- Multiplicité -->
+                      <strong>Multiplicity: </strong>{% if value.0.multiplicity != "Null" or value.0.multiplicity == 0 %}{{ value.0.multiplicity }}{% else %}Unknown{% endif %}
+                    </div>
+                    <div class="col-lg-8">
+                      <!-- Théorie du calcul
+                        Si la théorie est DFT on affiche seulement la fonction sinon on affiche la théorie/fonction
+                        On ajoute Le Basis set name (et sa valeur)
+                     -->
+                      {% if value.0.theory == "DFT" %}{{ value.0.functionnal }}{% else %}{{ value.0.theory }}/{{ value.0.functionnal }}{% endif %} / <strong>Basis set : </strong>{% if value.0.basis_set_name != "Null" or value.0.basis_set_name == 0 %}{{ value.0.basis_set_name }}{% else %}Unknown{% endif %} ({% if value.0.basis_set_size != "Null" or value.0.basis_set_size == 0 %}{{ value.0.basis_set_size }} functions{% else %}Unknown{% endif %})
+                    </div>
+                  </div>
+                  <div class="container row">
+                    <div class="col-lg-4">
+                      <!-- Solvent et méthode
+                        Si le solvent est différent de gas on affichage aussi la méthode de solvatation
+                      -->
+                      <strong>Solvent : </strong>{% if value.0.solvent != "Null" or value.0.solvent == 0 %}{{ value.0.solvent }}{% else %}Unknown{% endif %}
+                      {% if value.0.solvent != "Gas" %} / <strong>Solvatation method : </strong>{% if value.0.solvatation_method != "Null" or value.0.solvatation_method == 0 %}{{ value.0.solvatation_method }}{% else %}Unknown{% endif %}{% else %}{% endif %}
+                    </div>
+                    <div class="col-lg-8">
+                      <!-- Ending Energy -->
+                      <strong>Ending energy : </strong>{% if value.0.ending_energy != "Null" or value.0.ending_energy == 0 %}{{ value.0.ending_energy|floatformat:"7" }} a.u. {% else %}Unknown{% endif %}
+                    </div>
+                  </div>
+                </div>
+                <script>
+                /* Script de modification de la formule rajoutant les indices et les exposant nécéssaire */
+                  $(document).ready(function(){
+                    var charge = {{ value.0.charge }};
+                    var formula = $("#formula_{{ value.0.id_log }}").html();
+                    var str = "";
+                    // On parcourt la formule
+                    for (var i = formula.length-1; i >= 0; i--) {
+                      // Si la charge n'est pas nul alors on aura au moins un charactère en exposant
+                      if( i === formula.length-1 && charge !== 0 ){
+                        // Si la charge est différente de 1 alors il faudra afficher le signe et le numéro du signe en exposant
+                        if( charge > 1 || charge < -1){
+                          str = formula.charAt(i-1).sup() + formula.charAt(i).sup() + str;
+                          i--;
+                        } else {
+                          str = formula.charAt(i).sup() + str;
+                        }
+                        // On affiche tous les autres chiffre en indice
+                      } else if ( $.isNumeric(formula.charAt(i)) ){
+                        str = formula.charAt(i).sub() + str;
+                      } else {
+                        str = formula.charAt(i) + str;
+                      };
+                    };
+                    // On rajoute la nouvelle chaine sur la page
+                    $("#formula_{{ value.0.id_log }}").html(str);
+                  });
+                </script>
+              </div>
+              <hr/>
+
+                <br/>
+            <br/>
+            <br/>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+      <!-- Pagination et gestion du nombre de page -->
+      <div id="pagination">
+        <i class="fa fa-angle-left btn-previous" style="font-size:24px"></i>
+        <span class="content_btn_page"></span>
+        <i class="fa fa-angle-right btn-next" style="font-size:24px"></i>
+      </div>
+  </div>
+      {% else %}
+      <!-- Gestion de la page s'il n'y a pas de résultats pour la recherche -->
+      <div class='container' style='margin-top:50px;'>
+        <div class="row row404">
+          <h1>We couldn't find any molecule matching your search.</h1>
+        </div>
+        <div class="row row404">
+          {% load static %}
+          <div class="col-xs-4 "><img src="{% static "media/confused_scientist.png" %}" style="height:300px;"></div>
+          <div class="col-xs-4"><img src="{% static "media/molecule.png" %}" style="height:300px;"></div>
+        </div>
+      </div>
+  {% endif %}
+
+<script>
+  $(document).ready(function(){
+    var urlParams = new URLSearchParams(window.location.search);
+    var nbresult = {{ results.nbresult }};
+    var result_per_page = null;
+    if (urlParams.get('nbrpp') == null){
+        result_per_page = 10;
+    }
+    else{
+        result_per_page = urlParams.get('nbrpp');
+    }
+    var url = window.location.href;
+    var actualPage = null;
+    if (urlParams.get('page') == null){
+        actualPage = 1;
+    }
+    else{
+        actualPage = urlParams.get('page');
+    }
+    var actualSearch = urlParams.get('typeQuery');
+    var nbrpages = Math.ceil(nbresult/result_per_page);
+    /* fonction qui enlève le "InChi=" dans la donnée */
+    $(".molecule_name").children().each(function(){
+      if(this.id.split("_")[0] === "inchi"){
+        $("#"+this.id+" span").html($("#"+this.id+" span").text().replace("InChI=",""));
+      }
+    });
+
+    /* Fonction qui test la disponibilité d'une page */
+    // On Initialize la page à 0 quand on arrive sur la page
+    $(".content_btn_page").text("Page : "+actualPage+" / "+nbrpages);
+    // On test si la page actuelle est inférieur à la page max
+    if ( actualPage < nbrpages){
+      $(".btn-next").removeClass('fa-disabled');
+      $(".btn-next").click(function(){
+        actualPage++;
+        urlParams.set('page',actualPage);
+        var newUrl = location.protocol + '//' + location.host + location.pathname + "?" + urlParams.toString();
+        window.location.href = newUrl;
+      });
+    }else{
+      $('.btn-next').addClass('fa-disabled');
+    }
+    // On test si la page actuelle est suppérieur à 0
+    if( actualPage > 1 ) {
+      $('.btn-previous').removeClass('fa-disabled');
+      $(".btn-previous").click(function(){
+        actualPage--;
+        urlParams.set('page',actualPage);
+        var newUrl = location.protocol + '//' + location.host + location.pathname + "?" + urlParams.toString();
+        window.location.href = newUrl;
+      });
+    }else{
+      $('.btn-previous').addClass('fa-disabled');
+    }
+  });
+
+</script>
+{% endblock %}

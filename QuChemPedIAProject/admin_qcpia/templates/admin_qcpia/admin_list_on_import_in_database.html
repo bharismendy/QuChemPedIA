@@ -1,0 +1,150 @@
+{% extends "base_admin.html" %}
+{% block content %}
+        <main role="main" class="col-md-12" id="dashboard_main">
+        {% if history|length > 0 %}
+            <table class="table" id="table_of_import">
+                <thead>
+                    <tr>
+                        <th scope="col">File_ID</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">User ID</th>
+                        <th scope="col">show the json file</th>
+                        <th scope="col">show the log file</th>
+                        <th scope="col">Preview</th>
+                        <th scope="col">Launch the import</th>
+                        <th scope="col">Delete the import</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for imported_file in history %}
+                     <tr>
+                        <th scope="row">{{ imported_file.id_file }}</th>
+                        <td>{{ imported_file.status }}</td>
+                        <td><a href="{% url 'admin/edit_user' imported_file.id_user_id %}">{{ imported_file.id_user_id }}</a></td>
+                        <td>
+                            <form class="form" action="{{ MEDIA_URL }}{{ imported_file.path_file }}">
+                                {% csrf_token %}
+                                <button class="btn btn-xs btn-primary active">download
+                                    <svg class="feather feather-download-cloud sc-dnqmqq jxshSx"
+                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         aria-hidden="true" data-reactid="461"><polyline points="8 17 12 21 16 17">
+                                        </polyline><line x1="12" y1="12" x2="12" y2="21"></line>
+                                        <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form class="form" action="{{ MEDIA_URL }}{{ imported_file.log_path_file }}">
+                                {% csrf_token %}
+                                <button class="btn btn-xs btn-primary active">download
+                                    <svg class="feather feather-download-cloud sc-dnqmqq jxshSx"
+                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         aria-hidden="true" data-reactid="461"><polyline points="8 17 12 21 16 17">
+                                        </polyline><line x1="12" y1="12" x2="12" y2="21"></line>
+                                        <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form class="form" method="post" action="{% url 'details' %}?id={{imported_file.path_file}}">
+                                {% csrf_token %}
+                                <button class="btn btn-xs btn-primary active">see a preview
+                                    <svg class="feather feather-airplay sc-dnqmqq jxshSx"
+                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         aria-hidden="true" data-reactid="41">
+                                        <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1">
+                                        </path><polygon points="12 15 17 21 7 21 12 15"></polygon>
+                                    </svg>
+                                </button>
+                            </form>
+                        <td>
+                            <form class="form" method="post" action="{% url 'admin/launch_import' imported_file.id_file history.number %}">
+                                {% csrf_token %}
+                                <button class="btn btn-xs btn-primary active">start the import
+                                    <svg class="feather feather-arrow-right-circle sc-dnqmqq jxshSx"
+                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         aria-hidden="true" data-reactid="126">
+                                        <circle cx="12" cy="12" r="10">
+                                        </circle>
+                                        <polyline points="12 16 16 12 12 8"></polyline>
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                         <td>
+                            <form class="form" method="post" action="{% url 'admin/delete_import' imported_file.id_file history.number %}">
+                                {% csrf_token %}
+                                <button class="btn btn-xs btn-danger active">delete the import
+                                    <svg class="feather feather-delete sc-dnqmqq jxshSx"
+                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         aria-hidden="true" data-reactid="446">
+                                        <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+                                        <line x1="18" y1="9" x2="12" y2="15"></line>
+                                        <line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if history.has_other_pages %}
+                <ul class="pagination">
+                {% if history.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ history.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+                {% for i in history.paginator.page_range %}
+                    {% if history.number == i %}
+                        <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if history.has_next %}
+                    <li class="page-item"><a class="page-link" href="{% url 'admin/list_of_import_in_database' %}?page={{ history.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+                </ul>
+            {% endif %}
+        {% else %}
+             <div class="text-center text-danger">
+                <div class="col-lg-12">
+                    <p>
+                        <svg class="feather feather-alert-triangle sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                             width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="56">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                            </path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12" y2="17"></line>
+                        </svg>
+                        there is no record in database
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+                <script type="text/javascript">
+            $(document).ready( function () {
+                $('#table_of_import').DataTable({
+                    "paging":   false,
+                    "searching": false,
+                    "info":     false
+                } );
+            } );
+        </script>
+        </main>
+{% endblock %}

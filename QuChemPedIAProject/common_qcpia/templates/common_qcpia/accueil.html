@@ -1,0 +1,146 @@
+{% load static %}
+
+{# block used as header #}
+{% block header %}
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+      <!-- Chargement du CSS, bootstrap4, javascript et jQuery-->
+      {% load bootstrap4 %}
+      {% bootstrap_css %}
+      {% bootstrap_javascript jquery='full' %}
+      {% bootstrap_messages %}
+
+      <title>QuChemPedIA</title>
+      <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
+      <script src="{% static "js/dropzone.js" %}"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+    </head>
+{% endblock %}
+{% block nav %}
+      <div  id="sign" class="row float-right">
+                <!-- Bouton login-->
+                <a class="nav-link btn btn-info default-primary-color button-nav" title="import a file" href="{% url 'dashboard/import' %}">
+                            <svg class="feather feather-upload sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1236">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                      </a>
+                  {% if not user.is_authenticated %}
+                        <a  class="nav-link btn btn-info default-primary-color button-nav" title="Sign up/Sign in" href="{% url 'auth' %}">
+                            <svg class="feather feather-log-in sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
+                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="716">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                                <polyline points="10 17 15 12 10 7"></polyline>
+                                <line x1="15" y1="12" x2="3" y2="12"></line>
+                            </svg>
+                        </a>
+                  {% else %}
+                      <!-- Bouton Request calcul-->
+                      {%  if user.is_admin %}
+                          <a class="nav-link btn btn-info default-primary-color button-admin" title="Admin panel" href="{% url 'admin' %}">
+                            <svg class="feather feather-settings sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
+                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1016">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                        </a>
+                    {% endif %}
+                        <a class="nav-link btn btn-info default-primary-color button-nav" title="My profile" href="{% url 'dasboard/account' %}">
+                            <svg class="feather feather-user sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
+                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1261">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </a>
+                        <a class="nav-link btn btn-info default-primary-color button-nav" title="Log-out" href="{% url 'logout' %}">
+                            <svg class="feather feather-log-out sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
+                               width="24" height="24" viewBox="0 0 24 24" fill="none"
+                               stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                               stroke-linejoin="round" aria-hidden="true" data-reactid="721">
+                              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                              <polyline points="16 17 21 12 16 7"></polyline>
+                              <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                        </a>
+                  {% endif %}
+                </div>
+{% endblock %}
+
+{% block content %}
+<div class="container" >
+  <div class="Absolute-Center is-Responsive ">
+    <h1 class="display-2 text-center text-primary">QuChemPedIA</h1>
+    <h2 id="subtitle" class="diplay-2 text-center">Quantum Chemistry Collaborative EncyclopedIA</h2>
+    <br/>
+    <div id="form-accueil">
+      <!-- Formulaire de recherche -->
+      <form class="form-inline" action="{% url 'query' %}" method="GET" >
+          {% csrf_token %}
+          {{ query_form.as_table }}
+          <button id="button-search" class="btn btn-info default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <!-- Génération de la navbar pour footer -->
+  <nav class="navbar navbar-expand-sm fixed-bottom">
+    <div class="footer">
+      <a class="link-footer" href=""><u>Project</u></a>
+      <a class="link-footer" href=""><u>Team</u></a>
+      <a class="link-footer" href=""><u>Terms</u></a>
+    </div>
+  </nav>
+</footer>
+<script>
+/* Script de rendu pour le formulaire de recherche */
+ $(document).ready(function(){
+      $("#id_search").attr("placeholder","Search...");
+      $("#id_typeQuery").css("width","15%");
+  });
+</script>
+    <script>
+
+    Dropzone.autoDiscover = false;
+   // using jQuery
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+       $("#myDropzone").dropzone({
+        url:"{% url 'dashboard/import' %}",
+        addRemoveLinks : true,
+        maxFilesize: 5000,
+        dictDefaultMessage: "Drop your log files here or click to upload",
+        dictResponseError: 'Error uploading file!',
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        success: function (file, response) {
+            location.reload();
+            this.removeFile(file); //todo discuter de quoi faire
+        }
+        });
+    </script>
+
+{% endblock %}

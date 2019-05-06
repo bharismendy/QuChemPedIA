@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container vertical-center" >
+            <div class="row" id="content_sign_in_up">
+                <div class="col col-lg-6" id="form_sign_in">
+                    <form method="POST" action={% url 'auth' %}>
+                        <h4 >Sign In</h4>
+                        {% if error_login %}
+                            <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                            Vous êtes connecté, {{ user.username }} !
+                        {% else %}
+                                {% csrf_token %}
+                                {% for field in login_form.visible_fields %}
+                                    <div class="row form-group">
+                                        <div class="col-lg-4">
+                                            {{ field.label_tag }}
+                                        </div>
+                                        <div class="col-lg-7">
+                                          {{ field }}
+                                          {{ field.help_text }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            <button class="btn btn-success default-primary-color" name="btn-login" type="submit">Sign In</button>
+                        {% endif %}
+                    </form>
+                </div>
+            <div class="col col-lg-6">
+                <form method="POST" action={% url 'auth' %}>
+                    <h4>Sign Up</h4>
+                    {% if user.is_authenticated %}
+                        Vous êtes connecté, {{ user.username }} !
+                    {% else %}
+                        {% csrf_token %}
+                        {% for field in register_form.visible_fields %}
+                            <div class="row form-group">
+                                <div class="col-lg-12 text-danger error_fields">
+                                  {{ field.errors | safe }}
+                                </div>
+                                <div class="col-lg-4">
+                                    {{ field.label_tag }}
+                                </div>
+                                <div class="col-lg-7">
+                                  {{ field }}
+                                  {{ field.help_text }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <button class="btn btn-success default-primary-color" name="btn-register" type="submit">Sign Up</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
