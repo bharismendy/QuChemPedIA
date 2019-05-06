@@ -35,8 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'QuChemPedIA.apps.QuchempediaConfig',
-    'bootstrap4'
+    'bootstrap4',
+    'admin_qcpia',
+    'common_qcpia',
+    'import_qcpia',
+    'user_qcpia',
+    'query_qcpia',
 ]
 
 MIDDLEWARE = [
@@ -105,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'QuChemPedIA.Utilisateur'
+AUTH_USER_MODEL = 'user_qcpia.Utilisateur'
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -123,10 +127,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/common_qcpia/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/common_qcpia/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DATA_DIR_URL = '/data_dir/'
