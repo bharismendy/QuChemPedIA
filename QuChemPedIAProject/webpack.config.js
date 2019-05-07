@@ -14,7 +14,7 @@ module.exports = {
     },
     output: {
         path: path.resolve('./common_qcpia/static/webpack_bundles/'),
-        filename: "[name]-[hash].js"
+        filename: "[name].js"
     },
     module: {
         rules: [{
