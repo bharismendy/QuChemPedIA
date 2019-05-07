@@ -1,4 +1,5 @@
 {% load static %}
+{% load webpack_static from webpack_loader %}
 <!-- Page de base pour tout le site sauf la page d'accueil
      Incluant notamment le header avec titre et formulaire
    -->
@@ -9,9 +10,12 @@
 <head>
   <!-- Chargement du CSS, bootstrap, javascript et jQuery -->
   {% load bootstrap4 %}
-  {% bootstrap_css %}
+{#  {% bootstrap_css %}#}
+  {% render_bundle 'main' 'css' %}
   {% bootstrap_javascript jquery='full' %}
   {% bootstrap_messages %}
+
+
 
   <title>QuChemPedIA</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

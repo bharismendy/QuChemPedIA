@@ -4,8 +4,8 @@ const BundleTracker = require('webpack-bundle-tracker');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const copyPlugin =     new CopyWebpackPlugin([
-    { from: './assets/resources/**', to: './resources', flatten: true}
-], {})
+    { from: './assets/resources/**', to: './resources', flatten: false}
+], {});
 
 module.exports = {
     context: __dirname,
@@ -13,7 +13,7 @@ module.exports = {
         main: ['./assets/js/main.js', './assets/scss/main.scss'],
     },
     output: {
-        path: path.resolve('./static'),
+        path: path.resolve('./common_qcpia/static/webpack_bundles/'),
         filename: "[name]-[hash].js"
     },
     module: {

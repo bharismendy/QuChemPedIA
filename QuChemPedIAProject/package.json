@@ -5,7 +5,7 @@
   "repository": "https://github.com/bharismendy/QuChemPedIA",
   "author": "Université d'Angers",
   "license": "MIT",
-    "scripts": {
+  "scripts": {
     "dev": "./node_modules/webpack/bin/webpack.js --config webpack.config.js --mode development",
     "build": "./node_modules/webpack/bin/webpack.js --config webpack.config.js --mode production"
   },
@@ -18,5 +18,10 @@
     "webpack": "^4.30.0",
     "webpack-bundle-tracker": "^0.4.2-beta",
     "webpack-cli": "^3.3.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0"
   }
 }

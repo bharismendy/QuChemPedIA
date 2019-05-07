@@ -1,4 +1,5 @@
 {% load static %}
+{% load render_bundle from webpack_loader %}
 
 {# block used as header #}
 {% block header %}
@@ -7,7 +8,7 @@
     <head>
       <!-- Chargement du CSS, bootstrap4, javascript et jQuery-->
       {% load bootstrap4 %}
-      {% bootstrap_css %}
+{#      {% bootstrap_css %}#}
       {% bootstrap_javascript jquery='full' %}
       {% bootstrap_messages %}
 
@@ -100,6 +101,9 @@
     </div>
   </nav>
 </footer>
+
+{% render_bundle 'main' %}
+
 <script>
 /* Script de rendu pour le formulaire de recherche */
  $(document).ready(function(){
