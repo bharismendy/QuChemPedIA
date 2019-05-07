@@ -3,15 +3,7 @@ from query_qcpia.forms.QueryForm import QueryForm
 from common_qcpia.search import *
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
-import urllib.parse
-
-
-def build_url(*args, **kwargs):
-    get = kwargs.pop('get', {})
-    url = reverse(*args, **kwargs)
-    if get:
-        url += '?' + urllib.parse.urlencode(get)
-    return url
+from common_qcpia.QuChemPedIA_lib import build_url
 
 
 def query(request):
