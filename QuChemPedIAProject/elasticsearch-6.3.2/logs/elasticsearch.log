@@ -1,54 +1,54 @@
-[2018-08-29T10:10:57,151][INFO ][o.e.n.Node               ] [] initializing ...
-[2018-08-29T10:10:57,315][INFO ][o.e.e.NodeEnvironment    ] [DcblvXR] using [1] data paths, mounts [[/ (/dev/sda1)]], net usable_space [98.3gb], net total_space [133.8gb], types [ext4]
-[2018-08-29T10:10:57,316][INFO ][o.e.e.NodeEnvironment    ] [DcblvXR] heap size [990.7mb], compressed ordinary object pointers [true]
-[2018-08-29T10:10:57,351][INFO ][o.e.n.Node               ] [DcblvXR] node name derived from node ID [DcblvXRGSr-C2SK_sy6OuQ]; set [node.name] to override
-[2018-08-29T10:10:57,352][INFO ][o.e.n.Node               ] [DcblvXR] version[6.3.2], pid[11333], build[default/zip/053779d/2018-07-20T05:20:23.451332Z], OS[Linux/4.15.0-33-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/1.8.0_181/25.181-b13]
-[2018-08-29T10:10:57,358][INFO ][o.e.n.Node               ] [DcblvXR] JVM arguments [-Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -Djava.io.tmpdir=/tmp/elasticsearch.Lpr4Mlc0, -XX:+HeapDumpOnOutOfMemoryError, -XX:HeapDumpPath=data, -XX:ErrorFile=logs/hs_err_pid%p.log, -XX:+PrintGCDetails, -XX:+PrintGCDateStamps, -XX:+PrintTenuringDistribution, -XX:+PrintGCApplicationStoppedTime, -Xloggc:logs/gc.log, -XX:+UseGCLogFileRotation, -XX:NumberOfGCLogFiles=32, -XX:GCLogFileSize=64m, -Des.path.home=/home/etudiant/Documents/stage/QuChemPedIAProjectElastic/elasticsearch-6.3.2, -Des.path.conf=/home/etudiant/Documents/stage/QuChemPedIAProjectElastic/elasticsearch-6.3.2/config, -Des.distribution.flavor=default, -Des.distribution.type=zip]
-[2018-08-29T10:11:00,607][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [aggs-matrix-stats]
-[2018-08-29T10:11:00,608][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [analysis-common]
-[2018-08-29T10:11:00,608][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [ingest-common]
-[2018-08-29T10:11:00,608][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [lang-expression]
-[2018-08-29T10:11:00,608][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [lang-mustache]
-[2018-08-29T10:11:00,608][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [lang-painless]
-[2018-08-29T10:11:00,609][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [mapper-extras]
-[2018-08-29T10:11:00,609][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [parent-join]
-[2018-08-29T10:11:00,609][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [percolator]
-[2018-08-29T10:11:00,609][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [rank-eval]
-[2018-08-29T10:11:00,609][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [reindex]
-[2018-08-29T10:11:00,609][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [repository-url]
-[2018-08-29T10:11:00,609][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [transport-netty4]
-[2018-08-29T10:11:00,609][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [tribe]
-[2018-08-29T10:11:00,609][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-core]
-[2018-08-29T10:11:00,610][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-deprecation]
-[2018-08-29T10:11:00,610][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-graph]
-[2018-08-29T10:11:00,610][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-logstash]
-[2018-08-29T10:11:00,610][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-ml]
-[2018-08-29T10:11:00,610][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-monitoring]
-[2018-08-29T10:11:00,610][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-rollup]
-[2018-08-29T10:11:00,610][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-security]
-[2018-08-29T10:11:00,610][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-sql]
-[2018-08-29T10:11:00,610][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-upgrade]
-[2018-08-29T10:11:00,610][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-watcher]
-[2018-08-29T10:11:00,611][INFO ][o.e.p.PluginsService     ] [DcblvXR] no plugins loaded
-[2018-08-29T10:11:03,810][INFO ][o.e.x.s.a.s.FileRolesStore] [DcblvXR] parsed [0] roles from file [/home/etudiant/Documents/stage/QuChemPedIAProjectElastic/elasticsearch-6.3.2/config/roles.yml]
-[2018-08-29T10:11:04,247][INFO ][o.e.x.m.j.p.l.CppLogMessageHandler] [controller/11399] [Main.cc@109] controller (64 bit): Version 6.3.2 (Build 903094f295d249) Copyright (c) 2018 Elasticsearch BV
-[2018-08-29T10:11:04,838][DEBUG][o.e.a.ActionModule       ] Using REST wrapper from plugin org.elasticsearch.xpack.security.Security
-[2018-08-29T10:11:05,315][INFO ][o.e.d.DiscoveryModule    ] [DcblvXR] using discovery type [zen]
-[2018-08-29T10:11:06,647][INFO ][o.e.n.Node               ] [DcblvXR] initialized
-[2018-08-29T10:11:06,648][INFO ][o.e.n.Node               ] [DcblvXR] starting ...
-[2018-08-29T10:11:06,911][INFO ][o.e.t.TransportService   ] [DcblvXR] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
-[2018-08-29T10:11:06,944][WARN ][o.e.b.BootstrapChecks    ] [DcblvXR] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
-[2018-08-29T10:11:10,007][INFO ][o.e.c.s.MasterService    ] [DcblvXR] zen-disco-elected-as-master ([0] nodes joined)[, ], reason: new_master {DcblvXR}{DcblvXRGSr-C2SK_sy6OuQ}{sqKHFhZ1TbeNBu-QtpIMoA}{127.0.0.1}{127.0.0.1:9300}{ml.machine_memory=8291991552, xpack.installed=true, ml.max_open_jobs=20, ml.enabled=true}
-[2018-08-29T10:11:10,011][INFO ][o.e.c.s.ClusterApplierService] [DcblvXR] new_master {DcblvXR}{DcblvXRGSr-C2SK_sy6OuQ}{sqKHFhZ1TbeNBu-QtpIMoA}{127.0.0.1}{127.0.0.1:9300}{ml.machine_memory=8291991552, xpack.installed=true, ml.max_open_jobs=20, ml.enabled=true}, reason: apply cluster state (from master [master {DcblvXR}{DcblvXRGSr-C2SK_sy6OuQ}{sqKHFhZ1TbeNBu-QtpIMoA}{127.0.0.1}{127.0.0.1:9300}{ml.machine_memory=8291991552, xpack.installed=true, ml.max_open_jobs=20, ml.enabled=true} committed version [1] source [zen-disco-elected-as-master ([0] nodes joined)[, ]]])
-[2018-08-29T10:11:10,052][INFO ][o.e.x.s.t.n.SecurityNetty4HttpServerTransport] [DcblvXR] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
-[2018-08-29T10:11:10,053][INFO ][o.e.n.Node               ] [DcblvXR] started
-[2018-08-29T10:11:10,463][WARN ][o.e.x.s.a.s.m.NativeRoleMappingStore] [DcblvXR] Failed to clear cache for realms [[]]
-[2018-08-29T10:11:10,484][INFO ][o.e.l.LicenseService     ] [DcblvXR] license [fbb73695-1248-465c-96d2-fd35e96edce8] mode [basic] - valid
-[2018-08-29T10:11:10,506][INFO ][o.e.g.GatewayService     ] [DcblvXR] recovered [1] indices into cluster_state
-[2018-08-29T10:11:10,990][INFO ][o.e.c.r.a.AllocationService] [DcblvXR] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][3]] ...]).
-[2018-08-29T17:23:06,298][INFO ][o.e.x.m.j.p.NativeController] Native controller process has stopped - no new native processes can be started
-[2018-08-29T17:23:06,301][INFO ][o.e.n.Node               ] [DcblvXR] stopping ...
-[2018-08-29T17:23:06,401][INFO ][o.e.x.w.WatcherService   ] [DcblvXR] stopping watch service, reason [shutdown initiated]
-[2018-08-29T17:23:06,600][INFO ][o.e.n.Node               ] [DcblvXR] stopped
-[2018-08-29T17:23:06,601][INFO ][o.e.n.Node               ] [DcblvXR] closing ...
-[2018-08-29T17:23:06,631][INFO ][o.e.n.Node               ] [DcblvXR] closed
+[2019-05-07T11:37:07,393][INFO ][o.e.n.Node               ] [] initializing ...
+[2019-05-07T11:37:07,611][INFO ][o.e.e.NodeEnvironment    ] [DcblvXR] using [1] data paths, mounts [[/home (/dev/sda3)]], net usable_space [183.4gb], net total_space [216.5gb], types [ext4]
+[2019-05-07T11:37:07,612][INFO ][o.e.e.NodeEnvironment    ] [DcblvXR] heap size [990.7mb], compressed ordinary object pointers [true]
+[2019-05-07T11:37:07,636][INFO ][o.e.n.Node               ] [DcblvXR] node name derived from node ID [DcblvXRGSr-C2SK_sy6OuQ]; set [node.name] to override
+[2019-05-07T11:37:07,637][INFO ][o.e.n.Node               ] [DcblvXR] version[6.3.2], pid[32372], build[default/zip/053779d/2018-07-20T05:20:23.451332Z], OS[Linux/4.15.0-48-generic/amd64], JVM[Oracle Corporation/OpenJDK 64-Bit Server VM/1.8.0_191/25.191-b12]
+[2019-05-07T11:37:07,637][INFO ][o.e.n.Node               ] [DcblvXR] JVM arguments [-Xms1g, -Xmx1g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -XX:-OmitStackTraceInFastThrow, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -Djava.io.tmpdir=/tmp/elasticsearch.uQ7Ohx13, -XX:+HeapDumpOnOutOfMemoryError, -XX:HeapDumpPath=data, -XX:ErrorFile=logs/hs_err_pid%p.log, -XX:+PrintGCDetails, -XX:+PrintGCDateStamps, -XX:+PrintTenuringDistribution, -XX:+PrintGCApplicationStoppedTime, -Xloggc:logs/gc.log, -XX:+UseGCLogFileRotation, -XX:NumberOfGCLogFiles=32, -XX:GCLogFileSize=64m, -Des.path.home=/home/paulin/Dev/QuChemPedIA/QuChemPedIAProject/elasticsearch-6.3.2, -Des.path.conf=/home/paulin/Dev/QuChemPedIA/QuChemPedIAProject/elasticsearch-6.3.2/config, -Des.distribution.flavor=default, -Des.distribution.type=zip]
+[2019-05-07T11:37:10,885][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [aggs-matrix-stats]
+[2019-05-07T11:37:10,885][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [analysis-common]
+[2019-05-07T11:37:10,885][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [ingest-common]
+[2019-05-07T11:37:10,885][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [lang-expression]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [lang-mustache]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [lang-painless]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [mapper-extras]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [parent-join]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [percolator]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [rank-eval]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [reindex]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [repository-url]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [transport-netty4]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [tribe]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-core]
+[2019-05-07T11:37:10,886][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-deprecation]
+[2019-05-07T11:37:10,887][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-graph]
+[2019-05-07T11:37:10,887][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-logstash]
+[2019-05-07T11:37:10,887][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-ml]
+[2019-05-07T11:37:10,887][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-monitoring]
+[2019-05-07T11:37:10,887][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-rollup]
+[2019-05-07T11:37:10,887][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-security]
+[2019-05-07T11:37:10,887][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-sql]
+[2019-05-07T11:37:10,887][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-upgrade]
+[2019-05-07T11:37:10,887][INFO ][o.e.p.PluginsService     ] [DcblvXR] loaded module [x-pack-watcher]
+[2019-05-07T11:37:10,887][INFO ][o.e.p.PluginsService     ] [DcblvXR] no plugins loaded
+[2019-05-07T11:37:14,531][INFO ][o.e.x.s.a.s.FileRolesStore] [DcblvXR] parsed [0] roles from file [/home/paulin/Dev/QuChemPedIA/QuChemPedIAProject/elasticsearch-6.3.2/config/roles.yml]
+[2019-05-07T11:37:15,049][INFO ][o.e.x.m.j.p.l.CppLogMessageHandler] [controller/32438] [Main.cc@109] controller (64 bit): Version 6.3.2 (Build 903094f295d249) Copyright (c) 2018 Elasticsearch BV
+[2019-05-07T11:37:16,060][DEBUG][o.e.a.ActionModule       ] Using REST wrapper from plugin org.elasticsearch.xpack.security.Security
+[2019-05-07T11:37:16,416][INFO ][o.e.d.DiscoveryModule    ] [DcblvXR] using discovery type [zen]
+[2019-05-07T11:37:17,139][INFO ][o.e.n.Node               ] [DcblvXR] initialized
+[2019-05-07T11:37:17,139][INFO ][o.e.n.Node               ] [DcblvXR] starting ...
+[2019-05-07T11:37:17,349][INFO ][o.e.t.TransportService   ] [DcblvXR] publish_address {127.0.0.1:9300}, bound_addresses {[::1]:9300}, {127.0.0.1:9300}
+[2019-05-07T11:37:17,372][WARN ][o.e.b.BootstrapChecks    ] [DcblvXR] max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+[2019-05-07T11:37:20,421][INFO ][o.e.c.s.MasterService    ] [DcblvXR] zen-disco-elected-as-master ([0] nodes joined)[, ], reason: new_master {DcblvXR}{DcblvXRGSr-C2SK_sy6OuQ}{YUzUV32FRXm_5IpubZBLkw}{127.0.0.1}{127.0.0.1:9300}{ml.machine_memory=8246259712, xpack.installed=true, ml.max_open_jobs=20, ml.enabled=true}
+[2019-05-07T11:37:20,425][INFO ][o.e.c.s.ClusterApplierService] [DcblvXR] new_master {DcblvXR}{DcblvXRGSr-C2SK_sy6OuQ}{YUzUV32FRXm_5IpubZBLkw}{127.0.0.1}{127.0.0.1:9300}{ml.machine_memory=8246259712, xpack.installed=true, ml.max_open_jobs=20, ml.enabled=true}, reason: apply cluster state (from master [master {DcblvXR}{DcblvXRGSr-C2SK_sy6OuQ}{YUzUV32FRXm_5IpubZBLkw}{127.0.0.1}{127.0.0.1:9300}{ml.machine_memory=8246259712, xpack.installed=true, ml.max_open_jobs=20, ml.enabled=true} committed version [1] source [zen-disco-elected-as-master ([0] nodes joined)[, ]]])
+[2019-05-07T11:37:20,528][INFO ][o.e.x.s.t.n.SecurityNetty4HttpServerTransport] [DcblvXR] publish_address {127.0.0.1:9200}, bound_addresses {[::1]:9200}, {127.0.0.1:9200}
+[2019-05-07T11:37:20,528][INFO ][o.e.n.Node               ] [DcblvXR] started
+[2019-05-07T11:37:21,335][WARN ][o.e.x.s.a.s.m.NativeRoleMappingStore] [DcblvXR] Failed to clear cache for realms [[]]
+[2019-05-07T11:37:21,374][INFO ][o.e.l.LicenseService     ] [DcblvXR] license [fbb73695-1248-465c-96d2-fd35e96edce8] mode [basic] - valid
+[2019-05-07T11:37:21,393][INFO ][o.e.g.GatewayService     ] [DcblvXR] recovered [1] indices into cluster_state
+[2019-05-07T11:37:22,983][INFO ][o.e.c.r.a.AllocationService] [DcblvXR] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[quchempedia_index][2]] ...]).
+[2019-05-07T11:37:33,958][INFO ][o.e.x.m.j.p.NativeController] Native controller process has stopped - no new native processes can be started
+[2019-05-07T11:37:33,964][INFO ][o.e.n.Node               ] [DcblvXR] stopping ...
+[2019-05-07T11:37:33,980][INFO ][o.e.x.w.WatcherService   ] [DcblvXR] stopping watch service, reason [shutdown initiated]
+[2019-05-07T11:37:34,453][INFO ][o.e.n.Node               ] [DcblvXR] stopped
+[2019-05-07T11:37:34,453][INFO ][o.e.n.Node               ] [DcblvXR] closing ...
+[2019-05-07T11:37:34,476][INFO ][o.e.n.Node               ] [DcblvXR] closed
