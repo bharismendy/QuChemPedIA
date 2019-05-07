@@ -130,6 +130,7 @@ export default class MoleculeSummaryRenderer {
         return elt;
     }
 
+    // noinspection JSMethodCanBeStatic
     _createColumnElement(tag = "div") {
         const elt = document.createElement(tag);
         elt.classList.add("col");

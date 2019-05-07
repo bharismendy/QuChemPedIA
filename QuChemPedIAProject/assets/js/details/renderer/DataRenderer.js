@@ -20,6 +20,7 @@ export default class DataRenderer {
      * @property {Renderer} renderer
      * @property {String} htmlTag
      * @property {Object} renderOptions
+     * @property {String[]} classes
      */
 
     /**
@@ -51,6 +52,9 @@ export default class DataRenderer {
             }
 
             const childElement = document.createElement(htmlTag);
+            if (config.classes) {
+                childElement.classList.add.apply(childElement.classList, config.classes)
+            }
             config.renderer.render(subData, childElement, config.renderOptions);
             rootElement.appendChild(childElement);
         })
