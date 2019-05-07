@@ -7,14 +7,13 @@
     <html lang="fr">
     <head>
       <!-- Chargement du CSS, bootstrap4, javascript et jQuery-->
-      {% load bootstrap4 %}
+{#      {% load bootstrap4 %}#}
 {#      {% bootstrap_css %}#}
-      {% bootstrap_javascript jquery='full' %}
-      {% bootstrap_messages %}
+{#      {% bootstrap_javascript jquery='full' %}#}
+{#      {% bootstrap_messages %}#}
 
       <title>QuChemPedIA</title>
       <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
-      <script src="{% static "js/dropzone.js" %}"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
     </head>
@@ -103,6 +102,7 @@
 </footer>
 
 {% render_bundle 'main' %}
+<script src="{% static "js/dropzone.js" %}"></script>
 
 <script>
 /* Script de rendu pour le formulaire de recherche */
