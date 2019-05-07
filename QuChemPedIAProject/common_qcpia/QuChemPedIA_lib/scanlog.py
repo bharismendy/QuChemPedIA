@@ -500,7 +500,7 @@ def process_logfile_list(logfilelist, log_storage_path="", verbose=False):
     log_files = []
     for logfile in logfilelist:
         l, j = process_logfile(logfile, 
-                               log_storage_path=log_storage_path
+                               log_storage_path=log_storage_path,
                                verbose=verbose)
         json_list += j
         logfile += l

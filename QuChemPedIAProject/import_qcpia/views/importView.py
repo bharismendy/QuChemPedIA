@@ -13,7 +13,7 @@ import json
 import tempfile
 import shutil
 import os
-
+from common_qcpia.QuChemPedIA_lib import build_url
 
 def register_soft_job_type_and_version(path_to_file_to_register):
     """
@@ -242,7 +242,8 @@ def launch_import(request, id_file, page):
         print(error)
         file.status = 'import failed'
         file.save()
-    return HttpResponseRedirect('/admin/list_of_import_in_database?page=' + str(page))
+    url = build_url('admin/list_of_import_in_database', get={'page': request.GET.get(str(page))})
+    return HttpResponseRedirect(url)
 
 
 def delete_import(request, id_file, page):
@@ -282,4 +283,5 @@ def delete_import(request, id_file, page):
     except Exception as error:
         print(error)
         file.status("can't delete the object in database")
-    return HttpResponseRedirect('/admin/list_of_import_in_database?page=' + str(page))
+    url = build_url('admin/list_of_import_in_database', get={'page': request.GET.get(str(page))})
+    return HttpResponseRedirect(url)

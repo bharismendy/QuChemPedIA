@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, reverse
 from import_qcpia.models import ImportRule
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from common_qcpia.QuChemPedIA_lib import build_url
 
 
 def edit_rule_admin(request):
@@ -43,4 +44,5 @@ def switch_rule(request, id_of_rule, page):
     if request.POST:
         rule_to_switch.rule = request.POST.get('options')
         rule_to_switch.save()
-    return HttpResponseRedirect('/admin/list_of_rule?page='+str(page))
+    url = build_url('admin/list_of_rule', get={'page': request.GET.get(str(page))})
+    return HttpResponseRedirect(url)
