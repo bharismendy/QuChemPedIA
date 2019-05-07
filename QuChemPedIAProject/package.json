@@ -1,0 +1,27 @@
+{
+  "name": "QuChemPedIAProject",
+  "version": "2.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/bharismendy/QuChemPedIA",
+  "author": "Université d'Angers",
+  "license": "MIT",
+  "scripts": {
+    "dev": "./node_modules/webpack/bin/webpack.js --config webpack.config.js --mode development",
+    "build": "./node_modules/webpack/bin/webpack.js --config webpack_production.config.js --mode production"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.0.3",
+    "css-loader": "^2.1.1",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.30.0",
+    "webpack-bundle-tracker": "^0.4.2-beta",
+    "webpack-cli": "^3.3.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0"
+  }
+}

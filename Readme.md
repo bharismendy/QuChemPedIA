@@ -48,3 +48,31 @@
 	to ask django to set up the connection with database :
 	python manage.py makemigrations QuChemPedIA
 	python manage.py migrate
+	
+## Front End assets
+
+### Package manager : yarn
+
+Pour installer yarn, voir https://yarnpkg.com/en/docs/install
+
+Yarn requiert [NodeJs](https://nodejs.org/en/)
+
+### Installation des dépendences
+
+```
+yarn
+```
+
+### Compilation des assets js et css
+
+Pour le dévelopement :
+```
+yarn dev
+```
+
+Pour la production :
+```
+yarn build
+```
+
+
