@@ -1,5 +1,5 @@
 {% load static %}
-{% load webpack_static from webpack_loader %}
+{% load render_bundle from webpack_loader %}
 <!-- Page de base pour tout le site sauf la page d'accueil
      Incluant notamment le header avec titre et formulaire
    -->
@@ -9,11 +9,6 @@
 <html lang="fr">
 <head>
   <!-- Chargement du CSS, bootstrap, javascript et jQuery -->
-  {% load bootstrap4 %}
-{#  {% bootstrap_css %}#}
-  {% render_bundle 'main' 'css' %}
-  {% bootstrap_javascript jquery='full' %}
-  {% bootstrap_messages %}
 
 
 
@@ -108,7 +103,9 @@
 {% block footer%}
         <footer>
 
+
         </footer>
+        {% render_bundle 'main' %}
     </body>
 </html>
 {%  endblock %}
