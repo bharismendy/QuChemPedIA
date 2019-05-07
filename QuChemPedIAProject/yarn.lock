@@ -3211,6 +3211,11 @@ slash@^1.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
   integrity sha1-xB8vbDn8FtHNF61LXYlhFK5HDVU=
 
+smiles-drawer@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/smiles-drawer/-/smiles-drawer-1.0.10.tgz#fd42612a4ea9819e8d69d09666c60dfd6cd72e81"
+  integrity sha512-e+o+oD2mMiHv10cK66VY9Rzp9rPdJndkei57T4FKBJ82WGWLAZ6fgS19rNVr+R6uCOiRR4HbcboS2PcVjIfzcA==
+
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/snapdragon-node/-/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"
