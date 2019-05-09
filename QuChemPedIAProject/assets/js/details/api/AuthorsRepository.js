@@ -1,4 +1,4 @@
-export class AuthorsRepository {
+export default class AuthorsRepository {
 
     /**
      * @param {String} baseUrl

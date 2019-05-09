@@ -1,13 +1,13 @@
 import CardRenderer from "./CardRenderer";
 
-export default class MoleculeSummaryRenderer extends CardRenderer{
-    constructor() {
-        super((data, rootElement) => this._renderHeader(data, rootElement), (data, rootElement) => this._renderBody(data, rootElement))
-    }
+export default class MoleculeSummaryRenderer{
 
-    // noinspection JSMethodCanBeStatic
-    _renderHeader(data, headerElement) {
-        headerElement.innerHTML = "<h5>Molecule</h5>"
+    /**
+     * @param {CardRenderer} cardRenderer
+     */
+    constructor(cardRenderer) {
+        this._cardRenderer = cardRenderer;
+        // super((data, rootElement) => this._renderHeader(data, rootElement), (data, rootElement) => this._renderBody(data, rootElement))
     }
 
     /**
@@ -25,6 +25,24 @@ export default class MoleculeSummaryRenderer extends CardRenderer{
 
     /**
      *
+     * @param {Molecule} data
+     * @param {HTMLElement} rootElement
+     */
+    render(data, rootElement) {
+        this._cardRenderer.render({
+            headerRenderCallback: this._renderHeader,
+            bodyRenderCallback: this._renderBody,
+            data
+        },
+        rootElement)
+    }
+
+    // noinspection JSMethodCanBeStatic
+    _renderHeader(data, headerElement) {
+        headerElement.innerHTML = "<h5>Molecule</h5>"
+    }
+
+    /**
      * @param {Molecule} molecule
      * @param {HTMLElement} container
      * @private

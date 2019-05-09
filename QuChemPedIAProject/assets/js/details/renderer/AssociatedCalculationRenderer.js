@@ -1,17 +1,25 @@
 import * as FlexTableGenerator from "../dom-generator/FlexTableGenerator";
 import CardRenderer from "./CardRenderer";
+import AuthorRepository from "../api/AuthorsRepository"
 
-export default class AssociatedCalculationRenderer extends CardRenderer{
+export default class AssociatedCalculationRenderer{
     /**
      *
      * @param {AuthorRepository} authorRepository
+     * @param {CardRenderer} cardRenderer
      */
-    constructor(authorRepository) {
-        super(
-            (data, rootElement) => this._renderHeader(data, rootElement),
-            (data, rootElement) => this._renderBody(data, rootElement)
-        )
+    constructor(authorRepository, cardRenderer) {
         this._authorRepository = authorRepository;
+        this._cardRenderer = cardRenderer
+    }
+
+    render (data, rootElement) {
+        this._cardRenderer.render({
+            headerRenderCallback: this._renderHeader,
+            bodyRenderCallback: this._renderBody,
+            data
+        },
+        rootElement);
     }
 
     // noinspection JSMethodCanBeStatic
