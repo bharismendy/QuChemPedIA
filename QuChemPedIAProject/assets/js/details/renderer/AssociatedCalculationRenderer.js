@@ -1,16 +1,29 @@
-import * as FlexTableGenerator from "../dom-generator/FlexTableGenerator";
-import CardRenderer from "./CardRenderer";
-import AuthorRepository from "../api/AuthorsRepository"
+/**
+ * @external AuthorRepository
+ */
 
+/**
+ * @external CardRenderer
+ */
+
+/**
+ * @external TableRenderer
+ */
+
+/**
+ *
+ */
 export default class AssociatedCalculationRenderer{
     /**
      *
      * @param {AuthorRepository} authorRepository
      * @param {CardRenderer} cardRenderer
+     * @param {TableRenderer} tableRenderer
      */
-    constructor(authorRepository, cardRenderer) {
+    constructor(authorRepository, cardRenderer, tableRenderer) {
         this._authorRepository = authorRepository;
         this._cardRenderer = cardRenderer
+        this._tableRenderer = tableRenderer
     }
 
     render (data, rootElement) {
@@ -78,9 +91,7 @@ export default class AssociatedCalculationRenderer{
         });
 
 
-        const content = FlexTableGenerator.generateTable(labels, tableData, {});
-
-        rootElement.appendChild(content);
+        this._tableRenderer.render({labelsDescriptions: labels, data: tableData, opt: {}}, rootElement);
 
     }
 
