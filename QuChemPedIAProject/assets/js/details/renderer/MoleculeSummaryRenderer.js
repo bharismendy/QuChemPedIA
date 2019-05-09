@@ -1,18 +1,35 @@
-export default class MoleculeSummaryRenderer {
-    constructor();
+import CardRenderer from "./CardRenderer";
 
-    render(molecule, rootElement) {
-        rootElement.classList.add("card", "mt-3");
+export default class MoleculeSummaryRenderer extends CardRenderer{
+    constructor() {
+        super((data, rootElement) => this._renderHeader(data, rootElement), (data, rootElement) => this._renderBody(data, rootElement))
+    }
 
-        const header = document.createElement("div");
-        header.classList.add("card-header");
-        header.innerHTML = "<h5>Molecule</h5>"
+    // noinspection JSMethodCanBeStatic
+    _renderHeader(data, headerElement) {
+        headerElement.innerHTML = "<h5>Molecule</h5>"
+    }
 
-        rootElement.appendChild(header);
+    /**
+     * @typedef Molecule
+     * @property {Number} [multiplicity]
+     * @property {Number} [charge]
+     * @property {String} [formula]
+     * @property {Number} [monoisotopic_mass]
+     * @property {String} [inchi]
+     * @property {String} [smi]
+     * @property {Number} [nb_atoms]
+     * @property {String} [can]
+     * @property {String} [iupac]
+     */
 
-        const container = document.createElement("div");
-        container.classList.add("container");
-
+    /**
+     *
+     * @param {Molecule} molecule
+     * @param {HTMLElement} container
+     * @private
+     */
+    _renderBody(molecule, container) {
         if (molecule.iupac) {
             const ipuacRow = this._createDataRow(
                 "Iupac",
@@ -56,7 +73,7 @@ export default class MoleculeSummaryRenderer {
             );
         }
         if (molecule.formula) {
-            const charge = parseInt(molecule.charge);
+            const charge = molecule.charge;
             const formula = molecule.formula;
             let formulaString = "";
             for (let i = formula.length - 1; i >= 0; i--) {
@@ -96,6 +113,7 @@ export default class MoleculeSummaryRenderer {
                 )
             )
         }
+
     }
 
     _createDataRow(label, value, helpLink = null, helpTooltipTitle = null) {
