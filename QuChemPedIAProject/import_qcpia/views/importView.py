@@ -7,13 +7,15 @@ from common_qcpia.QuChemPedIA_lib import store_in_temp
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-#from scanlog.scanlog import process_logfile
+from common_qcpia.QuChemPedIA_lib.scanlog import process_logfile
 import datetime
 import json
 import tempfile
 import shutil
 import os
 from common_qcpia.QuChemPedIA_lib import build_url
+from QuChemPedIAProject.settings import MEDIA_ROOT
+
 
 def register_soft_job_type_and_version(path_to_file_to_register):
     """
@@ -144,8 +146,9 @@ def import_view(request):
             myfile = request.FILES['file']  # work for dropzone only
         # todo add json transform
         content = ContentFile(myfile.read())
-        dirpath = tempfile.mkdtemp(prefix="/var/www/html/media/to_import/tmp/")
-        filepath = os.path.join(dirpath,"file.log")
+        #dirpath = tempfile.mkdtemp(prefix="/var/www/html/media/to_import/tmp/")
+        dirpath = tempfile.mkdtemp(prefix=os.path.join(MEDIA_ROOT, "to_import/tmp/"))
+        filepath = os.path.join(dirpath, "file.log")
         default_storage.save(filepath, content)
         file_list, json_list = process_logfile(filepath, log_storage_path=os.path.dirname(dirpath))
 
@@ -285,3 +288,4 @@ def delete_import(request, id_file, page):
         file.status("can't delete the object in database")
     url = build_url('admin/list_of_import_in_database', get={'page': request.GET.get(str(page))})
     return HttpResponseRedirect(url)
+
