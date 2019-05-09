@@ -17,4 +17,8 @@ export default class HtmlTableRenderer extends TableRenderer {
     createHeaderRowBaseHtlmElement() {
         return document.createElement("tr");
     }
+
+    createBaseHtmlElement() {
+        return document.createElement("table");
+    }
 }

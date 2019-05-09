@@ -12,13 +12,13 @@ export default class TableRenderer {
      * @property {String} key
      * @property {String[]} [columnClasses]
      * @property {String[]} [headerClasses]
-     * @property {ColumnRenderCallback} columnRenderCallback
+     * @property {ColumnRenderCallback} [columnRenderCallback]
      */
 
     /**
      * @typedef GenerationOption
-     * @property columnClasses
-     * @property {Boolean} headers
+     * @property [columnClasses]
+     * @property {Boolean} [headers]
      */
 
     /**
@@ -29,7 +29,7 @@ export default class TableRenderer {
      * @param {HTMLElement} rootElement HTMLElement the generated table will be appended to
      */
     render({labelsDescriptions, data, opt}, rootElement) {
-        const tableElement = document.createElement("div");
+        const tableElement = this.createBaseHtmlElement();
 
         const headerRow = this.createHeaderRowBaseHtlmElement();
 
@@ -109,5 +109,14 @@ q     * @return HTMLElement
      */
     createDataColBaseHtmlElement() {
         throw new Error("Must be implemented by subclasss");
+    }
+
+    // noinspection JSMethodCanBeStatic
+    /**
+     * @abstract
+     * @return HTMLElement
+     */
+    createBaseHtmlElement() {
+        throw new Error("Must be implemented by subclass");
     }
 }

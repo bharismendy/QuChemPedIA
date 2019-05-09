@@ -28,4 +28,10 @@ export default class FlexTableRenderer extends TableRenderer{
 
         return headerRow;
     }
+
+    createBaseHtmlElement() {
+        const element = document.createElement("div");
+        element.classList.add("container");
+        return element;
+    }
 }
