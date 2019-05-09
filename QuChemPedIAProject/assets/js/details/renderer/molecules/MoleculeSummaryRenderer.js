@@ -1,4 +1,4 @@
-import CardRenderer from "./CardRenderer";
+import CardRenderer from "../CardRenderer";
 
 export default class MoleculeSummaryRenderer{
 

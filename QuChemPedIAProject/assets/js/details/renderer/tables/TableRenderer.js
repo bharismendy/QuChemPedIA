@@ -18,6 +18,7 @@ export default class TableRenderer {
     /**
      * @typedef GenerationOption
      * @property columnClasses
+     * @property {Boolean} headers
      */
 
     /**
@@ -27,22 +28,24 @@ export default class TableRenderer {
      * @param {GenerationOption} opt
      * @param {HTMLElement} rootElement HTMLElement the generated table will be appended to
      */
-    render ({labelsDescriptions, data, opt}, rootElement) {
+    render({labelsDescriptions, data, opt}, rootElement) {
         const tableElement = document.createElement("div");
 
         const headerRow = this.createHeaderRowBaseHtlmElement();
 
-        labelsDescriptions.forEach((labelDescription) => {
-            const headerColumn = this.createHeaderColBaseHtmlElement();
+        if ((!opt.hasOwnProperty("headers")) || opt.headers) {
+            labelsDescriptions.forEach((labelDescription) => {
+                const headerColumn = this.createHeaderColBaseHtmlElement();
 
-            if (labelDescription.headerInnerHtml instanceof String) {
-                headerColumn.innerHTML = labelDescription.headerInnerHtml;
-            } else {
-                headerColumn.appendChild(labelDescription.headerInnerHtml);
-            }
+                if (labelDescription.headerInnerHtml instanceof String) {
+                    headerColumn.innerHTML = labelDescription.headerInnerHtml;
+                } else {
+                    headerColumn.appendChild(labelDescription.headerInnerHtml);
+                }
 
-            headerRow.appendChild(headerColumn);
-        });
+                headerRow.appendChild(headerColumn);
+            });
+        }
 
         tableElement.appendChild(tableElement);
 
@@ -75,9 +78,9 @@ export default class TableRenderer {
     // noinspection JSMethodCanBeStatic
     /**
      * @abstract
-     * @return HTMLElement
+q     * @return HTMLElement
      */
-    createHeaderRowBaseHtlmElement () {
+    createHeaderRowBaseHtlmElement() {
         throw new Error("Must be implemented by subclass");
     }
 
@@ -104,7 +107,7 @@ export default class TableRenderer {
      * @abstract
      * @return HTMLElement
      */
-    createDataColBaseHtmlElement(){
+    createDataColBaseHtmlElement() {
         throw new Error("Must be implemented by subclasss");
     }
 }
