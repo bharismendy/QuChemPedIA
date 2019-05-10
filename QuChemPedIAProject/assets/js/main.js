@@ -1,7 +1,7 @@
-import jQuery from "jquery";
+import jQuery from 'jquery'
 
-window.$ = jQuery;
-window.jQuery = jQuery;
-
-import 'bootstrap';
+import 'bootstrap'
 import 'popper.js'
+
+window.$ = jQuery
+window.jQuery = jQuery

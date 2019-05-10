@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import QcpiaDetails from "./components/QcpiaDetails.vue"
+import QcpiaDetails from './components/QcpiaDetails.vue'
 
 /* eslint-disable no-new */
 new Vue({
