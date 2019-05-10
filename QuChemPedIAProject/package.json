@@ -7,9 +7,14 @@
   "license": "MIT",
   "scripts": {
     "dev": "./node_modules/webpack/bin/webpack.js --config webpack.config.js --mode development",
-    "build": "./node_modules/webpack/bin/webpack.js --config webpack_production.config.js --mode production"
+    "build": "./node_modules/webpack/bin/webpack.js --config webpack_production.config.js --mode production",
+    "docs:build": "vuese gen"
+  },
+  "vuese": {
+    "outDir": "../documentation/vue-components"
   },
   "devDependencies": {
+    "@vuese/cli": "^2.3.1",
     "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^2.1.1",
     "cypress": "^3.2.0",

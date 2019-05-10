@@ -14,13 +14,13 @@
                 </div>
                 <div class="col">{{ molecule.iupac }}</div>
             </div>
-            <!-- TOOD -->
+            <!-- TODO -->
         </div>
     </b-card>
 </template>
 
 <script>
-  import QcpiaHelpBadgeLink from "./QcpiaHelpBadgeLink";
+  import QcpiaHelpBadgeLink from "./QcpiaHelpBadgeLink.vue";
   export default {
       components: {QcpiaHelpBadgeLink},
       props: {
@@ -29,7 +29,7 @@
         required: true,
       }
     },
-    name: "QcpiaMoleculeAbstract.vue"
+    name: "QcpiaMoleculeAbstract"
   }
 </script>
 
