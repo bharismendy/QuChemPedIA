@@ -2,3 +2,4 @@ node_modules
 webpack-stats.json
 elasticsearch-6.3.2/data
 elasticsearch-6.3.2/logs
+cypress.env.json
