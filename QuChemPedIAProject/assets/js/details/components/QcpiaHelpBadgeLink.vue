@@ -5,7 +5,7 @@
     :target="target"
     :title="tooltipText"
   >
-    <span class="badge badge-pill">?</span>
+    <span class="badge badge-pill monBadge font-weight-bold">?</span>
   </a>
 </template>
 

@@ -11,7 +11,7 @@
 
 <script>
 import QcpiaMolecule from './QcpiaMolecule.vue'
-
+import axios from 'axios'
 export default {
   name: 'QcpiaDetails',
   components: { QcpiaMolecule },
@@ -32,7 +32,22 @@ export default {
     }
   },
   mounted () {
-    // TODO load molecule
+    console.log('Coucou')
+    this.detailsLoading = true
+    axios.get('/access/details_json', {
+      params: {
+        id_file: this.id
+      }
+    }).then((response) => {
+      if (response.data.molecule) this.molecule = response.data.molecule
+      if (response.data.metadata) this.metadata = response.data.metadata
+      if (response.data.results) this.results = response.data.results
+    }).catch(err => {
+      this.detailsLoadingError = err
+    }).then(() => {
+      this.detailsLoaded = true
+      this.detailsLoading = false
+    })
   }
 }
 </script>
