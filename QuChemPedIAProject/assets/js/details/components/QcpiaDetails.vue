@@ -1,10 +1,11 @@
 <template>
   <div class="container">
-    <QcpiaMolecule
+    <qcpia-molecule
       v-if="detailsLoaded && molecule"
       :molecule="molecule"
       :results="results"
       :metadata="metadata"
+      :computational-details="computationalDetails"
     />
   </div>
 </template>
@@ -28,7 +29,8 @@ export default {
       detailsLoadingError: null,
       molecule: null,
       metadata: null,
-      results: null
+      results: null,
+      computationalDetails: null
     }
   },
   mounted () {
@@ -42,6 +44,7 @@ export default {
       if (response.data.molecule) this.molecule = response.data.molecule
       if (response.data.metadata) this.metadata = response.data.metadata
       if (response.data.results) this.results = response.data.results
+      if (response.data.comp_details) this.computationalDetails = response.data.comp_details
     }).catch(err => {
       this.detailsLoadingError = err
     }).then(() => {
