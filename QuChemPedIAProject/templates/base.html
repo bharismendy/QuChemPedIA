@@ -1,8 +1,12 @@
 {% load static %}
+<<<<<<< Updated upstream
 {% load render_bundle from webpack_loader %}
 <!-- Page de base pour tout le site sauf la page d'accueil
      Incluant notamment le header avec titre et formulaire
    -->
+=======
+<!-- Page de base pour tout le site sauf la page d'accueil Incluant notamment le header avec titre et formulaire-->
+>>>>>>> Stashed changes
 {# block used as header #}
 {% block header %}
 <!DOCTYPE html>
@@ -12,17 +16,22 @@
 
 
 
-  <title>QuChemPedIA</title>
+  <title>QuChemPedIA base</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
-    <script src="{% static "js/jsPDF/jspdf.js" %}"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+  <script src="{% static "js/jsPDF/jspdf.js" %}"></script>
     <script src="{% static "js/jsPDF/dist/jspdf.min.js" %}"></script>
-    <script src="{% static "js/jsPDF/dist/jspdf.debug.js" %}"></script>
+  <script src="{% static "js/jsPDF/dist/jspdf.debug.js" %}"></script>
     <script src="{% static "js/divers.js" %}"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="{% static "js/dropzone.js" %}"></script>
+     <script src="{% static "js/import.js" %}"></script>
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
   <script src="{% static "js/smiles-drawer.js" %}"></script>
 </head>
 {% endblock %}
+
 <body>
 
 {% block nav %}
@@ -44,7 +53,6 @@
 
 </nav>
       <div  id="sign" class="row float-right">
-               <!-- Bouton login-->
                 <a class="nav-link btn btn-info default-primary-color button-nav" title="import a file" href="{% url 'dashboard/import' %}">
                             <svg class="feather feather-upload sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
                                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -73,7 +81,14 @@
                                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                             </svg>
                         </a>
+
+                        {% block menu_admin %}
+                        {% endblock %}
+
                     {% endif %}
+
+                        {% block menu_account%}
+                        {% endblock %}
                         <a class="nav-link btn btn-info default-primary-color button-nav" title="My profile" href="{% url 'dasboard/account' %}">
                             <svg class="feather feather-user sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
                                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -94,6 +109,8 @@
                         </a>
                   {% endif %}
                 </div>
+    <div class="container">
+      <div class="row">
 {% endblock %}
 
 {% block content %}
@@ -101,11 +118,16 @@
 
 {# block used for footer #}
 {% block footer%}
+<<<<<<< Updated upstream
         <footer>
 
 
         </footer>
         {% render_bundle 'main' %}
+=======
+        <footer/>
+>>>>>>> Stashed changes
     </body>
 </html>
 {%  endblock %}
+
