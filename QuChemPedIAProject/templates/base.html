@@ -1,4 +1,5 @@
 {% load static %}
+{% load render_bundle from webpack_loader %}
 <!-- Page de base pour tout le site sauf la page d'accueil
      Incluant notamment le header avec titre et formulaire
    -->
@@ -8,12 +9,8 @@
 <html lang="fr">
 <head>
   <!-- Chargement du CSS, bootstrap, javascript et jQuery -->
-  {% load bootstrap4 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript jquery='full' %}
-  {% bootstrap_messages %}
 
-  <title>QuChemPedIA</title>
+   <title>QuChemPedIA</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
     <script src="{% static "js/jsPDF/jspdf.js" %}"></script>
@@ -104,8 +101,6 @@
                         </a>
                   {% endif %}
                 </div>
-                <div class="container">
-                <div class="row">
 {% endblock %}
 
 {% block content %}
@@ -115,7 +110,9 @@
 {% block footer%}
         <footer>
 
+
         </footer>
+        {% render_bundle 'main' %}
     </body>
 </html>
-{%  endblock %}
+{% endblock %}
