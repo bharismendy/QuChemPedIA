@@ -75,21 +75,20 @@ export default {
               return [
                 {
                   label: 'Requested SCF convergence on RMS density',
-                  value: Number.parseFloat(targets[0]).toExponential() //TODO format to HTML
+                  value: Number.parseFloat(targets[0]).toExponential() // TODO format to HTML
                 },
                 {
                   label: 'Requested SCF convergence on MAX density',
-                  value: Number.parseFloat(targets[1]).toExponential() //TODO format to HTML
+                  value: Number.parseFloat(targets[1]).toExponential() // TODO format to HTML
                 },
                 {
                   label: 'Requested SCF convergence on energy',
-                  value: Number.parseFloat(targets[2]).toExponential() //TODO format to HTML
+                  value: Number.parseFloat(targets[2]).toExponential() // TODO format to HTML
                 }
               ]
             }
           }
         },
-        // TODO SCF_TARGETS
         {
           path: 'freq.temperature',
           label: 'Temperature',

@@ -4,10 +4,12 @@
       v-for="(element, index) in data"
       :key="index"
       class="row"
+      data-testid="data-row"
     >
       <div
         class="col"
         :class="labelClasses"
+        :data-testid="`data-label-${index}`"
       >
         <slot
           name="label"
@@ -20,6 +22,7 @@
       <div
         class="col"
         :class="valueClasses"
+        :data-testid="`data-value-${index}`"
       >
         <slot
           name="value"
