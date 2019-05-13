@@ -1,24 +1,18 @@
 <template>
-  <b-card>
-    <h5 slot="header">
-      Computational details
-    </h5>
-
-    <QcpiaDataMapPresenter
-      data-testid="computationalDetailsTable"
-      :data="tableData"
-      :label-classes="tableLabelClasses"
-    />
-  </b-card>
+  <QcpiaDataMapPresenter
+    data-testid="computationalDetailsTable"
+    :data="tableData"
+    :label-classes="tableLabelClasses"
+  />
 </template>
 
 <script>
 import QcpiaDataMapPresenter from './QcpiaDataMapPresenter.vue'
-import { valueFromPath } from '../../utils'
-
+import tableDataMapHelper from '../mixins/tableDataMapHelpers'
 export default {
   name: 'QcpiaMoleculeComputationalDetails',
   components: { QcpiaDataMapPresenter },
+  mixins: [tableDataMapHelper],
   props: {
     computationalDetails: {
       type: Object,
@@ -109,24 +103,7 @@ export default {
   },
   computed: {
     tableData () {
-      console.log(this.computationalDetails)
-      return this.tableDataDef.reduce((acc, current) => {
-        let value = valueFromPath(this.computationalDetails, current.path)
-        if (value === undefined) { return acc }
-
-        if (current.hasOwnProperty('handler')) {
-          Array.prototype.push.apply(acc, current.handler(value))
-        } else {
-          if (current.hasOwnProperty('formatter')) {
-            value = current.formatter(value)
-          }
-          acc.push({
-            label: current.label,
-            value
-          })
-        }
-        return acc
-      }, [])
+      return this.buildTableData(this.tableDataDef, this.computationalDetails)
     }
   }
 }

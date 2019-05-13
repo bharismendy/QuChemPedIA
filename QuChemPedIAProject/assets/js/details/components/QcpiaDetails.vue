@@ -41,10 +41,12 @@ export default {
         id_file: this.id
       }
     }).then((response) => {
-      if (response.data.molecule) this.molecule = response.data.molecule
-      if (response.data.metadata) this.metadata = response.data.metadata
-      if (response.data.results) this.results = response.data.results
-      if (response.data.comp_details) this.computationalDetails = response.data.comp_details
+      const data = response.data.data
+      console.log(data)
+      if (data.molecule) this.molecule = data.molecule
+      if (data.metadata) this.metadata = data.metadata
+      if (data.results) this.results = data.results
+      if (data.comp_details) this.computationalDetails = data.comp_details
     }).catch(err => {
       this.detailsLoadingError = err
     }).then(() => {
