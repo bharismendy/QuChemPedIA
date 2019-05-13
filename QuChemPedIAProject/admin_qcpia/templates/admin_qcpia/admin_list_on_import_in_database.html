@@ -68,7 +68,12 @@
                         <td>
                             <form class="form" method="post" action="{% url 'admin/launch_import' imported_file.id_file history.number %}">
                                 {% csrf_token %}
-                                <button class="btn btn-xs btn-primary active">start the import
+                                {% if imported_file.imported == True %}
+                                    <button class="btn btn-xs btn-primary disabled" disabled>
+                                {% else %}
+                                    <button class="btn btn-xs btn-primary active">
+                                {% endif %}
+                               start the import
                                     <svg class="feather feather-arrow-right-circle sc-dnqmqq jxshSx"
                                          xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                          viewBox="0 0 24 24" fill="none" stroke="currentColor"
