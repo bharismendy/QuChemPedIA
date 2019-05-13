@@ -21,6 +21,7 @@
       <qcpia-molecule-results
         :molecule="molecule"
         :results="results"
+        :computational-details="computationalDetails"
       />
     </b-card>
   </div>

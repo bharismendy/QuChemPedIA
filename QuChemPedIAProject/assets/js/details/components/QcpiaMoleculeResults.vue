@@ -17,9 +17,11 @@
       title="Geometry"
       active
     >
-      <b-card-text>
-        Content
-      </b-card-text>
+      <qcpia-molecule-results-geometry
+        :molecule="molecule"
+        :results="results"
+        :computational-details="computationalDetails"
+      />
     </b-tab>
     <b-tab
       title="Excited States"
@@ -35,9 +37,11 @@
 <script>
 import { isObjectEmpty } from '../../utils'
 import QcpiaMoleculeResultsThermochemistry from './QcpiaMoleculeResultsThermochemistry.vue'
+import QcpiaMoleculeResultsGeometry from './QcpiaMoleculeResultsGeometry.vue'
+
 export default {
   name: 'QcpiaMoleculeResults',
-  components: { QcpiaMoleculeResultsThermochemistry },
+  components: { QcpiaMoleculeResultsGeometry, QcpiaMoleculeResultsThermochemistry },
   props: {
     molecule: {
       type: Object,
@@ -46,11 +50,18 @@ export default {
     results: {
       type: Object,
       required: true
+    },
+    computationalDetails: {
+      type: Object,
+      required: true
     }
   },
   computed: {
     displayThermochemistry () {
       return this.results.freq && !isObjectEmpty(this.results.freq)
+    },
+    displayGeometry () {
+      return this.results.geometry && !isObjectEmpty(this.results.geometry)
     }
   }
 }
