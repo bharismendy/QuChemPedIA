@@ -5,6 +5,15 @@
     card
   >
     <b-tab
+      v-if="displayWaveFunction"
+      title="Wavefunction"
+    >
+      <qcpia-molecule-results-wavefunction
+        :molecule="molecule"
+        :results="results"
+      />
+    </b-tab>
+    <b-tab
       v-if="displayThermochemistry"
       title="Thermochemistry"
     >
@@ -14,8 +23,8 @@
       />
     </b-tab>
     <b-tab
+      v-if="displayGeometry"
       title="Geometry"
-      active
     >
       <qcpia-molecule-results-geometry
         :molecule="molecule"
@@ -24,11 +33,11 @@
       />
     </b-tab>
     <b-tab
+      v-if="displayExcitedStates"
       title="Excited States"
-      active
     >
       <b-card-text>
-        Content
+        TODO
       </b-card-text>
     </b-tab>
   </b-tabs>
@@ -38,10 +47,15 @@
 import { isObjectEmpty } from '../../utils'
 import QcpiaMoleculeResultsThermochemistry from './QcpiaMoleculeResultsThermochemistry.vue'
 import QcpiaMoleculeResultsGeometry from './QcpiaMoleculeResultsGeometry.vue'
+import QcpiaMoleculeResultsWavefunction from './QcpiaMoleculeResultsWavefunction.vue'
 
 export default {
   name: 'QcpiaMoleculeResults',
-  components: { QcpiaMoleculeResultsGeometry, QcpiaMoleculeResultsThermochemistry },
+  components: {
+    QcpiaMoleculeResultsWavefunction,
+    QcpiaMoleculeResultsGeometry,
+    QcpiaMoleculeResultsThermochemistry
+  },
   props: {
     molecule: {
       type: Object,
@@ -57,11 +71,17 @@ export default {
     }
   },
   computed: {
+    displayWaveFunction () {
+      return this.results.wavefunction && !isObjectEmpty(this.results.wavefunction)
+    },
     displayThermochemistry () {
       return this.results.freq && !isObjectEmpty(this.results.freq)
     },
     displayGeometry () {
       return this.results.geometry && !isObjectEmpty(this.results.geometry)
+    },
+    displayExcitedStates () {
+      return this.results.excited_states && !isObjectEmpty(this.results.excited_states)
     }
   }
 }
