@@ -1,4 +1,5 @@
 {% extends "base_account.html" %}
+{% load staticfiles %}
 {% block content %}
         <main role="main" class="col-md-9" id="dashboard_main">
         {% if not user.is_authenticated %}
@@ -33,6 +34,12 @@
                 </div>
             </div>
         {% endif %}
+        <div id="dropzone">
+            <form action="{% url 'dashboard/import' %}" class="dropzone"  id="my-awesome-dropzone">
+                {% csrf_token %}
+                <button class="btn btn-primary" type="submit" id="btn_upload" name="btn_upload">Send</button>
+            </form>
+        </div>
         {% if user.number_of_upload_this_day >= 10  %}
             <div class="text-center text-info">
                 <div class="col-lg-12">
@@ -52,32 +59,6 @@
         {% endif %}
         {% if number_of_stand_by_import <= 20 %}
 
-            <form id="drag_and_drop_form" action="{% url 'dashboard/import' %}" method="POST" enctype="multipart/form-data" class="text-center">
-                <div id="form_import_div">
-
-                </div>
-                  <div id="drop_zone">
-                      Drop files here
-                  </div>
-             <input type="file" id="fileInput" name="file" multiple="false" onchange="display_job_type();"/>
-            </form>
-            <script type="text/javascript">
-                // Setup the dnd listeners.
-                var dropZone = document.getElementById('drop_zone');
-                dropZone.addEventListener('dragover', handleDragOver, false);
-                dropZone.addEventListener('drop', handleFileSelect, false);
-            </script>
-            {% comment %} version with dropzone.js uncomment to
-            <div id="div-dropzone">
-              <!-- Génération de la dropzone -->
-              <form id="myDropzone" action="{% url 'dashboard/import' %}" method="POST" onsubmit="return submitForm();" class="dropzone text-center">
-                 <div id="form_import_div">
-                 </div>
-                <div class="fallback">
-                </div>
-              </form>
-            </div>
-            {% endcomment %}
         {% else %}
             <div class="text-center text-info">
                 <div class="col-lg-12">
@@ -95,28 +76,40 @@
             </div>
         {% endif %}
         </main>
-        <script type="text/javascript">/** version of the dropzone with dropzone.js
-           // using jQuery
-                var dropzone=null;
-
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function(){
                 Dropzone.autoDiscover = false;
-                dropzone = $("#myDropzone").dropzone({
+                Dropzone.options.myAwesomeDropzone = {
                     url:"{% url 'dashboard/import' %}",
                     maxFilesize: 5000,
                     addRemoveLinks : true,
                     dictDefaultMessage: "Drop your log files here or click to upload",
                     dictResponseError: 'Error uploading file!',
                     autoQueue:false,
-                    autoProcessQueue:false,
+                    autoProcessQueue:true,
                     maxFiles: 1,
-                    headers: {
-                        'X-CSRFToken': csrftoken
-                    },
                     success: function (file, response) {
+                        console.log('success!');
                         location.reload();
                         this.removeFile(file); //todo discuter de quoi faire
+                    },
+                    error: function (file, response) {
+                        console.log('fail!');
+                    },
+                    init: function () {
+                        var myDropzone = this;
+                        // Update selector to match your button
+                        $("#button").click(function (e) {
+                            console.log('success!');
+                            e.preventDefault();
+                            myDropzone.processQueue();
+                        });
                     }
+                };
+             })
+        </script>
 
-                });**/
-    </script>
 {% endblock %}
