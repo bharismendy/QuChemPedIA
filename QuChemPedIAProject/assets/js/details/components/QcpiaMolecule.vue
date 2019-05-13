@@ -17,6 +17,15 @@
     </b-card>
     <b-card class="mt-3">
       <h5 slot="header">
+        Associated Calculation
+      </h5>
+      <qcpia-molecule-associated-calculations
+        :siblings="siblings"
+        :author-repository="authorRepository"
+      />
+    </b-card>
+    <b-card class="mt-3">
+      <h5 slot="header">
         Computational Details
       </h5>
       <qcpia-molecule-computational-details
@@ -42,10 +51,11 @@ import QcpiaMoleculeComputationalDetails from './QcpiaMoleculeComputationalDetai
 import QcpiaMoleculeResults from './QcpiaMoleculeResults.vue'
 import QcpiaMoleculeAuthorship from './QcpiaMoleculeAuthorship.vue'
 import AuthorRepository from '../../api/AuthorRepository'
+import QcpiaMoleculeAssociatedCalculations from './QcpiaMoleculeAssociatedCalculations.vue'
 
 export default {
   name: 'QcpiaMolecule',
-  components: { QcpiaMoleculeAuthorship, QcpiaMoleculeResults, QcpiaMoleculeComputationalDetails, QcpiaMoleculeAbstract },
+  components: { QcpiaMoleculeAssociatedCalculations, QcpiaMoleculeAuthorship, QcpiaMoleculeResults, QcpiaMoleculeComputationalDetails, QcpiaMoleculeAbstract },
   props: {
     molecule: {
       type: Object,
@@ -61,6 +71,10 @@ export default {
     },
     computationalDetails: {
       type: Object,
+      required: true
+    },
+    siblings: {
+      type: Array,
       required: true
     },
     authorRepository: {

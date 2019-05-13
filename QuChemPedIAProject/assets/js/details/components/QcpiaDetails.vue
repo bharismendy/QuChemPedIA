@@ -6,6 +6,7 @@
       :results="results"
       :metadata="metadata"
       :computational-details="computationalDetails"
+      :siblings="siblings"
       :author-repository="authorRepository"
     />
   </div>
@@ -36,6 +37,7 @@ export default {
       molecule: null,
       metadata: null,
       results: null,
+      siblings: [],
       computationalDetails: null,
       authorRepository: new AuthorRepository(this.baseUrl)
     }
@@ -52,6 +54,7 @@ export default {
       if (data.molecule) this.molecule = data.molecule
       if (data.metadata) this.metadata = data.metadata
       if (data.results) this.results = data.results
+      if (response.data.siblings) this.siblings = response.data.siblings
       if (data.comp_details) this.computationalDetails = data.comp_details
     }).catch(err => {
       this.detailsLoadingError = err

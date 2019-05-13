@@ -30,6 +30,17 @@
         </template>
       </div>
     </div>
+    <div
+      v-if="metadata.affiliation"
+      class="row"
+    >
+      <div class="col font-weight-bold">
+        Affiliation
+      </div>
+      <div class="col">
+        {{ metadata.affiliation }}
+      </div>
+    </div>
   </div>
 </template>
 
