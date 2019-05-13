@@ -6,6 +6,7 @@
       :results="results"
       :metadata="metadata"
       :computational-details="computationalDetails"
+      :author-repository="authorRepository"
     />
   </div>
 </template>
@@ -13,11 +14,16 @@
 <script>
 import QcpiaMolecule from './QcpiaMolecule.vue'
 import axios from 'axios'
+import AuthorRepository from '../../api/AuthorRepository'
 export default {
   name: 'QcpiaDetails',
   components: { QcpiaMolecule },
   props: {
     id: {
+      type: String,
+      required: true
+    },
+    baseUrl: {
       type: String,
       required: true
     }
@@ -30,7 +36,8 @@ export default {
       molecule: null,
       metadata: null,
       results: null,
-      computationalDetails: null
+      computationalDetails: null,
+      authorRepository: new AuthorRepository(this.baseUrl)
     }
   },
   mounted () {
@@ -42,7 +49,6 @@ export default {
       }
     }).then((response) => {
       const data = response.data.data
-      console.log(data)
       if (data.molecule) this.molecule = data.molecule
       if (data.metadata) this.metadata = data.metadata
       if (data.results) this.results = data.results

@@ -33,18 +33,22 @@ describe('Molecule details', function () {
     cy.get('[data-testid=computationalDetailsTable] [data-testid=data-value-6]').contains('gas') // Solvent
   })
 
-  it.skip('Other molecule', function () {
-        cy.server()
+  it.only('Other molecule', function () {
+    cy.server()
 
     cy.fixture('molecule_2.json')
     // Stub the response for the molecule details xhr request
     cy.route('GET', '/access/details_json?id_file=iN0gjGoBaHZQCbKmLtmm', 'fixture:molecule_2.json')
       .as('detailsJsonRequest')
 
+    cy.route('GET', '/access/details_author?id_author=1', {"name": "John Smith"})
+      .as('detailAuthor1Request')
+
     // Visit the molecule page, a request that matche the route defined above should be made
     cy.visit('/access/details?id=iN0gjGoBaHZQCbKmLtmm')
 
     cy.wait('@detailsJsonRequest')
 
+    cy.wait('@detailAuthor1Request')
   })
 })

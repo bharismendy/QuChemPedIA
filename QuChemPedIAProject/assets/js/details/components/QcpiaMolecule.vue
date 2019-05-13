@@ -8,6 +8,15 @@
     </b-card>
     <b-card class="mt-3">
       <h5 slot="header">
+        Authorship
+      </h5>
+      <qcpia-molecule-authorship
+        :metadata="metadata"
+        :author-repository="authorRepository"
+      />
+    </b-card>
+    <b-card class="mt-3">
+      <h5 slot="header">
         Computational Details
       </h5>
       <qcpia-molecule-computational-details
@@ -31,10 +40,12 @@
 import QcpiaMoleculeAbstract from './QcpiaMoleculeAbstract.vue'
 import QcpiaMoleculeComputationalDetails from './QcpiaMoleculeComputationalDetails.vue'
 import QcpiaMoleculeResults from './QcpiaMoleculeResults.vue'
+import QcpiaMoleculeAuthorship from './QcpiaMoleculeAuthorship.vue'
+import AuthorRepository from '../../api/AuthorRepository'
 
 export default {
   name: 'QcpiaMolecule',
-  components: { QcpiaMoleculeResults, QcpiaMoleculeComputationalDetails, QcpiaMoleculeAbstract },
+  components: { QcpiaMoleculeAuthorship, QcpiaMoleculeResults, QcpiaMoleculeComputationalDetails, QcpiaMoleculeAbstract },
   props: {
     molecule: {
       type: Object,
@@ -50,6 +61,10 @@ export default {
     },
     computationalDetails: {
       type: Object,
+      required: true
+    },
+    authorRepository: {
+      type: AuthorRepository,
       required: true
     }
   }

@@ -51,6 +51,7 @@
       <b-table
         :items="mullikenAtomicItems"
         :fields="mullikenPartialChargeTableFields"
+        class="text-center"
       />
     </div>
   </div>
