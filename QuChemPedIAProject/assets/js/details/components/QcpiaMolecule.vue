@@ -8,17 +8,7 @@
         title="Molecule"
         class="py-3"
       >
-        <div class="row">
-          <div class="col-lg-6 col-md-12">
-            <qcpia-molecule-smiles
-              v-if="molecule.can"
-              :smiles="molecule.can"
-            />
-          </div>
-          <div class="col-lg-6 col-md-12">
-            <qcpia-molecule-abstract :molecule="molecule" />
-          </div>
-        </div>
+        <qcpia-molecule-abstract :molecule="molecule" />
       </b-tab>
       <b-tab
         title="Authorship"
@@ -110,12 +100,10 @@ import QcpiaMoleculeResults from './QcpiaMoleculeResults.vue'
 import QcpiaMoleculeAuthorship from './QcpiaMoleculeAuthorship.vue'
 import AuthorRepository from '../../api/AuthorRepository'
 import QcpiaMoleculeAssociatedCalculations from './QcpiaMoleculeAssociatedCalculations.vue'
-import QcpiaMoleculeSmiles from './QcpiaMoleculeSmiles.vue'
 
 export default {
   name: 'QcpiaMolecule',
   components: {
-    QcpiaMoleculeSmiles,
     QcpiaMoleculeAssociatedCalculations,
     QcpiaMoleculeAuthorship,
     QcpiaMoleculeResults,

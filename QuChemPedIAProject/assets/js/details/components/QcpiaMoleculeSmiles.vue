@@ -18,14 +18,20 @@ export default {
       type: String,
       required: false,
       default: 'smiles-canvas'
+    }
+  },
+  computed: {
+    width () {
+      if (!this.$refs.canvas) return 500
+      return this.$refs.canvas.width
     },
-    options: {
-      type: Object,
-      required: false,
-      default () {
-        return {
-          atomVisualization: 'none'
-        }
+
+    options () {
+      const size = this.width
+      return {
+        height: size,
+        width: size,
+        padding: 0
       }
     }
   },
@@ -34,7 +40,8 @@ export default {
       // I tried to do it without that timeout. I got weird canvas rendering errors.
       // I don't know why, but it works with the timeout
       setTimeout(() => {
-        let smilesDrawer = new window.SmilesDrawer.Drawer({})
+        console.log(this.options)
+        let smilesDrawer = new window.SmilesDrawer.Drawer(this.options)
         window.SmilesDrawer.parse(this.smiles, (tree) => {
           // Draw to the canvas
           smilesDrawer.draw(tree, this.$refs.canvas, 'light', false)
