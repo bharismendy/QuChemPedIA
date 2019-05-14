@@ -1,18 +1,76 @@
 <template>
-  <div>
-    <b-card class="mt-3">
+  <b-card
+    no-body
+    class="w-100"
+  >
+    <b-tabs card>
+      <b-tab
+        title="Molecule"
+        class="py-3"
+      >
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <qcpia-molecule-smiles
+              v-if="molecule.can"
+              :smiles="molecule.can"
+            />
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <qcpia-molecule-abstract :molecule="molecule" />
+          </div>
+        </div>
+      </b-tab>
+      <b-tab
+        title="Authorship"
+        class="py-3"
+      >
+        <qcpia-molecule-authorship
+          :metadata="metadata"
+          :author-repository="authorRepository"
+        />
+      </b-tab>
+      <b-tab title="Associated Calculations">
+        <qcpia-molecule-associated-calculations
+          :siblings="siblings"
+          :author-repository="authorRepository"
+        />
+      </b-tab>
+      <b-tab
+        title="Computational Details"
+        class="py-3"
+      >
+        <qcpia-molecule-computational-details
+          :computational-details="computationalDetails"
+        />
+      </b-tab>
+      <b-tab
+        title="Results"
+        class="py-3"
+      >
+        <qcpia-molecule-results
+          :molecule="molecule"
+          :results="results"
+          :computational-details="computationalDetails"
+        />
+      </b-tab>
+    </b-tabs>
+    <!--    <b-card class="mt-3">
       <h5 slot="header">
         Molecule
       </h5>
-      <QcpiaMoleculeAbstract :molecule="molecule" />
+      <qcpia-molecule-abstract :molecule="molecule"/>
+      <qcpia-molecule-smiles
+          v-if="molecule.can"
+          :smiles="molecule.can"
+      />
     </b-card>
     <b-card class="mt-3">
       <h5 slot="header">
         Authorship
       </h5>
       <qcpia-molecule-authorship
-        :metadata="metadata"
-        :author-repository="authorRepository"
+          :metadata="metadata"
+          :author-repository="authorRepository"
       />
     </b-card>
     <b-card class="mt-3">
@@ -20,8 +78,8 @@
         Associated Calculation
       </h5>
       <qcpia-molecule-associated-calculations
-        :siblings="siblings"
-        :author-repository="authorRepository"
+          :siblings="siblings"
+          :author-repository="authorRepository"
       />
     </b-card>
     <b-card class="mt-3">
@@ -29,7 +87,7 @@
         Computational Details
       </h5>
       <qcpia-molecule-computational-details
-        :computational-details="computationalDetails"
+          :computational-details="computationalDetails"
       />
     </b-card>
     <b-card class="mt-3">
@@ -37,12 +95,12 @@
         Results
       </h5>
       <qcpia-molecule-results
-        :molecule="molecule"
-        :results="results"
-        :computational-details="computationalDetails"
+          :molecule="molecule"
+          :results="results"
+          :computational-details="computationalDetails"
       />
-    </b-card>
-  </div>
+    </b-card>-->
+  </b-card>
 </template>
 
 <script>
@@ -52,10 +110,18 @@ import QcpiaMoleculeResults from './QcpiaMoleculeResults.vue'
 import QcpiaMoleculeAuthorship from './QcpiaMoleculeAuthorship.vue'
 import AuthorRepository from '../../api/AuthorRepository'
 import QcpiaMoleculeAssociatedCalculations from './QcpiaMoleculeAssociatedCalculations.vue'
+import QcpiaMoleculeSmiles from './QcpiaMoleculeSmiles.vue'
 
 export default {
   name: 'QcpiaMolecule',
-  components: { QcpiaMoleculeAssociatedCalculations, QcpiaMoleculeAuthorship, QcpiaMoleculeResults, QcpiaMoleculeComputationalDetails, QcpiaMoleculeAbstract },
+  components: {
+    QcpiaMoleculeSmiles,
+    QcpiaMoleculeAssociatedCalculations,
+    QcpiaMoleculeAuthorship,
+    QcpiaMoleculeResults,
+    QcpiaMoleculeComputationalDetails,
+    QcpiaMoleculeAbstract
+  },
   props: {
     molecule: {
       type: Object,
