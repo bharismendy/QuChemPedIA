@@ -16,6 +16,8 @@
 import QcpiaMolecule from './QcpiaMolecule.vue'
 import axios from 'axios'
 import AuthorRepository from '../../api/AuthorRepository'
+
+// Entry component for the detail page
 export default {
   name: 'QcpiaDetails',
   components: { QcpiaMolecule },
@@ -43,7 +45,6 @@ export default {
     }
   },
   mounted () {
-    console.log('Coucou')
     this.detailsLoading = true
     axios.get('/access/details_json', {
       params: {

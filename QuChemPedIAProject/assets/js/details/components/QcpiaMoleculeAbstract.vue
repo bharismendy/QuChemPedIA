@@ -151,22 +151,27 @@
 import QcpiaHelpBadgeLink from './QcpiaHelpBadgeLink.vue'
 import QcpiaMoleculeSmiles from './QcpiaMoleculeSmiles.vue'
 
+// This component display the main information about a molecule : formula, charge, inchi ...
 export default {
   name: 'QcpiaMoleculeAbstract',
   components: { QcpiaHelpBadgeLink, QcpiaMoleculeSmiles },
   // data () {return {}}
   props: {
+    // The molecule to display
     molecule: {
       type: Object,
       required: true
     }
   },
   computed: {
+    /**
+     * Render the html string for the molecule formula
+     * @returns {null|String}
+     */
     formattedFormula () {
       if (this.molecule.formula) {
         const charge = this.molecule.charge
         const formula = this.molecule.formula
-        let formattedFormula = ''
         for (let i = formula.length - 1; i >= 0; i--) {
           if (i === formula.length - 1 && charge !== 0) {
             if (charge > 1 || charge < -1) {
@@ -187,8 +192,18 @@ export default {
     }
   },
   methods: {
+    /**
+     * Put the text in the input element of the given ref in the user clipboard
+     * The input is considered to be hidden
+     * @param {String} ref
+     */
     copyInput (ref) {
       const input = this.$refs[ref]
+      if (!input) {
+        console.error(`Element with reference ${ref} not found`)
+        return
+      }
+
       input.setAttribute('type', 'text')
       input.select()
 
@@ -202,9 +217,15 @@ export default {
       input.setAttribute('type', 'hidden')
       window.getSelection().removeAllRanges()
     },
+    /**
+     * Copy the molecule Inchi into the user clipboard
+     */
     copyInchi () {
       this.copyInput('inchiInput')
     },
+    /**
+     * Copy the molecule canonical SMILES into the user clipboard
+     */
     copyCan () {
       this.copyInput('canInput')
     }

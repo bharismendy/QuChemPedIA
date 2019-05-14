@@ -11,6 +11,7 @@
         :class="labelClasses"
         :data-testid="`data-label-${index}`"
       >
+        <!-- Label slot -->
         <slot
           name="label"
           :element="element"
@@ -24,6 +25,7 @@
         :class="valueClasses"
         :data-testid="`data-value-${index}`"
       >
+        <!-- Value slot -->
         <slot
           name="value"
           :element="element"
@@ -40,11 +42,13 @@
 export default {
   name: 'QcpiaDataMapPresenter',
   props: {
+    // An array of object with properties `label` and `value`
     data: {
       // `Object[]`
       type: Array,
       required: true
     },
+    // Classes for the labels elements
     labelClasses: {
       // `String[]`
       type: Array,
@@ -54,6 +58,7 @@ export default {
         return ['font-weight-bold']
       }
     },
+    // Classes for the value element
     valueClasses: {
       // `String[]`
       type: Array,

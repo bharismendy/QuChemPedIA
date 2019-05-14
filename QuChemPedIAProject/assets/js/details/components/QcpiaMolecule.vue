@@ -44,52 +44,6 @@
         />
       </b-tab>
     </b-tabs>
-    <!--    <b-card class="mt-3">
-      <h5 slot="header">
-        Molecule
-      </h5>
-      <qcpia-molecule-abstract :molecule="molecule"/>
-      <qcpia-molecule-smiles
-          v-if="molecule.can"
-          :smiles="molecule.can"
-      />
-    </b-card>
-    <b-card class="mt-3">
-      <h5 slot="header">
-        Authorship
-      </h5>
-      <qcpia-molecule-authorship
-          :metadata="metadata"
-          :author-repository="authorRepository"
-      />
-    </b-card>
-    <b-card class="mt-3">
-      <h5 slot="header">
-        Associated Calculation
-      </h5>
-      <qcpia-molecule-associated-calculations
-          :siblings="siblings"
-          :author-repository="authorRepository"
-      />
-    </b-card>
-    <b-card class="mt-3">
-      <h5 slot="header">
-        Computational Details
-      </h5>
-      <qcpia-molecule-computational-details
-          :computational-details="computationalDetails"
-      />
-    </b-card>
-    <b-card class="mt-3">
-      <h5 slot="header">
-        Results
-      </h5>
-      <qcpia-molecule-results
-          :molecule="molecule"
-          :results="results"
-          :computational-details="computationalDetails"
-      />
-    </b-card>-->
   </b-card>
 </template>
 

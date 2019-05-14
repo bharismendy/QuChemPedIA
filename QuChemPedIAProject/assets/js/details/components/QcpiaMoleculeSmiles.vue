@@ -50,7 +50,7 @@ export default {
         })
       }, 50)
     } else {
-      console.error('no smiles drawer')
+      console.error('no smiles drawer') //Should never happen in production, check only for developpement if we change the django templates.
     }
   }
 }

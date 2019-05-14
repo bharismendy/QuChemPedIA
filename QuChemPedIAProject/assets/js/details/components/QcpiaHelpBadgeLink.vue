@@ -24,6 +24,7 @@ export default {
     target: {
       type: String,
       required: false,
+      // `_blank`
       default: '_blank'
     }
   }
