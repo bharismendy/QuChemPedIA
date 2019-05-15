@@ -22,7 +22,7 @@ def get_base_json():
     function to get the first architecture
     :return: basique json tree
     """
-    return '{"job_type": "OPT", "data": {}, "siblings": [],"md5_siblings":[],"contributor":[]}'
+    return '{"job_type": "OPT", "data": {},"contributor":[]}'
 
 
 def get_siblings_json():
@@ -369,7 +369,7 @@ def exist_td(id_json_to_test, json_to_input, path_to_log_file, destination_dir, 
                               destination_dir + path_in_file_sytem + "/TD_" + str(
                                   temp_md5) + ".log"])  # copie du JSON
 
-            create_jobs(json_loaded=json_to_input, job_type="TD", elastic_id=id_json_to_test, md5_json=temp_md5)
+            #create_jobs(json_loaded=json_to_input, job_type="TD", elastic_id=id_json_to_test, md5_json=temp_md5)
             return 0
         except Exception as error:
             print(error)
@@ -588,6 +588,68 @@ def create_query(path, json_file, destination_dir, id_user):
             return 3
 
 
+def create_query_log(path, json_file, destination_dir, id_user):
+    """
+       this function get all file from the source directory to store them in the destination directory
+       we put the log in database and the json in elasticSearch
+       :param path: directory or file path that contains the new .log
+       :param destination_dir: the directory where we are going to store our .log
+       :param id_user: id of the contributor
+       :return: nothing
+       """
+    # iterate on all file
+    # setting conection to elastic search server
+    es_host = settings.ELASTICSEARCH
+    es = Elasticsearch(hosts=[es_host])
+    base_json = get_base_json()
+    # creating the index
+    index_name = 'quchempedia_in'
+    if not es.indices.exists(index=index_name):
+        try:
+            response = es.indices.create(index=index_name)
+            print(response)
+        except Exception as error:
+            print(error)
+            return 4
+    loaded_json = json_file
+
+    if loaded_json['metadata']['archivable'] == "True" and loaded_json['metadata']['archivable_for_new_entry'] == "True":
+            # store data into the json
+            temp = json.loads(base_json)
+            temp['data']['molecule'] = loaded_json['molecule']
+            temp['data']['results'] = loaded_json['results']
+            temp['data']['comp_details'] = loaded_json['comp_details']
+            temp['data']['metadata'] = loaded_json['metadata']
+            temp['data']['metadata']['log_file'] = path
+            temp['data']['metadata']["id_user"] = id_user
+            temp['data']['metadata']["affiliation"] = get_affiliation(id_user=id_user)
+            temp['job_type'] = loaded_json['comp_details']['general']['job_type']
+            temp['contributor'].append(id_user)
+            temp = json.dumps(temp, indent=4)
+            #try:
+            response = es.index(index=index_name, doc_type="log_file", body=temp)
+            id_file = response['_id']
+            path_in_file_system = get_path_to_store(destination_dir=destination_dir,
+                                                    id_calcul=id_file, make_path=True)
+            response = es.get(index=index_name, doc_type="log_file", id=id_file)
+            location_opt = os.path.join(path_in_file_system + "/"+loaded_json['comp_details']['general']['job_type'][0]+"_" +
+                                        str(int(round(time.time() * 1000))) + ".log")
+            response['_source']['data']['metadata']['log_file'] = location_opt
+
+            subprocess.Popen(["cp", path, os.path.join(destination_dir + path_in_file_system + "/"+loaded_json['comp_details']['general']['job_type'][0]+"_" +
+                              str(int(round(time.time() * 1000))) + ".log")])  # copie du JSON
+            #  create_jobs(json_loaded=loaded_json, job_type=loaded_json['comp_details']['general']['job_type'][0], elastic_id=id_file)
+
+            subprocess.Popen(["rm", path])
+            es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_file)
+            return 0
+            #except Exception as error:
+            #  print(error)
+             #   return 4
+    else:
+        return 1
+
+
 def import_file(path, json_file, id_user):
     """
     main function to import file
@@ -598,5 +660,18 @@ def import_file(path, json_file, id_user):
     """
     # absolute path to the destination directory where we are going to store all the data
     destination_dir = settings.DATA_DIR_ROOT+'/'
-
-    return create_query(path=path,json_file=json_file, destination_dir=destination_dir, id_user=id_user)
+    es_host = settings.ELASTICSEARCH
+    es = Elasticsearch(hosts=[es_host])
+    base_json = get_base_json()
+    # creating the index
+    index_name = 'quchempedia_in'
+    if not es.indices.exists(index=index_name):
+        try:
+            response = es.indices.create(index=index_name)
+            print(response)
+        except Exception as error:
+            print(error)
+            return 4
+    loaded_json = json_file
+    return create_query_log(path=path, json_file=json_file, destination_dir=destination_dir, id_user=id_user)
+    #  return create_query(path=path, json_file=json_file, destination_dir=destination_dir, id_user=id_user)
