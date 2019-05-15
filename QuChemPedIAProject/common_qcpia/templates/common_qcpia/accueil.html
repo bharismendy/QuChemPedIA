@@ -6,9 +6,9 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-
+    <meta name="viewport" content="width=device-width" />
     <title>QuChemPedIA</title>
-    <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
 </head>
@@ -16,19 +16,19 @@
 {% block nav %}
 <div  id="sign" class="row float-right">
     {% if not user.is_authenticated %}
-    <a title="Sign up/Sign in" href="{% url 'auth' %}" style="color:gray;font-weight:bold;margin-right:10px">
+    <a title="Sign up/Sign in" href="{% url 'auth' %}" class="log">
         Sign In
-    </a><span class="fas fa-sign-in-alt" style="color:gray;margin-right:20px;font-size: 1.5em;"></span>
+    </a><span class="fas fa-sign-in-alt iconLog" ></span>
     {% else %}
-    <a title="Log-out" href="{% url 'logout' %}" style="color:gray;font-weight:bold;margin-right:10px">
+    <a title="Log-out" href="{% url 'logout' %}" class="log">
         Log Out
-    </a><span class="fas fa-sign-out-alt" style="color:gray;margin-right:20px;font-size: 1.5em;"></span>
+    </a><span class="fas fa-sign-out-alt iconLog"></span>
     {% endif %}
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="container" >
+<div class="container">
     <div class="Absolute-Center is-Responsive ">
         <h1 class="display-2 text-center text-primary">QuChemPedIA</h1>
         <h2 id="subtitle" class="diplay-2 text-center">Quantum Chemistry Collaborative EncyclopedIA</h2>

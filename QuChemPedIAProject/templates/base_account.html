@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% block menu_account %}
-<ul class="list-group">
-  <li class="list-group-item">
-    <a href="{% url 'dashboard/history' %}">
-      Your entries
-    </a><span class="fas fa-file-import icon"></span>
+  <li class="nav-item">
+    <a class="nav-link"  href="{% url 'dashboard/history' %}">
+      Entries
+    </a>
   </li>
-  <li class="list-group-item">
-    <a href="{% url 'dashboard/change_password' %}">
-      Change your password
-    </a><span class="fas fa-key icon"></span>
+  <li class="nav-item">
+    <a class="nav-link"  href="{% url 'dashboard/change_password' %}">
+      Change password
+    </a>
   </li>
-</ul>
 {% endblock %}

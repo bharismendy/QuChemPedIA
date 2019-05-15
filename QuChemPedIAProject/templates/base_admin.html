@@ -1,21 +1,19 @@
 {% extends "base.html" %}
 {% block menu_admin %}
+    <li class="nav-item">
+        <a  class="nav-link" href="{% url 'admin/list_of_import_in_database' %}">
+            List of import
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin/user_list' %}">
+            List of user
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin/list_of_rule' %}">
+            Manage import rule
+        </a>
+    </li>
 
-<ul class="list-group">
-    <li class="list-group-item">
-        <a href="{% url 'admin/list_of_import_in_database' %}">
-            List of import in database
-        </a><span class="fas fa-database icon"></span>
-    </li>
-    <li class="list-group-item">
-        <a href="{% url 'admin/user_list' %}">
-            List of user in database
-        </a><span class="fas fa-user-friends icon"></span>
-    </li>
-    <li class="list-group-item">
-        <a href="{% url 'admin/list_of_rule' %}">
-            Manage your import rule
-        </a><span class="fas fa-user-cog icon"></span>
-    </li>
-</ul>
 {% endblock %}

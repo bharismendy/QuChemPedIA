@@ -14,3 +14,17 @@
 li a {
     color: black;
 }
+
+.log{
+
+    color:gray;
+    font-weight:bold;
+    margin-right:10px;
+
+}
+
+.iconLog{
+    color:gray;
+    margin-right:20px;
+    font-size: 1.5em;
+}
