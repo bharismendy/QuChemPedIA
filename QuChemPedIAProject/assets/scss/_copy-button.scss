@@ -1,0 +1,13 @@
+.copy-button {
+  @extend .badge-pill;
+  @extend .badge;
+  @extend .px-1;
+  @extend .text-center;
+  @extend .badge-primary;
+  cursor: pointer;
+}
+
+
+.copy-button:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+}

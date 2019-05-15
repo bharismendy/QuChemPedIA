@@ -4,8 +4,9 @@
     :href="href"
     :target="target"
     :title="tooltipText"
+    class="badge badge-pill monBadge font-weight-bold text-primary"
   >
-    <span class="badge badge-pill monBadge font-weight-bold">?</span>
+    ?
   </a>
 </template>
 

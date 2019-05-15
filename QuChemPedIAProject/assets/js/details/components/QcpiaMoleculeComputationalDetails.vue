@@ -3,10 +3,13 @@
     data-testid="computationalDetailsTable"
     :data="tableData"
     :label-classes="tableLabelClasses"
+    :value-classes="tableValueClasses"
+    :row-classes="tableRowClasses"
   />
 </template>
 
 <script>
+import { exponentialToHtmlString } from '../../utils'
 import QcpiaDataMapPresenter from './QcpiaDataMapPresenter.vue'
 import tableDataMapHelper from '../mixins/tableDataMapHelpers'
 export default {
@@ -21,8 +24,9 @@ export default {
   },
   data () {
     return {
-      tableLabelClasses: ['font-weight-bold'],
-
+      tableLabelClasses: ['text-muted', 'col-12'],
+      tableValueClasses: ['col-12'],
+      tableRowClasses: ['mt-1'],
       tableDataDef: [
         {
           path: 'general.package',
@@ -69,15 +73,18 @@ export default {
               return [
                 {
                   label: 'Requested SCF convergence on RMS density',
-                  value: Number.parseFloat(targets[0]).toExponential() // TODO format to HTML
+                  _rawHtml: true,
+                  value: exponentialToHtmlString(Number.parseFloat(targets[0]))
                 },
                 {
                   label: 'Requested SCF convergence on MAX density',
-                  value: Number.parseFloat(targets[1]).toExponential() // TODO format to HTML
+                  _rawHtml: true,
+                  value: exponentialToHtmlString(Number.parseFloat(targets[1])) // TODO format to HTML
                 },
                 {
                   label: 'Requested SCF convergence on energy',
-                  value: Number.parseFloat(targets[2]).toExponential() // TODO format to HTML
+                  _rawHtml: true,
+                  value: exponentialToHtmlString(Number.parseFloat(targets[2])) // TODO format to HTML
                 }
               ]
             }

@@ -1,15 +1,13 @@
 <template>
-  <div class="container">
-    <qcpia-molecule
-      v-if="detailsLoaded && molecule"
-      :molecule="molecule"
-      :results="results"
-      :metadata="metadata"
-      :computational-details="computationalDetails"
-      :siblings="siblings"
-      :author-repository="authorRepository"
-    />
-  </div>
+  <qcpia-molecule
+    v-if="detailsLoaded && molecule"
+    :molecule="molecule"
+    :results="results"
+    :metadata="metadata"
+    :computational-details="computationalDetails"
+    :siblings="siblings"
+    :author-repository="authorRepository"
+  />
 </template>
 
 <script>

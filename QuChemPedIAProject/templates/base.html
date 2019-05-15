@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        {% render_bundle 'main' %}
+
   <script src="{% static "js/jsPDF/jspdf.js" %}"></script>
     <script src="{% static "js/jsPDF/dist/jspdf.min.js" %}"></script>
   <script src="{% static "js/jsPDF/dist/jspdf.debug.js" %}"></script>
@@ -104,10 +106,8 @@
 {% endblock %}
 
 <div class="container">
-  <div class="row">
     {% block content %}
     {% endblock %}
-  </div>
 </div>
 
 {# block used for footer #}
@@ -116,7 +116,6 @@
 
 
         </footer>
-        {% render_bundle 'main' %}
     </body>
 </html>
 {% endblock %}

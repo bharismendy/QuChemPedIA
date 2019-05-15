@@ -151,7 +151,7 @@ export default {
       for (let j = 0; j < this.mullikenPartialCharges.length; ++j) {
         items.push({
           symbol: AtomSymbols[this.molecule.atoms_Z[j] - 1],
-          index: j,
+          index: j + 1,
           mullikenPartialCharge: this.mullikenPartialCharges[j]
         })
       }

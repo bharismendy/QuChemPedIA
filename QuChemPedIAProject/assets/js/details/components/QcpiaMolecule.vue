@@ -3,12 +3,29 @@
     no-body
     class="w-100"
   >
-    <b-tabs card>
+    <b-tabs
+      card
+      fill
+      class="w-100"
+    >
       <b-tab
         title="Molecule"
         class="py-3"
       >
-        <qcpia-molecule-abstract :molecule="molecule" />
+        <qcpia-molecule-abstract
+          :molecule="molecule"
+          :computational-details="computationalDetails"
+        />
+      </b-tab>
+      <b-tab
+        title="Results"
+        class="py-3"
+      >
+        <qcpia-molecule-results
+          :molecule="molecule"
+          :results="results"
+          :computational-details="computationalDetails"
+        />
       </b-tab>
       <b-tab
         title="Authorship"
@@ -25,31 +42,12 @@
           :author-repository="authorRepository"
         />
       </b-tab>
-      <b-tab
-        title="Computational Details"
-        class="py-3"
-      >
-        <qcpia-molecule-computational-details
-          :computational-details="computationalDetails"
-        />
-      </b-tab>
-      <b-tab
-        title="Results"
-        class="py-3"
-      >
-        <qcpia-molecule-results
-          :molecule="molecule"
-          :results="results"
-          :computational-details="computationalDetails"
-        />
-      </b-tab>
     </b-tabs>
   </b-card>
 </template>
 
 <script>
 import QcpiaMoleculeAbstract from './QcpiaMoleculeAbstract.vue'
-import QcpiaMoleculeComputationalDetails from './QcpiaMoleculeComputationalDetails.vue'
 import QcpiaMoleculeResults from './QcpiaMoleculeResults.vue'
 import QcpiaMoleculeAuthorship from './QcpiaMoleculeAuthorship.vue'
 import AuthorRepository from '../../api/AuthorRepository'
@@ -61,7 +59,6 @@ export default {
     QcpiaMoleculeAssociatedCalculations,
     QcpiaMoleculeAuthorship,
     QcpiaMoleculeResults,
-    QcpiaMoleculeComputationalDetails,
     QcpiaMoleculeAbstract
   },
   props: {

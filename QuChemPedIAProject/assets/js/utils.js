@@ -28,3 +28,23 @@ export function isObjectEmpty (obj) {
   }
   return true
 }
+
+/**
+ *
+ * @param {Number} number
+ * @param {Number|null} [fractionDigit]
+ */
+export function exponentialToHtmlString (number, fractionDigit = undefined) {
+  const rawStr = `${number.toExponential(fractionDigit)}`
+
+  const posE = rawStr.indexOf('e')
+
+  const coeficient = rawStr.slice(0, posE)
+  const exponent = rawStr.slice(posE + 1)
+
+  if (coeficient === '1') {
+    return `10<sup>${exponent}</sup>`
+  }
+
+  return `${coeficient}×10<sup>${exponent}</sup>`
+}
