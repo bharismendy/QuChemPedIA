@@ -1,18 +1,15 @@
 {% extends "base.html" %}
 {% block menu_account %}
-<a class="nav-link btn btn-info default-primary-color button-nav" title="Your entries" href="{% url 'dashboard/history' %}">
-  <svg class="feather feather-folder sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
-       width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="566">
-    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-  </svg>
-</a>
-<a class="nav-link btn btn-info default-primary-color button-nav" title="Change your password" href="{% url 'dashboard/change_password' %}">
-  <svg class="feather feather-lock sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
-       height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="711">
-    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-  </svg>
-</a>
+<ul class="list-group">
+  <li class="list-group-item">
+    <a href="{% url 'dashboard/history' %}">
+      Your entries
+    </a><span class="fas fa-file-import icon"></span>
+  </li>
+  <li class="list-group-item">
+    <a href="{% url 'dashboard/change_password' %}">
+      Change your password
+    </a><span class="fas fa-key icon"></span>
+  </li>
+</ul>
 {% endblock %}
