@@ -168,6 +168,7 @@ export default {
       }
     },
     mullikenChargesMean () {
+      // The reduce call return the sum of all elements in the array
       return this.mullikenPartialCharges.reduce((acc, curr) => acc + curr, 0) / this.mullikenPartialCharges.length
     },
 

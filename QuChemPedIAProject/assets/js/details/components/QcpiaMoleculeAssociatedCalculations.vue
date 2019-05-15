@@ -66,8 +66,6 @@ export default {
         if (sibling.id_author) {
           this.authorRepository.findAuthorById(sibling.id_author)
             .then((author) => {
-              console.log({ author })
-
               this.$set(sibling, 'author', author)
             })
         }
