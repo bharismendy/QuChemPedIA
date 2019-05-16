@@ -11,13 +11,21 @@
         :author-repository="authorRepository"
       />
     </transition>
+    <b-spinner
+      v-if="detailsLoading"
+      label="Loading..."
+      variant="accent"
+      style="width: 5rem; height: 5rem; position: fixed; top: 0; left: 0; bottom: 0; right: 0; margin: auto;"
+    />
     <qcpia-notification-stack
+
       style="position: fixed; bottom: 0; right:0; max-width: 300px; "
     />
   </div>
 </template>
 
 <script>
+
 import QcpiaMolecule from './QcpiaMolecule.vue'
 import axios from 'axios'
 import AuthorRepository from '../../api/AuthorRepository'
@@ -65,11 +73,11 @@ export default {
       if (response.data.siblings) this.siblings = response.data.siblings
       if (data.comp_details) this.computationalDetails = data.comp_details
       eBus.$emit(eBus.signals.notify.SUCCESS, { message: 'Molecule loaded' })
+      this.detailsLoaded = true
     }).catch(err => {
       this.detailsLoadingError = err
       eBus.$emit(eBus.signals.notify.ERROR, { message: 'Failed to load molecule\n' + err })
     }).then(() => {
-      this.detailsLoaded = true
       this.detailsLoading = false
     })
   }
