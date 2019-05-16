@@ -10,18 +10,20 @@
 <head>
   <!-- Chargement du CSS, bootstrap, javascript et jQuery -->
   <title>QuChemPedIA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-  <script src="{% static "js/jsPDF/jspdf.js" %}"></script>
+    {% render_bundle 'main' %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script src="{% static "js/jsPDF/jspdf.js" %}"></script>
     <script src="{% static "js/jsPDF/dist/jspdf.min.js" %}"></script>
-  <script src="{% static "js/jsPDF/dist/jspdf.debug.js" %}"></script>
+    <script src="{% static "js/jsPDF/dist/jspdf.debug.js" %}"></script>
     <script src="{% static "js/divers.js" %}"></script>
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-  <script type="text/javascript" src="{% static "js/dropzone.js" %}"></script>
-     <script src="{% static "js/import.js" %}"></script>
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
-  <script src="{% static "js/smiles-drawer.js" %}"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="{% static "js/dropzone.js" %}"></script>
+    <script src="{% static "js/import.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
+    <script src="{% static "js/smiles-drawer.js" %}"></script>
 </head>
 {% endblock %}
 <body>
@@ -31,7 +33,7 @@
 <nav class="border border-secondary border-right-0 border-left-0 navbar navbar-togleable-md navbar-expand-sm navbar-dark sticky-top">
   <a id="title" class="navbar-brand" href="/">
     <!-- potention logo -->
-    <img class="img-responsive" src="{% static "" %}" alt="" style="width:150px;">
+
     QuChemPedIA
   </a>
   <!-- formulaire de recherche -->
@@ -109,8 +111,7 @@
   <div class="row">
     {% block content %}
     {% endblock %}
-  </div>
-</div>
+
 
 {# block used for footer #}
 {% block footer%}
@@ -118,7 +119,6 @@
 
 
         </footer>
-        {% render_bundle 'main' %}
     </body>
 </html>
 {% endblock %}
