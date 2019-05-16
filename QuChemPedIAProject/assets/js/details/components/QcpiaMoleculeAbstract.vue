@@ -69,6 +69,21 @@
           Molecule Details
         </h5>
         <div
+          v-if="molecule.monoisotopic_mass"
+          class="row mt-1"
+        >
+          <div class="col">
+            <span class="text-muted">Monoisotopic mass</span>
+          </div>
+          <div
+            class="col"
+            data-testid="molecule_monoisotopic_mass"
+          >
+            {{ molecule.monoisotopic_mass }}
+          </div>
+        </div>
+
+        <div
           v-if="molecule.iupac"
           class="row mt-1"
         >
@@ -112,18 +127,14 @@
                 {{ molecule.inchi.slice(6) }}
               </div>
               <div
-                v-b-tooltip.hover
-                class="col-1 copy-button"
-                title="Copy"
-                @click="copyInchi"
+                class="col-1"
               >
-                <i class="fa fa-copy" />
+                <qcpia-copy-text-button
+                  :text="molecule.inchi.slice(6)"
+                  tooltip-text="Copy"
+                  class="p-1"
+                />
               </div>
-              <input
-                ref="inchiInput"
-                type="hidden"
-                :value="molecule.inchi.slice(6)"
-              >
             </div>
           </div>
         </div>
@@ -152,35 +163,15 @@
                 :title="molecule.can"
               >
                 {{ molecule.can }}
-                <input
-                  ref="canInput"
-                  type="hidden"
-                  :value="molecule.can"
-                >
               </div>
-              <div
-                v-b-tooltip.hover
-                class="col-1 copy-button copy-button-primary"
-                title="Copy"
-                @click="copyCan"
-              >
-                <i class="fa fa-copy" />
+              <div class="col-1">
+                <qcpia-copy-text-button
+                  :text="molecule.can"
+                  tooltip-text="Copy to clipboard"
+                  class="p-1"
+                />
               </div>
             </div>
-          </div>
-        </div>
-        <div
-          v-if="molecule.monoisotopic_mass"
-          class="row mt-1"
-        >
-          <div class="col">
-            <span class="text-muted">Monoisotopic mass</span>
-          </div>
-          <div
-            class="col"
-            data-testid="molecule_monoisotopic_mass"
-          >
-            {{ molecule.monoisotopic_mass }}
           </div>
         </div>
       </div>
@@ -198,11 +189,12 @@
 import QcpiaHelpBadgeLink from './QcpiaHelpBadgeLink.vue'
 import QcpiaMoleculeSmiles from './QcpiaMoleculeSmiles.vue'
 import QcpiaMoleculeComputationalDetails from './QcpiaMoleculeComputationalDetails.vue'
+import QcpiaCopyTextButton from './QcpiaCopyTextButton.vue'
 
 // This component display the main information about a molecule : formula, charge, inchi ...
 export default {
   name: 'QcpiaMoleculeAbstract',
-  components: { QcpiaMoleculeComputationalDetails, QcpiaHelpBadgeLink, QcpiaMoleculeSmiles },
+  components: { QcpiaCopyTextButton, QcpiaMoleculeComputationalDetails, QcpiaHelpBadgeLink, QcpiaMoleculeSmiles },
   // data () {return {}}
   props: {
     // The molecule to display
