@@ -1,8 +1,10 @@
 <template>
-  <div
+  <b-btn
     v-b-tooltip.hover
-    class="copy-button copy-button-primary"
+    pill
+    :variant="variant"
     :title="tooltipText"
+    :size="size"
     @click="copyTextToClipboard"
   >
     <slot>
@@ -13,7 +15,7 @@
       :value="text"
       type="hidden"
     >
-  </div>
+  </b-btn>
 </template>
 
 <script>
@@ -23,6 +25,20 @@ export default {
     text: {
       type: String,
       required: true
+    },
+    size: {
+      // `sm`|`lg`|`null`
+      type: String,
+      required: false,
+      default: null,
+      validator (value) {
+        return ['sm', null, `lg`].indexOf(value) !== -1
+      }
+    },
+    variant: {
+      type: String,
+      required: false,
+      default: 'secondary'
     },
     icon: {
       type: String,

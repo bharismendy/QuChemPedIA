@@ -1,14 +1,16 @@
 <template>
   <div>
-    <qcpia-molecule
-      v-if="detailsLoaded && molecule"
-      :molecule="molecule"
-      :results="results"
-      :metadata="metadata"
-      :computational-details="computationalDetails"
-      :siblings="siblings"
-      :author-repository="authorRepository"
-    />
+    <transition name="fade">
+      <qcpia-molecule
+        v-if="detailsLoaded && molecule"
+        :molecule="molecule"
+        :results="results"
+        :metadata="metadata"
+        :computational-details="computationalDetails"
+        :siblings="siblings"
+        :author-repository="authorRepository"
+      />
+    </transition>
     <qcpia-notification-stack
       style="position: fixed; bottom: 0; right:0; max-width: 300px; "
     />

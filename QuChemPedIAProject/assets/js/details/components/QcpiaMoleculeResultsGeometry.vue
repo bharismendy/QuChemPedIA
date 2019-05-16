@@ -22,18 +22,53 @@
       v-if="displayCartesionAtomicCoordinates"
       class="mt-3"
     >
-      <h6>Cartesian atomic coordinates in Angstroms</h6>
-      <b-pagination
-        v-model="atomicCoordTableCurrentPage"
-        :total-rows="cartesianAtomicCoordinatesTableItems.length"
-        :per-page="atomicCoordPerPage"
-        align="center"
-      />
-      <b-table
-        :current-page="atomicCoordTableCurrentPage"
-        :per-page="atomicCoordPerPage"
-        :items="cartesianAtomicCoordinatesTableItems"
-      />
+      <h6>Cartesian atomic coordinates</h6>
+      <div class="row">
+        <div class="col-12 col-lg p-2">
+          <b-btn
+            :variant="showAtomicCoordTable ? 'primary' : 'outline-primary'"
+            @click="toogleCartesionAtomicCoordinatesTableDisplay"
+          >
+            {{ showAtomicCoordTable ? 'Hide' : 'Show' }} Cartesian atomic coordinates
+          </b-btn>
+        </div>
+        <div class="col-12 col-lg p-2">
+          <b-btn
+            :href="downloadCartesianAtomicCoordinatesTableHref"
+            download="molecule.xyz"
+          >
+            Download <i
+              class="fa fa-download"
+              aria-hidden="true"
+            />
+          </b-btn>
+        </div>
+      </div>
+      <transition
+        name="fade"
+        enter-active-class="fadeInUp"
+        leave-active-class="fadeOutDown"
+      >
+        <div
+          v-show="showAtomicCoordTable"
+          style="animation-duration: 0.5s"
+        >
+          <b-pagination
+            v-model="atomicCoordTableCurrentPage"
+            :total-rows="cartesianAtomicCoordinatesTableItems.length"
+            :per-page="atomicCoordPerPage"
+            align="center"
+          />
+          <p class="text-muted">
+            Coordinates are shown in Angstroms
+          </p>
+          <b-table
+            :current-page="atomicCoordTableCurrentPage"
+            :per-page="atomicCoordPerPage"
+            :items="cartesianAtomicCoordinatesTableItems"
+          />
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -61,7 +96,8 @@ export default {
   data () {
     return {
       atomicCoordTableCurrentPage: 1,
-      atomicCoordPerPage: 20
+      atomicCoordPerPage: 10,
+      showAtomicCoordTable: false
     }
   },
   computed: {
@@ -83,6 +119,22 @@ export default {
         })
       }
       return table
+    },
+
+    downloadCartesianAtomicCoordinatesTableHref () {
+      const tableString = `${this.cartesianAtomicCoordinatesTableItems.length}\n\n${
+        this.cartesianAtomicCoordinatesTableItems.map((elt) => {
+          return `${elt.atom}\t${elt.x}\t${elt.y}\t${elt.z}`
+        }).join('\n')
+      }` // TODO add id molecule
+
+      return 'data:text/plain;charset=utf-8,' + encodeURIComponent(tableString)
+    }
+
+  },
+  methods: {
+    toogleCartesionAtomicCoordinatesTableDisplay () {
+      this.showAtomicCoordTable = !this.showAtomicCoordTable
     }
   }
 }

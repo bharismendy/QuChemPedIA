@@ -1,13 +1,18 @@
 <template>
   <div class="col">
-    <b-alert
-      v-for="notif in notifications"
-      :key="notif.id"
-      :variant="notif.variant"
-      :show="true"
+    <transition-group
+      name="fadeUp"
     >
-      {{ notif.message }}
-    </b-alert>
+      <b-alert
+        v-for="notif in notifications"
+        :key="notif.id"
+        style="animation-duration: 0.5s"
+        :variant="notif.variant"
+        :show="true"
+      >
+        {{ notif.message }}
+      </b-alert>
+    </transition-group>
   </div>
 </template>
 

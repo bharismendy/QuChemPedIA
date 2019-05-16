@@ -88,9 +88,10 @@
           class="row mt-1"
         >
           <div class="col row">
-            <div class="">
-              <span class="text-muted mr-2">Iupac</span>
+            <div class="row align-items-center">
+              <span class="col text-muted">Iupac</span>
               <qcpia-help-badge-link
+                class="ml-2"
                 href="https://en.wikipedia.org/wiki/Union_internationale_de_chimie_pure_et_appliqu%C3%A9e"
                 tooltip-text="International Union of Pure and Applied Chemistry"
                 target="_blank"
@@ -106,7 +107,7 @@
           class="row mt-1"
         >
           <div class="col">
-            <div class="row">
+            <div class="row align-items-center">
               <span class="col text-muted">Inchi
                 <qcpia-help-badge-link
                   class="ml-2"
@@ -115,7 +116,7 @@
                   target="_blank"
                 /></span>
             </div>
-            <div class="row">
+            <div class="row align-items-center">
               <div
                 v-b-tooltip.hover
                 class="col"
@@ -127,12 +128,14 @@
                 {{ molecule.inchi.slice(6) }}
               </div>
               <div
-                class="col-1"
+                style="width: 2.5rem"
               >
                 <qcpia-copy-text-button
                   :text="molecule.inchi.slice(6)"
                   tooltip-text="Copy"
-                  class="p-1"
+                  size="sm"
+                  variant="outline-primary"
+                  class="p-1 w-100 text-center"
                   @copied="notifyCopy"
                 />
               </div>
@@ -145,7 +148,7 @@
           class="row mt-1"
         >
           <div class="col">
-            <div class="row">
+            <div class="row align-items-center">
               <span class="col text-muted">Canonical SMILES
                 <qcpia-help-badge-link
                   href="https://en.wikipedia.org/wiki/Simplified_Molecular_Input_Line_Entry_Specification"
@@ -155,7 +158,7 @@
                 />
               </span>
             </div>
-            <div class="row">
+            <div class="row align-items-center">
               <div
                 v-b-tooltip.hover
                 class="col"
@@ -165,11 +168,13 @@
               >
                 {{ molecule.can }}
               </div>
-              <div class="col-1">
+              <div style="width: 2.5rem">
                 <qcpia-copy-text-button
                   :text="molecule.can"
                   tooltip-text="Copy to clipboard"
-                  class="p-1"
+                  class="p-1 w-100 text-center"
+                  variant="outline-primary"
+                  size="sm"
                   @copied="notifyCopy"
                 />
               </div>

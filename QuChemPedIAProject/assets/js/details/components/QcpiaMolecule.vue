@@ -2,6 +2,7 @@
   <b-card
     no-body
     class="w-100"
+    style="border-bottom: none;"
   >
     <b-tabs
       card

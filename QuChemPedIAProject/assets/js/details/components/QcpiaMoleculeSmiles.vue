@@ -1,9 +1,12 @@
 <template>
   <div>
-    <canvas
-      ref="canvas"
-      @click="openDialog"
-    />
+    <transition name="fadeUp">
+      <canvas
+        v-show="drawingReady"
+        ref="canvas"
+        @click="openDialog"
+      />
+    </transition>
 
     <b-modal
       ref="modal"
@@ -40,7 +43,8 @@ export default {
   },
   data () {
     return {
-      showDialog: false
+      showDialog: false,
+      drawingReady: false
     }
   },
   computed: {
@@ -61,6 +65,7 @@ export default {
   },
   mounted () {
     if (window.SmilesDrawer) {
+      this.drawingReady = true
       // I tried to do it without that timeout. I got weird canvas rendering errors.
       // I don't know why, but it works with the timeout
       setTimeout(() => {
