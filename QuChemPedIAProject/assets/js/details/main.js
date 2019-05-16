@@ -17,6 +17,9 @@ if (appElement) {
   new Vue({
     el: '#app',
     components: { QcpiaDetails },
+    data: {
+      moleculeId: id
+    },
     template: `<QcpiaDetails id="${id}" base-url="${baseUrl}"/>`
   })
 }

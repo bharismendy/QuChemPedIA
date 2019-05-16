@@ -35,7 +35,7 @@
         <div class="col-12 col-lg p-2">
           <b-btn
             :href="downloadCartesianAtomicCoordinatesTableHref"
-            download="molecule.xyz"
+            :download="`molecule-${this.$root.moleculeId}.xyz`"
           >
             Download <i
               class="fa fa-download"
@@ -122,12 +122,11 @@ export default {
     },
 
     downloadCartesianAtomicCoordinatesTableHref () {
-      const tableString = `${this.cartesianAtomicCoordinatesTableItems.length}\n\n${
+      const tableString = `${this.cartesianAtomicCoordinatesTableItems.length}\n${this.$root.moleculeId}\tQuChemPedIA\n${
         this.cartesianAtomicCoordinatesTableItems.map((elt) => {
           return `${elt.atom}\t${elt.x}\t${elt.y}\t${elt.z}`
         }).join('\n')
-      }` // TODO add id molecule
-
+      }`
       return 'data:text/plain;charset=utf-8,' + encodeURIComponent(tableString)
     }
 
