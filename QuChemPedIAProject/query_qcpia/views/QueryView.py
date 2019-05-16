@@ -74,9 +74,9 @@ def query(request):
     if test_result['nbresult'] == 0 or len(test_result) == 1:
         results = '{}'
         test_result = json.loads(results)
-    if len(test_result) == 2 and request.GET.get('page') == 1:
+    if len(test_result) == 2:
         # if we have only one result we forward it to the detail page
-        url = reverse('details', args={'id': int(test_result["0"][0]["id_log"])})
+        url = build_url('details', get={'id': str(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)
 
     return render(request, 'query_qcpia/query.html', {'results': test_result, 'query_form': query_form})

@@ -8,17 +8,18 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <!-- Chargement du CSS, bootstrap, javascript et jQuery -->
-
-
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>QuChemPedIA</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
-    <script src="{% static "js/jsPDF/jspdf.js" %}"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+  <script src="{% static "js/jsPDF/jspdf.js" %}"></script>
     <script src="{% static "js/jsPDF/dist/jspdf.min.js" %}"></script>
-    <script src="{% static "js/jsPDF/dist/jspdf.debug.js" %}"></script>
+  <script src="{% static "js/jsPDF/dist/jspdf.debug.js" %}"></script>
     <script src="{% static "js/divers.js" %}"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="{% static "js/dropzone.js" %}"></script>
+     <script src="{% static "js/import.js" %}"></script>
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
   <script src="{% static "js/smiles-drawer.js" %}"></script>
 </head>
@@ -44,60 +45,70 @@
 
 </nav>
       <div  id="sign" class="row float-right">
-               <!-- Bouton login-->
-                <a class="nav-link btn btn-info default-primary-color button-nav" title="import a file" href="{% url 'dashboard/import' %}">
-                            <svg class="feather feather-upload sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
-                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1236">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                <polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
-                            </svg>
-                      </a>
+
+
+               <div class="dropleft button-menu">
+
+                 <button type="button" class="btn btn-primary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                   <i class="fa fa-bars"></i>
+                </button>
+
+
+               <div class="dropdown-menu" style="border:none">
+
+               <ul class="list-group">
+
+                <li class="list-group-item">
+                <a  type="button" href="{% url 'dashboard/import' %}">
+                           import a file
+                      </a><span class="fas fa-file-import icon"></span>
+                      </li>
                   {% if not user.is_authenticated %}
-                        <a  class="nav-link btn btn-info default-primary-color button-nav" title="Sign up/Sign in" href="{% url 'auth' %}">
-                            <svg class="feather feather-log-in sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
-                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="716">
-                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                                <polyline points="10 17 15 12 10 7"></polyline>
-                                <line x1="15" y1="12" x2="3" y2="12"></line>
-                            </svg>
-                        </a>
-                  {% else %}
+                     <li class="list-group-item">
+                        <a type="button" href="{% url 'auth' %}">
+                           Sign up/Sign in"
+                        </a><span class="fas fa-sign-in-alt icon"></span>
+                        </li>
+                       {% else %}
                       {%  if user.is_admin %}
-                          <a class="nav-link btn btn-info default-primary-color button-admin" title="Admin panel" href="{% url 'admin' %}">
-                            <svg class="feather feather-settings sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
-                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1016">
-                                <circle cx="12" cy="12" r="3"></circle>
-                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                            </svg>
-                        </a>
+                      <li class="list-group-item">
+                          <a href="{% url 'admin' %}">
+                            Settings
+                        </a><span class="fas fa-user-cog icon" ></span>
+                      </li>
+
+                        {% block menu_admin %}
+                        {% endblock %}
+
                     {% endif %}
-                        <a class="nav-link btn btn-info default-primary-color button-nav" title="My profile" href="{% url 'dasboard/account' %}">
-                            <svg class="feather feather-user sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
-                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1261">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
+
+                        {% block menu_account%}
+                        {% endblock %}
+                        <li class="list-group-item">
+                        <a href="{% url 'dasboard/account' %}">
+                            My profile
+                        </a><span class="fas fa-user-circle icon"></span>
+                        </li>
+                        <li class="list-group-item" >
+                        <a href="{% url 'logout' %}" >
+                            Log-out
                         </a>
-                        <a class="nav-link btn btn-info default-primary-color button-nav" title="Log-out" href="{% url 'logout' %}">
-                            <svg class="feather feather-log-out sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
-                               width="24" height="24" viewBox="0 0 24 24" fill="none"
-                               stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                               stroke-linejoin="round" aria-hidden="true" data-reactid="721">
-                              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                              <polyline points="16 17 21 12 16 7"></polyline>
-                              <line x1="21" y1="12" x2="9" y2="12"></line>
-                            </svg>
-                        </a>
+                        <span class="fas fa-sign-out-alt icon" ></span>
+                        </li>
                   {% endif %}
+                  </ul>
+                     </div>
+               </div>
                 </div>
+
 {% endblock %}
 
-{% block content %}
-{% endblock %}
+<div class="container">
+  <div class="row">
+    {% block content %}
+    {% endblock %}
+  </div>
+</div>
 
 {# block used for footer #}
 {% block footer%}
@@ -108,4 +119,4 @@
         {% render_bundle 'main' %}
     </body>
 </html>
-{%  endblock %}
+{% endblock %}

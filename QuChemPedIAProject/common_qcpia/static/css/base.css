@@ -1,0 +1,16 @@
+.icon{
+  float:right;
+  margin-left:250px;
+  color:gray;
+  text-shadow: 1px 1px 1px #ccc;
+  font-size: 1.5em;
+}
+.button-menu
+{
+    margin-right:auto;
+    margin-right: 20px;
+}
+
+li a {
+    color: black;
+}
