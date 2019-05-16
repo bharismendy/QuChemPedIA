@@ -29,17 +29,22 @@
 
 {% block content %}
 <div class="container">
-    <div class="Absolute-Center is-Responsive ">
-        <h1 class="display-2 text-center text-primary">QuChemPedIA</h1>
-        <h2 id="subtitle" class="diplay-2 text-center">Quantum Chemistry Collaborative EncyclopedIA</h2>
-        <br/>
-        <div id="form-accueil">
-            <!-- Formulaire de recherche -->
-            <form class="form-inline" action="{% url 'query' %}" method="GET" >
-                {% csrf_token %}
-                {{ query_form.as_table }}
-                <button id="button-search" class="btn btn-info default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
-            </form>
+    <div class="row justify-center w-100 align-content-center" style="height: 100vh">
+        <div class="col">
+            <h1 class="text-center text-primary">QuChemPedIA</h1>
+            <h2 id="subtitle" class="diplay-2 text-center">Quantum Chemistry Collaborative EncyclopedIA</h2>
+            <br/>
+            <div class="row justify-content-center">
+                <!-- Formulaire de recherche -->
+                <form class="col-8 justify-content-between" action="{% url 'query' %}" method="GET" >
+                    <div class="row">
+                    {% csrf_token %}
+                    {{ query_form.as_table }}
+                    <button class="mt-1 mb-1 mt-lg-0 btn btn-info default-primary-color col-12 col-lg-2" type="submit">Search <i class="fa fa-search"></i></button>
+
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
