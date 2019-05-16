@@ -75,4 +75,33 @@ Pour la production :
 yarn build
 ```
 
+## Release
+
+To release the develop branch onto master:
+
+```bash
+git checkout develop
+```
+
+Start your release branch
+```bash
+git flow release start [version-tag]
+```
+
+Build front end assets for production
+```bash
+yarn build
+```
+
+Commit the compiled assets
+```bash
+git add QuChemPedIAProject/common_qcpia/static/dist/*
+git commit -m "release: Compiled front end assets"
+```
+
+Finish the release
+
+```bash
+git flow release finish
+```
 
