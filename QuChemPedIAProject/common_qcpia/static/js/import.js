@@ -238,3 +238,34 @@ function uncheck_all(){
 function uncheck_job_type_none() {
     document.getElementById('none').checked = false
 }
+
+function myDropzoneJs(){
+     Dropzone.autoDiscover = false;
+     Dropzone.options.myAwesomeDropzone = {
+         url:"{% url 'dashboard/import' %}",
+         maxFilesize: 5000,
+         addRemoveLinks : true,
+         dictDefaultMessage: "Drop your log files here or click to upload",
+         dictResponseError: 'Error uploading file!',
+         autoQueue:false,
+         autoProcessQueue:true,
+         maxFiles: 1,
+         success: function (file, response) {
+             alert('success!');
+             location.reload();
+             this.removeFile(file); //todo discuter de quoi faire
+         },
+         error: function (file, response) {
+             alert('fail!');
+             },
+         init: function () {
+             var myDropzone = this;
+             // Update selector to match your button
+             $("#button").click(function (e) {
+                 alert('success!');
+                 e.preventDefault();
+                 myDropzone.processQueue();
+             });
+         }
+     };
+}

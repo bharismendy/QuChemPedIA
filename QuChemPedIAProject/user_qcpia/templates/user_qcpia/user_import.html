@@ -37,7 +37,8 @@
         <div id="dropzone">
             <form action="{% url 'dashboard/import' %}" class="dropzone"  id="my-awesome-dropzone">
                 {% csrf_token %}
-                <button class="btn btn-primary" type="submit" id="btn_upload" name="btn_upload">Send</button>
+                <input type="file" id="fileInput" name="file" multiple="false" onchange="myDropzoneJs();" style="display: none"/>
+                <button class="btn btn-primary" type="submit" id="btn_upload" name="btn_upload" style="display: none">Send</button>
             </form>
         </div>
         {% if user.number_of_upload_this_day >= 10  %}
@@ -76,40 +77,5 @@
             </div>
         {% endif %}
         </main>
-        <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            $(function(){
-                Dropzone.autoDiscover = false;
-                Dropzone.options.myAwesomeDropzone = {
-                    url:"{% url 'dashboard/import' %}",
-                    maxFilesize: 5000,
-                    addRemoveLinks : true,
-                    dictDefaultMessage: "Drop your log files here or click to upload",
-                    dictResponseError: 'Error uploading file!',
-                    autoQueue:false,
-                    autoProcessQueue:true,
-                    maxFiles: 1,
-                    success: function (file, response) {
-                        console.log('success!');
-                        location.reload();
-                        this.removeFile(file); //todo discuter de quoi faire
-                    },
-                    error: function (file, response) {
-                        console.log('fail!');
-                    },
-                    init: function () {
-                        var myDropzone = this;
-                        // Update selector to match your button
-                        $("#button").click(function (e) {
-                            console.log('success!');
-                            e.preventDefault();
-                            myDropzone.processQueue();
-                        });
-                    }
-                };
-             })
-        </script>
 
 {% endblock %}
