@@ -133,6 +133,7 @@
                   :text="molecule.inchi.slice(6)"
                   tooltip-text="Copy"
                   class="p-1"
+                  @copied="notifyCopy"
                 />
               </div>
             </div>
@@ -169,6 +170,7 @@
                   :text="molecule.can"
                   tooltip-text="Copy to clipboard"
                   class="p-1"
+                  @copied="notifyCopy"
                 />
               </div>
             </div>
@@ -190,6 +192,7 @@ import QcpiaHelpBadgeLink from './QcpiaHelpBadgeLink.vue'
 import QcpiaMoleculeSmiles from './QcpiaMoleculeSmiles.vue'
 import QcpiaMoleculeComputationalDetails from './QcpiaMoleculeComputationalDetails.vue'
 import QcpiaCopyTextButton from './QcpiaCopyTextButton.vue'
+import eBus from '../../event-bus'
 
 // This component display the main information about a molecule : formula, charge, inchi ...
 export default {
@@ -243,42 +246,8 @@ export default {
     }
   },
   methods: {
-    /**
-       * Put the text in the input element of the given ref in the user clipboard
-       * The input is considered to be hidden
-       * @param {String} ref
-       */
-    copyInput (ref) {
-      const input = this.$refs[ref]
-      if (!input) {
-        console.error(`Element with reference ${ref} not found`)
-        return
-      }
-
-      input.setAttribute('type', 'text')
-      input.select()
-
-      try {
-        document.execCommand('copy')
-      } catch (err) {
-        console.error(err)
-      }
-
-      /* unselect the range */
-      input.setAttribute('type', 'hidden')
-      window.getSelection().removeAllRanges()
-    },
-    /**
-       * Copy the molecule Inchi into the user clipboard
-       */
-    copyInchi () {
-      this.copyInput('inchiInput')
-    },
-    /**
-       * Copy the molecule canonical SMILES into the user clipboard
-       */
-    copyCan () {
-      this.copyInput('canInput')
+    notifyCopy () {
+      eBus.$emit(eBus.signals.notify.SUCCESS, { message: 'Copied to clipboard' })
     }
   }
 }
