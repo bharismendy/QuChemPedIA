@@ -19,7 +19,6 @@ export default {
             _rawHtml: current._rawHtml || false
           })
         }
-        console.log(acc)
         return acc
       }, [])
     }

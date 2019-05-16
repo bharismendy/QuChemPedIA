@@ -123,7 +123,6 @@
                 data-testid="molecule_inchi"
                 style="text-overflow: ellipsis;  white-space: nowrap;overflow: hidden;"
                 :title="molecule.inchi.slice(6)"
-                @click="copyInchi"
               >
                 {{ molecule.inchi.slice(6) }}
               </div>

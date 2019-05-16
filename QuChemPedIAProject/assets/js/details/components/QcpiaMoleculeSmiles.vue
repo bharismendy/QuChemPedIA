@@ -69,7 +69,6 @@ export default {
       // I tried to do it without that timeout. I got weird canvas rendering errors.
       // I don't know why, but it works with the timeout
       setTimeout(() => {
-        console.log(this.options)
         let smilesDrawer = new window.SmilesDrawer.Drawer(this.options)
         window.SmilesDrawer.parse(this.smiles, (tree) => {
           // Draw to the canvas
@@ -90,10 +89,6 @@ export default {
         if (this.$refs.modalCanvas) { size = this.$refs.modalCanvas.scrollWidth }
         // const size = this.$refs.modalCanvas.width
         // noinspection JSSuspiciousNameCombination
-        console.log({
-          height: size,
-          width: size
-        })
         let smilesDrawer = new window.SmilesDrawer.Drawer({
           height: size,
           width: size
