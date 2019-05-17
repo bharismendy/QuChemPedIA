@@ -111,17 +111,17 @@ def update_status_in_db(result_of_import: int, import_object: ImportFile):
     :return: nothing
     """
     if result_of_import == 0:
-        import_object.imported = True
         import_object.status = "imported to database"
     elif result_of_import == 1:
         import_object.status = "not archivable"
     elif result_of_import == 2:
         import_object.status = "theory not supported yet"
     elif result_of_import == 3:
-        import_object.status = "the opt is missing"
+        import_object.status = "already in database"
     else:
         import_object.status = "something goes wrong"
     import_object.save()
+
 
 
 def import_view(request):

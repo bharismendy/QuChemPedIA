@@ -3,18 +3,27 @@ import os
 import json
 from django.conf import settings
 from elasticsearch import Elasticsearch
-from elasticsearch_dsl import Search, Q
-import hashlib
+from elasticsearch_dsl import Search, Q, Range
+from common_qcpia.search import _get_job_type
 import subprocess
 import time
 
+# CONSTANTE
+NRE_PRECISION = -2  # power of 10
+TME_PRECISION = -6  # power of 10
 
-def create_jobs(json_loaded, job_type, elastic_id, md5_json=None):
-    if not md5_json :
-        md5_json = hashlib.md5(str(json_loaded).encode('utf-8')).hexdigest()
-    with open(os.path.join("/var/www/html/media/jobs/", "img"+job_type+"/todo", md5_json+'.json'), "w+") as file_to_write:
-        file_to_write.write("{\"elastic_id\": \""+elastic_id+"\",")
-        file_to_write.write("\"md5_file\": \""+md5_json + "\"}")
+def trun_n_d(n, d):
+    """
+    truncate fonction
+    :param n: power of ten
+    :param d: float to truncate
+    :return: truncated float
+    """
+    d = d*-1
+    s = repr(n).split('.')
+    if len(s) == 1:
+        return int(s[0])
+    return float(s[0] + '.' + s[1][:d])
 
 
 def get_base_json():
@@ -22,15 +31,38 @@ def get_base_json():
     function to get the first architecture
     :return: basique json tree
     """
-    return '{"job_type": "OPT", "data": {},"contributor":[]}'
+    return '{"job_type": "OPT", "data": {}, "siblings": []}'
 
 
-def get_siblings_json():
+def get_siblings_json(nre, formula, return_search = False):
     """
     use to get a sibling json
+    return_search : return directly the search
     :return: json tree of a sibling
     """
-    return '{"job_type": "OPT", "data": {}, "siblings": []}'
+    es_host = settings.ELASTICSEARCH
+    es = Elasticsearch(hosts=[es_host])
+    truncated_nre = trun_n_d(nre, NRE_PRECISION)
+    q = Q('bool',
+          must=[Q('match', data__molecule__formula=formula)])
+    q2 = Q('bool', data__results__nuclear_repulsion_energy_from_xyz=Range(gte=truncated_nre,
+                                                                          lt=truncated_nre+10**NRE_PRECISION))
+
+    s = Search(index='quchempedia_index').using(es).query(q).query(q2)
+    response = s.execute()
+    result = []
+    if return_search:
+        return response
+    else:
+        for hit in response:
+            try:
+                result.append({
+                    "id_log": hit.meta.id,
+                    "job": _get_job_type(hit)
+                })
+            except Exception as error:
+                print(error)
+        return result
 
 
 def does_file_exist_in_dir(dir_path):
@@ -104,488 +136,46 @@ def get_path_to_store(destination_dir, id_calcul, make_path=False, number_of_sub
     return path_in_file_system
 
 
-def is_opt_exist(json_to_test, job_type):
-    """
-    test if there is an opt of the molecule already registered
-    :param json_to_test: json of the .log
-    :param job_type:
-    :return: -1 if it's a new entry else id in elastic search
-    """
-    solvatation_method = None
-    if "OPT" in job_type or "FREQ" in job_type or "TD" in job_type:
-        # get value from json
-        try:
-            inchi = json_to_test['molecule']['inchi']
-            cansmiles = json_to_test['molecule']['can']
-            smiles = json_to_test['molecule']['smi']
-            formula = json_to_test['molecule']['formula']
-            software = json_to_test['comp_details']['general']['package']
-            theory = json_to_test['comp_details']['general']['all_unique_theory']
-            theory = "[\""+'","'.join(map(str, theory))+"\"]"
-            functionnal = json_to_test['comp_details']['general']['functional']
-            basis_set_md5 = json_to_test['comp_details']['general']['basis_set_md5']
-            basis_set_size = json_to_test['comp_details']['general']['basis_set_size']
-            charge = json_to_test['molecule']['charge']
-            multipicity = json_to_test['molecule']['multiplicity']
-            if 'solvent_reaction_field' in json_to_test:
-                solvatation_method = json_to_test['comp_details']['general']['solvent_reaction_field']
-            solvent = json_to_test['comp_details']['general']['solvent']
-
-        except Exception as error:
-            print(error)
-            return 4
-
-        try:
-            ending_energy = json_to_test['results']['wavefunction']['total_molecular_energy']
-            ending_nuclear_repulsion_energy = \
-                json_to_test['results']['geometry']['nuclear_repulsion_energy_from_xyz']
-        except Exception as error:
-            print(error)
-            return 4
-        try:
-            # search a corresponding file in elastic search
-            es_host = settings.ELASTICSEARCH
-            es = Elasticsearch(hosts=[es_host])
-            if solvatation_method is None:
-                q = Q('bool',
-                      must=[Q('match', data__molecule__inchi=inchi) &
-                            Q('match', data__molecule__can=cansmiles) &
-                            Q('match', data__molecule__smi=smiles) &
-                            Q('match', data__molecule__formula=formula) &
-                            Q('match', data__molecule__charge=charge) &
-                            Q('match', data__molecule__multiplicity=multipicity) &
-                            Q('match', data__comp_details__general__functional=functionnal) &
-                            Q('match', data__comp_details__general__package=software) &
-                            Q('match', data__comp_details__general__all_unique_theory=theory) &
-                            Q('match', data__comp_details__general__basis_set_size=basis_set_size) &
-                            Q('match', data__comp_details__general__basis_set_md5__keyword=basis_set_md5) &
-                            Q('match', data__comp_details__general__solvent=solvent) &
-                            Q('match', data__results__wavefunction__total_molecular_energy=ending_energy) &
-                            Q('match',
-                              data__results__geometry__nuclear_repulsion_energy_from_xyz=ending_nuclear_repulsion_energy
-                              )
-                            ],
-                      )
-            else:
-                q = Q('bool',
-                      must=[Q('match', data__molecule__inchi=inchi) &
-                            Q('match', data__molecule__can=cansmiles) &
-                            Q('match', data__molecule__smi=smiles) &
-                            Q('match', data__molecule__formula=formula) &
-                            Q('match', data__molecule__charge=charge) &
-                            Q('match', data__molecule__multiplicity=multipicity) &
-                            Q('match', data__comp_details__general__functionnal=functionnal) &
-                            Q('match', data__comp_details__general__package=software) &
-                            Q('match', data__comp_details__general__theory=theory) &
-                            Q('match', data__comp_details__general__basis_set_size=basis_set_size) &
-                            Q('match', data__comp_details__general__basis_set_md5__keyword=basis_set_md5) &
-                            Q('match', data__comp_details__general__solvent=solvent) &
-                            Q('match', data__results__wavefunction__total_molecular_energy=ending_energy) &
-                            Q('match',
-                              data__results__geometry__nuclear_repulsion_energy_from_xyz=ending_nuclear_repulsion_energy
-                              )
-                            ],
-                      )
-
-            s = Search().using(es).query(q)
-            s.execute()
-            return s
-        except Exception as error:
-            print(error)
-            return 4
-    if "SP" in job_type:
-
-        # get value from json
-        try:
-            inchi = json_to_test['molecule']['inchi']
-            cansmiles = json_to_test['molecule']['can']
-            smiles = json_to_test['molecule']['smi']
-            software = json_to_test['comp_details']['general']['package']
-            theory = json_to_test['comp_details']['general']['all_unique_theory']
-            theory = "[\""+'","'.join(map(str, theory))+"\"]"
-            functional = json_to_test['comp_details']['general']['functional']
-            basis_set_md5 = json_to_test['comp_details']['general']['basis_set_md5']
-            basis_set_size = json_to_test['comp_details']['general']['basis_set_size']
-            if 'solvent_reaction_field' in json_to_test:
-                solvatation_method = json_to_test['comp_details']['general']['solvent_reaction_field']
-            solvent = json_to_test['comp_details']['general']['solvent']
-        except Exception as error:
-            print(error)
-            return 4
-
-        try:
-            starting_nuclear_repulsion_energy = json_to_test['molecule']['starting_nuclear_repulsion']
-        except Exception as error:
-            print(error)
-            return 4
-        try:
-            # search a corresponding file in elastic search
-            es_host = settings.ELASTICSEARCH
-            es = Elasticsearch(hosts=[es_host])
-            if solvatation_method is None:
-                q = Q('bool',
-                      must=[
-                          Q('match', data__molecule__inchi=inchi) &
-                          Q('match', data__molecule__can=cansmiles) &
-                          Q('match', data__molecule__smi=smiles) &
-                          Q('match', data__comp_details__general__functional=functional) &
-                          Q('match', data__comp_details__general__package=software) &
-                          Q('match', data__comp_details__general__all_unique_theory=theory) &
-                          Q('match', data__comp_details__general__basis_set_size=basis_set_size) &
-                          Q('match', data__comp_details__general__basis_set_md5__keyword=basis_set_md5) &
-                          Q('match', data__comp_details__general__solvent=solvent) &
-                          Q('match',
-                            data__results__geometry__nuclear_repulsion_energy_from_xyz=starting_nuclear_repulsion_energy
-                            )
-                            ],
-                      )
-            else:
-                q = Q('bool',
-                      must=[
-                          Q('match', data__molecule__inchi=inchi) &
-                          Q('match', data__molecule__can=cansmiles) &
-                          Q('match', data__molecule__smi=smiles) &
-                          Q('match', data__comp_details__general__functionnal=functional) &
-                          Q('match', data__comp_details__general__package=software) &
-                          Q('match', data__comp_details__general__theory=theory) &
-                          Q('match', data__comp_details__general__basis_set_size=basis_set_size) &
-                          Q('match', data__comp_details__general__basis_set_md5__keyword=basis_set_md5) &
-                          Q('match', data__comp_details__general__solvent=solvent) &
-                          Q('match', data__comp_details__general__solvent_reaction_field=solvatation_method) &
-                          Q('match',
-                            data__results__geometry__nuclear_repulsion_energy_from_xyz=starting_nuclear_repulsion_energy
-                            )
-                            ],
-                      )
-
-            s = Search().using(es).query(q)
-            s.execute()
-            return s
-        except Exception as error:
-            print(error)
-            return 4
-
-
-def exist_freq(id_json_to_test, json_to_input, path_to_log_file, destination_dir, id_user):
-    """
-    test if already exist a freq in a file and if not enter it
-    :param id_json_to_test: id of the json to load
-    :param json_to_input: json data to input in elastic search
-    :param path_to_log_file : path in file system to log file
-    :param destination_dir : directory where log are send
-    :param id_user: id of the contributor
-    :return: True if already entered False if not
-    """
-    index_name = 'quchempedia_index'
-    base_json = get_siblings_json()
+def update_siblings(list_of_siblings, id_file, job_type):
     es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
-    response = es.get(index="quchempedia_index", doc_type="log_file", id=id_json_to_test)
-    path_in_file_sytem = get_path_to_store(destination_dir=destination_dir,
-                                           id_calcul=id_json_to_test, make_path=False)
-    temp_md5 = json.loads(base_json)
-    temp_md5['molecule'] = json_to_input['molecule']
-    temp_md5['results'] = json_to_input['results']
-    temp_md5['comp_details'] = json_to_input['comp_details']
-    temp_md5 = hashlib.md5(str(temp_md5).encode('utf-8')).hexdigest()
-    if temp_md5 not in response['_source']['md5_siblings']:
-        size = len(response['_source']['siblings'])
-        response['_source']['siblings'].append(json.loads(base_json))
-        response['_source']['siblings'][size]['data']['molecule'] = json_to_input['molecule']
-        response['_source']['siblings'][size]['data']['results'] = json_to_input['results']
-        response['_source']['siblings'][size]['data']['comp_details'] = json_to_input['comp_details']
-        response['_source']['siblings'][size]['data']['metadata'] = json_to_input['metadata']
-        response['_source']['siblings'][size]['data']['metadata']["id_user"] = id_user
-        response['_source']['siblings'][size]['data']['metadata']["affiliation"] = get_affiliation(
-            id_user=id_user)
-        response['_source']['siblings'][size]['data']['metadata']['log_file'] = \
-            path_in_file_sytem + "/FREQ_" + str(temp_md5) + ".log"
-        response['_source']['siblings'][size]['job_type'] = "FREQ"
+    index_name = 'quchempedia_index'
+    print(list_of_siblings[0])
+    for sib in list_of_siblings:
+        response = es.get(index=index_name, doc_type="log_file", id=sib["id_log"])
+        temp_sib = response['_source']['siblings']
+        temp_sib.append({"id_log": id_file, "job": job_type})
+        response['_source']['siblings'] = temp_sib
+        es.index(index=index_name, doc_type="log_file", body=response['_source'], id=sib["id_log"])
 
-        response['_source']['md5_siblings'].append(temp_md5)
-        response['_source']['contributor'].append(id_user)
-        json.dumps(response, indent=4)
-        try:
-            es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_json_to_test)
-            subprocess.Popen(["mv", path_to_log_file,
-                              destination_dir + path_in_file_sytem + "/FREQ_" + str(temp_md5) + ".log"])  # copie du JSON
+        
+def update_submission(last_sub, id_user, id_file, new_ref=False):
+    es_host = settings.ELASTICSEARCH
+    es = Elasticsearch(hosts=[es_host])
+    index_name = 'quchempedia_index'
 
-            create_jobs(json_loaded=json_to_input, job_type="FREQ", elastic_id=id_json_to_test, md5_json=temp_md5)
-            return 0
-        except Exception as error:
-            print(error)
-            return 4
+    temp = es.get(index=index_name, doc_type="log_file", id=last_sub)
+    list_of_sub = temp['_source']['data']['metadata']['submissions']
+    if new_ref:
+        temp['_source']['data']['metadata']['ref_sub'] = id_file
+    if not len(list_of_sub) > 0:
+        temp_sub = temp['_source']['data']['metadata']['submissions']
+        temp_sub.append({"id_log": id_file, "author": id_user})
+        if new_ref:
+            temp['_source']['data']['metadata']['ref_sub'] = id_file
+        temp['_source']['data']['metadata']['submissions'] = temp_sub
+        es.index(index=index_name, doc_type="log_file", body=temp['_source'], id=last_sub)
+
     else:
-        return 1
+        for sub in list_of_sub:
+            response = es.get(index=index_name, doc_type="log_file", id=sub["id_log"])
+            temp_sub = response['_source']['data']['metadata']['submissions']
+            temp_sub.append({"id_log": id_file, "author": id_user})
+            response['_source']['siblings'] = temp_sub
+            if new_ref:
+                response['_source']['data']['metadata']['ref_sub'] = id_file
 
-
-def exist_td(id_json_to_test, json_to_input, path_to_log_file, destination_dir, id_user):
-    """
-    test if already exist a td in a file and if not enter it
-    :param id_json_to_test: id of the json to load
-    :param json_to_input: json data to input in elastic search
-    :param path_to_log_file : path in file system to log file
-    :param destination_dir : directory where log are send
-    :param id_user: id of the contributor
-    :return: True if already entered False if not
-    """
-    index_name = 'quchempedia_index'
-    base_json = get_siblings_json()
-    es_host = settings.ELASTICSEARCH
-    es = Elasticsearch(hosts=[es_host])
-    response = es.get(index="quchempedia_index", doc_type="log_file", id=id_json_to_test)
-    path_in_file_sytem = get_path_to_store(destination_dir=destination_dir,
-                                           id_calcul=id_json_to_test, make_path=False)
-
-    temp_md5 = json.loads(base_json)
-    temp_md5['molecule'] = json_to_input['molecule']
-    temp_md5['results'] = json_to_input['results']
-    temp_md5['comp_details'] = json_to_input['comp_details']
-    temp_md5 = hashlib.md5(str(temp_md5).encode('utf-8')).hexdigest()
-
-    if temp_md5 not in response['_source']['md5_siblings']:
-        size = len(response['_source']['siblings'])
-        response['_source']['siblings'].append(json.loads(base_json))
-        response['_source']['siblings'][size]['data']['molecule'] = json_to_input['molecule']
-        response['_source']['siblings'][size]['data']['results'] = json_to_input['results']
-        response['_source']['siblings'][size]['data']['comp_details'] = json_to_input['comp_details']
-        response['_source']['siblings'][size]['data']['metadata'] = json_to_input['metadata']
-        response['_source']['siblings'][size]['data']['metadata']["id_user"] = id_user
-        response['_source']['siblings'][size]['data']['metadata']["affiliation"] = get_affiliation(
-            id_user=id_user)
-        response['_source']['siblings'][size]['data']['metadata']['log_file'] = \
-            path_in_file_sytem + "/TD_" + str(temp_md5) + ".log"
-        response['_source']['siblings'][size]['job_type'] = "TD"
-
-        response['_source']['md5_siblings'].append(temp_md5)
-        response['_source']['contributor'].append(id_user)
-        json.dumps(response, indent=4)
-        try:
-            es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_json_to_test)
-            path_in_file_sytem = get_path_to_store(destination_dir=destination_dir,
-                                                   id_calcul=id_json_to_test, make_path=False)
-            es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_json_to_test)
-            subprocess.Popen(["mv", path_to_log_file,
-                              destination_dir + path_in_file_sytem + "/TD_" + str(
-                                  temp_md5) + ".log"])  # copie du JSON
-
-            #create_jobs(json_loaded=json_to_input, job_type="TD", elastic_id=id_json_to_test, md5_json=temp_md5)
-            return 0
-        except Exception as error:
-            print(error)
-            return 4
-    else:
-        return 1
-
-
-def exist_sp(id_json_to_test, json_to_input, path_to_log_file, destination_dir, id_user):
-    """
-    test if already exist a sp in a file and if not enter it
-    :param id_json_to_test: id of the json to load
-    :param json_to_input: json data to input in elastic search
-    :param path_to_log_file : path in file system to log file
-    :param destination_dir : directory where log are send
-    :param id_user: id of the contributor
-    :return: True if already entered False if not
-    """
-    index_name = 'quchempedia_index'
-    base_json = get_siblings_json()
-    es_host = settings.ELASTICSEARCH
-    es = Elasticsearch(hosts=[es_host])
-    response = es.get(index="quchempedia_index", doc_type="log_file", id=id_json_to_test)
-    path_in_file_sytem = get_path_to_store(destination_dir=destination_dir,
-                                           id_calcul=id_json_to_test, make_path=False)
-    temp_md5 = json.loads(base_json)
-    temp_md5['molecule'] = json_to_input['molecule']
-    temp_md5['results'] = json_to_input['results']
-    temp_md5['comp_details'] = json_to_input['comp_details']
-    temp_md5 = hashlib.md5(str(temp_md5).encode('utf-8')).hexdigest()
-    if temp_md5 not in response['_source']['md5_siblings']:
-        size = len(response['_source']['siblings'])
-        response['_source']['siblings'].append(json.loads(base_json))
-        response['_source']['siblings'][size]['data']['molecule'] = json_to_input['molecule']
-        response['_source']['siblings'][size]['data']['results'] = json_to_input['results']
-        response['_source']['siblings'][size]['data']['comp_details'] = json_to_input['comp_details']
-        response['_source']['siblings'][size]['data']['metadata'] = json_to_input['metadata']
-        response['_source']['siblings'][size]['data']['metadata']["id_user"] = id_user
-        response['_source']['siblings'][size]['data']['metadata']["affiliation"] = get_affiliation(id_user=id_user)
-        response['_source']['siblings'][size]['data']['metadata']['log_file'] = \
-            path_in_file_sytem + "/SP_" + str(temp_md5) + ".log"
-        response['_source']['siblings'][size]['job_type'] = "SP"
-
-        response['_source']['md5_siblings'].append(temp_md5)
-        response['_source']['contributor'].append(id_user)
-        json.dumps(response, indent=4)
-        try:
-            es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_json_to_test)
-            path_in_file_sytem = get_path_to_store(destination_dir=destination_dir,
-                                                   id_calcul=id_json_to_test, make_path=False)
-            subprocess.Popen(["mv", path_to_log_file,
-                              destination_dir + path_in_file_sytem + "/SP_" + str(
-                                  temp_md5) + ".log"])  # copie du JSON
-            create_jobs(json_loaded=json_to_input, job_type="SP", elastic_id=id_json_to_test, md5_json=temp_md5)
-            return 0
-        except Exception as error:
-            print(error)
-            return 4
-    else:
-        return 1
-
-
-def create_query(path, json_file, destination_dir, id_user):
-    """
-    this function get all file from the source directory to store them in the destination directory
-    we put the log in database and the json in elasticSearch
-    :param path: directory or file path that contains the new .log
-    :param destination_dir: the directory where we are going to store our .log
-    :param id_user: id of the contributor
-    :return: nothing
-    """
-
-    # iterate on all file
-    # setting conection to elastic search server
-    es_host = settings.ELASTICSEARCH
-    es = Elasticsearch(hosts=[es_host])
-    base_json = get_base_json()
-    # creating the index
-    index_name = 'quchempedia_index'
-    if not es.indices.exists(index=index_name):
-        try:
-            response = es.indices.create(index=index_name)
-            print(response)
-        except Exception as error:
-            print(error)
-            return 4
-    loaded_json = json_file
-    # set up all OPT
-    s = is_opt_exist(json_to_test=loaded_json,
-                     job_type=loaded_json['comp_details']['general']['job_type'])
-
-    if not s:
-        return 4
-    if loaded_json['metadata']['archivable'] == "True" and \
-        loaded_json['metadata']['archivable_for_new_entry'] == "True" and \
-            "OPT" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
-        if "FREQ" in loaded_json['comp_details']['general']['job_type']:
-            # store data into the json
-            temp = json.loads(base_json)
-            temp['data']['molecule'] = loaded_json['molecule']
-            temp['data']['results'] = loaded_json['results']
-            temp['data']['comp_details'] = loaded_json['comp_details']
-            temp['data']['metadata'] = loaded_json['metadata']
-            temp['data']['metadata']['log_file'] = path
-            temp['data']['metadata']["id_user"] = id_user
-            temp['data']['metadata']['metadata']["affiliation"] = get_affiliation(
-                id_user=id_user)
-            temp['job_type'] = "OPT"
-            temp['siblings'].append(json.loads(base_json))
-            temp['siblings'][0]['job_type'] = "FREQ"
-            temp['md5_siblings'].append(
-                hashlib.md5(str(loaded_json).encode('utf-8')).hexdigest())
-            temp['contributor'].append(id_user)
-
-            temp = json.dumps(temp, indent=4)
-        else:
-            # store data into the json
-            temp = json.loads(base_json)
-            temp['data']['molecule'] = loaded_json['molecule']
-            temp['data']['results'] = loaded_json['results']
-            temp['data']['comp_details'] = loaded_json['comp_details']
-            temp['data']['metadata'] = loaded_json['metadata']
-            temp['data']['metadata']["id_user"] = id_user
-            temp['data']['metadata']["affiliation"] = get_affiliation(
-                id_user=id_user)
-            temp['data']['metadata']['log_file'] = path
-            temp['job_type'] = "OPT"
-            temp['contributor'].append(id_user)
-
-            temp = json.dumps(temp, indent=4)
-        try:
-            response = es.index(index=index_name, doc_type="log_file", body=temp)
-            id_file = response['_id']
-            path_in_file_system = get_path_to_store(destination_dir=destination_dir,
-                                                    id_calcul=id_file, make_path=True)
-
-            response = es.get(index="quchempedia_index", doc_type="log_file", id=id_file)
-            location_opt = path_in_file_system + "/OPT_" + str(int(round(time.time() * 1000))) + ".log"
-            response['_source']['data']['metadata']['log_file'] = location_opt
-            if "FREQ" in loaded_json['comp_details']['general']['job_type']:
-                location_freq = path_in_file_system + "FREQ_" + str(int(time.time())) + ".log"
-                response['_source']['siblings'][0]['data']['metadata']['log_file'] = location_freq
-
-            if location_opt:
-                subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
-                                  str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
-                create_jobs(json_loaded=loaded_json, job_type="OPT", elastic_id=id_file)
-            elif location_freq:
-                subprocess.Popen(["cp", path, destination_dir + path_in_file_system + "/OPT_" +
-                                  str(int(round(time.time() * 1000))) + ".log"])  # copie du JSON
-                create_jobs(json_loaded=loaded_json, job_type="FREQ", elastic_id=id_file)
-            subprocess.Popen(["rm", path])
-            es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_file)
-            return 0
-        except Exception as error:
-            print(error)
-            return 4
-    elif loaded_json['metadata']['archivable'] == "True" and \
-            loaded_json['metadata']['archivable_for_new_entry'] == "True" and \
-            "OPT" in loaded_json['comp_details']['general']['job_type'] and s.count() > 0:
-        return 1
-    elif loaded_json['metadata']['archivable'] == "True":
-        if "FREQ" in loaded_json['comp_details']['general']['job_type'] and \
-                loaded_json['metadata']['archivable_for_new_entry'] == "False" and \
-                s.count() == 1:
-            for hit in s:
-                try:
-                    return exist_freq(id_json_to_test=hit.meta.id,
-                                      json_to_input=loaded_json,
-                                      path_to_log_file=path,
-                                      destination_dir=destination_dir,
-                                      id_user=id_user)
-                except Exception as error:
-                    print(error)
-                    return 4
-        elif "FREQ" in loaded_json['comp_details']['general']['job_type'] and \
-                loaded_json['metadata']['archivable_for_new_entry'] == "False" and \
-                s.count() == 0:
-            return 3
-        if "SP" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
-            for hit in s:
-                try:
-                    return exist_sp(id_json_to_test=hit.meta.id,
-                                    json_to_input=loaded_json,
-                                    path_to_log_file=path,
-                                    destination_dir=destination_dir,
-                                    id_user=id_user)
-                except Exception as error:
-                    print(error)
-                    return 4
-        elif "SP" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
-            return 3
-        if "TD" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
-            for hit in s:
-                try:
-                    return exist_td(id_json_to_test=hit.meta.id,
-                                    json_to_input=loaded_json,
-                                    path_to_log_file=path,
-                                    destination_dir=destination_dir,
-                                    id_user=id_user)
-
-                except Exception as error:
-                    print(error)
-                    return 4
-        elif "TD" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
-            return 3
-
-        if "OPT_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
-            return 2
-        elif "OPT_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
-            return 3
-
-        if "FREQ_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 1:
-            return 2
-        elif "FREQ_ES" in loaded_json['comp_details']['general']['job_type'] and s.count() == 0:
-            return 3
+            es.index(index=index_name, doc_type="log_file", body=response['_source'], id=sub["id_log"])
 
 
 def create_query_log(path, json_file, destination_dir, id_user):
@@ -603,7 +193,7 @@ def create_query_log(path, json_file, destination_dir, id_user):
     es = Elasticsearch(hosts=[es_host])
     base_json = get_base_json()
     # creating the index
-    index_name = 'quchempedia_in'
+    index_name = 'quchempedia_index'
     if not es.indices.exists(index=index_name):
         try:
             response = es.indices.create(index=index_name)
@@ -614,38 +204,108 @@ def create_query_log(path, json_file, destination_dir, id_user):
     loaded_json = json_file
 
     if loaded_json['metadata']['archivable'] == "True" and loaded_json['metadata']['archivable_for_new_entry'] == "True":
-            # store data into the json
-            temp = json.loads(base_json)
-            temp['data']['molecule'] = loaded_json['molecule']
-            temp['data']['results'] = loaded_json['results']
-            temp['data']['comp_details'] = loaded_json['comp_details']
-            temp['data']['metadata'] = loaded_json['metadata']
-            temp['data']['metadata']['log_file'] = path
-            temp['data']['metadata']["id_user"] = id_user
-            temp['data']['metadata']["affiliation"] = get_affiliation(id_user=id_user)
-            temp['job_type'] = loaded_json['comp_details']['general']['job_type']
-            temp['contributor'].append(id_user)
-            temp = json.dumps(temp, indent=4)
-            #try:
+        # we get the siblings to test how many they are
+        siblings = None
+        nre = loaded_json['results']['geometry']['nuclear_repulsion_energy_from_xyz']
+        formula = loaded_json['molecule']['formula']
+        solveur = loaded_json['comp_details']['general']['package']
+        tme = loaded_json['results']['wavefunction']['total_molecular_energy']  # total molecular energy
+        job_type = _get_job_type(json_file)
+        author = id_user
+        try:
+            siblings = get_siblings_json(nre=nre,
+                                         formula=formula,
+                                         return_search=True)
+        except Exception as error:
+            print(error)
+
+        #  boolean to know if it's a sibling or a submission
+        new_sib = False
+        new_sub = False
+        new_ref = False
+        ref_prec_sub = None
+        if siblings.hits.total > 0:
+            for hit in siblings:
+                if hit.job_type[0] in job_type:
+                    if hit.data.comp_details.general.package == solveur:
+                        truncated_tme = trun_n_d(hit.data.results.wavefunction.total_molecular_energy, TME_PRECISION)
+
+                        if truncated_tme <= tme < truncated_tme+10**NRE_PRECISION:
+                            if hit.data.metadata.id_user == author:
+                                return 3
+                            try:
+                                if hit.data.metadata.discretizable:
+                                    new_ref = True
+                                    break
+                                else:
+                                    return 3
+                            except:
+                                pass
+                        else:
+                            new_sub = True
+                            ref_prec_sub = hit.meta.id
+                            break
+                    else:
+                        new_sub = True
+                        ref_prec_sub = hit.meta.id
+                        break
+                else:
+                    new_sib = True
+                    break
+
+        # store data into the json
+        siblings = get_siblings_json(nre=nre,
+                                     formula=formula)
+        temp = json.loads(base_json)
+        temp['data']['molecule'] = loaded_json['molecule']
+        temp['data']['results'] = loaded_json['results']
+        temp['data']['comp_details'] = loaded_json['comp_details']
+        temp['data']['metadata'] = loaded_json['metadata']
+        temp['data']['metadata']['log_file'] = path
+        temp['data']['metadata']["id_user"] = id_user
+        temp['data']['metadata']['submissions'] = []
+        if new_sib:
+            temp['siblings'] = siblings
+
+        temp['data']['metadata']["affiliation"] = get_affiliation(id_user=id_user)
+        temp['job_type'] = loaded_json['comp_details']['general']['job_type']
+        temp = json.dumps(temp, indent=4)
+
+        try:
             response = es.index(index=index_name, doc_type="log_file", body=temp)
             id_file = response['_id']
+            response = es.get(index=index_name, doc_type="log_file", id=id_file)
+
+            if new_sib:
+                update_siblings(siblings, id_file, job_type)
+
+            if new_sub:
+                response_last_sub = es.get(index=index_name, doc_type="log_file", id=ref_prec_sub)
+                if new_ref:
+                    update_submission(last_sub=ref_prec_sub, new_ref=new_ref, id_file=id_file, id_user=id_user)
+                else:
+                    update_submission(last_sub=ref_prec_sub, new_ref=new_ref, id_file=id_file, id_user=id_user)
+                current_sub = response_last_sub['_source']['data']['metadata']['submissions']
+                current_sub.append({"id_log": id_file, "author": id_user})
+                response['_source']['data']['metadata']['submissions'] = current_sub
+
+            else:
+                response['_source']['data']['metadata']['submissions'] = [{"id_log": id_file, "author": id_user}]
             path_in_file_system = get_path_to_store(destination_dir=destination_dir,
                                                     id_calcul=id_file, make_path=True)
-            response = es.get(index=index_name, doc_type="log_file", id=id_file)
             location_opt = os.path.join(path_in_file_system + "/"+loaded_json['comp_details']['general']['job_type'][0]+"_" +
                                         str(int(round(time.time() * 1000))) + ".log")
             response['_source']['data']['metadata']['log_file'] = location_opt
 
-            subprocess.Popen(["cp", path, os.path.join(destination_dir + path_in_file_system + "/"+loaded_json['comp_details']['general']['job_type'][0]+"_" +
-                              str(int(round(time.time() * 1000))) + ".log")])  # copie du JSON
-            #  create_jobs(json_loaded=loaded_json, job_type=loaded_json['comp_details']['general']['job_type'][0], elastic_id=id_file)
-
+            subprocess.Popen(["cp", path, os.path.join(destination_dir + path_in_file_system + "/"+
+                                                       loaded_json['comp_details']['general']['job_type'][0]+"_" +
+                                                       str(int(round(time.time() * 1000))) + ".log")])  # copie du JSON
             subprocess.Popen(["rm", path])
             es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_file)
             return 0
-            #except Exception as error:
-            #  print(error)
-             #   return 4
+        except Exception as error:
+            print(error)
+            return 4
     else:
         return 1
 
@@ -664,7 +324,7 @@ def import_file(path, json_file, id_user):
     es = Elasticsearch(hosts=[es_host])
     base_json = get_base_json()
     # creating the index
-    index_name = 'quchempedia_in'
+    index_name = 'quchempedia_index'
     if not es.indices.exists(index=index_name):
         try:
             response = es.indices.create(index=index_name)
@@ -672,6 +332,4 @@ def import_file(path, json_file, id_user):
         except Exception as error:
             print(error)
             return 4
-    loaded_json = json_file
     return create_query_log(path=path, json_file=json_file, destination_dir=destination_dir, id_user=id_user)
-    #  return create_query(path=path, json_file=json_file, destination_dir=destination_dir, id_user=id_user)
