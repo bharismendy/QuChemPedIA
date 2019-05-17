@@ -6,6 +6,7 @@ $theme-colors: (
 );
 
 @import "~bootstrap/scss/bootstrap";
+@import "resultPage";
 
 @import "~vue2-animate/dist/vue2-animate.css";
 
@@ -219,11 +220,12 @@ $theme-colors: (
 */
 
 /* Formulaire de recherche */
+/*
 .form-control {
   width: 40%;
   margin-left: auto;
 }
-
+*/
 /* Selection du type pour la recherche */
 .custom-select {
   width: 24%;
@@ -416,9 +418,14 @@ strong {
 }
 
 
-#list-query-group {
-  padding-bottom: 10px;
+img {
+  border-radius: 5px 5px 0 0;
 }
+
+.container {
+  padding: 2px 16px;
+}
+
 
 /* Gestion du positionnement de la page d'accueil
 *
@@ -620,6 +627,7 @@ strong {
 #dashboard_main{
     padding-top: 2%;
 }
+/*
 #research_entry{
   width:40%;
   margin-left: auto;
@@ -634,6 +642,7 @@ strong {
   border-radius: .25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+*/
 .error_fields ul {
   list-style: none;
 }
@@ -658,4 +667,35 @@ strong {
     padding-right: auto;
     padding-bottom: 20px;
     color: #495057;
+}
+
+.icon{
+  float:right;
+  margin-left:250px;
+  color:gray;
+  text-shadow: 1px 1px 1px #ccc;
+  font-size: 1.5em;
+}
+.button-menu
+{
+    margin-right:auto;
+    margin-right: 20px;
+}
+
+li a {
+    color: black;
+}
+
+.log{
+
+    color:gray;
+    font-weight:bold;
+    margin-right:10px;
+
+}
+
+.iconLog{
+    color:gray;
+    margin-right:20px;
+    font-size: 1.5em;
 }
