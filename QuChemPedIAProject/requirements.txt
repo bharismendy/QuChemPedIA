@@ -32,5 +32,4 @@ snowballstemmer==1.2.1
 Sphinx==1.7.6
 sphinxcontrib-websupport==1.1.0
 urllib3==1.22
-curl -X GET -H 'Content-Type: application/json' -i 'http9200/quchempedia_index/_search?' --data '{'query': {'bool': {'must': [{'bool': {'must': [{'match': {'data.molecule.formula': 'C6H5Cl'}}, {'range': {'data.results.nuclear_repulsion_energy_from_xyz': {'lt': 317.3, 'gte': 317.29}}}]}}]}}}'
 
