@@ -8,7 +8,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <!-- Chargement du CSS, bootstrap, javascript et jQuery -->
   <title>QuChemPedIA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -32,88 +31,62 @@
 <body>
 
 {% block nav %}
-<!-- Barre de navigation header contenant formulaire et titre pour retour sur la page d'accueil -->
-<nav class="border border-secondary border-right-0 border-left-0 navbar navbar-togleable-md navbar-expand-sm navbar-dark sticky-top">
-  <a id="title" class="navbar-brand" href="/">
-    <!-- potention logo -->
 
-    QuChemPedIA
-  </a>
-  <!-- formulaire de recherche -->
-  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-    <form class="form-inline" action="{% url 'query' %}" method="GET">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand primary" href="{% url 'accueil' %}">QuChemPedIA</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+         <a  class="nav-link" href="{% url 'dashboard/import' %}">Import</a>
+      </li>
+       {% if not user.is_authenticated %}
+             <li class="nav-item">
+                <a class="nav-link"  href="{% url 'auth' %}">
+                  Sign In
+                </a>
+              </li>
+       {% else %}
+       {%  if user.is_admin %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin' %}">
+                  Settings
+                </a>
+              </li>
+              {% block menu_admin %}
+              {% endblock %}
+       {% endif %}
+
+              {% block menu_account%}
+              {% endblock %}
+              <li class="nav-item">
+                 <a class="nav-link" href="{% url 'dasboard/account' %}">
+                  Profile
+                 </a>
+               </li>
+               <li class="nav-item">
+                 <a class="nav-link" href="{% url 'logout' %}" >
+                  Log-out
+                 </a>
+               </li>
+       {% endif %}
+    </ul>
+     <form class="form-inline my-2 my-lg-0" action="{% url 'query' %}" method="GET">
       {% csrf_token %}
       {{ query_form.as_table }}
-      <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
+       <button class="btn btn-success default-primary-color mt-lg-0  my-2 my-sm-0" type="submit">Search <i class="fa fa-search"></i></button>
+
     </form>
   </div>
-
 </nav>
-      <div  id="sign" class="row float-right">
-               <!-- Bouton login-->
-                <a class="nav-link btn btn-info default-primary-color button-nav" title="import a file" href="{% url 'dashboard/import' %}">
-                            <svg class="feather feather-upload sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
-                                 width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1236">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                <polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
-                            </svg>
-                      </a>
-                  {% if not user.is_authenticated %}
-                        <a  class="nav-link btn btn-info default-primary-color button-nav" title="Sign up/Sign in" href="{% url 'auth' %}">
-                            <svg class="feather feather-log-in sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
-                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="716">
-                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                                <polyline points="10 17 15 12 10 7"></polyline>
-                                <line x1="15" y1="12" x2="3" y2="12"></line>
-                            </svg>
-                        </a>
-                       {% else %}
-                      {%  if user.is_admin %}
-                          <a class="nav-link btn btn-info default-primary-color button-admin" title="Admin panel" href="{% url 'admin' %}">
-                            <svg class="feather feather-settings sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
-                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1016">
-                                <circle cx="12" cy="12" r="3"></circle>
-                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                            </svg>
-                        </a>
-
-                        {% block menu_admin %}
-                        {% endblock %}
-
-                    {% endif %}
-
-                        {% block menu_account%}
-                        {% endblock %}
-                        <a class="nav-link btn btn-info default-primary-color button-nav" title="My profile" href="{% url 'dasboard/account' %}">
-                            <svg class="feather feather-user sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24"
-                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1261">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </a>
-                        <a class="nav-link btn btn-info default-primary-color button-nav" title="Log-out" href="{% url 'logout' %}">
-                            <svg class="feather feather-log-out sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg"
-                               width="24" height="24" viewBox="0 0 24 24" fill="none"
-                               stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                               stroke-linejoin="round" aria-hidden="true" data-reactid="721">
-                              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                              <polyline points="16 17 21 12 16 7"></polyline>
-                              <line x1="21" y1="12" x2="9" y2="12"></line>
-                            </svg>
-                        </a>
-                  {% endif %}
-                </div>
 
 {% endblock %}
 
-<div class="container">
-  <div class="row">
-    {% block content %}
-    {% endblock %}
+{% block content %}
+{% endblock %}
 
 
 {# block used for footer #}

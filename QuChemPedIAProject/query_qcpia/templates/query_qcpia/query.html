@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-  </div>
-</div>
   {% if results|length >= 1 %}
   <!-- Page de résultat de recherche -->
 
@@ -207,6 +205,4 @@
     <script>
     page_result({{results.nbresult}})
     </script>
-    <div>
-    <div>
 {% endblock %}
