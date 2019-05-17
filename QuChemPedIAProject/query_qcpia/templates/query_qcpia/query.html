@@ -4,7 +4,7 @@
   {% if results|length >= 1 %}
   <!-- Page de résultat de recherche -->
 
-  <div class="container">
+  <div class="container search-results">
     <!-- Affichage du nombre de résultat et valeur de la recherche - Test si le nombre est >1 pour accorder en nombre le texte -->
     <div class="row">
       <h2 id="result-title">{{ results.nbresult }} result{% if results.nbresult > 1 %}s{% endif %} for <strong>{{ query_form.search.value }}</strong>.</h2>

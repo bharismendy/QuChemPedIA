@@ -74,7 +74,7 @@ export default {
       if (data.results) this.results = data.results
       if (response.data.siblings) this.siblings = response.data.siblings
       if (data.comp_details) this.computationalDetails = data.comp_details
-      eBus.$emit(eBus.signals.notify.SUCCESS, { message: 'Molecule loaded' })
+      // eBus.$emit(eBus.signals.notify.SUCCESS, { message: 'Molecule loaded' })
       this.detailsLoaded = true
     }).catch(err => {
       this.detailsLoadingError = err
