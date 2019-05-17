@@ -8,7 +8,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>QuChemPedIA</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
@@ -29,79 +28,57 @@
 <body>
 
 {% block nav %}
-<!-- Barre de navigation header contenant formulaire et titre pour retour sur la page d'accueil -->
-<nav class="border border-secondary border-right-0 border-left-0 navbar navbar-togleable-md navbar-expand-sm navbar-dark sticky-top">
-  <a id="title" class="navbar-brand" href="/">
-    <!-- potention logo -->
-    <img class="img-responsive" src="{% static "" %}" alt="" style="width:150px;">
-    QuChemPedIA
-  </a>
-  <!-- formulaire de recherche -->
-  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-    <form class="form-inline" action="{% url 'query' %}" method="GET">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand primary" href="{% url 'accueil' %}">QuChemPedIA</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+         <a  class="nav-link" href="{% url 'dashboard/import' %}">Import</a>
+      </li>
+       {% if not user.is_authenticated %}
+             <li class="nav-item">
+                <a class="nav-link"  href="{% url 'auth' %}">
+                  Sign In
+                </a>
+              </li>
+       {% else %}
+       {%  if user.is_admin %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin' %}">
+                  Settings
+                </a>
+              </li>
+              {% block menu_admin %}
+              {% endblock %}
+       {% endif %}
+
+              {% block menu_account%}
+              {% endblock %}
+              <li class="nav-item">
+                 <a class="nav-link" href="{% url 'dasboard/account' %}">
+                  Profile
+                 </a>
+               </li>
+               <li class="nav-item">
+                 <a class="nav-link" href="{% url 'logout' %}" >
+                  Log-out
+                 </a>
+               </li>
+       {% endif %}
+    </ul>
+     <form class="form-inline my-2 my-lg-0" action="{% url 'query' %}" method="GET">
       {% csrf_token %}
       {{ query_form.as_table }}
-      <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
+       <button class="btn btn-success default-primary-color mt-lg-0  my-2 my-sm-0" type="submit">Search <i class="fa fa-search"></i></button>
+
     </form>
   </div>
-
 </nav>
-      <div  id="sign" class="row float-right">
-
-
-               <div class="dropleft button-menu">
-
-                 <button type="button" class="btn btn-primary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                   <i class="fa fa-bars"></i>
-                </button>
-
-
-               <div class="dropdown-menu" style="border:none">
-
-               <ul class="list-group">
-
-                <li class="list-group-item">
-                <a  type="button" href="{% url 'dashboard/import' %}">
-                           import a file
-                      </a><span class="fas fa-file-import icon"></span>
-                      </li>
-                  {% if not user.is_authenticated %}
-                     <li class="list-group-item">
-                        <a type="button" href="{% url 'auth' %}">
-                           Sign up/Sign in"
-                        </a><span class="fas fa-sign-in-alt icon"></span>
-                        </li>
-                       {% else %}
-                      {%  if user.is_admin %}
-                      <li class="list-group-item">
-                          <a href="{% url 'admin' %}">
-                            Settings
-                        </a><span class="fas fa-user-cog icon" ></span>
-                      </li>
-
-                        {% block menu_admin %}
-                        {% endblock %}
-
-                    {% endif %}
-
-                        {% block menu_account%}
-                        {% endblock %}
-                        <li class="list-group-item">
-                        <a href="{% url 'dasboard/account' %}">
-                            My profile
-                        </a><span class="fas fa-user-circle icon"></span>
-                        </li>
-                        <li class="list-group-item" >
-                        <a href="{% url 'logout' %}" >
-                            Log-out
-                        </a>
-                        <span class="fas fa-sign-out-alt icon" ></span>
-                        </li>
-                  {% endif %}
-                  </ul>
-                     </div>
-               </div>
-                </div>
 
 {% endblock %}
 
