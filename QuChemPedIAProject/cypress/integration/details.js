@@ -51,4 +51,21 @@ describe('Molecule details', function () {
 
     cy.wait('@detailAuthor1Request')
   })
+
+  it('Show message on 404 error', function () {
+    cy.server()
+
+    cy.route({
+      url: "/access/details_json?id_file=iN0gjGoBaHZQCbKmLtmm",
+      method: "GET",
+      status: 404,
+      response: {}
+    }).as('detailsJsonRequest404')
+
+    cy.visit('/access/details?id=iN0gjGoBaHZQCbKmLtmm')
+
+    cy.wait('@detailsJsonRequest404')
+
+    cy.get('[data-testid=details_404]').should('be.visible')
+  })
 })

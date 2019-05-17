@@ -17,6 +17,7 @@
       variant="accent"
       style="width: 5rem; height: 5rem; position: fixed; top: 0; left: 0; bottom: 0; right: 0; margin: auto;"
     />
+    <qcpia-details404 v-if="detailsLoadingError" />
     <qcpia-notification-stack
 
       style="position: fixed; bottom: 0; right:0; max-width: 300px; "
@@ -31,11 +32,12 @@ import axios from 'axios'
 import AuthorRepository from '../../api/AuthorRepository'
 import QcpiaNotificationStack from '../../components/QcpiaNotificationStack.vue'
 import eBus from '../../event-bus'
+import QcpiaDetails404 from './QcpiaDetails404.vue'
 
 // Entry component for the detail page
 export default {
   name: 'QcpiaDetails',
-  components: { QcpiaNotificationStack, QcpiaMolecule },
+  components: { QcpiaDetails404, QcpiaNotificationStack, QcpiaMolecule },
   props: {
     id: {
       type: String,
