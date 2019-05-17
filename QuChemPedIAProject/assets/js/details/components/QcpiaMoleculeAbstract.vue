@@ -65,7 +65,7 @@
     </div>
     <div class="row justify-content-around">
       <div class="col-lg-5 col-md-12">
-        <h5 class="border-bottom">
+        <h5 class="border-bottom pb-1">
           Molecule Details
         </h5>
 
@@ -74,7 +74,7 @@
         />
       </div>
       <div class="col-lg-5 col-md-12">
-        <h5 class="border-bottom mt-3 mt-lg-0">
+        <h5 class="border-bottom mt-3 mt-lg-0 pb-1  ">
           Computation details
         </h5>
         <qcpia-molecule-computational-details :computational-details="computationalDetails" />
