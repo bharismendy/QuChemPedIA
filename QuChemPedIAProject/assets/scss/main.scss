@@ -689,7 +689,7 @@ img {
 
 .flip-card-front p {
   font-size: 25px;
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
 }
 div#list-query-group {
     max-width: 1200px;
@@ -729,13 +729,16 @@ div#list-query-group:after {
 }
 
 .flip-over {
-  display: none;
+  display: block;
+  width: 36px;
+  float: right;
+  margin-right: 10px;
 }
 
 @media all and (max-width: 600px) {
   .flip-over{
     display: block;
-    width: 80px;
+    width: 50px;
     float: right;
     margin-right: 10px;
   }
