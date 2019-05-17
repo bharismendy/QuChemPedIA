@@ -10,20 +10,7 @@
           v-html="formattedFormula"
         />
         <div class="">
-          <span class="text-muted">Computed with </span> {{ software }}
-        </div>
-        <div class="">
-          <div class="d-inline-block">
-            <span class="text-muted">Method : </span> {{ computationalDetails.general.last_theory }}
-          </div>
-          <div class="d-inline-block ml-2">
-            <span class="text-muted">Functional : </span> {{ computationalDetails.general.functional }}
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="row justify-content-between">
-          <div class="col-12 justify-content-between text-center">
+          <div class="d-flex">
             <span class="mr-2 text-muted">
               Charge :
             </span>
@@ -34,7 +21,7 @@
               {{ molecule.charge }}
             </span>
           </div>
-          <div class="col-12 text-center">
+          <div class="d-flex">
             <span
               class="mr-2 text-muted"
             >
@@ -46,6 +33,19 @@
             >
               {{ molecule.multiplicity }}
             </span>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="">
+          <span class="text-muted">Computed with </span> {{ software }}
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-auto">
+            <span class="text-muted">Method : </span> {{ computationalDetails.general.last_theory }}
+          </div>
+          <div class="col-12 col-lg-auto">
+            <span class="text-muted">Functional : </span> {{ computationalDetails.general.functional }}
           </div>
         </div>
       </div>
@@ -68,118 +68,10 @@
         <h5 class="border-bottom">
           Molecule Details
         </h5>
-        <div
-          v-if="molecule.monoisotopic_mass"
-          class="row mt-1"
-        >
-          <div class="col">
-            <span class="text-muted">Monoisotopic mass</span>
-          </div>
-          <div
-            class="col"
-            data-testid="molecule_monoisotopic_mass"
-          >
-            {{ molecule.monoisotopic_mass }}
-          </div>
-        </div>
 
-        <div
-          v-if="molecule.iupac"
-          class="row mt-1"
-        >
-          <div class="col row">
-            <div class="row align-items-center">
-              <span class="col text-muted">Iupac</span>
-              <qcpia-help-badge-link
-                class="ml-2"
-                href="https://en.wikipedia.org/wiki/Union_internationale_de_chimie_pure_et_appliqu%C3%A9e"
-                tooltip-text="International Union of Pure and Applied Chemistry"
-                target="_blank"
-              />
-            </div>
-            <div data-testid="molecule_iupac">
-              {{ molecule.iupac }}
-            </div>
-          </div>
-        </div>
-        <div
-          v-if="molecule.inchi"
-          class="row mt-1"
-        >
-          <div class="col">
-            <div class="row align-items-center">
-              <span class="col text-muted">Inchi
-                <qcpia-help-badge-link
-                  class="ml-2"
-                  href="https://en.wikipedia.org/wiki/International_Chemical_Identifier"
-                  tooltip-text="International Chemical Identifier"
-                  target="_blank"
-                /></span>
-            </div>
-            <div class="row align-items-center">
-              <div
-                v-b-tooltip.hover
-                class="col"
-                data-testid="molecule_inchi"
-                style="text-overflow: ellipsis;  white-space: nowrap;overflow: hidden;"
-                :title="molecule.inchi.slice(6)"
-              >
-                {{ molecule.inchi.slice(6) }}
-              </div>
-              <div
-                style="width: 2.5rem"
-              >
-                <qcpia-copy-text-button
-                  :text="molecule.inchi.slice(6)"
-                  tooltip-text="Copy"
-                  size="sm"
-                  variant="outline-primary"
-                  class="p-1 w-100 text-center"
-                  @copied="notifyCopy"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          v-if="molecule.can"
-          class="row mt-1"
-        >
-          <div class="col">
-            <div class="row align-items-center">
-              <span class="col text-muted">Canonical SMILES
-                <qcpia-help-badge-link
-                  href="https://en.wikipedia.org/wiki/Simplified_Molecular_Input_Line_Entry_Specification"
-                  tooltip-text="Simplified Molecular Input Line Entry Specification"
-                  target="_blank"
-                  class="ml-2"
-                />
-              </span>
-            </div>
-            <div class="row align-items-center">
-              <div
-                v-b-tooltip.hover
-                class="col"
-                data-testid="molecule_can"
-                style="text-overflow: ellipsis;  white-space: nowrap;overflow: hidden;"
-                :title="molecule.can"
-              >
-                {{ molecule.can }}
-              </div>
-              <div style="width: 2.5rem">
-                <qcpia-copy-text-button
-                  :text="molecule.can"
-                  tooltip-text="Copy to clipboard"
-                  class="p-1 w-100 text-center"
-                  variant="outline-primary"
-                  size="sm"
-                  @copied="notifyCopy"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <qcpia-molecule-molecule
+          :molecule="molecule"
+        />
       </div>
       <div class="col-lg-5 col-md-12">
         <h5 class="border-bottom mt-3 mt-lg-0">
@@ -192,16 +84,15 @@
 </template>
 
 <script>
-import QcpiaHelpBadgeLink from './QcpiaHelpBadgeLink.vue'
 import QcpiaMoleculeSmiles from './QcpiaMoleculeSmiles.vue'
 import QcpiaMoleculeComputationalDetails from './QcpiaMoleculeComputationalDetails.vue'
-import QcpiaCopyTextButton from './QcpiaCopyTextButton.vue'
-import eBus from '../../event-bus'
+import QcpiaMoleculeMolecule from './QcpiaMoleculeMolecule.vue'
+import { moleculeFormulaToHtml } from '../../utils'
 
 // This component display the main information about a molecule : formula, charge, inchi ...
 export default {
   name: 'QcpiaMoleculeAbstract',
-  components: { QcpiaCopyTextButton, QcpiaMoleculeComputationalDetails, QcpiaHelpBadgeLink, QcpiaMoleculeSmiles },
+  components: { QcpiaMoleculeMolecule, QcpiaMoleculeComputationalDetails, QcpiaMoleculeSmiles },
   // data () {return {}}
   props: {
     // The molecule to display
@@ -221,24 +112,7 @@ export default {
        */
     formattedFormula () {
       if (this.molecule.formula) {
-        const charge = this.molecule.charge
-        const formula = this.molecule.formula
-        let formattedFormula = ''
-        for (let i = formula.length - 1; i >= 0; i--) {
-          if (i === formula.length - 1 && charge !== 0) {
-            if (charge > 1 || charge < -1) {
-              formattedFormula = formula.charAt(i - 1).sup() + formula.charAt(i).sup() + formattedFormula
-              i--
-            } else {
-              formattedFormula = formula.charAt(i).sup() + formattedFormula
-            }
-          } else if (!isNaN(formula.charAt(i))) {
-            formattedFormula = formula.charAt(i).sub() + formattedFormula
-          } else {
-            formattedFormula = formula.charAt(i) + formattedFormula
-          }
-        }
-        return formattedFormula
+        return moleculeFormulaToHtml(this.molecule.formula, this.molecule.charge)
       }
       return null
     },
@@ -247,11 +121,6 @@ export default {
       const software = this.computationalDetails.general.package
       const softwareVersionStr = this.computationalDetails.general.package_version ? ' ( ' + this.computationalDetails.general.package_version + ' )' : ''
       return `${software}${softwareVersionStr}`
-    }
-  },
-  methods: {
-    notifyCopy () {
-      eBus.$emit(eBus.signals.notify.SUCCESS, { message: 'Copied to clipboard' })
     }
   }
 }
