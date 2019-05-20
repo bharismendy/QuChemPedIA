@@ -12,7 +12,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% render_bundle 'main' %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/general.css" %}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <script src="{% static "js/jsPDF/jspdf.js" %}"></script>
     <script src="{% static "js/jsPDF/dist/jspdf.min.js" %}"></script>
@@ -53,7 +52,7 @@
        {%  if user.is_admin %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'admin' %}">
-                  Settings
+                  Admin Panel
                 </a>
               </li>
               {% block menu_admin %}
@@ -82,11 +81,13 @@
     </form>
   </div>
 </nav>
-
 {% endblock %}
 
-{% block content %}
-{% endblock %}
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
 
 
 {# block used for footer #}
