@@ -2,6 +2,7 @@ from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, Q
 import json
 from django.conf import settings
+from itertools import chain
 
 
 def find(key, dictionary):
@@ -24,14 +25,17 @@ def find(key, dictionary):
                         yield result
 
 
-def _get_job_type(file_to_analyze):
+def _get_job_type(file_to_analyze, name_key='job_type'):
     """
     function that return a list of job_type from a document
-    :param json: json to analyze
+    :param file_to_analyze: json to analyze
+    :param name_key: name of the job type
     :return: array of job_type
     """
-    file_to_analyze = file_to_analyze.to_dict()
-    return list(find('job_type', file_to_analyze))
+    if not type(file_to_analyze) is dict:
+        file_to_analyze = file_to_analyze.to_dict()
+    result = list(set(chain(*find(name_key, file_to_analyze))))
+    return result
 
 
 def _search_to_json(search, nbresult):
@@ -213,3 +217,4 @@ def search_id(id_value):
     response = es.get(index="quchempedia_index", doc_type="log_file", id=id_value)
     result = response['_source']
     return result
+
