@@ -15,7 +15,8 @@ export default {
           }
           acc.push({
             label: current.label,
-            value
+            value,
+            _rawHtml: current._rawHtml || false
           })
         }
         return acc

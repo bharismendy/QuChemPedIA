@@ -4,7 +4,7 @@
       v-if="wavefunction.total_molecular_energy"
       class="row"
     >
-      <div class="col font-weight-bold">
+      <div class="col text-muted">
         Total molecular energy
       </div>
       <div class="col">
@@ -15,7 +15,7 @@
       v-if="homoIndexes.length > 0"
       class="row"
     >
-      <div class="col font-weight-bold">
+      <div class="col text-muted">
         HOMO number
       </div>
       <div class="col">
@@ -27,9 +27,9 @@
       v-if="displayHomeEnergiesTable"
       class="mt-3"
     >
-      <h6 class="font-weight-bold text-center">
+      <h5 class="font-weight-bold text-center">
         Calculated energies for the frontier molecular orbitals
-      </h6>
+      </h5>
       <b-table
         :items="homoEnergiesTableItems"
         small
@@ -41,10 +41,10 @@
       v-if="displayMullikenAtomic"
       class="mt-3"
     >
-      <h6 class="text-center font-weight-bold">
+      <h5 class="text-center font-weight-bold">
         Most intense Mulliken atomic charges
-      </h6>
-      <p class="font-weight-bold text-center">
+      </h5>
+      <p class="text-center">
         mean={{ mullikenChargesMean.toFixed(3) }}, e, std= {{ mullikenChargesStd.toFixed(3) }}
       </p>
 
@@ -151,7 +151,7 @@ export default {
       for (let j = 0; j < this.mullikenPartialCharges.length; ++j) {
         items.push({
           symbol: AtomSymbols[this.molecule.atoms_Z[j] - 1],
-          index: j,
+          index: j + 1,
           mullikenPartialCharge: this.mullikenPartialCharges[j]
         })
       }

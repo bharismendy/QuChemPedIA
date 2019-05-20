@@ -4,7 +4,7 @@
       v-if="metadata.log_file"
       class="row"
     >
-      <div class="col font-weight-bold">
+      <div class="col text-muted">
         Original log file
       </div>
       <div class="col">
@@ -18,7 +18,7 @@
       v-if="metadata.id_user"
       class="row"
     >
-      <div class="col font-weight-bold">
+      <div class="col text-muted">
         Primary Author
       </div>
       <div class="col">
@@ -34,7 +34,7 @@
       v-if="metadata.affiliation"
       class="row"
     >
-      <div class="col font-weight-bold">
+      <div class="col text-muted">
         Affiliation
       </div>
       <div class="col">

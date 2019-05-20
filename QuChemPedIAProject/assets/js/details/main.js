@@ -12,11 +12,13 @@ const baseUrl = window.qcpia.baseUrl ? window.qcpia.baseUrl : 'http://localhost:
 
 if (appElement) {
   const id = appElement.dataset.moleculeid
-  console.log({ id, baseUrl })
   /* eslint-disable no-new */
   new Vue({
     el: '#app',
     components: { QcpiaDetails },
+    data: {
+      moleculeId: id
+    },
     template: `<QcpiaDetails id="${id}" base-url="${baseUrl}"/>`
   })
 }

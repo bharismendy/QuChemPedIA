@@ -4,36 +4,82 @@
       v-for="(element, index) in data"
       :key="index"
       class="row"
+      :class="rowClasses"
       data-testid="data-row"
     >
-      <div
-        class="col"
-        :class="labelClasses"
-        :data-testid="`data-label-${index}`"
-      >
-        <!-- Label slot -->
-        <slot
-          name="label"
-          :element="element"
-          :index="index"
+      <template v-if="labelPosition === 'left'">
+        <div
+          class="col"
+          :class="labelClasses"
+          :data-testid="`data-label-${index}`"
         >
-          {{ element.label }}
-        </slot>
-      </div>
-      <div
-        class="col"
-        :class="valueClasses"
-        :data-testid="`data-value-${index}`"
-      >
-        <!-- Value slot -->
-        <slot
-          name="value"
-          :element="element"
-          :index="index"
+          <!-- Label slot -->
+          <slot
+            name="label"
+            :element="element"
+            :index="index"
+          >
+            {{ element.label }}
+          </slot>
+        </div>
+        <div
+          class="col"
+          :class="valueClasses"
+          :data-testid="`data-value-${index}`"
         >
-          {{ element.value }}
-        </slot>
-      </div>
+          <!-- Value slot -->
+          <slot
+            name="value"
+            :element="element"
+            :index="index"
+          >
+            <template
+              v-if="element._rawHtml"
+            >
+              <span v-html="element.value" />
+            </template>
+            <template v-else>
+              {{ element.value }}
+            </template>
+          </slot>
+        </div>
+      </template>
+      <template v-else>
+        <div class="col">
+          <div
+            :class="labelClasses"
+            :data-testid="`data-label-${index}`"
+          >
+            <!-- Label slot -->
+            <slot
+              name="label"
+              :element="element"
+              :index="index"
+            >
+              {{ element.label }}
+            </slot>
+          </div>
+          <div
+            :class="valueClasses"
+            :data-testid="`data-value-${index}`"
+          >
+            <!-- Value slot -->
+            <slot
+              name="value"
+              :element="element"
+              :index="index"
+            >
+              <template
+                v-if="element._rawHtml"
+                v-html="element.value"
+              />
+              <template v-else>
+                {{ element.value }}
+              </template>
+            </slot>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -67,6 +113,18 @@ export default {
       default () {
         return []
       }
+    },
+    rowClasses: {
+      type: Array,
+      required: false,
+      default () { return [] }
+    },
+    labelPosition: {
+      // `top` / `left`
+      type: String,
+      required: false,
+      // `left`
+      default: 'left'
     }
   }
 }
