@@ -26,6 +26,12 @@
       </div>
       <b-card class="mt-4">
         <h5 slot="header">
+          Computational Details
+        </h5>
+        <qcpia-molecule-computational-details :computational-details="computationalDetails" />
+      </b-card>
+      <b-card class="mt-4">
+        <h5 slot="header">
           Authorship
         </h5>
         <qcpia-molecule-authorship
@@ -50,6 +56,7 @@
           :molecule="molecule"
           :results="results"
           :computational-details="computationalDetails"
+          :tabs-display="false"
         />
       </b-card>
     </template>
@@ -140,10 +147,12 @@ import AuthorRepository from '../../api/AuthorRepository'
 import QcpiaMoleculeAssociatedCalculations from './QcpiaMoleculeAssociatedCalculations.vue'
 import QcpiaMoleculeMolecule from './QcpiaMoleculeMolecule.vue'
 import QcpiaMoleculeSmiles from './QcpiaMoleculeSmiles.vue'
+import QcpiaMoleculeComputationalDetails from './QcpiaMoleculeComputationalDetails.vue'
 
 export default {
   name: 'QcpiaMolecule',
   components: {
+    QcpiaMoleculeComputationalDetails,
     QcpiaMoleculeSmiles,
     QcpiaMoleculeMolecule,
     QcpiaMoleculeAssociatedCalculations,

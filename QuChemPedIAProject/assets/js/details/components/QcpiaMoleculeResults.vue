@@ -1,46 +1,79 @@
 <template>
-  <b-tabs
-    pills
-    vertical
-    card
-  >
-    <b-tab
-      v-if="displayWaveFunction"
-      title="Wavefunction"
+  <div>
+    <b-tabs
+      v-if="tabsDisplay"
+      pills
+      vertical
+      card
     >
-      <qcpia-molecule-results-wavefunction
-        :molecule="molecule"
-        :results="results"
-      />
-    </b-tab>
-    <b-tab
-      v-if="displayThermochemistry"
-      title="Thermochemistry"
-    >
-      <qcpia-molecule-results-thermochemistry
-        :molecule="molecule"
-        :results="results"
-      />
-    </b-tab>
-    <b-tab
-      v-if="displayGeometry"
-      title="Geometry"
-    >
-      <qcpia-molecule-results-geometry
-        :molecule="molecule"
-        :results="results"
-        :computational-details="computationalDetails"
-      />
-    </b-tab>
-    <b-tab
-      v-if="displayExcitedStates"
-      title="Excited States"
-    >
-      <b-card-text>
+      <b-tab
+        v-if="displayWaveFunction"
+        title="Wavefunction"
+      >
+        <qcpia-molecule-results-wavefunction
+          :molecule="molecule"
+          :results="results"
+        />
+      </b-tab>
+      <b-tab
+        v-if="displayThermochemistry"
+        title="Thermochemistry"
+      >
+        <qcpia-molecule-results-thermochemistry
+          :molecule="molecule"
+          :results="results"
+        />
+      </b-tab>
+      <b-tab
+        v-if="displayGeometry"
+        title="Geometry"
+      >
+        <qcpia-molecule-results-geometry
+          :molecule="molecule"
+          :results="results"
+          :computational-details="computationalDetails"
+        />
+      </b-tab>
+      <b-tab
+        v-if="displayExcitedStates"
+        title="Excited States"
+      >
+        <b-card-text>
+          TODO
+        </b-card-text>
+      </b-tab>
+    </b-tabs>
+    <template v-else>
+      <div
+        v-if="displayWaveFunction"
+        class="mt-2 pb-3 border-bottom"
+      >
+        <h4>Wavefunction</h4>
+        <qcpia-molecule-results-wavefunction
+          :molecule="molecule"
+          :results="results"
+        />
+      </div>
+      <div
+        v-if="displayGeometry"
+        class="mt-2 pb-3 border-bottom"
+      >
+        <h4>Geometry</h4>
+        <qcpia-molecule-results-geometry
+          :molecule="molecule"
+          :results="results"
+          :computational-details="computationalDetails"
+        />
+      </div>
+      <div
+        v-if="displayExcitedStates"
+        class="mt-2 pb-3 border-bottom"
+      >
+        <h4>Excited States</h4>
         TODO
-      </b-card-text>
-    </b-tab>
-  </b-tabs>
+      </div>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -68,6 +101,11 @@ export default {
     computationalDetails: {
       type: Object,
       required: true
+    },
+    tabsDisplay: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   computed: {

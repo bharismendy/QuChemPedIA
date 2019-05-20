@@ -1,7 +1,10 @@
 <template>
   <div v-if="displayTable">
-    <h6>Geometry optimization convergence criteria</h6>
-    <p v-html="description" />
+    <h5>Geometry optimization convergence criteria</h5>
+    <p
+      class="font-italic"
+      v-html="description"
+    />
     <b-table
       :items="tableItems"
       :fields="tableFields"
