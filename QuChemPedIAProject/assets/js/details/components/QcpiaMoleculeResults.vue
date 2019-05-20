@@ -38,9 +38,9 @@
         v-if="displayExcitedStates"
         title="Excited States"
       >
-        <b-card-text>
-          TODO
-        </b-card-text>
+        <qcpia-molecule-results-excited-states
+          :results="results"
+        />
       </b-tab>
     </b-tabs>
     <template v-else>
@@ -70,7 +70,9 @@
         class="mt-2 pb-3 border-bottom"
       >
         <h4>Excited States</h4>
-        TODO
+        <qcpia-molecule-results-excited-states
+          :results="results"
+        />
       </div>
     </template>
   </div>
@@ -81,10 +83,12 @@ import { isObjectEmpty } from '../../utils'
 import QcpiaMoleculeResultsThermochemistry from './QcpiaMoleculeResultsThermochemistry.vue'
 import QcpiaMoleculeResultsGeometry from './QcpiaMoleculeResultsGeometry.vue'
 import QcpiaMoleculeResultsWavefunction from './QcpiaMoleculeResultsWavefunction.vue'
+import QcpiaMoleculeResultsExcitedStates from './QcpiaMoleculeResultsExcitedStates.vue'
 
 export default {
   name: 'QcpiaMoleculeResults',
   components: {
+    QcpiaMoleculeResultsExcitedStates,
     QcpiaMoleculeResultsWavefunction,
     QcpiaMoleculeResultsGeometry,
     QcpiaMoleculeResultsThermochemistry
