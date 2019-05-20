@@ -71,6 +71,8 @@
           <qcpia-molecule-abstract
             :molecule="molecule"
             :computational-details="computationalDetails"
+            :author-repository="authorRepository"
+            :metadata="metadata"
           />
         </b-tab>
         <b-tab

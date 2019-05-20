@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="row mt-1">
+    <div
+      v-if="!isHidden('formula')"
+      class="row mt-1"
+    >
       <div class="col text-muted">
         Formula
       </div>
@@ -9,7 +12,10 @@
         v-html="formattedFormula"
       />
     </div>
-    <div class="row mt-1">
+    <div
+      v-if="!isHidden('charge')"
+      class="row mt-1"
+    >
       <div class="col text-muted">
         Charge
       </div>
@@ -17,7 +23,10 @@
         {{ molecule.charge }}
       </div>
     </div>
-    <div class="row  mt-1">
+    <div
+      v-if="!isHidden('multiplicity')"
+      class="row  mt-1"
+    >
       <div class="col text-muted">
         Spin multiplicity
       </div>
@@ -26,7 +35,7 @@
       </div>
     </div>
     <div
-      v-if="molecule.monoisotopic_mass"
+      v-if="molecule.monoisotopic_mass && !isHidden('monoisotopic_mass')"
       class="row mt-1"
     >
       <div class="col">
@@ -41,7 +50,7 @@
     </div>
 
     <div
-      v-if="molecule.iupac"
+      v-if="molecule.iupac && !isHidden('iupac')"
       class="row mt-1"
     >
       <div class="col row">
@@ -60,7 +69,7 @@
       </div>
     </div>
     <div
-      v-if="molecule.inchi"
+      v-if="molecule.inchi && !isHidden('inchi')"
       class="row mt-1"
     >
       <div class="col">
@@ -100,7 +109,7 @@
     </div>
 
     <div
-      v-if="molecule.can"
+      v-if="molecule.can && !isHidden('can')"
       class="row mt-1"
     >
       <div class="col">
@@ -156,6 +165,13 @@ export default {
     molecule: {
       type: Object,
       required: true
+    },
+    hiddenProps: {
+      type: Array,
+      required: false,
+      default () {
+        return []
+      }
     }
   },
   computed: {
@@ -174,6 +190,9 @@ export default {
   methods: {
     notifyCopy () {
       eBus.$emit(eBus.signals.notify.SUCCESS, { message: 'Copied to clipboard' })
+    },
+    isHidden (props) {
+      return this.hiddenProps.indexOf(props) !== -1
     }
   }
 }

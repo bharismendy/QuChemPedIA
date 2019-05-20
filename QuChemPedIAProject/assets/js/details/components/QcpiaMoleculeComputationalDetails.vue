@@ -24,9 +24,9 @@ export default {
   },
   data () {
     return {
-      tableLabelClasses: ['text-muted', 'col-12'],
-      tableValueClasses: ['col-12'],
-      tableRowClasses: ['mt-1'],
+      tableLabelClasses: ['text-muted', 'col-auto'],
+      tableValueClasses: ['col-auto'],
+      tableRowClasses: ['mt-1 justify-content-between'],
       tableDataDef: [
         {
           path: 'general.package',
