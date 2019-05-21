@@ -3,7 +3,6 @@
 {% block content %}
   {% if results|length >= 1 %}
   <!-- Page de résultat de recherche -->
-  <div class="container">
     <!-- Affichage du nombre de résultat et valeur de la recherche - Test si le nombre est >1 pour accorder en nombre le texte -->
     <div class="row">
       <h2 id="result-title">{{ results.nbresult }} result{% if results.nbresult > 1 %}s{% endif %} for <strong>{{ query_form.search.value }}</strong>.</h2>
@@ -153,7 +152,7 @@
         <span class="content_btn_page"></span>
         <i class="fa fa-angle-right btn-next" style="font-size:24px"></i>
       </div>
-  </div>
+
       {% else %}
       <!-- Gestion de la page s'il n'y a pas de résultats pour la recherche -->
       <div class='container' style='margin-top:50px;'>
