@@ -294,9 +294,6 @@ def create_query_log(path, json_file, destination_dir, id_user):
                         new_sib = True
                 else:
                     new_sib = True
-
-            print(new_sub)
-            print(new_sib)
             if not (new_sib or new_sub):
                 return 3
             if new_sub and new_sib:
@@ -380,3 +377,4 @@ def import_file(path, json_file, id_user):
             print(error)
             return 4
     return create_query_log(path=path, json_file=json_file, destination_dir=destination_dir, id_user=id_user)
+
