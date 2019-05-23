@@ -6,7 +6,7 @@ $theme-colors: (
 );
 
 @import "~bootstrap/scss/bootstrap";
-@import "resultPage";
+
 
 @import "~vue2-animate/dist/vue2-animate.css";
 
@@ -385,7 +385,7 @@ strong {
 .button_download {
   background-color: var(--default-primary-color);
   border-color: var(--default-primary-color);
-  margin-bottom: 20px;
+  margin-bottom: 100px;
   margin-right: 25px;
   color: white;
 }
@@ -667,4 +667,28 @@ img {
     color:gray;
     margin-right:20px;
     font-size: 1.5em;
+}
+
+div#pagination-2 {
+    float: left;
+}
+
+@media all and (max-width: 375px){
+    div#pagination-2 {
+        width: 100%;
+        text-align: center;
+        float: none;
+        flex-basis: initial;
+    }
+    .col.mobile-center.text-right {
+        width: 100%;
+        text-align: center!important;
+    }
+}
+
+@media all and (max-width: 425px){
+    .col.tablet-center {
+        display: none;
+    }
+
 }
