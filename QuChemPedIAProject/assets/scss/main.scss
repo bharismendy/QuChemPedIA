@@ -221,10 +221,7 @@ $theme-colors: (
 
 /* Formulaire de recherche */
 /*
-.form-control {
-  width: 40%;
-  margin-left: auto;
-}
+
 */
 /* Selection du type pour la recherche */
 .custom-select {
@@ -597,25 +594,6 @@ img {
   text-transform: uppercase;
 }
 
-/*
- * Navbar
- */
-.navbar .form-control {
-  padding: .75rem 1rem;
-  border-width: 0;
-  border-radius: 0;
-}
-
-.form-control-dark {
-  color: #fff;
-  background-color: rgba(255, 255, 255, .1);
-  border-color: rgba(255, 255, 255, .1);
-}
-
-.form-control-dark:focus {
-  border-color: transparent;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
-}
 
 /*
  * Utilities
@@ -676,15 +654,6 @@ img {
   text-shadow: 1px 1px 1px #ccc;
   font-size: 1.5em;
 }
-.button-menu
-{
-    margin-right:auto;
-    margin-right: 20px;
-}
-
-li a {
-    color: black;
-}
 
 .log{
 
@@ -721,4 +690,5 @@ div#pagination-2 {
     .col.tablet-center {
         display: none;
     }
+
 }
