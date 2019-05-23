@@ -67,9 +67,9 @@
                 <!-- En fonction du critère de recherche rajouter InChi ou CID ou cansmiles -->
                   <div class="container row">
                     <div id="molecule_{{ value.0.id_log }}" class="col molecule_name">
-                      {% if query_form.typeQuery.value ==  "InChi" %}<div id="inchi_{{ value.0.id_log }}"><strong>InChi: </strong><span>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}Unknown{% endif %}</span></div>{% endif %}
-                      {% if query_form.typeQuery.value ==  "SMILES" %}<div><strong>Canonical smiles: </strong><span>{% if value.0.cansmiles != "Null" or value.0.cansmiles == 0 %}{{ value.0.cansmiles }}{% else %}Unknown{% endif %}</span></div>{% endif %}
-                      {% if query_form.typeQuery.value ==  "CID" %}<div><strong>CID: </strong><span>{% if value.0.cid != "Null" or value.0.cid == 0 %}{{ value.0.cid }}{% else %}Unknown{% endif %}</span></div>{% endif %}
+                      {% if query_form.typeQuery.value ==  "InChi" %}<div id="inchi_{{ value.0.id_log }}"><<span class="text-muted">>InChi: </span><span>{% if value.0.InChi != "Null" or value.0.InChi == 0 %}{{ value.0.InChi }}{% else %}Unknown{% endif %}</span></div>{% endif %}
+                      {% if query_form.typeQuery.value ==  "SMILES" %}<div><<span class="text-muted">>Canonical smiles: </span><span>{% if value.0.cansmiles != "Null" or value.0.cansmiles == 0 %}{{ value.0.cansmiles }}{% else %}Unknown{% endif %}</span></div>{% endif %}
+                      {% if query_form.typeQuery.value ==  "CID" %}<div><<span class="text-muted">>CID: </span><span>{% if value.0.cid != "Null" or value.0.cid == 0 %}{{ value.0.cid }}{% else %}Unknown{% endif %}</span></div>{% endif %}
                     </div>
                   </div>
                 </div>
@@ -78,7 +78,7 @@
                     <div class="col-lg-4">
                       <!-- Formule -->
                       <a href="./details?id={{value.0.id_log}}" class="formula">
-                        <b>Formula : </b>{% if value.0.formula != "Null" %}<span id="formula_{{ value.0.id_log }}">{{value.0.formula}}</span>{% else%}Unknown{% endif %}
+                          <span class="">Formula: </span>{% if value.0.formula != "Null" %}<b>{{value.0.formula}}</b>{% else%}Unknown{% endif %}
                       </a>
                     </div>
                       {% if value.0.iupac != "Null" %}
@@ -94,34 +94,34 @@
                     <div class="col-lg-4">
                         <!-- Job Types -->
                         <a href="./details?id={{value.0.id_log}}" class="">
-                            <b>Job Type :{% if value.0.job_type != "Null"%}{{ value.0.job_type.0 }}{%else %}Unknown{% endif %} </b>
+                            <span class=""> Job Type: </span>{% if value.0.job_type != "Null"%}<b>{{ value.0.job_type.0 }}</b>{%else %}Unknown{% endif %}
                         </a>
                       </div>
                     <div class="col-lg-8">
                         <!-- Software - on affiche que le nom du software -->
-                      <strong>Software : </strong>{% if value.0.software != "Null" or value.0.software == 0 %}{{ value.0.software }}{% else %}Unknown{% endif %}
+                      <span class="text-muted">Software: </span>{% if value.0.software != "Null" or value.0.software == 0 %}{{ value.0.software }}{% else %}Unknown{% endif %}
                     </div>
                 </div>
                   <div class="container row">
                     <div class="col-lg-4">
                       <!-- Charge -->
-                      <strong>Charge : </strong>{% if value.0.charge != "Null" or value.0.charge == 0 %}{{ value.0.charge }}{% else %}Unknown{% endif %}
+                        <span class="text-muted">Charge: </span>{% if value.0.charge != "Null" or value.0.charge == 0 %}{{ value.0.charge }}{% else %}Unknown{% endif %}
                     </div>
                     <div class="col-lg-8">
-                      {% if value.0.basis_set_name != "Null" or value.0.basis_set_name == 0 %}<strong>Basis set name: </strong>{{ value.0.basis_set_name }}{% else %}<strong>Basis set size : </strong> ({% if value.0.basis_set_size != "Null" or value.0.basis_set_size == 0 %}{{ value.0.basis_set_size }} functions{% else %}Unknown{% endif %}){% endif %}
+                      {% if value.0.basis_set_name != "Null" or value.0.basis_set_name == 0 %}<span class="text-muted">Basis set name: </span>{{ value.0.basis_set_name }}{% else %}<span class="text-muted">Basis set size: </span> {% if value.0.basis_set_size != "Null" or value.0.basis_set_size == 0 %}{{ value.0.basis_set_size }} functions{% else %}Unknown{% endif %}{% endif %}
                      </div>
                   </div>
                   <div class="container row">
                     <div class="col-lg-4">
                       <!-- Multiplicité -->
-                      <strong>Multiplicity: </strong>{% if value.0.multiplicity != "Null" or value.0.multiplicity == 0 %}{{ value.0.multiplicity }}{% else %}Unknown{% endif %}
+                      <span class="text-muted">Multiplicity: </span>{% if value.0.multiplicity != "Null" or value.0.multiplicity == 0 %}{{ value.0.multiplicity }}{% else %}Unknown{% endif %}
                     </div>
                     <div class="col-lg-8">
                       <!-- Théorie du calcul
                         Si la théorie est DFT on affiche seulement la fonction sinon on affiche la théorie/fonction
                         On ajoute Le Basis set name (et sa valeur)
                      -->
-                      <strong>Basis set : </strong>{% if value.0.theory == "DFT" %}{{ value.0.functionnal }}{% else %}{{ value.0.theory }}/{{ value.0.functionnal }}{% endif %}
+                      <span class="text-muted">Series: </span>{% if value.0.theory == "DFT" %}{{ value.0.functionnal }}{% else %}{{ value.0.theory }}/{{ value.0.functionnal }}{% endif %}
                     </div>
                   </div>
                   <div class="container row">
@@ -129,12 +129,12 @@
                       <!-- Solvent et méthode
                         Si le solvent est différent de gas on affichage aussi la méthode de solvatation
                       -->
-                      <strong>Solvent : </strong>{% if value.0.solvent != "Null" or value.0.solvent == 0 %}{{ value.0.solvent }}{% else %}Unknown{% endif %}
-                      {% if value.0.solvent != "Gas" %} / <strong>Solvatation method : </strong>{% if value.0.solvatation_method != "Null" or value.0.solvatation_method == 0 %}{{ value.0.solvatation_method }}{% else %}Unknown{% endif %}{% else %}{% endif %}
+                      <span class="text-muted">Solvent: </span>{% if value.0.solvent != "Null" or value.0.solvent == 0 %}{{ value.0.solvent }}{% else %}Unknown{% endif %}
+                      {% if value.0.solvent != "Gas" %} / <span class="text-muted">Solvatation method: </span>{% if value.0.solvatation_method != "Null" or value.0.solvatation_method == 0 %}{{ value.0.solvatation_method }}{% else %}Unknown{% endif %}{% else %}{% endif %}
                     </div>
                     <div class="col-lg-8">
                       <!-- Ending Energy -->
-                      <strong>Ending energy : </strong>{% if value.0.ending_energy != "Null" or value.0.ending_energy == 0 %}{{ value.0.ending_energy|floatformat:"7" }} a.u. {% else %}Unknown{% endif %}
+                      <span class="text-muted">Ending energy: </span>{% if value.0.ending_energy != "Null" or value.0.ending_energy == 0 %}{{ value.0.ending_energy|floatformat:"7" }} a.u. {% else %}Unknown{% endif %}
                     </div>
                   </div>
                 </div>
