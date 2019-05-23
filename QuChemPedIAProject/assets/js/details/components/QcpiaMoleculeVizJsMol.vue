@@ -1,10 +1,13 @@
 <template>
-  <div>
-    <!--        <div id="spinstuff" />-->
-    <!--        <div-->
-    <!--          id="apphere"-->
-    <!--          class="w-100"-->
-    <!--        />-->
+  <div
+    ref="container"
+    class="w-100"
+  >
+    <iframe
+      :src="vizUrl"
+      class="w-100 border-0"
+      height="500"
+    />
   </div>
 </template>
 
@@ -17,7 +20,10 @@ export default {
       required: true
     }
   },
-  mounted () {
+  computed: {
+    vizUrl () {
+      return `${this.$root.baseUrl}/access/viz?log_file=${this.metadata.log_file}`
+    }
   }
 }
 </script>

@@ -59,6 +59,12 @@
           :tabs-display="false"
         />
       </b-card>
+      <b-card class="mt-4">
+        <h5 slot="header">
+          Visualisation
+        </h5>
+        <qcpia-molecule-viz-js-mol :metadata="metadata" />
+      </b-card>
     </template>
     <b-card
       v-else
