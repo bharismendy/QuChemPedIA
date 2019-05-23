@@ -8,7 +8,7 @@
         Original log file
       </div>
       <div class="col">
-        <a :href="`data_dir/${metadata.log_file}`">
+        <a :href="`/common_qcpia/static/data_dir/${metadata.log_file}`">
           <i class="fa fa-download mr-1" />
           Download
         </a>

@@ -70,6 +70,7 @@
         card
         fill
         class="w-100"
+        @input="onTabChanged"
       >
         <b-tab
           title="Molecule"
@@ -106,6 +107,9 @@
             :siblings="siblings"
             :author-repository="authorRepository"
           />
+        </b-tab>
+        <b-tab title="Visualisation">
+          <qcpia-molecule-viz-js-mol :metadata="metadata" />
         </b-tab>
       </b-tabs>
     </b-card>
@@ -148,10 +152,12 @@ import QcpiaMoleculeAssociatedCalculations from './QcpiaMoleculeAssociatedCalcul
 import QcpiaMoleculeMolecule from './QcpiaMoleculeMolecule.vue'
 import QcpiaMoleculeSmiles from './QcpiaMoleculeSmiles.vue'
 import QcpiaMoleculeComputationalDetails from './QcpiaMoleculeComputationalDetails.vue'
-
+import QcpiaMoleculeVizJsMol from './QcpiaMoleculeVizJsMol.vue'
+import eBus from '../../event-bus'
 export default {
   name: 'QcpiaMolecule',
   components: {
+    QcpiaMoleculeVizJsMol,
     QcpiaMoleculeComputationalDetails,
     QcpiaMoleculeSmiles,
     QcpiaMoleculeMolecule,
@@ -188,7 +194,8 @@ export default {
   },
   data () {
     return {
-      display: 'tabs'
+      display: 'tabs',
+      tabs: ['molecule', 'results', 'authorship', 'associatedCalculations', 'viz']
     }
   },
   computed: {
@@ -202,6 +209,11 @@ export default {
       return this.$root.moleculeId
     }
 
+  },
+  methods: {
+    onTabChanged (index) {
+      eBus.$emit(eBus.signals.tabs.SWITCH, { name: this.tabs[index], data: { molecule: this.molecule, metadata: this.metadata } })
+    }
   }
 }
 </script>

@@ -8,6 +8,9 @@ export default new Vue({
       notify: {
         SUCCESS: 'NOTIFY_SUCCESS',
         ERROR: 'NOTIFY_ERROR'
+      },
+      tabs: {
+        SWITCH: 'TAB_SWITCH'
       }
     }
   }
