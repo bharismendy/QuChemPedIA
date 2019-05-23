@@ -1,7 +1,7 @@
 
 window.$.urlParam = function (name) { // fonction qui permet de récupérer l'url
-  var results = new RegExp('[?&]' + name + '=([^&#]*)').exec(window.location.href)
-  return results[1] || 0
+  const results = new RegExp('[?&]' + name + '=([^&#]*)').exec(window.location.href)
+  return results[1] || undefined
 }
 
 function jmolInitViz (fileUrl, baseUrl) {
@@ -23,7 +23,6 @@ function jmolInitViz (fileUrl, baseUrl) {
     script: `set zoomLarge falase; load ${fileUrl}`
   }
 
-  console.log(Info)
 
   window.Jmol._document = null
   window.$('#apphere').html(window.Jmol.getAppletHtml('jmolApplet0', Info))
@@ -39,7 +38,6 @@ window.$(document).ready(() => {
     const baseUrl = vizContainer.dataset.baseUrl
 
     const fileUrl = `${baseUrl}${dataDir}${logFile}`
-    console.log({ logFile, dataDir, fileUrl })
     jmolInitViz(fileUrl, baseUrl)
   }, 2000)
 })
