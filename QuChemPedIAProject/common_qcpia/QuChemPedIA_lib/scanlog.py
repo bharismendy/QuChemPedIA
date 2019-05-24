@@ -2,16 +2,15 @@
 #-*- coding: utf-8 -*-
 
 from __future__ import print_function
-
 import os
 import sys
 import json
 import pickle
 import hashlib
 import traceback
-
-import cclib # custom github BenoitDamota/cclib (clone+pythonpath)
-import pybel # included in openbabel (pip install open babel)
+import cclib  # custom github BenoitDamota/cclib (clone+pythonpath)
+import cclib.parser
+import pybel  # included in openbabel (pip install open babel)
 import numpy as np
 import openbabel as ob # (apt + pip)
 import scipy.sparse as sp
@@ -25,11 +24,16 @@ scanlog_version = "v7.4"
 
 """ Scanlog Exception class.
 """
+
+
 class ScanlogException(Exception):
     pass
 
+
 """Redefining nuclear_repulsion_energy with 5 decimals of precision on coords.
 """
+
+
 def nuclear_repulsion_energy(data, slice_id=-1):
     nre = 0.0
     for i in range(data.natom):
@@ -42,11 +46,14 @@ def nuclear_repulsion_energy(data, slice_id=-1):
             nre += zi * zj / d
     return float("%.5f" % (nre * CstBohr2Ang))
 
+
 """Utility function to simplify data recording from dict or other object.
 """
+
+
 def _try_key_insertion(res_json, key, obj, obj_path=[], nullable=True):
     # case : dictionary
-    if obj.__class__ == dict :
+    if obj.__class__ == dict:
         try:
             if obj_path:
                 d = obj.copy()
@@ -60,10 +67,11 @@ def _try_key_insertion(res_json, key, obj, obj_path=[], nullable=True):
     # case : simple object
     elif obj != 'N/A':
         res_json[key] = obj
-    elif not nullable:        
+    elif not nullable:
         raise ScanlogException("Fatal : key %s is N/A but is required" % key)
     # else obj is 'N/A' ans is ignored
-    
+
+
 def general_param_subsection(res_json, data_json, data, obdata):
     res_json["comp_details"]["general"] = {}
     section = res_json["comp_details"]["general"]
@@ -79,7 +87,7 @@ def general_param_subsection(res_json, data_json, data, obdata):
             theo_array = all_unique_theory
     except:
         theo_array = 'N/A'
-    if theo_array.__class__ != str :
+    if theo_array.__class__ != str:
         if len(theo_array) > 0:
             theo_array = theo_array.tolist() if (theo_array != 'N/A').any() else 'N/A'
         else:
@@ -102,14 +110,14 @@ def general_param_subsection(res_json, data_json, data, obdata):
     try:
         basis_str = pickle.dumps(data.gbasis, protocol=0)
         basis_hash = hashlib.md5(basis_str).hexdigest()
-        _try_key_insertion(section, "basis_set", basis_str.decode())#"%s"  % basis_str[2:-1])
+        _try_key_insertion(section, "basis_set", basis_str.decode())  # "%s"  % basis_str[2:-1])
         _try_key_insertion(section, "basis_set_md5", basis_hash)
     except:
         pass
     _try_key_insertion(section, "basis_set_size", data_json, ['properties', 'orbitals', 'basis number'])
     _try_key_insertion(section, "ao_names", data_json, ['atoms', 'orbitals', 'names'])
     try:
-        section["is_closed_shell"] = repr(len(data.moenergies) == 1 
+        section["is_closed_shell"] = repr(len(data.moenergies) == 1
                                           or np.allclose(*data.moenergies, atol=1e-6))
     except:
         pass
@@ -119,16 +127,19 @@ def general_param_subsection(res_json, data_json, data, obdata):
     _try_key_insertion(section, "scf_targets", data_json, ['optimization', 'scf', 'targets'])
     _try_key_insertion(section, "core_electrons_per_atoms", data_json, ['atoms', 'core electrons'])
 
+
 def geometry_param_subsection(res_json, data_json, data, obdata):
     res_json["comp_details"]["geometry"] = {}
     section = res_json["comp_details"]["geometry"]
     _try_key_insertion(section, "geometric_targets", data_json, ['optimization', 'geometric targets'])
+
 
 def freq_param_subsection(res_json, data_json, data, obdata):
     res_json["comp_details"]["freq"] = {}
     section = res_json["comp_details"]["freq"]
     _try_key_insertion(section, "temperature", data_json, ['properties', 'temperature'])
     _try_key_insertion(section, "anharmonicity", data_json, ['vibrations', 'anharmonicity constants'])
+
 
 def td_param_subsection(res_json, data_json, data, obdata):
     res_json["comp_details"]["excited_states"] = {}
@@ -143,6 +154,7 @@ def td_param_subsection(res_json, data_json, data, obdata):
     # res_json["comp_details"]["excited_states"]["et_optimization"] = 'N/A' # boolean (if optimization of ES)
     # res_json["comp_details"]["excited_states"]["opt_root_number"] = 'N/A' # optimized ES number
 
+
 def wavefunction_results_subsection(res_json, data_json, data, obdata):
     res_json["results"]["wavefunction"] = {}
     section = res_json["results"]["wavefunction"]
@@ -153,7 +165,7 @@ def wavefunction_results_subsection(res_json, data_json, data, obdata):
     # MO_number, MO_energies, MO_sym, MO_coefs
     try:
         _try_key_insertion(section, "MO_number", data_json, ['properties', 'orbitals', 'MO number'],
-                          nullable=False) # not nullable in this context, exception catched.
+                           nullable=False)  # not nullable in this context, exception catched.
         # TODO : Pb with energies, if NaN -> -inf
         data.moenergies[-1][np.isnan(data.moenergies[-1])] = -np.inf
         w_cut = np.where(data.moenergies[-1] > 10.)
@@ -167,7 +179,7 @@ def wavefunction_results_subsection(res_json, data_json, data, obdata):
         _try_key_insertion(section, "MO_sym", [mosym[:b_cut] for mosym in section["MO_sym"]])
 
         # compress and prune mocoeffs
-        threshold = 0.05 # compression with loss threshold
+        threshold = 0.05  # compression with loss threshold
         mo_coefs = []
         # take last mocoeffs  (-2 with alpha/beta or -1)
         nb_coef = -2 if len(data.moenergies) == 2 else -1
@@ -178,14 +190,14 @@ def wavefunction_results_subsection(res_json, data_json, data, obdata):
             a_argsort = a_.argsort(1)
             a_.sort(axis=1)
             # where are values under the threshold (based on cumsum)
-            az = np.where(a_.cumsum(axis=1) < threshold )
-            # zeroing
+            az = np.where(a_.cumsum(axis=1) < threshold)
+            #  zeroing
             a[az[0], a_argsort[az]] = 0.
             a = a[:b_cut, :]
             # to sparse csr matrix
             acsr = sp.csr_matrix(a)
             # append tuple for the csr to mo_coefs
-            mo_coefs.append( (acsr.data.tolist(), acsr.indices.tolist(), acsr.indptr.tolist()) )
+            mo_coefs.append((acsr.data.tolist(), acsr.indices.tolist(), acsr.indptr.tolist()))
         # data insertion into JSON
         section["MO_coefs"] = mo_coefs
     except Exception as e:
@@ -193,14 +205,14 @@ def wavefunction_results_subsection(res_json, data_json, data, obdata):
         pass
     _try_key_insertion(section, "total_molecular_energy", data_json, ['properties', 'energy', 'total'])
     # eV to Hartree conversion
-    try: 
+    try:
         _try_key_insertion(section, "total_molecular_energy", section["total_molecular_energy"] / CstHartree2eV)
     except:
         ## TODO : pb with SP
-        pass # SP ? failure ?
+        pass  # SP ? failure ?
     _try_key_insertion(section, "Mulliken_partial_charges", data_json, ['properties', 'partial charges', 'mulliken'])
     try:
-        section["SCF_values"] = data_json['optimization']['scf']['values'][-1][-1] 
+        section["SCF_values"] = data_json['optimization']['scf']['values'][-1][-1]
     except:
         pass
     _try_key_insertion(section, "virial_ratio", data_json, ['optimization', 'scf', 'virialratio'])
@@ -210,6 +222,7 @@ def wavefunction_results_subsection(res_json, data_json, data, obdata):
     # except:
     #     pass
 
+
 def geom_results_subsection(res_json, data_json, data, obdata):
     res_json["results"]["geometry"] = {}
     section = res_json["results"]["geometry"]
@@ -218,7 +231,8 @@ def geom_results_subsection(res_json, data_json, data, obdata):
     _try_key_insertion(section, "OPT_DONE", data_json, ['optimization', 'done'])
     _try_key_insertion(section, "elements_3D_coords_converged", data_json, ['atoms', 'coords', '3d'])
     _try_key_insertion(section, "geometric_values", data_json, ['optimization', 'geometric values'])
-   
+
+
 def freq_results_subsection(res_json, data_json, data, obdata):
     res_json["results"]["freq"] = {}
     section = res_json["results"]["freq"]
@@ -233,7 +247,7 @@ def freq_results_subsection(res_json, data_json, data, obdata):
     _try_key_insertion(section, "zero_point_energy", data_json, ['properties', 'zero point energy'])
     _try_key_insertion(section, "electronic_thermal_energy", data_json, ['properties', 'electronic thermal energy'])
     try:
-        section["polarizabilities"] =  data.polarizabilities[0].tolist()
+        section["polarizabilities"] = data.polarizabilities[0].tolist()
     except:
         pass
     _try_key_insertion(section, "vibrational_freq", data_json, ['vibrations', 'frequencies'])
@@ -242,6 +256,7 @@ def freq_results_subsection(res_json, data_json, data, obdata):
     _try_key_insertion(section, "vibration_disp", data_json, ['vibrations', 'displacement'])
     _try_key_insertion(section, "vibrational_anharms", data_json, ['vibrations', 'anharmonicity constants'])
     _try_key_insertion(section, "vibrational_raman", data_json, ['vibrations', 'intensities', 'raman'])
+
 
 def td_results_subsection(res_json, data_json, data, obdata):
     res_json["results"]["excited_states"] = {}
@@ -253,17 +268,18 @@ def td_results_subsection(res_json, data_json, data, obdata):
     _try_key_insertion(section, "et_rot", data_json, ['transitions', 'rotatory strength'])
     _try_key_insertion(section, "et_transitions", data_json, ['transitions', 'one excited config'])
 
+
 def molecule_section(res_json, data_json, data, obdata, verbose=False):
     res_json["molecule"] = {}
     section = res_json["molecule"]
 
     # Start OpenBabel (all are mandatory)
     try:
-        res_json["molecule"]["inchi"] = obdata.write("inchi").strip() # remove trailing \n
+        res_json["molecule"]["inchi"] = obdata.write("inchi").strip()  # remove trailing \n
         res_json["molecule"]["smi"] = obdata.write("smi").split()[0]
         res_json["molecule"]["can"] = obdata.write("can").split()[0]
         res_json["molecule"]["chirality"] = obdata.OBMol.IsChiral()
-        res_json["molecule"]["monoisotopic_mass"] = obdata.OBMol.GetExactMass() # in Dalton
+        res_json["molecule"]["monoisotopic_mass"] = obdata.OBMol.GetExactMass()  # in Dalton
         res_json["molecule"]["atoms_valence"] = [at.OBAtom.GetValence() for at in obdata.atoms]
         connectivity = {}
         connectivity["atom_pairs"] = []
@@ -277,7 +293,7 @@ def molecule_section(res_json, data_json, data, obdata, verbose=False):
         res_json["molecule"]["connectivity"] = connectivity
     except:
         if verbose:
-            traceback.print_exc()            
+            traceback.print_exc()
         raise ScanlogException("Reading mandatory data failed (Openbabel)")
     # End OpenBabel
 
@@ -288,32 +304,34 @@ def molecule_section(res_json, data_json, data, obdata, verbose=False):
     _try_key_insertion(section, "charge", data_json, ['properties', 'charge'])
     _try_key_insertion(section, "multiplicity", data_json, ['properties', 'multiplicity'])
     _try_key_insertion(section, "atoms_Z", data_json, ['atoms', 'elements', 'number'])
-    #_try_key_insertion(section, "atoms_masses", data.atommasses.tolist())
-    #_try_key_insertion(section, "nuclear_spins", data.nuclearspins.tolist())
-    #_try_key_insertion(section, "atoms_Zeff", data.atomzeff.tolist())
-    #_try_key_insertion(section, "nuclear_QMom", data.nuclearqmom.tolist())
-    #_try_key_insertion(section, "nuclear_gfactors", data.nucleargfactors.tolist())
-    _try_key_insertion(section, "starting_geometry", data.atomcoords[0,:,:].tolist())
+    # _try_key_insertion(section, "atoms_masses", data.atommasses.tolist())
+    # _try_key_insertion(section, "nuclear_spins", data.nuclearspins.tolist())
+    # _try_key_insertion(section, "atoms_Zeff", data.atomzeff.tolist())
+    # _try_key_insertion(section, "nuclear_QMom", data.nuclearqmom.tolist())
+    # _try_key_insertion(section, "nuclear_gfactors", data.nucleargfactors.tolist())
+    _try_key_insertion(section, "starting_geometry", data.atomcoords[0, :, :].tolist())
     ## TODO: pb with SP
-    _try_key_insertion(section, "starting_energy",  data_json, 
-                      ["optimization", "scf", "scf energies"]) # in eV
+    _try_key_insertion(section, "starting_energy", data_json,
+                       ["optimization", "scf", "scf energies"])  # in eV
     try:
         # eV to Hartree conversion
         _try_key_insertion(section, "starting_energy", section["starting_energy"][0] / CstHartree2eV)
     except:
-        pass #  SP ?
+        pass  # SP ?
     _try_key_insertion(section, "starting_nuclear_repulsion", nuclear_repulsion_energy(data, 0))
+
 
 def parameters_section(res_json, data_json, data, obdata):
     res_json["comp_details"] = {}
     # subsection : General parameters
     general_param_subsection(res_json, data_json, data, obdata)
-    # subsection : Geometry 
+    # subsection : Geometry
     geometry_param_subsection(res_json, data_json, data, obdata)
     # subsection : Thermochemistry and normal modes
     freq_param_subsection(res_json, data_json, data, obdata)
     # subsection :  Excited states
     td_param_subsection(res_json, data_json, data, obdata)
+
 
 def results_section(res_json, data_json, data, obdata):
     res_json["results"] = {}
@@ -326,12 +344,14 @@ def results_section(res_json, data_json, data, obdata):
     # subsection : Excited states
     td_results_subsection(res_json, data_json, data, obdata)
 
+
 def metadata_section(logfile, res_json, data_json, data, obdata):
     res_json["metadata"] = {}
     section = res_json["metadata"]
     res_json["metadata"]["parser_version"] = scanlog_version
     res_json["metadata"]["log_file"] = os.path.basename(logfile)
-    #res_json["metadata"]["publication_DOI"] = 'N/A'
+    # res_json["metadata"]["publication_DOI"] = 'N/A'
+
 
 def full_report(logfile, data_json, data, obdata, verbose=False):
     res_json = {}
@@ -344,22 +364,23 @@ def full_report(logfile, data_json, data, obdata, verbose=False):
     # section : Metadata
     metadata_section(logfile, res_json, data_json, data, obdata)
     return res_json
-    
+
+
 def logfile_to_dict(logfile, verbose=False):
     # reading with cclib
     data = cclib.parser.ccopen(logfile).parse()
     data_json = json.loads(data.writejson())
     # openbabel sur XYZ
     obdata = pybel.readstring("xyz", data.writexyz())
-    # construct new dict    
+    # construct new dict
     return full_report(logfile, data_json, data, obdata, verbose=verbose)
 
 
 def job_type_guess(res_json):
     job_type = []
     # TODO : verify for other solvers
-    if ((res_json["comp_details"]["general"]["package"] == "Gaussian") or 
-        (res_json["comp_details"]["general"]["package"] == "GAMESS")): 
+    if ((res_json["comp_details"]["general"]["package"] == "Gaussian") or
+            (res_json["comp_details"]["general"]["package"] == "GAMESS")):
         ### TODO: GAMESS not tested, accepted here only for Riken DB insertion purpose (only OPT)
         ### Note: tested and works for TD
         if "vibrational_freq" in res_json["results"]["freq"].keys():
@@ -367,7 +388,7 @@ def job_type_guess(res_json):
                 job_type.append('FREQ_ES')
             else:
                 job_type.append('FREQ')
-        if "geometric_targets" in res_json["comp_details"]["geometry"].keys(): # problem with STO
+        if "geometric_targets" in res_json["comp_details"]["geometry"].keys():  # problem with STO
             if "nb_et_states" in res_json["comp_details"]["excited_states"].keys():
                 job_type.append('OPT_ES')
             else:
@@ -381,8 +402,11 @@ def job_type_guess(res_json):
         #     job_type.append('MO')
     res_json["comp_details"]["general"]["job_type"] = job_type
 
+
 """Verify that Logfile is readable by cclib and extract solver.
 """
+
+
 def quality_check_lvl1(logfile, verbose=False):
     if verbose:
         print(">>> START QC lvl1 <<<")
@@ -396,8 +420,11 @@ def quality_check_lvl1(logfile, verbose=False):
     solver = data.metadata['package']
     return solver
 
+
 """Split Logfile.
 """
+
+
 def split_logfile(logfile, solver, log_storage_path="", verbose=False):
     try:
         log_files = []
@@ -410,7 +437,7 @@ def split_logfile(logfile, solver, log_storage_path="", verbose=False):
             with open(logfile, 'r') as log_fd:
                 lines = log_fd.readlines()
             nbl = len(lines)
-            
+
             file_cnt = 0
             base_fname = os.path.basename(logfile).rsplit('.', 1)[0]
             log_pat = os.path.join(log_storage_path, "%s_step_%s.log" % (base_fname, "%d"))
@@ -418,21 +445,21 @@ def split_logfile(logfile, solver, log_storage_path="", verbose=False):
             if verbose:
                 print(">>> Processing", cur_log, "...")
             cur_log_fd = open(cur_log, "w")
-        
+
             for cur_l, line in enumerate(lines):
                 cur_log_fd.write(line)
-                if line.find(TERM) > -1 :
+                if line.find(TERM) > -1:
                     if verbose:
-                        print("=> ",line)
+                        print("=> ", line)
                     log_files.append(cur_log)
                     cur_log_fd.close()
                     file_cnt += 1
-                    if nbl > (cur_l + 1) :
+                    if nbl > (cur_l + 1):
                         cur_log = log_pat % file_cnt
                         if verbose:
                             print(">>> Processing", cur_log, "...")
                         cur_log_fd = open(cur_log, "w")
-            if not cur_log_fd.closed :
+            if not cur_log_fd.closed:
                 cur_log_fd.close()
         elif solver == "GAMESS":
             ### TODO : GAMESS not tested, accepted here only for Riken
@@ -441,12 +468,12 @@ def split_logfile(logfile, solver, log_storage_path="", verbose=False):
             with open(logfile, 'r') as log_fd:
                 lines = log_fd.readlines()
             for line in lines:
-                if line.find(TERM) > -1 :
+                if line.find(TERM) > -1:
                     if verbose:
-                        print("=> ",line)
+                        print("=> ", line)
                     log_files.append(logfile)
             pass
-        else: # other solvers
+        else:  # other solvers
             log_files.append(logfile)
         if verbose:
             print(">>> Steps :", log_files, "\n")
@@ -455,24 +482,26 @@ def split_logfile(logfile, solver, log_storage_path="", verbose=False):
         if verbose:
             traceback.print_exc()
         raise ScanlogException("File spliting failed.")
-        
+
 
 """Check if logfile is archivable and candidate for a new entry.
-"""       
+"""
+
+
 def quality_check_lvl2(res_json, solver, verbose=False):
     qual = "True"
-    qual2 = "False"
-    if not "basis_set_md5" in res_json["comp_details"]["general"].keys():
-        qual = "False"
+    qual2 = "True"
+    # if not "basis_set_md5" in res_json["comp_details"]["general"].keys():
+    #     qual = "False"
     if not "total_molecular_energy" in res_json["results"]["wavefunction"].keys():
         qual = "False"
     # if OPT then res_json["results"]["wavefunction"]["MO_coefs"] needed
-    if 'OPT' in res_json["comp_details"]["general"]["job_type"]:
-        if "MO_coefs" in res_json["results"]["wavefunction"].keys():
-            qual2 = "True"
-            # # If only OPT then qual = False (not archivable) ???
-            # if len(res_json["comp_details"]["general"]["job_type"]) == 1:
-            #     qual = "False"
+    # if 'OPT' in res_json["comp_details"]["general"]["job_type"]:
+    #     if "MO_coefs" in res_json["results"]["wavefunction"].keys():
+    #         qual2 = "True"
+    # # If only OPT then qual = False (not archivable) ???
+    # if len(res_json["comp_details"]["general"]["job_type"]) == 1:
+    #     qual = "False"
 
     res_json['metadata']['archivable'] = qual
     res_json['metadata']['archivable_for_new_entry'] = qual2
@@ -484,36 +513,39 @@ def quality_check_lvl2(res_json, solver, verbose=False):
         print("Archivable for new entry:", res_json['metadata']['archivable_for_new_entry'])
         print(">>> END QC lvl2 <<<\n")
 
+
 def process_logfile(logfile, log_storage_path="", verbose=False):
     solver = quality_check_lvl1(logfile, verbose=verbose)
     log_files = split_logfile(logfile, solver, log_storage_path=log_storage_path, verbose=verbose)
     json_list = []
     for log in log_files:
         res_json = logfile_to_dict(log, verbose=verbose)
-        job_type_guess(res_json)            
+        job_type_guess(res_json)
         quality_check_lvl2(res_json, solver, verbose=verbose)
         json_list.append(res_json)
     return (log_files, json_list)
+
 
 def process_logfile_list(logfilelist, log_storage_path="", verbose=False):
     json_list = []
     log_files = []
     for logfile in logfilelist:
-        l, j = process_logfile(logfile, 
-                               log_storage_path=log_storage_path
+        l, j = process_logfile(logfile,
+                               log_storage_path=log_storage_path,
                                verbose=verbose)
         json_list += j
         logfile += l
-        
+
     return (log_files, json_list)
 
-if __name__ == "__main__" :
+
+if __name__ == "__main__":
     log_files, json_list = process_logfile(sys.argv[1], log_storage_path="tmp", verbose=True)
-    if len(sys.argv) == 3 :
-        with open(sys.argv[2], "w") as fp :
+    if len(sys.argv) == 3:
+        with open(sys.argv[2], "w") as fp:
             json.dump(json_list, fp)
-    else :
+    else:
         print(">>> Processed successfully %d steps (over %d detected)." % (len(json_list),
                                                                            len(log_files)))
         print(json.dumps(json_list))
-    #print(json_list)
+    # print(json_list)

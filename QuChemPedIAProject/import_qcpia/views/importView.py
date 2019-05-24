@@ -7,12 +7,14 @@ from common_qcpia.QuChemPedIA_lib import store_in_temp
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-#from scanlog.scanlog import process_logfile
+from common_qcpia.QuChemPedIA_lib.scanlog import process_logfile
 import datetime
 import json
 import tempfile
 import shutil
 import os
+from common_qcpia.QuChemPedIA_lib import build_url
+from QuChemPedIAProject.settings import MEDIA_ROOT
 
 
 def register_soft_job_type_and_version(path_to_file_to_register):
@@ -111,14 +113,15 @@ def update_status_in_db(result_of_import: int, import_object: ImportFile):
     if result_of_import == 0:
         import_object.status = "imported to database"
     elif result_of_import == 1:
-        import_object.status = "calculation already in database"
+        import_object.status = "not archivable"
     elif result_of_import == 2:
         import_object.status = "theory not supported yet"
     elif result_of_import == 3:
-        import_object.status = "the opt is missing"
+        import_object.status = "already in database"
     else:
         import_object.status = "something goes wrong"
     import_object.save()
+
 
 
 def import_view(request):
@@ -144,8 +147,9 @@ def import_view(request):
             myfile = request.FILES['file']  # work for dropzone only
         # todo add json transform
         content = ContentFile(myfile.read())
-        dirpath = tempfile.mkdtemp(prefix="/var/www/html/media/to_import/tmp/")
-        filepath = os.path.join(dirpath,"file.log")
+        #dirpath = tempfile.mkdtemp(prefix="/var/www/html/media/to_import/tmp/")
+        dirpath = tempfile.mkdtemp(prefix=os.path.join(MEDIA_ROOT, "to_import/tmp/"))
+        filepath = os.path.join(dirpath, "file.log")
         default_storage.save(filepath, content)
         file_list, json_list = process_logfile(filepath, log_storage_path=os.path.dirname(dirpath))
 
@@ -158,25 +162,6 @@ def import_view(request):
             final_path = store_in_temp(id_calcul=str(temps.id_file), file=json_file, type="json")
             temps.path_file = final_path
             temps.log_path_file = log_final_path
-            # record what user think of is file
-            if request.POST.get('job_type_opt'):
-                temps.is_opt = True
-
-            if request.POST.get('job_type_opt_es_et'):
-                temps.is_opt_es_et = True
-
-            if request.POST.get('job_type_freq'):
-                temps.is_freq = True
-
-            if request.POST.get('job_type_freq_es_et'):
-                temps.is_freq_es_et = True
-
-            if request.POST.get('job_type_sp'):
-                temps.is_sp = True
-
-            if request.POST.get('job_type_td'):
-                temps.is_td = True
-
             temps.save()
 
             # adding an import  for this day to the user*
@@ -242,7 +227,8 @@ def launch_import(request, id_file, page):
         print(error)
         file.status = 'import failed'
         file.save()
-    return HttpResponseRedirect('/admin/list_of_import_in_database?page=' + str(page))
+    url = build_url('admin/list_of_import_in_database', get={'page': request.GET.get(str(page))})
+    return HttpResponseRedirect(url)
 
 
 def delete_import(request, id_file, page):
@@ -282,4 +268,5 @@ def delete_import(request, id_file, page):
     except Exception as error:
         print(error)
         file.status("can't delete the object in database")
-    return HttpResponseRedirect('/admin/list_of_import_in_database?page=' + str(page))
+    url = build_url('admin/list_of_import_in_database', get={'page': request.GET.get(str(page))})
+    return HttpResponseRedirect(url)

@@ -17,11 +17,13 @@ def details(request):
     :return: html template
     """
     query_form = QueryForm(request.GET or None)
-    site_url = settings.SITE_URL
-    port_number = settings.SITE_PORT
-    return render(request, 'query_qcpia/details.html', {'query_form': query_form,
+    site_url = settings.SITE_ROOT_URL
+    data_dir = settings.DATA_DIR_URL
+    return render(request, 'query_qcpia/details.html', {
+                                                        'query_form': query_form,
                                                         'site_url': site_url,
-                                                        'port_number': port_number})
+                                                        'data_dir' : data_dir
+                                                        })
 
 
 def details_json(request):
@@ -33,20 +35,12 @@ def details_json(request):
     """
     id_file = request.GET.get(key='id_file')
     results = None
-    path = settings.MEDIA_ROOT+'/'+ id_file
-    if request.is_ajax():
-        if os.path.isfile(path):
-            try:
-                json_data = open(path)
-                results = json.load(json_data)  # deserialize it
-                json_data.close()
-            except Exception as error:
-                print(error)
-        else:
-            try:
-                results = search_id(id_file)
-            except Exception as error:
-                print(error)
+    try:
+        results = search_id(id_file)
+    except Exception as error:
+        return HttpResponse(None, status=500)
+    if results is None:
+        return HttpResponse(None, status=404)
     return HttpResponse(json.dumps(results), content_type="application/json")
 
 

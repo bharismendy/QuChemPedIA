@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'webpack_loader',
     'admin_qcpia',
     'common_qcpia',
     'import_qcpia',
@@ -114,13 +115,9 @@ AUTH_USER_MODEL = 'user_qcpia.Utilisateur'
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -128,15 +125,37 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/common_qcpia/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'common_qcpia/static')
 
 MEDIA_URL = '/common_qcpia/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'common_qcpia/media')
 
-DATA_DIR_URL = '/data_dir/'
-DATA_DIR_ROOT = os.path.join(BASE_DIR, 'data_dir')
+DATA_DIR_URL = '/common_qcpia/data_dir/'
+DATA_DIR_ROOT = os.path.join(BASE_DIR, 'common_qcpia/data_dir')
 SITE_URL = 'http://127.0.0.1'
 SITE_PORT = '8000'
-
+SITE_ROOT_URL= "http://127.0.0.1:8000"
 
 ELASTICSEARCH = {"host": "localhost", "port": 9200}
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets'),
+)
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'webpack_bundles/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map']
+    }
+}
+
+if not DEBUG:
+    WEBPACK_LOADER.update({
+        'BUNDLE_DIR_NAME': 'dist/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats-prod.json')
+})
+

@@ -3,15 +3,7 @@ from query_qcpia.forms.QueryForm import QueryForm
 from common_qcpia.search import *
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
-import urllib.parse
-
-
-def build_url(*args, **kwargs):
-    get = kwargs.pop('get', {})
-    url = reverse(*args, **kwargs)
-    if get:
-        url += '?' + urllib.parse.urlencode(get)
-    return url
+from common_qcpia.QuChemPedIA_lib import build_url
 
 
 def query(request):
@@ -58,19 +50,7 @@ def query(request):
             return HttpResponseRedirect(url)
         if 'id_user' in request.GET.get('typeQuery'):
             results = search_id_user(id_user=request.GET.get('search'), nbrpp=nbrpp, page=page)
-        """
-        if 'homo_alpha_energy' in request.GET.get('typeQuery'):
-            results = list(Query.objects.filter(homo_alpha_energy=request.GET.get('search')))
-    
-        if 'homo_beta_energy' in request.GET.get('typeQuery'):
-            results = list(Query.objects.filter(homo_beta_energy=request.GET.get('search')))
 
-        if 'lumo_alpha_energy' in request.GET.get('typeQuery'):
-            results = list(Query.objects.filter(lumo_alpha_energy=request.GET.get('search')))
-
-        if 'lumo_beta_energy' in request.GET.get('typeQuery'):
-            results = list(Query.objects.filter(lumo_beta_energy=request.GET.get('search')))
-        """
     except Exception as error:
         print("error :")
         print(error)
@@ -82,9 +62,9 @@ def query(request):
     if test_result['nbresult'] == 0 or len(test_result) == 1:
         results = '{}'
         test_result = json.loads(results)
-    if len(test_result) == 2 and request.GET.get('page') == 1:
+    if len(test_result) == 2:
         # if we have only one result we forward it to the detail page
-        url = reverse('details', args={'id': int(test_result["0"][0]["id_log"])})
+        url = build_url('details', get={'id': str(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)
 
     return render(request, 'query_qcpia/query.html', {'results': test_result, 'query_form': query_form})

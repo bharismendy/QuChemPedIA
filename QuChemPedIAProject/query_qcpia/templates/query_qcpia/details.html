@@ -1,60 +1,17 @@
 {% extends "base.html" %}
-{% block nav %}
-    {{ block.super }}
-    <div  id="download_div" class="row float-right">
-        <a class="nav-link btn btn-success default-primary-color button_download" title="Download PDF" onclick="html_converter()">
-            <svg class="feather feather-download sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                 stroke-linejoin="round" aria-hidden="true" data-reactid="466">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-        </a>
-    </div>
-{% endblock %}
+{% load render_bundle from webpack_loader %}
 {% load static %}
 {% block content %}
-    <div id="404error">
-</div>
-		<div id="loadingImage" align=center><img src="{% static "/media/loading.gif" %}" alt="loading"></div>
-		
-		<span style="font-size:30px;cursor:pointer;" id="openNav">&#9776;</span>
 
-		<div class="card sidenav" id="mySidenav">
-			 <div id="closebtn">&times;</div>
+  <div class="container">
+    <div id="app" data-moleculeid="{{ request.GET.id }}" data-data-dir="{{ data_dir }}" data-base-url="{{ site_url }}"></div>
+  </div>
+{% endblock %}
+{% block footer %}
 
-		</div>
+  {{ block.super }}
+  {#	<script src="{% static "js/details.js" %}"></script>#}
+{#  <script type="text/javascript" src="{% static "js/jsmol/js/JSmol.full.nojq.js" %}"></script>#}
 
-		<div class="container">
-			<div class="row">
-				<div id="autorshipMolecule" class="col-lg-6">
-
-				</div>
-
-				<div class="col-lg-6">
-					<canvas id="canvas" width="300" height="300">
-					  Sorry, your browser doesn't support the &lt;canvas&gt; element.
-					</canvas>
-				</div>
-			</div>
-		</div>
-		
-		<div id="associatedCalculations" class="col-mt-10 container">
-
-		</div>
-
-		<div id="ficheMolecule" class="col-mt-10 container">
-
-		</div>
-
-
-	<script>
-    var url_web_site = '{{ site_url }}';
-    var port_web_site = '{{ port_number }}'
-	var loadingImage = "{% static "/media/loading.gif" %}";
-	var scientist = "{% static "media/confused_scientist.png" %}";
-	var molecule = "{% static "media/molecule.png" %}";
-	</script>
-	<script src="{% static "js/details.js" %}"></script>
+  {% render_bundle 'details' %}
 {% endblock %}

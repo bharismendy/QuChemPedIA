@@ -1,0 +1,49 @@
+{
+  "name": "QuChemPedIAProject",
+  "version": "2.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/bharismendy/QuChemPedIA",
+  "author": "Université d'Angers",
+  "license": "MIT",
+  "scripts": {
+    "dev": "./node_modules/webpack/bin/webpack.js --config webpack.config.js --mode development",
+    "build": "./node_modules/webpack/bin/webpack.js --config webpack_production.config.js --mode production",
+    "docs:build": "vuese gen",
+    "lint": "eslint \"assets/**/*.{js,vue}\" --fix"
+  },
+  "vuese": {
+    "outDir": "../documentation/vue-components"
+  },
+  "devDependencies": {
+    "@vuese/cli": "^2.3.1",
+    "axios": "^0.18.0",
+    "copy-webpack-plugin": "^5.0.3",
+    "css-loader": "^2.1.1",
+    "cypress": "^3.2.0",
+    "eslint": ">=5.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": ">=2.13.0",
+    "eslint-plugin-node": ">=7.0.0",
+    "eslint-plugin-promise": ">=4.0.0",
+    "eslint-plugin-standard": ">=4.0.0",
+    "eslint-plugin-vue": "^5.2.2",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "vue": "^2.6.10",
+    "vue-loader": "^15.7.0",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.30.0",
+    "webpack-bundle-tracker": "^0.4.2-beta",
+    "webpack-cli": "^3.3.2"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "2.0.0-rc.20",
+    "eslint-plugin-html": "^5.0.3",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
+    "vue2-animate": "^2.1.0"
+  }
+}

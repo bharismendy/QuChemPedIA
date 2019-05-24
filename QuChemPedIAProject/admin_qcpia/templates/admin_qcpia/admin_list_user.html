@@ -1,13 +1,13 @@
 {% extends "base_admin.html" %}
 {% block content %}
         <main role="main" class="col-md-12" id="dashboard_main">
-        <form class="form-inline mb-5" action="{% url 'admin/user_list' %}" method="GET">
+        <form class="row" action="{% url 'admin/user_list' %}" method="GET">
             {% csrf_token %}
             {{ search_user_form.as_table }}
-            <button id="button-search" class="btn btn-success default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
+            <button class="mt-1 mb-1 mt-lg-0 btn btn-success default-primary-color" type="submit">Search <i class="fa fa-search"></i></button>
         </form>
         {% if users|length > 0 %}
-            <table class="table" id="table_of_user">
+            <table class="table table-responsive">
                 <thead>
                     <tr>
                         <th scope="col">User ID</th>
@@ -25,7 +25,7 @@
                         <th scope="row"><a href="{% url 'admin/edit_user' user_element.id %}">{{ user_element.id }}</a></th>
                         <td>{{ user_element.first_name }}</td>
                         <td>{{ user_element.last_name }}</td>
-                        <td>{{ user_element.email }}</td>
+                        <td>{{ user_esponsiveelement.email }}</td>
                         <td>{{ user_element.affiliation }}</td>
                         <td>{{ user_element.is_admin }}</td>
                         <td>
