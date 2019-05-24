@@ -12,7 +12,8 @@ import time
 NRE_PRECISION = -2  # power of 10
 TME_PRECISION = -6  # power of 10
 
-def trun_n_d(n, d):
+
+def truncate(n, d):
     """
     truncate fonction
     :param n: power of ten
@@ -42,11 +43,15 @@ def get_siblings_json(nre, formula, return_search = False):
     """
     es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
-    truncated_nre = trun_n_d(nre, NRE_PRECISION)
+    truncated_nre = truncate(nre, NRE_PRECISION)
+    if truncated_nre < 0:
+        upper_band_nre = truncated_nre + (-10 ** TME_PRECISION)
+    else:
+        upper_band_nre = truncated_nre + (10 ** TME_PRECISION)
     q = Q('bool',
           must=[Q('match', data__molecule__formula=formula)])
     q2 = Q('bool', data__results__nuclear_repulsion_energy_from_xyz=Range(gte=truncated_nre,
-                                                                          lt=truncated_nre+10**NRE_PRECISION))
+                                                                          lt=upper_band_nre))
 
     s = Search(index='quchempedia_index').using(es).query(q).query(q2)
     response = s.execute()
@@ -140,7 +145,6 @@ def update_siblings(list_of_siblings, id_file, job_type):
     es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     index_name = 'quchempedia_index'
-    print(list_of_siblings[0])
     for sib in list_of_siblings:
         response = es.get(index=index_name, doc_type="log_file", id=sib["id_log"])
         temp_sib = response['_source']['siblings']
@@ -148,7 +152,7 @@ def update_siblings(list_of_siblings, id_file, job_type):
         response['_source']['siblings'] = temp_sib
         es.index(index=index_name, doc_type="log_file", body=response['_source'], id=sib["id_log"])
 
-        
+
 def update_submission(last_sub, id_user, id_file, new_ref=False):
     es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
@@ -210,8 +214,18 @@ def create_query_log(path, json_file, destination_dir, id_user):
         formula = loaded_json['molecule']['formula']
         solveur = loaded_json['comp_details']['general']['package']
         tme = loaded_json['results']['wavefunction']['total_molecular_energy']  # total molecular energy
+        exited_state = loaded_json['comp_details']['excited_states']
         job_type = _get_job_type(json_file)
-        author = id_user
+        author = 6
+        symetrie = None
+        anharmonicity = None
+        temperature = None
+        discretizable = False  # TODO replace by real value (not implemented yet)
+        if 'TD' in job_type:
+            symetrie = loaded_json['results']['excited_states']['et_sym']
+        if 'FREQ' in job_type:
+            anharmonicity = loaded_json["comp_details"]["freq"]["anharmonicity"]
+            temperature = loaded_json["comp_details"]["freq"]["temperature"]
         try:
             siblings = get_siblings_json(nre=nre,
                                          formula=formula,
@@ -219,40 +233,71 @@ def create_query_log(path, json_file, destination_dir, id_user):
         except Exception as error:
             print(error)
 
-        #  boolean to know if it's a sibling or a submission
+        #  boolean to know if it's a sibling or a submission / new reference
         new_sib = False
         new_sub = False
         new_ref = False
+        already_ref = False
         ref_prec_sub = None
         if siblings.hits.total > 0:
             for hit in siblings:
-                if hit.job_type[0] in job_type:
-                    if hit.data.comp_details.general.package == solveur:
-                        truncated_tme = trun_n_d(hit.data.results.wavefunction.total_molecular_energy, TME_PRECISION)
-
-                        if truncated_tme <= tme < truncated_tme+10**NRE_PRECISION:
-                            if hit.data.metadata.id_user == author:
-                                return 3
-                            try:
-                                if hit.data.metadata.discretizable:
-                                    new_ref = True
-                                    break
-                                else:
-                                    return 3
-                            except:
-                                pass
-                        else:
-                            new_sub = True
-                            ref_prec_sub = hit.meta.id
-                            break
+                if hit.job_type == job_type:
+                    truncated_tme = truncate(hit.data.results.wavefunction.total_molecular_energy, TME_PRECISION)
+                    if truncated_tme < 0:
+                        upper_band_tme = truncated_tme+(-10**TME_PRECISION)
                     else:
-                        new_sub = True
-                        ref_prec_sub = hit.meta.id
-                        break
+                        upper_band_tme = truncated_tme + (10 ** TME_PRECISION)
+                    if truncated_tme > tme >= upper_band_tme:
+                        if hit.data.comp_details.general.package == solveur:
+                            new_sib = False
+                            if 'FREQ' in job_type:
+                                new_sib = False
+                                if anharmonicity == hit.data.comp_details.freq.anharmonicity:
+                                    if temperature == hit.data.comp_details.freq.temperature:
+                                        if hit.data.metadata.id_user != author or discretizable:
+                                            new_sub = True
+                                            new_ref = True
+                                            ref_prec_sub = hit.meta.id
+                                        else:
+                                            break
+                                    else:
+                                        new_sib = True
+                                else:
+                                    new_sib = True
+                            if 'TD' in job_type:
+                                new_sib = False
+                                if exited_state == hit.data.comp_details.excited_states:
+                                    new_sib = False
+                                    if symetrie == hit.data.results.excited_states.et_sym:
+                                        new_sib =False
+                                        if hit.data.metadata.id_user != author or discretizable:
+                                            new_sub = True
+                                            new_ref = True
+                                            ref_prec_sub = hit.meta.id
+                                        else:
+                                            break
+                                    else:
+                                        new_sib = True
+                                else:
+                                    new_sib = True
+                            else:
+                                if hit.data.metadata.id_user != author or discretizable:
+                                        new_sub = True
+                                        new_ref = True
+                                        ref_prec_sub = hit.meta.id
+                                else:
+                                    new_sub = new_sib = False
+                                    break
+                        else:
+                            new_sib = True
+                    else:
+                        new_sib = True
                 else:
                     new_sib = True
-                    break
-
+            if not (new_sib or new_sub):
+                return 3
+            if new_sub and new_sib:
+                new_sib = False
         # store data into the json
         siblings = get_siblings_json(nre=nre,
                                      formula=formula)
@@ -262,7 +307,7 @@ def create_query_log(path, json_file, destination_dir, id_user):
         temp['data']['comp_details'] = loaded_json['comp_details']
         temp['data']['metadata'] = loaded_json['metadata']
         temp['data']['metadata']['log_file'] = path
-        temp['data']['metadata']["id_user"] = id_user
+        temp['data']['metadata']["id_user"] = author
         temp['data']['metadata']['submissions'] = []
         if new_sib:
             temp['siblings'] = siblings
@@ -300,7 +345,7 @@ def create_query_log(path, json_file, destination_dir, id_user):
             subprocess.Popen(["cp", path, os.path.join(destination_dir + path_in_file_system + "/"+
                                                        loaded_json['comp_details']['general']['job_type'][0]+"_" +
                                                        str(int(round(time.time() * 1000))) + ".log")])  # copie du JSON
-            subprocess.Popen(["rm", path])
+            #subprocess.Popen(["rm", path])
             es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_file)
             return 0
         except Exception as error:
@@ -328,8 +373,8 @@ def import_file(path, json_file, id_user):
     if not es.indices.exists(index=index_name):
         try:
             response = es.indices.create(index=index_name)
-            print(response)
         except Exception as error:
             print(error)
             return 4
     return create_query_log(path=path, json_file=json_file, destination_dir=destination_dir, id_user=id_user)
+
