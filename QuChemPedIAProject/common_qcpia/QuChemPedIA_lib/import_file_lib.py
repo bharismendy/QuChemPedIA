@@ -414,5 +414,4 @@ def import_file(path, json_file, id_user):
             print(error)
             return 4
     return create_query_log(path=path, json_file=json_file, destination_dir=destination_dir, id_user=id_user)
-
-
+  

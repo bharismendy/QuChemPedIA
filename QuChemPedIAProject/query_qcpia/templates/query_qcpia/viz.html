@@ -1,0 +1,27 @@
+{% load render_bundle from webpack_loader %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div class="container-fluid" id="vizContainer" data-data-dir="{{ data_dir }}" data-base-url="{{ base_url }}">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div
+          id="apphere"
+          class="m-auto w-100 d-flex justify-content-center"
+      ></div>
+    </div>
+  </div>
+</div>
+
+{% render_bundle 'main' %}
+<script type="text/javascript" src="{% static "js/jsmol/js/JSmol.full.nojq.js" %}"></script>
+{% render_bundle 'viz' %}
+
+</body>
+</html>

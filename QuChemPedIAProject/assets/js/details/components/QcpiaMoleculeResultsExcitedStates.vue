@@ -3,6 +3,7 @@
     <h5>Calculated mono-electronic excitations</h5>
     <b-table
       :fields="monoElectronicExcitationTableFields"
+      :items="monoElectronicExcitationTableData"
     />
   </div>
 </template>
@@ -47,7 +48,7 @@ export default {
           energy_nm: Math.round(10000000 / energy),
           symmetry: etSym[index],
           oscillatorStrength: etOscs[index].toFixed(4),
-          rotatoryStrength: etRot[index] ? etRot[index].toFixed(4) : 'Unknown'
+          rotatoryStrength: etRot[index] !== undefined && etRot !== null ? etRot[index].toFixed(4) : 'Unknown'
         }
       })
     }
