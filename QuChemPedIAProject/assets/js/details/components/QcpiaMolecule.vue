@@ -46,6 +46,7 @@
         <qcpia-molecule-associated-calculations
           :author-repository="authorRepository"
           :siblings="siblings"
+          :metadata="metadata"
         />
       </b-card>
       <b-card class="mt-4">
@@ -112,6 +113,7 @@
           <qcpia-molecule-associated-calculations
             :siblings="siblings"
             :author-repository="authorRepository"
+            :metadata="metadata"
           />
         </b-tab>
         <b-tab title="Visualisation">
