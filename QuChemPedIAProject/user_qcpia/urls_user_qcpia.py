@@ -7,7 +7,6 @@ urlpatterns = [
     path('logout', views.deconnexion, name='logout'),
     path('dashboard', login_required(views.dashboard), name='dashboard'),
     path('dashboard/account', login_required(views.account), name='dasboard/account'),
-    path('dashboard/password', login_required(views.password), name='dashboard/change_password'),
     path('dashboard/history', login_required(views.user_history_import), name='dashboard/history'),
     path('dashboard/import', views_import.import_view, name='dashboard/import'),
 ]
