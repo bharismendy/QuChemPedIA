@@ -240,7 +240,7 @@ def create_query_log(path, json_file, destination_dir, id_user):
         tme = loaded_json['results']['wavefunction']['total_molecular_energy']  # total molecular energy
         exited_state = loaded_json['comp_details']['excited_states']
         job_type = _get_job_type(json_file)
-        author = 6
+        author = id_user
         symetrie = None
         anharmonicity = None
         temperature = None
