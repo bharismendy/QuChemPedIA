@@ -5,8 +5,8 @@ window.$.urlParam = function (name) { // fonction qui permet de récupérer l'ur
 }
 
 function jmolInitViz (fileUrl, baseUrl) {
-  const size = Math.min(document.querySelector('#apphere').clientWidth, 500)
-  console.log({ size })
+  const size = Math.min(document.querySelector('#apphere').scrollWidth, 500) || 500
+  console.log(size)
   const Info = {
     use: 'HTML5',
     width: size,
@@ -22,7 +22,6 @@ function jmolInitViz (fileUrl, baseUrl) {
     // readyFunction: setOptions,
     script: `set zoomLarge falase; load ${fileUrl}`
   }
-
 
   window.Jmol._document = null
   window.$('#apphere').html(window.Jmol.getAppletHtml('jmolApplet0', Info))

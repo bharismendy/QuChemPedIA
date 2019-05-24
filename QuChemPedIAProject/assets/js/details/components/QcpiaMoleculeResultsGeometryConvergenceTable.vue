@@ -72,6 +72,8 @@ export default {
       const titreCol = ['Maximum Force', 'RMS Force', 'Maximum Displacement', 'RMS Displacement']
       const items = []
 
+      if (!(this.computationalDetails.geometry.geometric_targets && this.results.geometry.geometric_values[this.results.geometry.geometric_values.length - 1])) return null
+
       const geometricTargets = this.computationalDetails.geometry.geometric_targets
       const geometricValues = this.results.geometry.geometric_values[this.results.geometry.geometric_values.length - 1]
 

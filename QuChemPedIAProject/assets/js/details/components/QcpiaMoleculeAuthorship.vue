@@ -80,9 +80,11 @@ export default {
         this.loadingAuthor = true
         this.authorRepository.findAuthorById(this.metadata.id_user)
           .then((author) => {
+            console.log({ author })
             this.$set(this, 'author', author)
-            this.loadingAuthor = false
-          })
+          }).catch(() => {
+            this.author = null
+          }).then(() => { this.loadingAuthor = false })
       }
     }
   }
