@@ -35,7 +35,7 @@ def get_base_json():
     return '{"job_type": "OPT", "data": {}, "siblings": []}'
 
 
-def get_siblings_json(nre, formula, return_search = False):
+def get_siblings_json(nre, formula, return_search=False):
     """
     use to get a sibling json
     return_search : return directly the search
@@ -61,10 +61,26 @@ def get_siblings_json(nre, formula, return_search = False):
     else:
         for hit in response:
             try:
+                try:
+                    basis_set_name = hit.data.comp_details.general.basis_set_name
+                except:
+                    basis_set_name = "Null"
+
+                try:
+                    solvent = hit.data.comp_details.general.solvent
+                except Exception as error:
+                    solvent = "GAS"
+
                 result.append({
                     "id_log": hit.meta.id,
-                    "job": _get_job_type(hit)
-                })
+                    "job": _get_job_type(hit),
+                    "charge": hit.data.molecule.charge,
+                    "multiplicity": hit.data.molecule.multiplicity,
+                    "solvent":  solvent,
+                    "ending_energy": hit.data.results.wavefunction.total_molecular_energy,
+                    "software":  hit.data.comp_details.general.package,
+                    "basis_set_name": basis_set_name,
+                    "functionnal": hit.data.comp_details.general.functional})
             except Exception as error:
                 print(error)
         return result
@@ -141,14 +157,22 @@ def get_path_to_store(destination_dir, id_calcul, make_path=False, number_of_sub
     return path_in_file_system
 
 
-def update_siblings(list_of_siblings, id_file, job_type):
+def update_siblings(list_of_siblings, id_file, job_type, charge, multiplicity, solvent, ending_energy, software, basis_set_name, functionnal):
     es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     index_name = 'quchempedia_index'
     for sib in list_of_siblings:
         response = es.get(index=index_name, doc_type="log_file", id=sib["id_log"])
         temp_sib = response['_source']['siblings']
-        temp_sib.append({"id_log": id_file, "job": job_type})
+        temp_sib.append({"id_log": id_file,
+                         "job": job_type,
+                         "charge": charge,
+                         "multiplicity": multiplicity,
+                         "solvent": solvent,
+                         "ending_energy": ending_energy,
+                         "software": software,
+                         "basis_set_name": basis_set_name,
+                         "functionnal": functionnal})
         response['_source']['siblings'] = temp_sib
         es.index(index=index_name, doc_type="log_file", body=response['_source'], id=sib["id_log"])
 
@@ -299,9 +323,9 @@ def create_query_log(path, json_file, destination_dir, id_user):
             if new_sub and new_sib:
                 new_sib = False
         # store data into the json
+        temp = json.loads(base_json)
         siblings = get_siblings_json(nre=nre,
                                      formula=formula)
-        temp = json.loads(base_json)
         temp['data']['molecule'] = loaded_json['molecule']
         temp['data']['results'] = loaded_json['results']
         temp['data']['comp_details'] = loaded_json['comp_details']
@@ -315,14 +339,27 @@ def create_query_log(path, json_file, destination_dir, id_user):
         temp['data']['metadata']["affiliation"] = get_affiliation(id_user=id_user)
         temp['job_type'] = loaded_json['comp_details']['general']['job_type']
         temp = json.dumps(temp, indent=4)
-
         try:
+            try:
+                basis_set_name = loaded_json["comp_details"]["general"]["basis_set_name"]
+            except:
+                basis_set_name = "Null"
+
             response = es.index(index=index_name, doc_type="log_file", body=temp)
             id_file = response['_id']
             response = es.get(index=index_name, doc_type="log_file", id=id_file)
 
             if new_sib:
-                update_siblings(siblings, id_file, job_type)
+                update_siblings(siblings,
+                                id_file,
+                                job_type,
+                                charge=loaded_json["molecule"]["charge"],
+                                multiplicity=loaded_json["molecule"]["multiplicity"],
+                                solvent=loaded_json["comp_details"]["general"]["solvent"],
+                                ending_energy=loaded_json["results"]["wavefunction"]["total_molecular_energy"],
+                                software=loaded_json["comp_details"]["general"]["package"],
+                                basis_set_name=basis_set_name,
+                                functionnal=loaded_json["comp_details"]["general"]["functional"])
 
             if new_sub:
                 response_last_sub = es.get(index=index_name, doc_type="log_file", id=ref_prec_sub)
@@ -335,7 +372,7 @@ def create_query_log(path, json_file, destination_dir, id_user):
                 response['_source']['data']['metadata']['submissions'] = current_sub
 
             else:
-                response['_source']['data']['metadata']['submissions'] = [{"id_log": id_file, "author": id_user}]
+                response['_source']['data']['metadata']['submissions'] = [{"id_log": id_file, "author": author}]
             path_in_file_system = get_path_to_store(destination_dir=destination_dir,
                                                     id_calcul=id_file, make_path=True)
             location_opt = os.path.join(path_in_file_system + "/"+loaded_json['comp_details']['general']['job_type'][0]+"_" +
@@ -377,4 +414,4 @@ def import_file(path, json_file, id_user):
             print(error)
             return 4
     return create_query_log(path=path, json_file=json_file, destination_dir=destination_dir, id_user=id_user)
-
+  
