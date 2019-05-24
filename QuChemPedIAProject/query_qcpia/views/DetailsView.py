@@ -17,11 +17,13 @@ def details(request):
     :return: html template
     """
     query_form = QueryForm(request.GET or None)
-    site_url = settings.SITE_URL
-    port_number = settings.SITE_PORT
-    return render(request, 'query_qcpia/details.html', {'query_form': query_form,
+    site_url = settings.SITE_ROOT_URL
+    data_dir = settings.DATA_DIR_URL
+    return render(request, 'query_qcpia/details.html', {
+                                                        'query_form': query_form,
                                                         'site_url': site_url,
-                                                        'port_number': port_number})
+                                                        'data_dir' : data_dir
+                                                        })
 
 
 def details_json(request):

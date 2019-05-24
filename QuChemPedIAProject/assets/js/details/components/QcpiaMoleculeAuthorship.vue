@@ -8,7 +8,7 @@
         Original log file
       </div>
       <div class="col">
-        <a :href="`data_dir/${metadata.log_file}`">
+        <a :href="`/common_qcpia/static/data_dir/${metadata.log_file}`">
           <i class="fa fa-download mr-1" />
           Download
         </a>
@@ -80,9 +80,11 @@ export default {
         this.loadingAuthor = true
         this.authorRepository.findAuthorById(this.metadata.id_user)
           .then((author) => {
+            console.log({ author })
             this.$set(this, 'author', author)
-            this.loadingAuthor = false
-          })
+          }).catch(() => {
+            this.author = null
+          }).then(() => { this.loadingAuthor = false })
       }
     }
   }

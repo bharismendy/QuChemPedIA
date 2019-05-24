@@ -19,71 +19,67 @@
       class="row"
       style="font-size: 1rem"
     >
-      <div
-        class="row mt-1"
-      >
-        <div class="col-12 col-lg-6">
-          <div class="row align-items-center">
-            <a
-              v-b-tooltip.hover
-              class="col-auto text-muted"
-              title="International Chemical Identifier"
-              href="https://en.wikipedia.org/wiki/International_Chemical_Identifier"
-            >Inchi
-            </a>
-            <div
-              v-b-tooltip.hover
-              class="col text-left"
-              data-testid="molecule_inchi"
-              style="text-overflow: ellipsis;  white-space: nowrap;overflow: hidden;"
-              :title="molecule.inchi.slice(6)"
-            >
-              {{ molecule.inchi.slice(6) }}
-            </div>
-            <div
-              class="col-auto text-left"
-            >
-              <qcpia-copy-text-button
-                :text="molecule.inchi.slice(6)"
-                tooltip-text="Copy Inchi to clipboard"
-                size="sm"
-                variant="outline-primary"
-                class="text-center"
-                @copied="notifyCopy"
-              />
-            </div>
+      <div class="col-12 col-lg-6">
+        <div class="row align-items-center">
+          <a
+            v-b-tooltip.hover
+            class="col-auto text-muted"
+            title="International Chemical Identifier"
+            href="https://en.wikipedia.org/wiki/International_Chemical_Identifier"
+          >Inchi
+          </a>
+          <div
+            v-b-tooltip.hover
+            class="col text-left"
+            data-testid="molecule_inchi"
+            style="text-overflow: ellipsis;  white-space: nowrap;overflow: hidden;"
+            :title="molecule.inchi.slice(6)"
+          >
+            {{ molecule.inchi.slice(6) }}
+          </div>
+          <div
+            class="col-auto text-left"
+          >
+            <qcpia-copy-text-button
+              :text="molecule.inchi.slice(6)"
+              tooltip-text="Copy Inchi to clipboard"
+              size="sm"
+              variant="outline-primary"
+              class="text-center"
+              @copied="notifyCopy"
+            />
           </div>
         </div>
-        <div class="col-12 col-lg-6">
-          <div class="row">
-            <a
-              v-b-tooltip.hover
-              class="col-auto text-muted"
-              title="Simplified Molecular Input Line Entry Specification"
-              href="https://en.wikipedia.org/wiki/Simplified_Molecular_Input_Line_Entry_Specification"
-            >SMILES
-            </a>
-            <div
-              v-b-tooltip.hover
-              class="col text-left"
-              data-testid="molecule_inchi"
-              style="text-overflow: ellipsis;  white-space: nowrap;overflow: hidden;"
-              :title="molecule.can"
-            >
-              {{ molecule.can }}
-            </div>
-            <div
-              class="col-auto text-left"
-            >
-              <qcpia-copy-text-button
-                :text="molecule.can"
-                tooltip-text="Copy SMILES to clipboard"
-                size="sm"
-                variant="outline-primary"
-                class="text-center"
-                @copied="notifyCopy"
-              />
-            </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="row">
+          <a
+            v-b-tooltip.hover
+            class="col-auto text-muted"
+            title="Simplified Molecular Input Line Entry Specification"
+            href="https://en.wikipedia.org/wiki/Simplified_Molecular_Input_Line_Entry_Specification"
+          >SMILES
+          </a>
+          <div
+            v-b-tooltip.hover
+            class="col text-left"
+            data-testid="molecule_inchi"
+            style="text-overflow: ellipsis;  white-space: nowrap;overflow: hidden;"
+            :title="molecule.can"
+          >
+            {{ molecule.can }}
+          </div>
+          <div
+            class="col-auto text-left"
+          >
+            <qcpia-copy-text-button
+              :text="molecule.can"
+              tooltip-text="Copy SMILES to clipboard"
+              size="sm"
+              variant="outline-primary"
+              class="text-center"
+              @copied="notifyCopy"
+            />
           </div>
         </div>
       </div>

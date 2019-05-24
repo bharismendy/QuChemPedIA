@@ -12,7 +12,8 @@ module.exports = {
   context: __dirname,
   entry: {
     main: ['./assets/js/main.js', './assets/scss/main.scss'],
-    details: ['./assets/js/details/main.js']
+    details: ['./assets/js/details/main.js'],
+    viz: ['./assets/js/viz/main.js']
   },
   output: {
     path: path.resolve('./common_qcpia/static/webpack_bundles/'),

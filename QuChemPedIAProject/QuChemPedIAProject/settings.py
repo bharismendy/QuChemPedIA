@@ -130,11 +130,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'common_qcpia/static')
 MEDIA_URL = '/common_qcpia/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'common_qcpia/media')
 
-DATA_DIR_URL = '/data_dir/'
-DATA_DIR_ROOT = os.path.join(BASE_DIR, 'data_dir')
+DATA_DIR_URL = '/common_qcpia/data_dir/'
+DATA_DIR_ROOT = os.path.join(BASE_DIR, 'common_qcpia/data_dir')
 SITE_URL = 'http://127.0.0.1'
 SITE_PORT = '8000'
-
+SITE_ROOT_URL= "http://127.0.0.1:8000"
 
 ELASTICSEARCH = {"host": "localhost", "port": 9200}
 
