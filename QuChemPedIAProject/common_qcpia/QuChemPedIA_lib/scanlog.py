@@ -1,18 +1,19 @@
 #!/usr/bin/python3 -W ignore
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from __future__ import print_function
+
 import os
 import sys
 import json
 import pickle
 import hashlib
 import traceback
+
 import cclib  # custom github BenoitDamota/cclib (clone+pythonpath)
-import cclib.parser
 import pybel  # included in openbabel (pip install open babel)
 import numpy as np
-import openbabel as ob # (apt + pip)
+import openbabel as ob  # (apt + pip)
 import scipy.sparse as sp
 import sklearn.preprocessing
 
@@ -20,7 +21,7 @@ import sklearn.preprocessing
 CstBohr2Ang = 0.52917721092
 CstHartree2eV = 27.21138505
 CstHartree2cm1 = 219474.6313708
-scanlog_version = "v7.4"
+scanlog_version = "v7.4a"
 
 """ Scanlog Exception class.
 """
@@ -445,10 +446,18 @@ def split_logfile(logfile, solver, log_storage_path="", verbose=False):
             if verbose:
                 print(">>> Processing", cur_log, "...")
             cur_log_fd = open(cur_log, "w")
+            # FLAG to add copyright at the beginning of each step.
+            file_start = True
 
             for cur_l, line in enumerate(lines):
+                if file_start:
+                    cur_log_fd.write(" Copyright (c) 1988,1990,1992,1993,1995,1998,2003,2009,2013,\n")
+                    cur_log_fd.write("            Gaussian, Inc.  All Rights Reserved.\n")
+                    file_start = False
+
                 cur_log_fd.write(line)
                 if line.find(TERM) > -1:
+                    file_start = True
                     if verbose:
                         print("=> ", line)
                     log_files.append(cur_log)
@@ -549,3 +558,4 @@ if __name__ == "__main__":
                                                                            len(log_files)))
         print(json.dumps(json_list))
     # print(json_list)
+

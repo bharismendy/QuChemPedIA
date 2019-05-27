@@ -112,6 +112,7 @@ def update_status_in_db(result_of_import: int, import_object: ImportFile):
     """
     if result_of_import == 0:
         import_object.status = "imported to database"
+        import_object.imported = True
     elif result_of_import == 1:
         import_object.status = "not archivable"
     elif result_of_import == 2:
@@ -270,3 +271,4 @@ def delete_import(request, id_file, page):
         file.status("can't delete the object in database")
     url = build_url('admin/list_of_import_in_database', get={'page': request.GET.get(str(page))})
     return HttpResponseRedirect(url)
+
