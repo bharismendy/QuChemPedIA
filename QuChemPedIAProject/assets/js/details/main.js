@@ -9,7 +9,7 @@ const appElement = document.querySelector('#app')
 window.qcpia = window.qcpia ? window.qcpia : {}
 
 const baseUrl = appElement.dataset.baseUrl
-
+const dataDir = appElement.dataset.dataDir
 if (appElement) {
   const id = appElement.dataset.moleculeid
   /* eslint-disable no-new */
@@ -18,7 +18,8 @@ if (appElement) {
     components: { QcpiaDetails },
     data: {
       moleculeId: id,
-      baseUrl
+      baseUrl,
+      dataDir
     },
     template: `<QcpiaDetails id="${id}" base-url="${baseUrl}"/>`
   })
