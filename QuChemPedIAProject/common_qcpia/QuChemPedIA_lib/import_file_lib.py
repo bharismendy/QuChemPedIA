@@ -240,7 +240,7 @@ def create_query_log(path, json_file, destination_dir, id_user):
         tme = loaded_json['results']['wavefunction']['total_molecular_energy']  # total molecular energy
         exited_state = loaded_json['comp_details']['excited_states']
         job_type = _get_job_type(json_file)
-        author = 6
+        author = id_user
         symetrie = None
         anharmonicity = None
         temperature = None
@@ -348,18 +348,20 @@ def create_query_log(path, json_file, destination_dir, id_user):
             response = es.index(index=index_name, doc_type="log_file", body=temp)
             id_file = response['_id']
             response = es.get(index=index_name, doc_type="log_file", id=id_file)
-
-            if new_sib:
-                update_siblings(siblings,
-                                id_file,
-                                job_type,
-                                charge=loaded_json["molecule"]["charge"],
-                                multiplicity=loaded_json["molecule"]["multiplicity"],
-                                solvent=loaded_json["comp_details"]["general"]["solvent"],
-                                ending_energy=loaded_json["results"]["wavefunction"]["total_molecular_energy"],
-                                software=loaded_json["comp_details"]["general"]["package"],
-                                basis_set_name=basis_set_name,
-                                functionnal=loaded_json["comp_details"]["general"]["functional"])
+            try:
+                if new_sib:
+                    update_siblings(siblings,
+                                    id_file,
+                                    job_type,
+                                    charge=loaded_json["molecule"]["charge"],
+                                    multiplicity=loaded_json["molecule"]["multiplicity"],
+                                    solvent= solvent,
+                                    ending_energy=loaded_json["results"]["wavefunction"]["total_molecular_energy"],
+                                    software=loaded_json["comp_details"]["general"]["package"],
+                                    basis_set_name=basis_set_name,
+                                    functionnal=loaded_json["comp_details"]["general"]["functional"])
+            except:
+                response = es.delete(index='index_name', doc_type='log_file', id=id_file)
 
             if new_sub:
                 response_last_sub = es.get(index=index_name, doc_type="log_file", id=ref_prec_sub)

@@ -1,6 +1,6 @@
 {
   "name": "QuChemPedIAProject",
-  "version": "2.1.0",
+  "version": "2.0.0-beta.1",
   "main": "index.js",
   "repository": "https://github.com/bharismendy/QuChemPedIA",
   "author": "Université d'Angers",
