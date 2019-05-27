@@ -167,7 +167,7 @@ export default {
     },
     loadSubmissionsAuthors () {
       this.metadata.submissions.forEach((submissions) => {
-        if (submissions.id_author) {
+        if (submissions.author) {
           this.authorRepository.findAuthorById(submissions.author)
             .then((author) => {
               this.$set(submissions, 'authorName', author.name)
