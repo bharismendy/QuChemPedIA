@@ -79,7 +79,7 @@
         @input="onTabChanged"
       >
         <b-tab
-          title="Molecule"
+          title="Description"
           class="py-3"
         >
           <qcpia-molecule-abstract
