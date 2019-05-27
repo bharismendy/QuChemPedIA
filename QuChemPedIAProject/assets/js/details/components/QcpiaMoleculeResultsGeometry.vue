@@ -125,7 +125,7 @@ export default {
       const tableString = `${this.cartesianAtomicCoordinatesTableItems.length}\n${this.$root.moleculeId}\tQuChemPedIA\n${
         this.cartesianAtomicCoordinatesTableItems.map((elt) => {
           return `${elt.atom}\t${elt.x}\t${elt.y}\t${elt.z}`
-        }).join('\n')
+        }).join('\r\n')
       }`
       return 'data:text/plain;charset=utf-8,' + encodeURIComponent(tableString)
     }
