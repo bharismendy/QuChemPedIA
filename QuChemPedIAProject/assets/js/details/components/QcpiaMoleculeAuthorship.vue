@@ -8,7 +8,7 @@
         Original log file
       </div>
       <div class="col">
-        <a :href="`/common_qcpia/static/data_dir/${metadata.log_file}`">
+        <a :href="logFileLink">
           <i class="fa fa-download mr-1" />
           Download
         </a>
@@ -63,6 +63,13 @@ export default {
     return {
       loadingAuthor: false,
       author: null
+    }
+  },
+  computed: {
+    logFileLink () {
+      const baseUrl = this.$root.baseUrl
+      const dataDir = this.$root.dataDir
+      return `${baseUrl}${dataDir}${this.metadata.log_file}`
     }
   },
   watch: {
