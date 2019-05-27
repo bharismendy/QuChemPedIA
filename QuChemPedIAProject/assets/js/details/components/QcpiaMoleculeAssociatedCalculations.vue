@@ -1,52 +1,67 @@
 <template>
   <div>
-    <h5 class="border-bottom pb-1">
-      Submissions
-    </h5>
-    <b-table
-      :fields="submissionsTableFieds"
-      :items="submissionTableItems"
-      borderless
-      show-empty
-    >
-      <template
-        slot="fileId"
-        slot-scope="data"
+    <section>
+      <h5 class="border-bottom pb-1">
+        Submissions
+      </h5>
+      <b-table
+        :fields="submissionsTableFieds"
+        :items="submissionTableItems"
+        :per-page="submissionTablePagination.itemsPerPage"
+        :current-page="submissionTablePagination.currentPage"
+        borderless
+        show-empty
       >
-        <a :href="`details?id=${data.item.fileId}`"><i
-          class="fa fa-external-link"
-          aria-label="Open"
-        /></a>
-      </template>
-    </b-table>
-
-    <h5 class="border-bottom pb-1">
-      Siblings
-    </h5>
-    <b-table
-      :items="siblingsTableItems"
-      :fields="siblingsTableFields"
-      borderless
-      show-empty
-    >
-      <template
-        slot="fileId"
-        slot-scope="data"
-      >
-        <a :href="`details?id=${data.item.fileId}`"><i
-          class="fa fa-external-link"
-          aria-label="Open"
-        /></a>
-      </template>
-    </b-table>
+        <template
+          slot="fileId"
+          slot-scope="data"
+        >
+          <a :href="`details?id=${data.item.fileId}`"><i
+            class="fa fa-external-link"
+            aria-label="Open"
+          /></a>
+        </template>
+      </b-table>
+      <b-pagination
+        v-if="displaySubmissionPagination"
+        v-model="submissionTablePagination.currentPage"
+        :total-rows="submissionTableItems.length"
+        :per-page="submissionTablePagination.itemsPerPage"
+        align="right"
+        size="sm"
+      />
+    </section>
+    <section>
+      <h5 class="border-bottom pb-1">
+        Siblings
+      </h5>
+      <div class="px-4">
+        <qcpia-molecule-associated-calculations-sibling
+          v-for="(sibling, index) in paginatedSiblingTableItems"
+          :key="`${sibling.fileId}-${index}`"
+          :sibling="sibling"
+          class="py-2 mt-3"
+        />
+      </div>
+      <b-pagination
+        v-if="displaySiblingPagination"
+        v-model="siblingsTablePagination.currentPage"
+        :total-rows="siblingsTableItems.length"
+        :per-page="siblingsTablePagination.itemsPerPage"
+        align="right"
+        size="sm"
+      />
+    </section>
   </div>
 </template>
 
 <script>
 import AuthorRepository from '../../api/AuthorRepository'
+import QcpiaMoleculeAssociatedCalculationsSibling from './QcpiaMoleculeAssociatedCalculationsSibling.vue'
 
 export default {
   name: 'QcpiaMoleculeAssociatedCalculations',
+  components: { QcpiaMoleculeAssociatedCalculationsSibling },
   props: {
     siblings: {
       // `Object[]`
@@ -72,18 +87,42 @@ export default {
       submissionsTableFieds: [
         { key: 'authorName', label: 'Author Name' },
         { key: 'fileId', label: '' }
-      ]
+      ],
+      siblingsTablePagination: {
+        itemsPerPage: 5,
+        currentPage: 1
+      },
+      submissionTablePagination: {
+        itemsPerPage: 5,
+        currentPage: 1
+      }
+
     }
   },
   computed: {
     siblingsTableItems () {
       return this.siblings.map((sibling) => {
         return {
-          jobType: sibling.job,
+          jobTypes: sibling.job ? sibling.job.join(', ') : 'Unknown',
           authorName: sibling.author ? sibling.author.name : 'N/A',
-          fileId: sibling.id_ES
+          fileId: sibling.id_log,
+          basisSetName: sibling.basis_set_name ? (sibling.basis_set_name === 'Null' ? 'Unknown' : sibling.basis_set_name) : 'Unknown',
+          'charge': sibling.charge !== null && sibling.charge !== undefined ? sibling.charge : 'Unknown',
+          'endingEnergy': sibling.ending_energy || 'Unknown',
+          'solvent': sibling.solvent || 'Unknown',
+          'functionnal': sibling.functional || 'Unknown',
+          'multiplicity': sibling.multiplicity || 'Unknown',
+          'software': sibling.software || 'Unknown'
         }
       })
+    },
+    displaySiblingPagination () {
+      return this.siblingsTableItems.length > this.siblingsTablePagination.itemsPerPage
+    },
+    paginatedSiblingTableItems () {
+      const start = (this.siblingsTablePagination.currentPage - 1) * this.siblingsTablePagination.itemsPerPage
+      const end = (this.siblingsTablePagination.currentPage) * this.siblingsTablePagination.itemsPerPage
+      return this.siblingsTableItems.slice(start, end)
     },
     submissionTableItems () {
       return this.metadata.submissions.map((submission) => {
@@ -92,8 +131,10 @@ export default {
           fileId: submission.id_log
         }
       })
+    },
+    displaySubmissionPagination () {
+      return this.submissionTableItems.length > this.siblingsTablePagination.itemsPerPage
     }
-
   },
   watch: {
     siblings: {

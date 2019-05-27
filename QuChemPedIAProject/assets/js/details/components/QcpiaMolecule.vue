@@ -70,8 +70,7 @@
     <b-card
       v-else
       no-body
-      class="w-100"
-      style="border-bottom: none;"
+      class="w-100 mb-4"
     >
       <b-tabs
         card
@@ -98,15 +97,6 @@
             :molecule="molecule"
             :results="results"
             :computational-details="computationalDetails"
-          />
-        </b-tab>
-        <b-tab
-          title="Authorship"
-          class="py-3"
-        >
-          <qcpia-molecule-authorship
-            :metadata="metadata"
-            :author-repository="authorRepository"
           />
         </b-tab>
         <b-tab title="Associated Calculations">
