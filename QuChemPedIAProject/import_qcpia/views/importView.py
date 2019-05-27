@@ -119,9 +119,12 @@ def update_status_in_db(result_of_import: int, import_object: ImportFile):
         import_object.status = "theory not supported yet"
     elif result_of_import == 3:
         import_object.status = "already in database"
+        import_object.imported = True
     else:
         import_object.status = "something goes wrong"
     import_object.save()
+
+
 
 
 
