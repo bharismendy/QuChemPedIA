@@ -112,15 +112,19 @@ def update_status_in_db(result_of_import: int, import_object: ImportFile):
     """
     if result_of_import == 0:
         import_object.status = "imported to database"
+        import_object.imported = True
     elif result_of_import == 1:
         import_object.status = "not archivable"
     elif result_of_import == 2:
         import_object.status = "theory not supported yet"
     elif result_of_import == 3:
         import_object.status = "already in database"
+        import_object.imported = True
     else:
         import_object.status = "something goes wrong"
     import_object.save()
+
+
 
 
 
