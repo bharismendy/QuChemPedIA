@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div class="row justify-content-around text-primary">
+    <div class="row text-primary">
       <div
-        class="col-auto"
+        class="col col-lg-6"
         data-testid="molecule_formula"
       >
         <h2
@@ -10,9 +10,10 @@
         />
       </div>
       <div
-        class="col-auto"
+        v-if="molecule.iupac"
+        class="col col-lg-6"
       >
-        <h2>{{ molecule.iupac || "IUPAC PLACEHOLDER" }}</h2>
+        <h2>{{ molecule.iupac }}</h2>
       </div>
     </div>
     <div
