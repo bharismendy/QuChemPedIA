@@ -9,6 +9,7 @@
         :computational-details="computationalDetails"
         :siblings="siblings"
         :author-repository="authorRepository"
+        :job-types="jobTypes"
       />
     </transition>
     <b-spinner
@@ -58,31 +59,19 @@ export default {
       results: null,
       siblings: [],
       computationalDetails: null,
-      authorRepository: new AuthorRepository(this.baseUrl)
+      authorRepository: new AuthorRepository(this.baseUrl),
+      jobTypes: null
     }
   },
   mounted () {
     this.detailsLoading = true
-    // Promise.resolve(Mock).then(mock => {
-    //   const data = mock.data
-    //   if (data.molecule) this.molecule = data.molecule
-    //   if (data.metadata) this.metadata = data.metadata
-    //   if (data.results) this.results = data.results
-    //   if (mock.siblings) this.siblings = mock.siblings
-    //   if (data.comp_details) this.computationalDetails = data.comp_details
-    //   this.detailsLoaded = true
-    // }).catch(err => {
-    //   this.detailsLoadingError = err
-    //   eBus.$emit(eBus.signals.notify.ERROR, { message: 'Failed to load molecule\n' + err })
-    // }).then(() => {
-    //   this.detailsLoading = false
-    // })
     axios.get('/access/details_json', {
       params: {
         id_file: this.id
       }
     }).then((response) => {
       const data = response.data.data
+      if (response.data.job_type) this.jobTypes = response.data.job_type
       if (data.molecule) this.molecule = data.molecule
       if (data.metadata) this.metadata = data.metadata
       if (data.results) this.results = data.results

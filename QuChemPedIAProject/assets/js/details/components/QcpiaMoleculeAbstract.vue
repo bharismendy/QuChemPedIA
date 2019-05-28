@@ -121,7 +121,10 @@
         <h5 class="border-bottom mt-3 mt-lg-0 pb-1  ">
           Computation details
         </h5>
-        <qcpia-molecule-computational-details :computational-details="computationalDetails" />
+        <qcpia-molecule-computational-details
+          :computational-details="computationalDetails"
+          :job-types="jobTypes"
+        />
       </div>
     </div>
   </div>
@@ -154,6 +157,10 @@ export default {
     // The molecule to display
     molecule: {
       type: Object,
+      required: true
+    },
+    jobTypes: {
+      type: Array,
       required: true
     },
     computationalDetails: {

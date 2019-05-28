@@ -28,7 +28,10 @@
         <h5 slot="header">
           Computational Details
         </h5>
-        <qcpia-molecule-computational-details :computational-details="computationalDetails" />
+        <qcpia-molecule-computational-details
+          :computational-details="computationalDetails"
+          :job-types="jobTypes"
+        />
       </b-card>
       <b-card class="mt-4">
         <h5 slot="header">
@@ -87,6 +90,7 @@
             :computational-details="computationalDetails"
             :author-repository="authorRepository"
             :metadata="metadata"
+            :job-types="jobTypes"
           />
         </b-tab>
         <b-tab
@@ -167,6 +171,10 @@ export default {
   props: {
     molecule: {
       type: Object,
+      required: true
+    },
+    jobTypes: {
+      type: Array,
       required: true
     },
     metadata: {
