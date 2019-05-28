@@ -7,6 +7,8 @@ from elasticsearch_dsl import Search, Q, Range
 from common_qcpia.search import _get_job_type
 import subprocess
 import time
+from QuChemPedIAProject.settings import DATA_DIR_ROOT
+
 
 # CONSTANTE
 NRE_PRECISION = -2  # power of 10
@@ -248,7 +250,10 @@ def create_query_log(path, json_file, destination_dir, id_user):
         if 'TD' in job_type:
             symetrie = loaded_json['results']['excited_states']['et_sym']
         if 'FREQ' in job_type:
-            anharmonicity = loaded_json["comp_details"]["freq"]["anharmonicity"]
+            if "anharmonicity" in loaded_json["comp_details"]["freq"] :
+                anharmonicity = loaded_json["comp_details"]["freq"]["anharmonicity"]
+            else:
+                anharmonicity = None
             temperature = loaded_json["comp_details"]["freq"]["temperature"]
         try:
             siblings = get_siblings_json(nre=nre,
@@ -344,7 +349,10 @@ def create_query_log(path, json_file, destination_dir, id_user):
                 basis_set_name = loaded_json["comp_details"]["general"]["basis_set_name"]
             except:
                 basis_set_name = "Null"
-
+            try:
+                solvent = loaded_json["comp_details"]["general"]["solvent"]
+            except Exception as error:
+                solvent = "GAS"
             response = es.index(index=index_name, doc_type="log_file", body=temp)
             id_file = response['_id']
             response = es.get(index=index_name, doc_type="log_file", id=id_file)
@@ -361,30 +369,33 @@ def create_query_log(path, json_file, destination_dir, id_user):
                                     basis_set_name=basis_set_name,
                                     functionnal=loaded_json["comp_details"]["general"]["functional"])
             except:
-                response = es.delete(index='index_name', doc_type='log_file', id=id_file)
+                response = es.delete(index=index_name, doc_type='log_file', id=id_file)
+                return 4
+            try :
+                if new_sub:
+                    response_last_sub = es.get(index=index_name, doc_type="log_file", id=ref_prec_sub)
+                    if new_ref:
+                        update_submission(last_sub=ref_prec_sub, new_ref=new_ref, id_file=id_file, id_user=id_user)
+                    else:
+                        update_submission(last_sub=ref_prec_sub, new_ref=new_ref, id_file=id_file, id_user=id_user)
+                    current_sub = response_last_sub['_source']['data']['metadata']['submissions']
+                    current_sub.append({"id_log": id_file, "author": id_user})
+                    response['_source']['data']['metadata']['submissions'] = current_sub
 
-            if new_sub:
-                response_last_sub = es.get(index=index_name, doc_type="log_file", id=ref_prec_sub)
-                if new_ref:
-                    update_submission(last_sub=ref_prec_sub, new_ref=new_ref, id_file=id_file, id_user=id_user)
                 else:
-                    update_submission(last_sub=ref_prec_sub, new_ref=new_ref, id_file=id_file, id_user=id_user)
-                current_sub = response_last_sub['_source']['data']['metadata']['submissions']
-                current_sub.append({"id_log": id_file, "author": id_user})
-                response['_source']['data']['metadata']['submissions'] = current_sub
-
-            else:
-                response['_source']['data']['metadata']['submissions'] = [{"id_log": id_file, "author": author}]
+                    response['_source']['data']['metadata']['submissions'] = [{"id_log": id_file, "author": author}]
+            except:
+                response = es.delete(index=index_name, doc_type='log_file', id=id_file)
+                return 4
             path_in_file_system = get_path_to_store(destination_dir=destination_dir,
                                                     id_calcul=id_file, make_path=True)
             location_opt = os.path.join(path_in_file_system + "/"+loaded_json['comp_details']['general']['job_type'][0]+"_" +
                                         str(int(round(time.time() * 1000))) + ".log")
-            response['_source']['data']['metadata']['log_file'] = location_opt
+            response['_source']['data']['metadata']['log_file'] = "/"+location_opt
 
-            subprocess.Popen(["cp", path, os.path.join(destination_dir + path_in_file_system + "/"+
-                                                       loaded_json['comp_details']['general']['job_type'][0]+"_" +
-                                                       str(int(round(time.time() * 1000))) + ".log")])  # copie du JSON
-            #subprocess.Popen(["rm", path])
+            subprocess.Popen(["cp", path, os.path.join(DATA_DIR_ROOT, location_opt)])  # copie du JSON
+            print(os.path.join(DATA_DIR_ROOT, location_opt))
+            subprocess.Popen(["rm", path])
             es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_file)
             return 0
         except Exception as error:
@@ -416,4 +427,4 @@ def import_file(path, json_file, id_user):
             print(error)
             return 4
     return create_query_log(path=path, json_file=json_file, destination_dir=destination_dir, id_user=id_user)
-  
+
