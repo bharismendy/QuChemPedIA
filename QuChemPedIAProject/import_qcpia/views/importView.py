@@ -112,12 +112,14 @@ def update_status_in_db(result_of_import: int, import_object: ImportFile):
     """
     if result_of_import == 0:
         import_object.status = "imported to database"
+        import_object.imported = True
     elif result_of_import == 1:
         import_object.status = "not archivable"
     elif result_of_import == 2:
         import_object.status = "theory not supported yet"
     elif result_of_import == 3:
         import_object.status = "already in database"
+        import_object.imported = True
     else:
         import_object.status = "something goes wrong"
     import_object.save()
@@ -227,7 +229,7 @@ def launch_import(request, id_file, page):
         print(error)
         file.status = 'import failed'
         file.save()
-    url = build_url('admin/list_of_import_in_database', get={'page': request.GET.get(str(page))})
+    url = build_url('admin/list_of_import_in_database', get={'page': str(page)})
     return HttpResponseRedirect(url)
 
 
@@ -268,5 +270,5 @@ def delete_import(request, id_file, page):
     except Exception as error:
         print(error)
         file.status("can't delete the object in database")
-    url = build_url('admin/list_of_import_in_database', get={'page': request.GET.get(str(page))})
+    url = build_url('admin/list_of_import_in_database', get={'page': str(page)})
     return HttpResponseRedirect(url)
