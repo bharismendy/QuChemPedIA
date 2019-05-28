@@ -20,6 +20,10 @@ export default {
     computationalDetails: {
       type: Object,
       required: true
+    },
+    jobTypes: {
+      type: Array,
+      required: true
     }
   },
   data () {
@@ -28,6 +32,13 @@ export default {
       tableValueClasses: ['col-auto'],
       tableRowClasses: ['mt-1 justify-content-between'],
       tableDataDef: [
+        {
+          path: 'jobTypes',
+          label: 'Job',
+          formatter: (value) => {
+            return value.join(', ')
+          }
+        },
         {
           path: 'general.package',
           label: 'Software',
@@ -104,7 +115,7 @@ export default {
   },
   computed: {
     tableData () {
-      return this.buildTableData(this.tableDataDef, this.computationalDetails)
+      return this.buildTableData(this.tableDataDef, Object.assign({ jobTypes: this.jobTypes }, this.computationalDetails))
     }
   },
   methods: {
