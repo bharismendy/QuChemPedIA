@@ -2,7 +2,6 @@ from django.shortcuts import render
 from query_qcpia.forms.QueryForm import QueryForm
 from common_qcpia.search import *
 from django.http.response import HttpResponseRedirect
-from django.urls import reverse
 from common_qcpia.QuChemPedIA_lib import build_url
 
 
@@ -62,7 +61,7 @@ def query(request):
     if test_result['nbresult'] == 0 or len(test_result) == 1:
         results = '{}'
         test_result = json.loads(results)
-    if len(test_result) == 2:
+    if len(test_result) == 2 and 'id_user' not in request.GET.get('typeQuery'):
         # if we have only one result we forward it to the detail page
         url = build_url('details', get={'id': str(test_result["0"][0]["id_log"])})
         return HttpResponseRedirect(url)

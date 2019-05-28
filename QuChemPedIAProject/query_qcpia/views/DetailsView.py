@@ -7,6 +7,7 @@ import base64
 import os
 from django.conf import settings
 from user_qcpia.models import Utilisateur
+from common_qcpia.QuChemPedIA_lib import import_file_lib
 
 
 def details(request):
@@ -35,12 +36,25 @@ def details_json(request):
     """
     id_file = request.GET.get(key='id_file')
     results = None
-    try:
-        results = search_id(id_file)
-    except Exception as error:
-        return HttpResponse(None, status=500)
-    if results is None:
-        return HttpResponse(None, status=404)
+    path = os.path.join(settings.MEDIA_ROOT + '/' + id_file)
+    if os.path.isfile(path):
+        try:
+            json_data = open(path)
+            results = json.load(json_data)  # deserialize it
+            forma = json.loads(import_file_lib.get_base_json())
+            forma['data'] = results
+            results = forma
+            json_data.close()
+        except Exception as error:
+            print(error)
+            return HttpResponse(None, status=500)
+    else:
+        try:
+            results = search_id(id_file)
+        except Exception as error:
+            return HttpResponse(None, status=500)
+        if results is None:
+            return HttpResponse(None, status=404)
     return HttpResponse(json.dumps(results), content_type="application/json")
 
 
@@ -73,11 +87,13 @@ def details_author(request):
     :return: png file
     """
     id_author = request.GET.get(key='id_author')
-    if request.is_ajax() and id_author:
+    if id_author:
         try:
             user = Utilisateur.objects.get(id=id_author)
             results = {'name': str(user.first_name)+' '+str(user.last_name)}
         except Exception as error:
             print(error)
             results = None
+        if results is None:
+            return HttpResponse(None, status=404)
         return HttpResponse(json.dumps(results), content_type="application/json")

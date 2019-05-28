@@ -231,7 +231,7 @@ def launch_import(request, id_file, page):
         print(error)
         file.status = 'import failed'
         file.save()
-    url = build_url('admin/list_of_import_in_database', get={'page': request.GET.get(str(page))})
+    url = build_url('admin/list_of_import_in_database', get={'page': str(page)})
     return HttpResponseRedirect(url)
 
 
@@ -272,6 +272,6 @@ def delete_import(request, id_file, page):
     except Exception as error:
         print(error)
         file.status("can't delete the object in database")
-    url = build_url('admin/list_of_import_in_database', get={'page': request.GET.get(str(page))})
+    url = build_url('admin/list_of_import_in_database', get={'page': str(page)})
     return HttpResponseRedirect(url)
 
