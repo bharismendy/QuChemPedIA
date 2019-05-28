@@ -28,7 +28,10 @@
         <h5 slot="header">
           Computational Details
         </h5>
-        <qcpia-molecule-computational-details :computational-details="computationalDetails" />
+        <qcpia-molecule-computational-details
+          :computational-details="computationalDetails"
+          :job-types="jobTypes"
+        />
       </b-card>
       <b-card class="mt-4">
         <h5 slot="header">
@@ -46,6 +49,7 @@
         <qcpia-molecule-associated-calculations
           :author-repository="authorRepository"
           :siblings="siblings"
+          :metadata="metadata"
         />
       </b-card>
       <b-card class="mt-4">
@@ -59,20 +63,26 @@
           :tabs-display="false"
         />
       </b-card>
+      <b-card class="mt-4">
+        <h5 slot="header">
+          Visualisation
+        </h5>
+        <qcpia-molecule-viz-js-mol :metadata="metadata" />
+      </b-card>
     </template>
     <b-card
       v-else
       no-body
-      class="w-100"
-      style="border-bottom: none;"
+      class="w-100 mb-4"
     >
       <b-tabs
         card
         fill
         class="w-100"
+        @input="onTabChanged"
       >
         <b-tab
-          title="Molecule"
+          title="Description"
           class="py-3"
         >
           <qcpia-molecule-abstract
@@ -80,6 +90,7 @@
             :computational-details="computationalDetails"
             :author-repository="authorRepository"
             :metadata="metadata"
+            :job-types="jobTypes"
           />
         </b-tab>
         <b-tab
@@ -92,20 +103,15 @@
             :computational-details="computationalDetails"
           />
         </b-tab>
-        <b-tab
-          title="Authorship"
-          class="py-3"
-        >
-          <qcpia-molecule-authorship
-            :metadata="metadata"
-            :author-repository="authorRepository"
-          />
-        </b-tab>
         <b-tab title="Associated Calculations">
           <qcpia-molecule-associated-calculations
             :siblings="siblings"
             :author-repository="authorRepository"
+            :metadata="metadata"
           />
+        </b-tab>
+        <b-tab title="Visualisation">
+          <qcpia-molecule-viz-js-mol :metadata="metadata" />
         </b-tab>
       </b-tabs>
     </b-card>
@@ -148,10 +154,12 @@ import QcpiaMoleculeAssociatedCalculations from './QcpiaMoleculeAssociatedCalcul
 import QcpiaMoleculeMolecule from './QcpiaMoleculeMolecule.vue'
 import QcpiaMoleculeSmiles from './QcpiaMoleculeSmiles.vue'
 import QcpiaMoleculeComputationalDetails from './QcpiaMoleculeComputationalDetails.vue'
-
+import QcpiaMoleculeVizJsMol from './QcpiaMoleculeVizJsMol.vue'
+import eBus from '../../event-bus'
 export default {
   name: 'QcpiaMolecule',
   components: {
+    QcpiaMoleculeVizJsMol,
     QcpiaMoleculeComputationalDetails,
     QcpiaMoleculeSmiles,
     QcpiaMoleculeMolecule,
@@ -163,6 +171,10 @@ export default {
   props: {
     molecule: {
       type: Object,
+      required: true
+    },
+    jobTypes: {
+      type: Array,
       required: true
     },
     metadata: {
@@ -188,7 +200,8 @@ export default {
   },
   data () {
     return {
-      display: 'tabs'
+      display: 'tabs',
+      tabs: ['molecule', 'results', 'authorship', 'associatedCalculations', 'viz']
     }
   },
   computed: {
@@ -202,6 +215,11 @@ export default {
       return this.$root.moleculeId
     }
 
+  },
+  methods: {
+    onTabChanged (index) {
+      eBus.$emit(eBus.signals.tabs.SWITCH, { name: this.tabs[index], data: { molecule: this.molecule, metadata: this.metadata } })
+    }
   }
 }
 </script>

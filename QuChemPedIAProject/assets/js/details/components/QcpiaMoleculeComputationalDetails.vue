@@ -20,6 +20,10 @@ export default {
     computationalDetails: {
       type: Object,
       required: true
+    },
+    jobTypes: {
+      type: Array,
+      required: true
     }
   },
   data () {
@@ -28,6 +32,13 @@ export default {
       tableValueClasses: ['col-auto'],
       tableRowClasses: ['mt-1 justify-content-between'],
       tableDataDef: [
+        {
+          path: 'jobTypes',
+          label: 'Job',
+          formatter: (value) => {
+            return value.join(', ')
+          }
+        },
         {
           path: 'general.package',
           label: 'Software',
@@ -66,29 +77,23 @@ export default {
           label: 'Solvent'
         },
         {
-          path: 'general.scf_targets',
-          handler: (value) => {
-            if (value.length > 0) {
-              const targets = value[value.length - 1]
-              return [
-                {
-                  label: 'Requested SCF convergence on RMS density',
-                  _rawHtml: true,
-                  value: exponentialToHtmlString(Number.parseFloat(targets[0]))
-                },
-                {
-                  label: 'Requested SCF convergence on MAX density',
-                  _rawHtml: true,
-                  value: exponentialToHtmlString(Number.parseFloat(targets[1])) // TODO format to HTML
-                },
-                {
-                  label: 'Requested SCF convergence on energy',
-                  _rawHtml: true,
-                  value: exponentialToHtmlString(Number.parseFloat(targets[2])) // TODO format to HTML
-                }
-              ]
-            }
-          }
+          path: 'general.scf_targets.0',
+          label: 'Requested SCF convergence on RMS density',
+          _rawHtml: true,
+          formatter: this.requestedScfFormatter
+
+        },
+        {
+          path: 'general.scf_targets.1',
+          label: 'Requested SCF convergence on MAX density',
+          _rawHtml: true,
+          formatter: this.requestedScfFormatter
+        },
+        {
+          path: 'general.scf_targets.2',
+          label: 'Requested SCF convergence on energy',
+          _rawHtml: true,
+          formatter: this.requestedScfFormatter
         },
         {
           path: 'freq.temperature',
@@ -110,7 +115,12 @@ export default {
   },
   computed: {
     tableData () {
-      return this.buildTableData(this.tableDataDef, this.computationalDetails)
+      return this.buildTableData(this.tableDataDef, Object.assign({ jobTypes: this.jobTypes }, this.computationalDetails))
+    }
+  },
+  methods: {
+    requestedScfFormatter (value) {
+      return exponentialToHtmlString(Number.parseFloat(value))
     }
   }
 }

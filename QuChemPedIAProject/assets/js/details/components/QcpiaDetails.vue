@@ -9,6 +9,7 @@
         :computational-details="computationalDetails"
         :siblings="siblings"
         :author-repository="authorRepository"
+        :job-types="jobTypes"
       />
     </transition>
     <b-spinner
@@ -33,7 +34,7 @@ import AuthorRepository from '../../api/AuthorRepository'
 import QcpiaNotificationStack from '../../components/QcpiaNotificationStack.vue'
 import eBus from '../../event-bus'
 import QcpiaDetails404 from './QcpiaDetails404.vue'
-
+// import Mock from '../mock'
 // Entry component for the detail page
 export default {
   name: 'QcpiaDetails',
@@ -58,7 +59,8 @@ export default {
       results: null,
       siblings: [],
       computationalDetails: null,
-      authorRepository: new AuthorRepository(this.baseUrl)
+      authorRepository: new AuthorRepository(this.baseUrl),
+      jobTypes: null
     }
   },
   mounted () {
@@ -69,6 +71,7 @@ export default {
       }
     }).then((response) => {
       const data = response.data.data
+      if (response.data.job_type) this.jobTypes = response.data.job_type
       if (data.molecule) this.molecule = data.molecule
       if (data.metadata) this.metadata = data.metadata
       if (data.results) this.results = data.results

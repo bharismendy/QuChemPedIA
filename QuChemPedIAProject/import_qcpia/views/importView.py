@@ -126,6 +126,8 @@ def update_status_in_db(result_of_import: int, import_object: ImportFile):
 
 
 
+
+
 def import_view(request):
     """
     controler of the template account that allow the user to import file
@@ -272,3 +274,4 @@ def delete_import(request, id_file, page):
         file.status("can't delete the object in database")
     url = build_url('admin/list_of_import_in_database', get={'page': str(page)})
     return HttpResponseRedirect(url)
+

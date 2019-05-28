@@ -346,6 +346,7 @@ def create_query_log(path, json_file, destination_dir, id_user):
                 basis_set_name = loaded_json["comp_details"]["general"]["basis_set_name"]
             except:
                 basis_set_name = "Null"
+
             try:
                 solvent = loaded_json["comp_details"]["general"]["solvent"]
             except Exception as error:
@@ -389,9 +390,9 @@ def create_query_log(path, json_file, destination_dir, id_user):
             location_opt = os.path.join(path_in_file_system + "/"+loaded_json['comp_details']['general']['job_type'][0]+"_" +
                                         str(int(round(time.time() * 1000))) + ".log")
             response['_source']['data']['metadata']['log_file'] = location_opt
-
             subprocess.Popen(["cp", path, os.path.join(DATA_DIR_ROOT, location_opt)])  # copie du JSON
             subprocess.Popen(["rm", path])
+
             es.index(index=index_name, doc_type="log_file", body=response['_source'], id=id_file)
             return 0
         except Exception as error:
@@ -423,4 +424,3 @@ def import_file(path, json_file, id_user):
             print(error)
             return 4
     return create_query_log(path=path, json_file=json_file, destination_dir=destination_dir, id_user=id_user)
-

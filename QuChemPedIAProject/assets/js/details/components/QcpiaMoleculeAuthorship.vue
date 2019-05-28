@@ -8,7 +8,7 @@
         Original log file
       </div>
       <div class="col">
-        <a :href="`data_dir/${metadata.log_file}`">
+        <a :href="logFileLink">
           <i class="fa fa-download mr-1" />
           Download
         </a>
@@ -65,6 +65,13 @@ export default {
       author: null
     }
   },
+  computed: {
+    logFileLink () {
+      const baseUrl = this.$root.baseUrl
+      const dataDir = this.$root.dataDir
+      return `${baseUrl}${dataDir}${this.metadata.log_file}`
+    }
+  },
   watch: {
     'metadata.id_user' () {
       this.loadAuthor()
@@ -80,9 +87,11 @@ export default {
         this.loadingAuthor = true
         this.authorRepository.findAuthorById(this.metadata.id_user)
           .then((author) => {
+            console.log({ author })
             this.$set(this, 'author', author)
-            this.loadingAuthor = false
-          })
+          }).catch(() => {
+            this.author = null
+          }).then(() => { this.loadingAuthor = false })
       }
     }
   }

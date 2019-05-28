@@ -128,7 +128,7 @@ def search_id_user(id_user, page, nbrpp):
     es_host = settings.ELASTICSEARCH
     es = Elasticsearch(hosts=[es_host])
     q = Q('bool',
-          should=[Q('match', contributor=id_user)],
+          should=[Q('match', data__metadata__id_user=id_user)],
           )
     s = Search().using(es).query(q)[nbrpp * page - nbrpp:(nbrpp * page) - 1]
     return _search_to_json(search=s.execute(), nbresult=s.count())

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div class="row justify-content-around text-primary">
+    <div class="row text-primary">
       <div
-        class="col-auto"
+        class="col col-lg-6"
         data-testid="molecule_formula"
       >
         <h2
@@ -10,80 +10,77 @@
         />
       </div>
       <div
-        class="col-auto"
+        v-if="molecule.iupac"
+        class="col col-lg-6"
       >
-        <h2>{{ molecule.iupac || "IUPAC PLACEHOLDER" }}</h2>
+        <h2>{{ molecule.iupac }}</h2>
       </div>
     </div>
     <div
       class="row"
       style="font-size: 1rem"
     >
-      <div
-        class="row mt-1"
-      >
-        <div class="col-12 col-lg-6">
-          <div class="row align-items-center">
-            <a
-              v-b-tooltip.hover
-              class="col-auto text-muted"
-              title="International Chemical Identifier"
-              href="https://en.wikipedia.org/wiki/International_Chemical_Identifier"
-            >Inchi
-            </a>
-            <div
-              v-b-tooltip.hover
-              class="col text-left"
-              data-testid="molecule_inchi"
-              style="text-overflow: ellipsis;  white-space: nowrap;overflow: hidden;"
-              :title="molecule.inchi.slice(6)"
-            >
-              {{ molecule.inchi.slice(6) }}
-            </div>
-            <div
-              class="col-auto text-left"
-            >
-              <qcpia-copy-text-button
-                :text="molecule.inchi.slice(6)"
-                tooltip-text="Copy Inchi to clipboard"
-                size="sm"
-                variant="outline-primary"
-                class="text-center"
-                @copied="notifyCopy"
-              />
-            </div>
+      <div class="col-12 col-lg-6">
+        <div class="row align-items-center">
+          <a
+            v-b-tooltip.hover
+            class="col-auto text-muted"
+            title="International Chemical Identifier"
+            href="https://en.wikipedia.org/wiki/International_Chemical_Identifier"
+          >Inchi
+          </a>
+          <div
+            v-b-tooltip.hover
+            class="col text-left"
+            data-testid="molecule_inchi"
+            style="text-overflow: ellipsis;  white-space: nowrap;overflow: hidden;"
+            :title="molecule.inchi.slice(6)"
+          >
+            {{ molecule.inchi.slice(6) }}
+          </div>
+          <div
+            class="col-auto text-left"
+          >
+            <qcpia-copy-text-button
+              :text="molecule.inchi.slice(6)"
+              tooltip-text="Copy Inchi to clipboard"
+              size="sm"
+              variant="outline-primary"
+              class="text-center"
+              @copied="notifyCopy"
+            />
           </div>
         </div>
-        <div class="col-12 col-lg-6">
-          <div class="row">
-            <a
-              v-b-tooltip.hover
-              class="col-auto text-muted"
-              title="Simplified Molecular Input Line Entry Specification"
-              href="https://en.wikipedia.org/wiki/Simplified_Molecular_Input_Line_Entry_Specification"
-            >SMILES
-            </a>
-            <div
-              v-b-tooltip.hover
-              class="col text-left"
-              data-testid="molecule_inchi"
-              style="text-overflow: ellipsis;  white-space: nowrap;overflow: hidden;"
-              :title="molecule.can"
-            >
-              {{ molecule.can }}
-            </div>
-            <div
-              class="col-auto text-left"
-            >
-              <qcpia-copy-text-button
-                :text="molecule.can"
-                tooltip-text="Copy SMILES to clipboard"
-                size="sm"
-                variant="outline-primary"
-                class="text-center"
-                @copied="notifyCopy"
-              />
-            </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="row">
+          <a
+            v-b-tooltip.hover
+            class="col-auto text-muted"
+            title="Simplified Molecular Input Line Entry Specification"
+            href="https://en.wikipedia.org/wiki/Simplified_Molecular_Input_Line_Entry_Specification"
+          >SMILES
+          </a>
+          <div
+            v-b-tooltip.hover
+            class="col text-left"
+            data-testid="molecule_inchi"
+            style="text-overflow: ellipsis;  white-space: nowrap;overflow: hidden;"
+            :title="molecule.can"
+          >
+            {{ molecule.can }}
+          </div>
+          <div
+            class="col-auto text-left"
+          >
+            <qcpia-copy-text-button
+              :text="molecule.can"
+              tooltip-text="Copy SMILES to clipboard"
+              size="sm"
+              variant="outline-primary"
+              class="text-center"
+              @copied="notifyCopy"
+            />
           </div>
         </div>
       </div>
@@ -124,7 +121,10 @@
         <h5 class="border-bottom mt-3 mt-lg-0 pb-1  ">
           Computation details
         </h5>
-        <qcpia-molecule-computational-details :computational-details="computationalDetails" />
+        <qcpia-molecule-computational-details
+          :computational-details="computationalDetails"
+          :job-types="jobTypes"
+        />
       </div>
     </div>
   </div>
@@ -157,6 +157,10 @@ export default {
     // The molecule to display
     molecule: {
       type: Object,
+      required: true
+    },
+    jobTypes: {
+      type: Array,
       required: true
     },
     computationalDetails: {
