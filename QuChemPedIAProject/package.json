@@ -42,7 +42,7 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "2.0.0-rc.20",
     "eslint-plugin-html": "^5.0.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.15.0",
     "vue2-animate": "^2.1.0"
   }
