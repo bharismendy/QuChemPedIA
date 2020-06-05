@@ -3,7 +3,7 @@ Babel==2.6.0
 cclib==1.6.1
 certifi==2018.4.16
 chardet==3.0.4
-Django==2.0.5
+Django==2.2.13
 django-bootstrap4==0.0.6
 django-webpack-loader==0.6.0
 docutils==0.14
